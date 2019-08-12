@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="33dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/publishJobTitleFour"
+            android:textColor="@color/text_publish_job"
+            android:textSize="@dimen/text_big_size"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:id="@+id/tvContactsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="4"
+                android:text="@string/contactsName"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_default_size" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tvContactsTitle"
+                android:background="@null"
+                android:hint="请输您的姓名"
+                android:textColor="@color/text_publish_job"
+                android:textColorHint="@color/text_light_color"
+                android:textSize="@dimen/text_default_size" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/text_light_color" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="22dp">
+
+            <TextView
+                android:id="@+id/tvContactsPhoneTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="4"
+                android:text="@string/contactsPhone"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_default_size" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tvContactsPhoneTitle"
+                android:background="@null"
+                android:hint="请输您的姓名"
+                android:text="19137629693"
+                android:textColor="@color/text_publish_job"
+                android:textColorHint="@color/text_light_color"
+                android:textSize="@dimen/text_default_size" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/text_light_color" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="22dp">
+
+            <TextView
+                android:id="@+id/tvContactsEmailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="4"
+                android:text="@string/contactsEmail"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_default_size" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tvContactsEmailTitle"
+                android:background="@null"
+                android:hint="请输您的姓名"
+                android:text="2466921206@qq.com"
+                android:textColor="@color/text_publish_job"
+                android:textColorHint="@color/text_light_color"
+                android:textSize="@dimen/text_default_size" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/text_light_color" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="4"
+                android:text="@string/contactsTips"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_small_size" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/llBottomParent"
+        android:layout_marginBottom="30dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布即同意"
+            android:textColor="@color/protocolDefaultColor"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《匠小豆发布兼职协议》"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_small_size" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_above="@id/llBottomParent"
+        android:background="@color/text_light_color" />
+
+    <LinearLayout
+        android:id="@+id/llBottomParent"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/previewResume"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/tvImmediatelyPublish"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="@string/immediatelyPublish"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

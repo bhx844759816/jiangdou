@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion deps.versions.compileSdk
+    buildToolsVersion deps.versions.buildTools
+    defaultConfig {
+        applicationId deps.versions.applicationId
+        minSdkVersion deps.versions.minSdk
+        targetSdkVersion deps.versions.targetSdk
+        versionCode deps.versions.versionCode
+        versionName deps.versions.versionName
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.supports.kotlin_stdlib
+    implementation deps.supports.kotlin_core
+    implementation deps.supports.kotlin_reflect
+    implementation deps.supports.cardView
+    implementation deps.supports.material
+    implementation deps.multidex
+    implementation deps.calendarview
+    implementation deps.wheelview
+    implementation project(':common_base')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

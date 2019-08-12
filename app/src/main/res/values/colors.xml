@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#82A2FE</color>
+    <color name="colorPrimaryDark">#82A2FE</color>
+    <color name="colorAccent">#82A2FE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text_default">#474747</color>
+    <color name="divider_line">#F3F3F3</color>
+    <color name="code_line">#D8D8D8</color>
+    <color name="text_hint">#c7c7c7</color>
+    <color name="text_new_user_register">#A1A1A1</color>
+    <color name="text_publish_job">#232323 </color>
+    <color name="text_light_color">#BFC4CB </color>
+    <color name="text_publish_sex">#6d6d6d </color>
+    <color name="app_bg">#F9FAFC </color>
+    <color name="data_range_item_bg">#EFEFEF </color>
+    <color name="protocolDefaultColor">#797E85 </color>
+    <color name="jobPublishMoney">#FFC970 </color>
+    <color name="jobPublishLine">#E2E2E2 </color>
+    <color name="transparent">#00000000</color>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="radioGroup_item_01"></item>
+    <item type="id" name="radioGroup_item_02"></item>
+    <item type="id" name="radioGroup_item_03"></item>
+    <item type="id" name="radioGroup_item_04"></item>
+    <item type="id" name="radioGroup_item_05"></item>
+    <item type="id" name="radioGroup_item_06"></item>
+    <item type="id" name="radioGroup_item_07"></item>
+</resources>

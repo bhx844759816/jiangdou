@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolBar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:id="@+id/ivClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/icon_close"
+            />
+            <TextView
+                    android:id="@+id/tvPhoneLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/text_default"
+                    android:text="@string/phoneLogin"
+                    android:textSize="@dimen/text_default_size"
+            />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/toolBar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="18dp"
+            android:text="@string/userNamePsdLogin"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_big_size"
+            android:textColor="@color/text_default"
+    />
+    <LinearLayout
+            android:id="@+id/rlInputParent"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="vertical"
+            android:layout_margin="18dp">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+            <TextView
+                    android:id="@+id/phoneHead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/shape_gray_circle_rectage"
+                    android:text="+86"
+                    android:textSize="@dimen/text_small_size"
+            />
+
+            <EditText
+                    android:id="@+id/etInputPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:maxLines="1"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/phoneHead"
+                    android:layout_toEndOf="@id/phoneHead"
+                    android:layout_marginLeft="10dp"
+                    android:hint="@string/inputPhone"
+                    android:textColorHint="@color/text_hint"
+                    android:textColor="@color/text_default"
+                    android:textSize="@dimen/text_default_size"
+            />
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:layout_alignParentBottom="true"
+                  android:background="@color/divider_line"
+            />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="45dp">
+
+            <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:inputType="textPassword"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:layout_marginStart="10dp"
+                    android:hint="@string/inputPsd"
+                    android:textColorHint="@color/text_hint"
+                    android:textColor="@color/text_default"
+                    android:textSize="@dimen/text_default_size"
+            />
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:layout_alignParentBottom="true"
+                  android:background="@color/divider_line"
+            />
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:gravity="center_vertical"
+                          android:layout_alignParentRight="true"
+
+                          android:layout_centerVertical="true">
+                <FrameLayout
+                        android:id="@+id/flEyeParent"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent">
+                    <ImageView
+                            android:id="@+id/ivEye"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_eye_close"
+                            android:layout_gravity="center"
+                    />
+                </FrameLayout>
+
+                <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/divider_line"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                />
+                <TextView
+                        android:id="@+id/tvForgetPsd"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/forgetPsd"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <TextView
+            android:id="@+id/tvLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/rlInputParent"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="25dp"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:text="@string/login"
+            android:gravity="center"
+            android:enabled="false"
+            android:textSize="@dimen/text_btn_size"
+            android:background="@drawable/shape_button_default"
+    />
+
+    <TextView
+            android:id="@+id/tvRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvLogin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="新用户注册"
+            android:textColor="@color/text_new_user_register"
+            android:textSize="@dimen/text_default_size"
+            android:layout_marginTop="25dp"
+    />
+
+    <include layout="@layout/view_third_login"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

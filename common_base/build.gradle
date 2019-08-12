@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+
+
+android {
+
+    compileSdkVersion deps.versions.compileSdk
+
+    defaultConfig {
+        minSdkVersion deps.versions.minSdk
+        targetSdkVersion deps.versions.targetSdk
+        versionCode deps.versions.versionCode
+        versionName deps.versions.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api deps.supports.appCompat
+    api deps.supports.recyclerView
+    api deps.supports.constraintLayout
+    api deps.supports.coordinatorlayout
+    //
+    api deps.rxJava.runntime
+    api deps.rxJava.rxAndroid
+    api deps.rxJava.rxlifecycle
+    //
+    api deps.retrofit.runntime
+    api deps.retrofit.convert
+    api deps.retrofit.adapter
+    //
+    api deps.lifecycle.extensions
+    annotationProcessor deps.lifecycle.compiler
+    api deps.logger
+    api deps.glide
+
+}
