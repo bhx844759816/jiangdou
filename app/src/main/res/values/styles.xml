@@ -9,4 +9,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Base.AppTheme" parent="AppTheme">
+
+    </style>
+
 </resources>

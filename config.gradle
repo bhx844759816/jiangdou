@@ -34,6 +34,7 @@ version.logger = "2.2.0"
 version.lifecycle = "1.1.1"
 version.calendarview = "3.6.6"
 version.wheelView = "4.0.9"
+version.statusBarUtil = "1.4.0"
 
 deps.versions = version
 //系统库
@@ -79,3 +80,5 @@ deps.multidex = "com.android.support:multidex:$version.multidex"
 deps.calendarview = "com.haibin:calendarview:$version.calendarview"
 //滚轮View
 deps.wheelview = "com.contrarywind:wheelview:$version.wheelView"
+//
+deps.statusBarUtil = "com.jaeger.statusbarutil:library:$version.statusBarUtil"

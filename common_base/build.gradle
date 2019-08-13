@@ -43,5 +43,6 @@ dependencies {
     annotationProcessor deps.lifecycle.compiler
     api deps.logger
     api deps.glide
+    api deps.statusBarUtil
 
 }

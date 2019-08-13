@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bhx.common.R;
 import com.bhx.common.adapter.rv.listener.OnLoadMoreListener;
+import com.bhx.common.mvvm.BaseMVVMActivity;
+import com.bhx.common.mvvm.BaseViewModel;
 
 import java.util.List;
 
@@ -16,16 +18,14 @@ import java.util.List;
  * 上拉刷新和下拉加载更多
  * Created By bhx On 2019/7/30 0030 12:01
  */
-public abstract class BaseSwipeRvActivity extends AppCompatActivity implements RvViewCreate, SwipeRefreshHelper.SwipeRefreshListener, OnLoadMoreListener {
+public abstract class BaseSwipeRvActivity<T extends BaseViewModel> extends BaseMVVMActivity<T>
+        implements RvViewCreate, SwipeRefreshHelper.SwipeRefreshListener, OnLoadMoreListener {
     public RvViewHelper rvViewHelper;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(getLayoutRes());
+    protected void initView() {
+        super.initView();
         rvViewHelper = new RvViewHelper.Builder(this, this, this).build();
-        initView();
-        initData();
     }
 
     @Override
@@ -63,24 +63,9 @@ public abstract class BaseSwipeRvActivity extends AppCompatActivity implements R
         return false;
     }
 
-    public abstract int getLayoutRes();
-
-    /**
-     * 初始化View
-     */
-    public void initView() {
-
-    }
-
-    /**
-     * 初始化数据
-     */
-    public void initData() {
-
-    }
-
     public void notifyAdapterDataSetChanged(List data) {
         rvViewHelper.notifyAdapterDataSetChanged(data);
     }
+
 
 }

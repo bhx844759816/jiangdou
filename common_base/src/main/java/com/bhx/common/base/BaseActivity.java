@@ -1,13 +1,12 @@
 package com.bhx.common.base;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bhx.common.utils.StatusBarUtil;
-
+import com.bhx.common.R;
+import com.jaeger.library.StatusBarUtil;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -23,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        setStatusBarColor();
         initView();
         initData();
     }
@@ -52,5 +52,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             mDisposables.clear();
             mDisposables = null;
         }
+    }
+
+    protected void setStatusBarColor() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorAccent));
     }
 }

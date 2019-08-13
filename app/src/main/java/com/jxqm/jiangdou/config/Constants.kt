@@ -36,7 +36,9 @@ class Constants {
 
         const val EVENT_KEY_SELECT_JOB_TYPE = "event_key_select_job_type"//选择兼职类型
 
-        const val EVENT_KEY_PEOPLE_ATTESTATION = "event_key_people_attestation"
+        const val EVENT_KEY_PEOPLE_ATTESTATION = "event_key_people_attestation" // 企业认证
+
+        const val EVENT_KEY_JOB_MANAGER = "event_key_job_manager" // 兼职管理界面
 
 
     }
