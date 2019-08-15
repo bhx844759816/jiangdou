@@ -22,8 +22,9 @@
                     android:layout_height="match_parent"
                     app:contentScrim="@color/colorAccent"
                     app:collapsedTitleGravity="center"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                    app:statusBarScrim="@color/colorAccent"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed"
+                    app:statusBarScrim="@android:color/transparent"
+                    app:scrimVisibleHeightTrigger="100dp"
                     app:titleEnabled="false">
 
                 <RelativeLayout
@@ -70,11 +71,10 @@
 
                 <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
-                        android:layout_height="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
                         android:layout_width="match_parent"
-                        app:titleTextColor="@color/white"
-                        android:gravity="center_vertical"
-
+                        android:minHeight="?actionBarSize"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
                         app:title=""
                         app:navigationIcon="@drawable/icon_back_white"
                         app:layout_collapseMode="pin">
@@ -100,7 +100,6 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:descendantFocusability="blocksDescendants"
                     android:orientation="vertical">
                 <!--招聘要求-->
                 <LinearLayout
@@ -457,6 +456,7 @@
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

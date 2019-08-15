@@ -5,11 +5,14 @@
     <string name="inputPhone">请输入手机号</string>
     <string name="inputPsd">请输入密码</string>
     <string name="inputVerifyCode">请输入验证码</string>
+    <string name="newPeopleRegister">新用户注册</string>
     <string name="userNamePsdLogin">用户名密码登录</string>
+    <string name="inputPsdTips">请输入6-20位数字或字母组合密码</string>
     <string name="userAgreementTips">请阅读并同意以下内容</string>
     <string name="nextSteps">下一步</string>
     <string name="login">登录</string>1
     <string name="register">注册</string>
+    <string name="confirmRegister">确认注册</string>
     <string name="forgetPsd">忘记密码</string>
     <string name="thirdLogin">第三方登录</string>
     <string name="userAgreementContent">《用户协议及隐私政策》</string>
@@ -45,4 +48,5 @@
     <string name="noSex">不限</string>
     <string name="contactsTips">默认使用匠小豆报名，同步到邮箱</string>
     <string name="jobPublishTips">小豆提示：凡收取费用的或工作内容不符的兼职，请你提高警惕并第一时间向我们举报。</string>
+    <string name="protocolContent">《用户协议及隐私政策 》</string>
 </resources>

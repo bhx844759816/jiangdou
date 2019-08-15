@@ -80,7 +80,7 @@ class PhoneLoginActivity : BaseDataActivity<PhoneLoginViewModel>() {
     private fun changeBtnState() {
         if (isPhoneInput && isPasswordInput) {
             tvLogin.isEnabled = true
-            tvLogin.setBackgroundResource(R.drawable.shape_button_select)
+            tvLogin.setBackgroundResource(R.drawable.icon_shadow_btn)
         } else {
             tvLogin.isEnabled = false
             tvLogin.setBackgroundResource(R.drawable.shape_button_default)

@@ -1,86 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/actionBarHeight"
-            android:id="@+id/toolBar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionBarHeight"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <FrameLayout
-                android:id="@+id/flBack"
-                android:layout_width="60dp"
-                android:layout_height="match_parent">
+            android:id="@+id/flBack"
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
+
             <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/icon_back"
-                    android:layout_gravity="center_vertical"
-            />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/icon_back" />
         </FrameLayout>
     </androidx.appcompat.widget.Toolbar>
+
     <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/toolBar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="18dp"
-            android:text="@string/inputPsd"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_big_size"
-            android:textColor="@color/text_default"
-    />
-    <RelativeLayout
-            android:id="@+id/rlInputParent"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/newPeopleRegister"
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_big_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolBar" />
+
+    <LinearLayout
+        android:id="@+id/rlInputParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
             android:layout_height="45dp">
 
-        <EditText
-                android:id="@+id/etInputPsd"
+            <TextView
+                android:id="@+id/phoneHead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_gray_circle_rectage"
+                android:paddingLeft="10dp"
+                android:paddingTop="2dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="2dp"
+                android:text="+86"
+                android:textSize="@dimen/text_small_size" />
+
+            <EditText
+                android:id="@+id/etInputPhone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"
                 android:layout_centerVertical="true"
-                android:hint="@string/inputPsd"
-                android:inputType="textPassword"
-                android:textColorHint="@color/text_hint"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@id/phoneHead"
+                android:layout_toRightOf="@id/phoneHead"
+                android:background="@null"
+                android:hint="@string/inputPhone"
+                android:inputType="phone"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size"
-        />
-        <View android:layout_width="match_parent"
-              android:layout_height="1dp"
-              android:layout_alignParentBottom="true"
-              android:background="@color/divider_line"
-        />
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
 
-    </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divider_line" />
 
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/etCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:hint="@string/inputVerifyCode"
+                android:textColor="@color/text_default"
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divider_line" />
+
+            <TextView
+                android:id="@+id/tvGetCode"
+                android:layout_width="75dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/shape_get_verify_code_bg"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="@string/getVerifyCode"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_big_small_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/inputPsdTips"
+                android:inputType="textPassword"
+                android:textColor="@color/text_default"
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divider_line" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cbProtocol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintLeft_toLeftOf="@id/rlInputParent"
+        app:layout_constraintTop_toBottomOf="@id/rlInputParent" />
 
     <TextView
-            android:id="@+id/tvRegister"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintTop_toBottomOf="@id/rlInputParent"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
-            android:layout_marginTop="40dp"
-            android:textColor="@color/white"
-            android:text="@string/register"
-            android:enabled="false"
-            android:gravity="center"
-            android:textSize="@dimen/text_btn_size"
-            android:background="@drawable/shape_button_default"
-    />
-    <include layout="@layout/view_third_login"/>
+        android:id="@+id/tvProtocolTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我已阅读并同意"
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintBottom_toBottomOf="@id/cbProtocol"
+        app:layout_constraintLeft_toRightOf="@id/cbProtocol"
+        app:layout_constraintTop_toTopOf="@id/cbProtocol" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/protocolContent"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintBottom_toBottomOf="@id/tvProtocolTitle"
+        app:layout_constraintLeft_toRightOf="@id/tvProtocolTitle"
+        app:layout_constraintTop_toTopOf="@id/tvProtocolTitle" />
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="18dp"
+        android:background="@drawable/shape_button_default"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/confirmRegister"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_btn_size"
+        app:layout_constraintTop_toBottomOf="@id/cbProtocol" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

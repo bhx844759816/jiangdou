@@ -6,20 +6,20 @@ import com.bhx.common.base.BaseActivity
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_publish.*
 
 /**
  * 发布兼职的界面
  * Created By bhx On 2019/8/8 0008 09:00
  */
-class PublishActivity : BaseActivity(), OnJobPublishCallBack {
+class JobPublishActivity : BaseActivity(), OnJobPublishCallBack {
 
 
     private var mJobTypeFragment: JobTypeFragment? = null
     private var mJobMessageFragment: JobMessageFragment? = null
     private var mJobTimeFragment: JobTimeFragment? = null
     private var mJobContactsFragment: JobContactsFragment? = null
-
     private var mCurrentFragment: Fragment? = null
 
 
@@ -28,7 +28,7 @@ class PublishActivity : BaseActivity(), OnJobPublishCallBack {
 
     override fun initView() {
         super.initView()
-        ivBack.clickWithTrigger {
+        toolBar.setNavigationOnClickListener {
             onBackPressed()
         }
         showSelectJobTypeFragment()
@@ -53,7 +53,7 @@ class PublishActivity : BaseActivity(), OnJobPublishCallBack {
     }
 
     /**
-     * 展示
+     * 展示选择工作详情的界面
      */
     private fun showSelectJobMessageFragment() {
         val transaction = supportFragmentManager.beginTransaction()
@@ -89,7 +89,7 @@ class PublishActivity : BaseActivity(), OnJobPublishCallBack {
     }
 
     /**
-     * 展示时间选着界面
+     * 展示联系人界面
      */
     private fun showSelectJobContactsFragment() {
         val transaction = supportFragmentManager.beginTransaction()
@@ -142,7 +142,7 @@ class PublishActivity : BaseActivity(), OnJobPublishCallBack {
     }
 
     override fun jobContactsNextStep() {
-        finish()
+        startActivity<JobPreviewActivity>()
     }
 
     override fun onBackPressed() {

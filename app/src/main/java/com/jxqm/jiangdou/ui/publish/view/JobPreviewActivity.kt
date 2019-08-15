@@ -6,6 +6,7 @@ import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import kotlinx.android.synthetic.main.activity_job_preview.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.bhx.common.utils.DensityUtil
 
 
 /**
@@ -19,13 +20,8 @@ class JobPreviewActivity : BaseActivity() {
     override fun initView() {
         super.initView()
         StatusBarUtil.setTranslucentForImageView(this, 0, toolbar)
-        val styledAttributes = theme.obtainStyledAttributes(
-            intArrayOf(android.R.attr.actionBarSize)
-        )
-        val mActionBarSize = styledAttributes.getDimension(0, 0f).toInt()
         val layoutParams = nestedScrollView.layoutParams as CoordinatorLayout.LayoutParams
-        layoutParams.bottomMargin = mActionBarSize + getStatusBarHeight()
-        styledAttributes.recycle()
+        layoutParams.bottomMargin = getStatusBarHeight() + DensityUtil.dip2px(this,50f)
         nestedScrollView.fullScroll(View.FOCUS_UP)
     }
 
@@ -33,5 +29,7 @@ class JobPreviewActivity : BaseActivity() {
         val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
         return resources.getDimensionPixelSize(resourceId)
     }
+
+
 
 }

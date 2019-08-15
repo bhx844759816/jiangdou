@@ -63,7 +63,7 @@ class ForgetPsdActivity : BaseDataActivity<ForgetPsdViewModel>() {
     private fun changeBtnState() {
         if (isPhoneInput && isPasswordInput && isCodeInput) {
             tvSubmit.isEnabled = true
-            tvSubmit.setBackgroundResource(R.drawable.shape_button_select)
+            tvSubmit.setBackgroundResource(R.drawable.icon_shadow_btn)
         } else {
             tvSubmit.isEnabled = false
             tvSubmit.setBackgroundResource(R.drawable.shape_button_default)

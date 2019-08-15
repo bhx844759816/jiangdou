@@ -26,7 +26,7 @@
                 android:name=".ui.login.view.VerifyCodeActivity"
                 android:windowSoftInputMode="stateVisible|adjustPan"/>
         <!--发布兼职模块-->
-        <activity android:name=".ui.publish.view.PublishActivity"/>
+        <activity android:name=".ui.publish.view.JobPublishActivity"/>
         <activity android:name=".ui.publish.view.JobPreviewActivity"/>
     </application>
 
