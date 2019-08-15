@@ -46,7 +46,7 @@ class LoginActivity : BaseDataActivity<LoginViewModel>() {
                     tvLogin.setBackgroundResource(R.drawable.shape_button_default)
                     tvLogin.isEnabled = false
                 } else {
-                    tvLogin.setBackgroundResource(R.drawable.icon_shadow_btn)
+                    tvLogin.setBackgroundResource(R.drawable.shape_button_select)
                     tvLogin.isEnabled = true
                 }
             }
