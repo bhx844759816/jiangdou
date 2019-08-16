@@ -138,9 +138,8 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
             }
             return@setOnKeyListener false
         }
-
         tvLogin.clickWithTrigger {
-            UserAgreementDialog.show(this)
+            ToastUtils.toastShort("登录成功")
         }
     }
 

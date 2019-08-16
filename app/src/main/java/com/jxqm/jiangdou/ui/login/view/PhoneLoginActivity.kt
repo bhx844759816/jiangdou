@@ -56,7 +56,7 @@ class PhoneLoginActivity : BaseDataActivity<PhoneLoginViewModel>() {
             startActivity<ForgetPsdActivity>()
         }
         tvRegister.clickWithTrigger {
-            finish()
+            startActivity<RegisterActivity>()
         }
         etInputPhone.addTextChangedListener {
             afterTextChanged {

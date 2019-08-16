@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.jxqm.jiangdou">
+    package="com.jxqm.jiangdou">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-            android:name="com.bhx.common.BaseApplication"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/Base.AppTheme">
+        android:name="com.bhx.common.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Base.AppTheme">
         <activity android:name=".ui.login.view.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <!--登录注册模块-->
-        <activity android:name=".ui.login.view.PhoneLoginActivity"/>
-        <activity android:name=".ui.login.view.ForgetPsdActivity"/>
-        <activity android:name=".ui.login.view.RegisterActivity"/>
+        <activity android:name=".ui.login.view.PhoneLoginActivity" />
+        <activity android:name=".ui.login.view.ForgetPsdActivity" />
+        <activity android:name=".ui.login.view.RegisterActivity" />
         <activity
-                android:name=".ui.login.view.VerifyCodeActivity"
-                android:windowSoftInputMode="stateVisible|adjustPan"/>
+            android:name=".ui.login.view.VerifyCodeActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <!--发布兼职模块-->
-        <activity android:name=".ui.publish.view.JobPublishActivity"/>
-        <activity android:name=".ui.publish.view.JobPreviewActivity"/>
+        <activity android:name=".ui.publish.view.JobPublishActivity" />
+        <activity android:name=".ui.publish.view.JobPreviewActivity" />
+        <activity android:name=".ui.city.SelectCity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

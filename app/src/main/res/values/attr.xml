@@ -3,4 +3,18 @@
     <declare-styleable name="MultipleRadioGroup">
         <attr name="isSupportMultiple" format="boolean" />
     </declare-styleable>
+
+
+    <declare-styleable name="SideIndexBar">
+        <attr name="cpIndexBarTextSize" format="dimension" />
+        <attr name="cpIndexBarNormalTextColor" format="color" />
+        <attr name="cpIndexBarSelectedTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="GridRadioGroup">
+        <attr name="numColumns" format="integer" />
+        <attr name="horizontalSpacing" format="dimension" />
+        <attr name="verticalSpacing" format="dimension" />
+    </declare-styleable>
+
 </resources>
