@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/tvCompanyLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/shape_circle_gradually_change"
+            android:gravity="center"
+            android:text="匠"
+            android:textColor="@color/white"
+            android:textSize="@dimen/cp_index_bar_width"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:text="河南匠小豆品牌管理有限公司"
+            android:textColor="@color/text_default"
+            android:textSize="@dimen/text_btn_size"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/tvCompanyLogo"
+            app:layout_constraintTop_toTopOf="@id/tvCompanyLogo" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="@id/tvCompanyName"
+            app:layout_constraintTop_toBottomOf="@id/tvCompanyName">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_list_item_bg"
+                android:padding="5dp"
+                android:text="100-500人"
+                android:textColor="@color/text_light_color"
+                android:textSize="@dimen/text_small_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/shape_list_item_bg"
+                android:padding="5dp"
+                android:text="互联网"
+                android:textColor="@color/text_light_color"
+                android:textSize="@dimen/text_small_size" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View style="@style/DividerLineTheme" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公司简介"
+            android:textStyle="bold"
+            android:textColor="@color/text_default"
+            android:textSize="@dimen/text_default_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:text="@string/test_company_details"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:text="展开>>"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_default_size" />
+    </LinearLayout>
+
+    <View style="@style/DividerLineTheme" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公司地址"
+            android:textStyle="bold"
+            android:textColor="@color/text_default"
+            android:textSize="@dimen/text_default_size" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="详细地址:郑州市 金水区 木华广场3号楼B座920室"
+            android:textColor="@color/text_default"
+            android:textSize="@dimen/text_default_size" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:textStyle="bold"
+        android:text="招聘职位"
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_default_size" />
+</LinearLayout>

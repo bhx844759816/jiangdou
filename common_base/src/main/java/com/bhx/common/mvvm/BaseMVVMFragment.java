@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
+
 import com.bhx.common.base.BaseLazyFragment;
 import com.bhx.common.event.LiveBus;
 import com.bhx.common.utils.ReflexUtils;
@@ -26,6 +27,7 @@ public abstract class BaseMVVMFragment<T extends BaseViewModel> extends BaseLazy
 
     @Override
     protected void initView(Bundle bundle) {
+        super.initView(bundle);
         mViewModel = VMProviders(this, ReflexUtils.getInstance(this, 0));
     }
 

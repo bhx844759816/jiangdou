@@ -41,5 +41,16 @@ class Constants {
         const val EVENT_KEY_JOB_MANAGER = "event_key_job_manager" // 兼职管理界面
 
 
+        const val EVENT_KEY_JOB_SEARCH = "event_key_job_search" // 工作搜索界面
+
+
+        const val EVENT_KEY_JOB_LIST = "event_key_job_list" // 搜职位的Fragment
+
+        const val EVENT_KEY_COMPANY_LIST = "event_key_company_list"//搜公司得Fragment
+
+
+        const val EVENT_KEY_COMPANY_DETAILS = "event_key_company_details"//公司详情界面
+
+
     }
 }

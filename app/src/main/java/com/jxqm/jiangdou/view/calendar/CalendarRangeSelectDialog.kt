@@ -23,7 +23,7 @@ class CalendarRangeSelectDialog : BaseDialogFragment() {
         super.initView(view)
         calendarView.setRange(
             calendarView.curYear, calendarView.curMonth, calendarView.curDay,
-            2020, 12, 30
+            calendarView.curYear + 2, 12, 30
         )
     }
 

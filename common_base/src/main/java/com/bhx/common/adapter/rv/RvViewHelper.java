@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.bhx.common.adapter.rv.listener.OnLoadMoreListener;
 
 import java.util.List;
@@ -84,7 +85,7 @@ public class RvViewHelper<T> {
                         int lastItemPosition = manager.findLastVisibleItemPosition();
                         int itemCount = manager.getItemCount();
                         // 判断是否滑动到了最后一个item，并且是向上滑动 且当前加载已完成
-                        if (lastItemPosition == (itemCount - 1) && isSlidingUpward && !isOnLoadMore()) {
+                        if (lastItemPosition == (itemCount - 1) && isSlidingUpward && !isOnLoadMore() && getOnLoadMoreState() != LoadMoreAdapter.LOADING_END) {
                             //加载更多
                             if (mLoadMoreListener != null) {
                                 setOnLoadMoreState(LoadMoreAdapter.LOADING);
@@ -98,7 +99,7 @@ public class RvViewHelper<T> {
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    isSlidingUpward = dy>0;
+                    isSlidingUpward = dy > 0;
 //                    if (dy > dx && dy > 0) {
 //                        isSlidingUpward = true;
 //                    } else {
@@ -155,6 +156,14 @@ public class RvViewHelper<T> {
             adapter.setLoadState(state);
 
         }
+    }
+
+    public int getOnLoadMoreState() {
+        if (isSupportPaging) {
+            LoadMoreAdapter adapter = (LoadMoreAdapter) mMultiItemTypeAdapter;
+            return adapter.getLoadState();
+        }
+        throw new RuntimeException("isSupportPaging is false not support loadMore");
     }
 
     /**

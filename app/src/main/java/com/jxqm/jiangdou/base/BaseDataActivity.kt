@@ -10,21 +10,4 @@ import kotlinx.android.synthetic.main.view_toolbar.*
  * 公共类
  * Created By bhx On 2019/8/6 0006 09:38
  */
-abstract class BaseDataActivity<T : BaseViewModel<*>> : BaseMVVMActivity<T>() {
-    override fun initView() {
-        super.initView()
-        toolBar.setNavigationOnClickListener {
-            onBack()
-        }
-    }
-
-    fun onBack() {
-        finish()
-    }
-
-    fun setTitle(title: String) {
-        tvTitle.text = title
-    }
-
-
-}
+abstract class BaseDataActivity<T : BaseViewModel<*>> : BaseMVVMActivity<T>()

@@ -10,7 +10,6 @@ import com.haibin.calendarview.RangeMonthView;
  * 范围选择月视图
  * Created by huanghaibin on 2018/9/13.
  */
-
 public class CustomRangeMonthView extends RangeMonthView {
 
     private int mRadius;

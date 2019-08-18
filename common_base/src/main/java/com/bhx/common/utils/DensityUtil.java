@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.util.DisplayMetrics;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -90,6 +91,9 @@ public class DensityUtil {
         return result;
     }
 
+    public static int getScreenHeight(Context context){
+        return   context.getResources().getDisplayMetrics().heightPixels;
+    }
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */

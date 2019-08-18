@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.bhx.common.R;
 import com.bhx.common.adapter.rv.base.ItemViewType;
 import com.bhx.common.adapter.rv.holder.ViewHolder;
@@ -79,6 +80,10 @@ public class LoadMoreAdapter<T> extends MultiItemTypeAdapter<T> {
     void setLoadState(int state) {
         this.loadState = state;
         notifyItemChanged(mDatas.size());
+    }
+
+    int getLoadState() {
+        return loadState;
     }
 
     public boolean isOnLoadMore() {

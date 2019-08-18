@@ -49,4 +49,7 @@
     <string name="contactsTips">默认使用匠小豆报名，同步到邮箱</string>
     <string name="jobPublishTips">小豆提示：凡收取费用的或工作内容不符的兼职，请你提高警惕并第一时间向我们举报。</string>
     <string name="protocolContent">《用户协议及隐私政策 》</string>
+    <string name="searchHistory">搜索历史</string>
+    <string name="searchHot">热门搜索</string>
+    <string name="test_company_details">ViewPager像ListView 等控件一样，必须要对ViewPager设置PagerAdapter来完成页面数据的绑定，这个PagerAdapter是一个适配器基类，同样有ViewPager中承载Fragment页的适配器FragmentStatePagerAdapter 以及 FragmentPagerAdapter,实现一个最基本的PagerAdapter，需要实现以下4个方法,ViewPager加第三方库实现威信，或者豆瓣的主界面</string>
 </resources>

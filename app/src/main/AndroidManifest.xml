@@ -27,6 +27,12 @@
         <activity android:name=".ui.publish.view.JobPublishActivity" />
         <activity android:name=".ui.publish.view.JobPreviewActivity" />
         <activity android:name=".ui.city.SelectCity">
+
+        </activity>
+        <activity android:name=".ui.job.view.JobSearchActivity">
+
+        </activity>
+        <activity android:name=".ui.job.view.JobCompanyListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -34,6 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.job.view.CompanyDetailsActivity"/>
     </application>
 
 </manifest>

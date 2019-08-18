@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id="@+id/tvCompanyLogo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/shape_circle_gradually_change"
+        android:gravity="center"
+        android:text="匠"
+        android:textColor="@color/white"
+        android:textSize="@dimen/cp_index_bar_width"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCompanyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:text="河南匠小豆品牌管理有限公司"
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_btn_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/tvCompanyLogo"
+        app:layout_constraintTop_toTopOf="@id/tvCompanyLogo" />
+
+    <LinearLayout
+        android:id="@+id/llJobMessageParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="@id/tvCompanyName"
+        app:layout_constraintTop_toBottomOf="@id/tvCompanyName">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="金水 | 高新区"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="录用"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="2人"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_small_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="@id/llJobMessageParent"
+        app:layout_constraintTop_toBottomOf="@id/llJobMessageParent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_list_item_bg"
+            android:padding="5dp"
+            android:text="100-500人"
+            android:textColor="@color/text_light_color"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/shape_list_item_bg"
+            android:padding="5dp"
+            android:text="互联网"
+            android:textColor="@color/text_light_color"
+            android:textSize="@dimen/text_small_size" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
