@@ -22,6 +22,7 @@ version.kotlin_reflect = "1.3.41"
 version.cardView = "1.0.0"
 version.material = "1.0.0-rc01"
 
+
 //第三方共用库版本
 version.rxJava = "2.1.7"
 version.rxAndroid = "2.0.1"
@@ -33,7 +34,7 @@ version.permission = "0.9.5@aar"
 version.logger = "2.2.0"
 version.lifecycle = "1.1.1"
 version.calendarview = "3.6.6"
-version.wheelView = "4.0.9"
+version.pickerView = "4.1.8"
 version.statusBarUtil = "1.4.0"
 
 deps.versions = version
@@ -79,6 +80,8 @@ deps.multidex = "com.android.support:multidex:$version.multidex"
 //日历
 deps.calendarview = "com.haibin:calendarview:$version.calendarview"
 //滚轮View
-deps.wheelview = "com.contrarywind:wheelview:$version.wheelView"
-//
+deps.pickerView = "com.contrarywind:Android-PickerView:$version.pickerView"
+//状态栏
 deps.statusBarUtil = "com.jaeger.statusbarutil:library:$version.statusBarUtil"
+//权限
+deps.permission = "com.tbruyelle.rxpermissions2:rxpermissions:$version.permission"

@@ -1,6 +1,7 @@
 package com.bhx.common.utils;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.util.Log;
 import okhttp3.OkHttpClient;
 
@@ -283,7 +284,7 @@ public class FileUtils {
             urlcon.setRequestProperty("Content-Length", "0");
             urlcon.setRequestProperty("Connection", "close");
             urlcon.connect();
-            fileLength =  urlcon.getContentLength();
+            fileLength = urlcon.getContentLength();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -343,5 +344,28 @@ public class FileUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 通过Assets加载Json文件
+     *
+     * @param context
+     * @param fileName
+     * @return
+     */
+    public static String getJsonFromAssets(Context context, String fileName) {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            AssetManager assetManager = context.getAssets();
+            BufferedReader bf = new BufferedReader(new InputStreamReader(
+                    assetManager.open(fileName)));
+            String line;
+            while ((line = bf.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
     }
 }

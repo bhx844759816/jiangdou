@@ -1,7 +1,309 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/screen"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_title_size" />
+
+        <ImageView
+            android:id="@+id/ivCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/icon_cancel" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="性别要求"
+                android:textColor="@color/text_default"
+                android:textSize="@dimen/text_title_size" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbNoSex"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="11dp"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="不限"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_default_size" />
+
+                <RadioButton
+                    android:id="@+id/rbBoy"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="11dp"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/boy"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_default_size" />
+
+                <RadioButton
+                    android:id="@+id/rbGirl"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="11dp"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/girl"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_default_size" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="上班时段  (可多选)"
+                android:textColor="@color/text_default"
+                android:textSize="@dimen/text_title_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <CheckBox
+                    android:id="@+id/rbNoLimitTime"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="11dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="不限"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_default_size" />
+
+                <CheckBox
+                    android:id="@+id/rbLimitMorning"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="11dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="上午"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_default_size" />
+
+                <CheckBox
+                    android:id="@+id/rbLimitAfternoon"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="11dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="下午"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_default_size" />
+
+                <CheckBox
+                    android:id="@+id/rbLimitNight"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="11dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="晚上"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_default_size" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="开始工作时间"
+                android:textColor="@color/text_default"
+                android:textSize="@dimen/text_title_size" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:id="@+id/rgJobTimeParent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbNoLimitJobTime"
+                        android:layout_width="100dp"
+                        android:layout_height="36dp"
+                        android:layout_marginRight="11dp"
+                        android:background="@drawable/select_screen_item_bg"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="不限"
+                        android:textColor="@color/select_publish_job_item_textcolor"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <RadioButton
+                        android:id="@+id/rbLimitJobTime"
+                        android:layout_width="100dp"
+                        android:layout_height="36dp"
+                        android:layout_marginRight="11dp"
+                        android:background="@drawable/select_screen_item_bg"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="指定"
+                        android:textColor="@color/select_publish_job_item_textcolor"
+                        android:textSize="@dimen/text_default_size" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/rgJobTimeParent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:text="2019年8月22日"
+                    android:textColor="@color/text_hint"
+                    android:textSize="@dimen/text_default_size" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/text_hint"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/shape_circle"
+                        android:gravity="center"
+                        android:text="@string/leftArrow"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="2019年8月"
+
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/shape_circle"
+                        android:gravity="center"
+                        android:text="@string/rightArrow"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+                </LinearLayout>
+
+                <com.haibin.calendarview.CalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:current_day_text_color="#fff"
+
+                    app:current_month_text_color="#333333"
+                    app:month_view="com.jxqm.jiangdou.view.calendar.SingleMonthView"
+                    app:month_view_show_mode="mode_only_current"
+                    app:other_month_text_color="#e1e1e1"
+                    app:scheme_text_color="#128c4b"
+                    app:scheme_theme_color="#128c4b"
+                    app:select_mode="single_mode"
+                    app:selected_text_color="#fff"
+                    app:selected_theme_color="@color/colorAccent"
+                    app:week_bar_view="com.jxqm.jiangdou.view.calendar.SingleWeekBar" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.8"
+            android:background="@drawable/shape_publish_job_item_default"
+            android:gravity="center"
+            android:text="重置"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_default_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/shape_publish_job_item_checked"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_default_size" />
+    </LinearLayout>
 </LinearLayout>

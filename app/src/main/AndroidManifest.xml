@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jxqm.jiangdou">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name="com.bhx.common.BaseApplication"
@@ -33,6 +35,13 @@
 
         </activity>
         <activity android:name=".ui.job.view.JobCompanyListActivity">
+
+        </activity>
+        <activity android:name=".ui.job.view.CompanyDetailsActivity"/>
+        <activity android:name=".ui.job.view.JobScreenActivity">
+
+        </activity>
+        <activity android:name=".ui.user.view.MyResumeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -40,7 +49,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.job.view.CompanyDetailsActivity"/>
+
+        <!-- 拍照安装Apk所需要的provider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.jxqm.jiangdou.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public"/>
+        </provider>
+
     </application>
 
 </manifest>

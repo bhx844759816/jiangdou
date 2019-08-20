@@ -52,5 +52,8 @@ class Constants {
         const val EVENT_KEY_COMPANY_DETAILS = "event_key_company_details"//公司详情界面
 
 
+        const val EVENT_KEY_MY_RESUME = "event_key_my_resume"//公司详情界面
+
+
     }
 }

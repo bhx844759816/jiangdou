@@ -44,8 +44,10 @@ dependencies {
     implementation deps.supports.material
     implementation deps.multidex
     implementation deps.calendarview
-    implementation deps.wheelview
+    implementation deps.pickerView
+    implementation deps.permission
     implementation project(':common_base')
+    implementation project(':common_photo')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

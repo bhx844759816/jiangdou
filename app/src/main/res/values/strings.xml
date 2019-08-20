@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">匠豆</string>
+    <string name="app_name">test</string>
     <string name="accountLogin">账号密码登录</string>
     <string name="phoneLogin">手机快捷登录</string>
     <string name="inputPhone">请输入手机号</string>
@@ -13,6 +13,7 @@
     <string name="login">登录</string>1
     <string name="register">注册</string>
     <string name="confirmRegister">确认注册</string>
+    <string name="confirm">确定</string>
     <string name="forgetPsd">忘记密码</string>
     <string name="thirdLogin">第三方登录</string>
     <string name="userAgreementContent">《用户协议及隐私政策》</string>
@@ -52,4 +53,13 @@
     <string name="searchHistory">搜索历史</string>
     <string name="searchHot">热门搜索</string>
     <string name="test_company_details">ViewPager像ListView 等控件一样，必须要对ViewPager设置PagerAdapter来完成页面数据的绑定，这个PagerAdapter是一个适配器基类，同样有ViewPager中承载Fragment页的适配器FragmentStatePagerAdapter 以及 FragmentPagerAdapter,实现一个最基本的PagerAdapter，需要实现以下4个方法,ViewPager加第三方库实现威信，或者豆瓣的主界面</string>
+    <string name="screen">筛选</string>
+    <string name="leftArrow"><![CDATA[<]]></string>
+    <string name="rightArrow"><![CDATA[>]]></string>
+    <string name="cancel">取消</string>
+    <string name="myResume">我的简历</string>
+    <string name="save">保存</string>
+    <string name="userName">姓名</string>
+    <string name="userSex">性别</string>
+    <string name="pleaseSelectComplainType">请选择投诉类型</string>
 </resources>
