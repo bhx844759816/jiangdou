@@ -22,4 +22,5 @@
     <style name="popup_animation" >
         <item name="android:windowEnterAnimation">@anim/pop_in</item>
     </style>
+
 </resources>

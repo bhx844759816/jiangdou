@@ -42,6 +42,5 @@ class JobCompanyListActivity : BaseActivity() {
         override fun getPageTitle(position: Int): CharSequence? {
             return mTitles[position]
         }
-
     }
 }
