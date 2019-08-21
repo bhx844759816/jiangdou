@@ -54,6 +54,12 @@ class Constants {
 
         const val EVENT_KEY_MY_RESUME = "event_key_my_resume"//公司详情界面
 
+        const val EVENT_KEY_MAIN_HOME = "event_key_main_home"//首页界面
+
+        const val EVENT_KEY_MAIN_WORK = "event_key_main_work"//工作台界面
+
+        const val EVENT_KEY_MAIN_MY = "event_key_main_my"//我的界面
+
 
     }
 }

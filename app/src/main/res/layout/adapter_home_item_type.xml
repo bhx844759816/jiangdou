@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_marginTop="15dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:text="职位列表"
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_default_size" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:drawableRight="@drawable/icon_arrow_right"
+        android:drawablePadding="5dp"
+        android:text="更多"
+        android:textColorHint="@color/text_hint"
+        android:textSize="@dimen/text_small_size" />
+
+    <View
+        style="@style/DividerLineTheme"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

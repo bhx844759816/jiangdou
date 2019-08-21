@@ -347,6 +347,7 @@ public class MatisseActivity extends AppCompatActivity implements
 
     @Override
     public void onUpdate() {
+        // notify bottom toolbar that check state changed.
         updateBottomToolbar();
     }
 
