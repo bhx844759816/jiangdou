@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2019/8/17.
  */
-public abstract class BaseSwipRvFragment<T extends BaseViewModel>  extends BaseMVVMFragment<T> implements RvViewCreate, SwipeRefreshHelper.SwipeRefreshListener, OnLoadMoreListener {
+public abstract class BaseSwipeRvFragment<T extends BaseViewModel>  extends BaseMVVMFragment<T> implements RvViewCreate, SwipeRefreshHelper.SwipeRefreshListener, OnLoadMoreListener {
     public RvViewHelper rvViewHelper;
     @Override
     protected void initView(Bundle bundle) {

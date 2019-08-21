@@ -63,8 +63,7 @@ class MyBottomNavigationBar @JvmOverloads constructor(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             elevation = 0f
         }
-        setBottomNavigationItem(10, 26, 12)
-
+        setBottomNavigationItem(12, 24, 13)
     }
 
 
@@ -91,14 +90,14 @@ class MyBottomNavigationBar @JvmOverloads constructor(
 
                         //获取到Tab内的文字控件
                         val labelView =
-                            view.findViewById<View>(com.ashokvarma.bottomnavigation.R.id.fixed_bottom_navigation_title) as TextView
+                            view.findViewById<View>(R.id.fixed_bottom_navigation_title) as TextView
                         //计算文字的高度DP值并设置，setTextSize为设置文字正方形的对角线长度，所以：文字高度（总内容高度减去间距和图片高度）*根号2即为对角线长度，此处用DP值，设置该值即可。
                         labelView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize.toFloat())
                         labelView.includeFontPadding = false
                         labelView.setPadding(0, 0, 0, dpToPx(20 - textSize - space / 2))
                         //获取到Tab内的图像控件
                         val iconView =
-                            view.findViewById<View>(com.ashokvarma.bottomnavigation.R.id.fixed_bottom_navigation_icon) as ImageView
+                            view.findViewById<View>(R.id.fixed_bottom_navigation_icon) as ImageView
                         //设置图片参数，其中，MethodUtils.dip2px()：换算dp值
                         params = LayoutParams(dpToPx(imgLen), dpToPx(imgLen))
                         params.setMargins(0, 0, 0, space / 2)

@@ -4,24 +4,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.bhx.common.adapter.rv.BaseSwipRvFragment
+import com.bhx.common.adapter.rv.BaseSwipeRvFragment
 import com.bhx.common.adapter.rv.LoadMoreAdapter
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bhx.common.adapter.rv.listener.OnItemClickListener
-import com.bhx.common.mvvm.BaseMVVMFragment
-import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.job.adapter.CompanyListAdapter
 import com.jxqm.jiangdou.ui.job.vm.CompanyListViewModel
-import com.jxqm.jiangdou.ui.job.vm.JobListViewModel
 import com.jxqm.jiangdou.utils.startActivity
 
 /**
  * Created by Administrator on 2019/8/17.
  */
-class CompanyListFragment : BaseSwipRvFragment<CompanyListViewModel>() {
+class CompanyListFragment : BaseSwipeRvFragment<CompanyListViewModel>() {
     private val mData = arrayListOf("", "", "", "", "", "", "", "", "", "")
     override fun createRecycleViewAdapter(): MultiItemTypeAdapter<*> = CompanyListAdapter(mContext)
 

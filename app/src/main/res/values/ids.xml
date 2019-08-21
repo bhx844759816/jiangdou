@@ -7,4 +7,6 @@
     <item type="id" name="radioGroup_item_05"></item>
     <item type="id" name="radioGroup_item_06"></item>
     <item type="id" name="radioGroup_item_07"></item>
+
+    <item name="id_real_item_view" type="id" />
 </resources>

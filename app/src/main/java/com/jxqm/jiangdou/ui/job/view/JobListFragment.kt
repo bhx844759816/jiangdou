@@ -3,15 +3,12 @@ package com.jxqm.jiangdou.ui.job.view
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.widget.CompoundButton
-import android.widget.RadioGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bhx.common.adapter.rv.BaseSwipRvFragment
+import com.bhx.common.adapter.rv.BaseSwipeRvFragment
 import com.bhx.common.adapter.rv.LoadMoreAdapter
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bhx.common.adapter.rv.listener.OnItemClickListener
-import com.bhx.common.mvvm.BaseMVVMFragment
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.job.adapter.JobListAdapter
@@ -24,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_job_list.*
 /**
  * Created by Administrator on 2019/8/17.
  */
-class JobListFragment : BaseSwipRvFragment<JobListViewModel>() {
+class JobListFragment : BaseSwipeRvFragment<JobListViewModel>() {
 
     private var mSortPopupWindow: JobListSortPopupWindow? = null
     private val mData = arrayListOf("", "", "", "", "", "", "", "", "", "")

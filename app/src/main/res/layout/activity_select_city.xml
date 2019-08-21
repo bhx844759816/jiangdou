@@ -1,97 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
+        android:id="@+id/rlTop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         android:background="@color/white">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            android:minHeight="?actionBarSize"
-            app:navigationIcon="@drawable/icon_back"
-            app:title="">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/icon_back" />
 
-            <TextView
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="城市选择"
-                android:textColor="@color/text_default"
-                android:textSize="@dimen/text_btn_size" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="城市选择"
+            android:textColor="@color/text_default"
+            android:textSize="@dimen/text_title_size"
 
-
-        </androidx.appcompat.widget.Toolbar>
-
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider_line"/>
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_line" />
+    </RelativeLayout>
 
-        <EditText
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/rlTop"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_gray_circle_rectage"
-            android:hint="请输入城市拼音或首字母"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:textSize="@dimen/text_small_size"
-            app:layout_scrollFlags="scroll|enterAlways" />
-    </com.google.android.material.appbar.AppBarLayout>
+            app:elevation="0dp"
+            android:background="@color/white">
+            <LinearLayout
+                android:id="@+id/llSearch"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="11"
+                android:background="@drawable/shape_gray_circle_rectage"
+                app:layout_scrollFlags="scroll|enterAlways">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/icon_search" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="请输入城市的首字母"
+                    android:textColor="@color/text_default"
+                    android:textColorHint="@color/text_light_color"
+                    android:textSize="@dimen/text_big_small_size" />
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCityList"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:scrollbars="none"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCityList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
 
-        <!--右侧字母导航-->
-        <com.jxqm.jiangdou.ui.city.view.SideIndexBar
-            android:id="@+id/sideIndexBar"
-            android:layout_width="@dimen/cp_index_bar_width"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            app:cpIndexBarNormalTextColor="#999999"
-            app:cpIndexBarSelectedTextColor="#333333"
-            app:cpIndexBarTextSize="13sp" />
+            </androidx.recyclerview.widget.RecyclerView>
 
-        <include layout="@layout/view_city_empty" />
-    </RelativeLayout>
+            <!--右侧字母导航-->
+            <com.jxqm.jiangdou.ui.city.view.SideIndexBar
+                android:id="@+id/sideIndexBar"
+                android:layout_width="@dimen/cp_index_bar_width"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                app:cpIndexBarNormalTextColor="#999999"
+                app:cpIndexBarSelectedTextColor="#333333"
+                app:cpIndexBarTextSize="13sp" />
+
+            <include layout="@layout/view_city_empty" />
+        </RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <TextView
         android:id="@+id/tvOverlay"
         android:layout_width="100dp"
         android:layout_height="90dp"
-        android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:background="@drawable/cp_overlay_bg"
+        android:text="Is"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="I"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:visibility="gone" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

@@ -1,11 +1,15 @@
 package com.jxqm.jiangdou.ui.job.view
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bhx.common.adapter.rv.listener.OnItemClickListener
 import com.bhx.common.base.BaseActivity
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.ui.city.SelectCity
+import com.jxqm.jiangdou.ui.publish.view.JobPreviewActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_job_company_list.*
@@ -34,6 +38,7 @@ class JobCompanyListActivity : BaseActivity() {
         tvSearchJob.clickWithTrigger {
             startActivity<JobSearchActivity>()
         }
+
     }
 
     inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,6 +24,13 @@ inline fun <reified T : Activity> Context.startActivity() {
     startActivity(intent)
 }
 
+/**
+ * 扩展StartActivity
+ */
+inline fun <reified T : Activity> Fragment.startActivity() {
+    val intent = Intent(context, T::class.java)
+    startActivity(intent)
+}
 inline fun <reified T : Activity> Context.startActivity(bundle: Bundle) {
     val intent = Intent(this, T::class.java)
     intent.putExtras(bundle)

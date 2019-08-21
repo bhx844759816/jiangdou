@@ -9,8 +9,15 @@
         android:id="@+id/myViewPage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/myBottomNavigationBar"
+        app:layout_constraintBottom_toTopOf="@id/line"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/line"
+        style="@style/DividerLineTheme"
+        app:layout_constraintBottom_toTopOf="@id/myBottomNavigationBar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <com.jxqm.jiangdou.view.MyBottomNavigationBar
         android:id="@+id/myBottomNavigationBar"
