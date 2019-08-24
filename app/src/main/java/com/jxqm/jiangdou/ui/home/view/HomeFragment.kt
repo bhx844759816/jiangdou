@@ -3,7 +3,6 @@ package com.jxqm.jiangdou.ui.home.view
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.common.adapter.rv.BaseSwipeRvFragment
 import com.bhx.common.adapter.rv.LoadMoreAdapter
@@ -20,8 +19,7 @@ import com.jxqm.jiangdou.ui.city.SelectCity
 import com.jxqm.jiangdou.ui.home.adapter.HomeAdapter
 import com.jxqm.jiangdou.ui.home.vm.HomeViewModel
 import com.jxqm.jiangdou.ui.job.view.JobCompanyListActivity
-import com.jxqm.jiangdou.ui.job.view.JobSearchActivity
-import com.jxqm.jiangdou.ui.publish.view.JobPreviewActivity
+import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -50,7 +48,7 @@ class HomeFragment : BaseSwipeRvFragment<HomeViewModel>() {
         
         rvViewHelper.adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View?, holder: ViewHolder?, position: Int) {
-                context?.startActivity<JobPreviewActivity>()
+                context?.startActivity<JobDetailsActivity>()
             }
 
             override fun onItemLongClick(view: View?, holder: ViewHolder?, position: Int): Boolean {

@@ -77,7 +77,6 @@ public class SingleMonthView extends MonthView {
                             calendar.isCurrentMonth() ? mSchemeTextPaint : mOtherMonthTextPaint);
 
         } else {
-
             canvas.drawText(String.valueOf(calendar.getDay()),
                     cx,
                     baselineY,

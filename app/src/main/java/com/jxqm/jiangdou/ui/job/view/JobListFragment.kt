@@ -14,7 +14,7 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.job.adapter.JobListAdapter
 import com.jxqm.jiangdou.ui.job.vm.JobListViewModel
 import com.jxqm.jiangdou.ui.job.widget.JobListSortPopupWindow
-import com.jxqm.jiangdou.ui.publish.view.JobPreviewActivity
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_job_list.*
 
@@ -25,7 +25,6 @@ class JobListFragment : BaseSwipeRvFragment<JobListViewModel>() {
 
     private var mSortPopupWindow: JobListSortPopupWindow? = null
     private val mData = arrayListOf("", "", "", "", "", "", "", "", "", "")
-
 
     override fun createRecycleViewAdapter(): MultiItemTypeAdapter<*> = JobListAdapter(mContext)
 
@@ -52,8 +51,9 @@ class JobListFragment : BaseSwipeRvFragment<JobListViewModel>() {
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
         rgJobSortParent.check(R.id.rbSortDistance)
-//        rbSortWhole.setOnCheckedChangeListener { _, p1 -> showSortPopupWindow() }
-
+        rlScreenJob.clickWithTrigger {
+            startActivity<JobScreenActivity>()
+        }
         rgJobSortParent.setOnCheckedChangeListener { _, id ->
             when (id) {
                 R.id.rbSortWhole -> {
@@ -67,10 +67,9 @@ class JobListFragment : BaseSwipeRvFragment<JobListViewModel>() {
                 }
             }
         }
-
         rvViewHelper.adapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View?, holder: ViewHolder?, position: Int) {
-                context?.startActivity<JobPreviewActivity>()
+                context?.startActivity<JobDetailsActivity>()
             }
 
             override fun onItemLongClick(view: View?, holder: ViewHolder?, position: Int): Boolean {

@@ -46,7 +46,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_white_circle_horn_bg"
                 android:gravity="center_horizontal"
@@ -55,6 +55,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/icon_complain_charge_type"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
@@ -63,7 +65,7 @@
                     android:layout_marginTop="10dp"
                     android:text="收取费用"
                     android:textColor="@color/text_default"
-                    android:textSize="@dimen/text_big_size"
+                    android:textSize="@dimen/text_default_size"
 
                     />
 
@@ -74,13 +76,12 @@
                     android:gravity="center_horizontal"
                     android:text="企业变相收费,收取押金\n或服务费"
                     android:textColor="@color/text_hint"
-                    android:textSize="@dimen/text_default_size" />
+                    android:textSize="@dimen/text_small_size" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="15dp"
+                android:layout_height="150dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_white_circle_horn_bg"
                 android:gravity="center_horizontal"
@@ -89,6 +90,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/icon_complain_money_type"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
@@ -97,7 +100,7 @@
                     android:layout_marginTop="10dp"
                     android:text="工资拖欠"
                     android:textColor="@color/text_default"
-                    android:textSize="@dimen/text_big_size"
+                    android:textSize="@dimen/text_default_size"
 
                     />
 
@@ -108,7 +111,7 @@
                     android:gravity="center_horizontal"
                     android:text="企业不发工资或少发工资"
                     android:textColor="@color/text_hint"
-                    android:textSize="@dimen/text_default_size" />
+                    android:textSize="@dimen/text_small_size" />
             </LinearLayout>
         </LinearLayout>
 
@@ -120,7 +123,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_white_circle_horn_bg"
                 android:gravity="center_horizontal"
@@ -129,15 +132,17 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/icon_complain_timeout_type"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="收取费用"
+                    android:text="放鸽子"
                     android:textColor="@color/text_default"
-                    android:textSize="@dimen/text_big_size"
+                    android:textSize="@dimen/text_default_size"
 
                     />
 
@@ -146,15 +151,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:text="企业变相收费,收取押金\n或服务费"
+                    android:text="企业失约，没有安排上岗"
                     android:textColor="@color/text_hint"
-                    android:textSize="@dimen/text_default_size" />
+                    android:textSize="@dimen/text_small_size" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="15dp"
+                android:layout_height="150dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_white_circle_horn_bg"
                 android:gravity="center_horizontal"
@@ -163,15 +167,17 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/icon_complain_message_error_type"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="工资拖欠"
+                    android:text="信息虚假"
                     android:textColor="@color/text_default"
-                    android:textSize="@dimen/text_big_size"
+                    android:textSize="@dimen/text_default_size"
 
                     />
 
@@ -180,15 +186,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:text="企业不发工资或少发工资"
+                    android:text="职位相关内容与实际不符"
                     android:textColor="@color/text_hint"
-                    android:textSize="@dimen/text_default_size" />
+                    android:textSize="@dimen/text_small_size" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/shape_white_circle_horn_bg"
             android:gravity="center_horizontal"
@@ -197,6 +203,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/icon_complain_other_type"
+                android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal" />
 
             <TextView

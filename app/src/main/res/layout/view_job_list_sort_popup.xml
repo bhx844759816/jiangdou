@@ -12,10 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical">
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider_line" />
+        <View style="@style/DividerLineTheme" />
 
         <RadioButton
             android:id="@+id/rbSortWhole"
@@ -27,11 +24,7 @@
             android:textSize="@dimen/text_small_size"
             android:textColor="@color/select_job_list_sort_rule" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider_line" />
-
+        <View style="@style/DividerLineTheme" />
         <RadioButton
             android:id="@+id/rbSortMoney"
             android:layout_width="match_parent"
@@ -42,10 +35,7 @@
             android:textSize="@dimen/text_small_size"
             android:textColor="@color/select_job_list_sort_rule" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider_line" />
+        <View style="@style/DividerLineTheme" />
 
         <RadioButton
             android:id="@+id/rbSortJobPeoples"
@@ -56,7 +46,6 @@
             android:gravity="center"
             android:text="招人最多"
             android:textColor="@color/select_job_list_sort_rule" />
-
 
     </RadioGroup>
 </FrameLayout>

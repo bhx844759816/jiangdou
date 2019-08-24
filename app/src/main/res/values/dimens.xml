@@ -8,7 +8,7 @@
     <dimen name="text_big_size">20sp</dimen>
     <dimen name="text_title_size">19sp</dimen>
     <dimen name="actionBarHeight">55dp</dimen>
-    <dimen name="cp_index_bar_width">25dp</dimen>
+    <dimen name="cp_index_bar_width">21sp</dimen>
 
     <dimen tools:override="true" name="design_bottom_navigation_text_size">14sp</dimen>
     <dimen tools:override="true" name="design_bottom_navigation_active_text_size">14sp</dimen>

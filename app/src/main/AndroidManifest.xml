@@ -27,7 +27,7 @@
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <!--发布兼职模块-->
         <activity android:name=".ui.publish.view.JobPublishActivity" />
-        <activity android:name=".ui.publish.view.JobPreviewActivity" />
+        <activity android:name=".ui.job.view.JobDetailsActivity" />
         <activity android:name=".ui.city.SelectCity">
 
         </activity>

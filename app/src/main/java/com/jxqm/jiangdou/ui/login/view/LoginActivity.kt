@@ -1,7 +1,5 @@
 package com.jxqm.jiangdou.ui.login.view
 
-import android.text.Editable
-import android.text.TextWatcher
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
@@ -11,7 +9,6 @@ import com.jxqm.jiangdou.ui.login.vm.LoginViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import com.jxqm.jiangdou.ui.publish.view.JobPreviewActivity
 import com.jxqm.jiangdou.ui.publish.view.JobPublishActivity
 
 

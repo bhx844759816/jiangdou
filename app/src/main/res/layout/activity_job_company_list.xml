@@ -15,8 +15,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways">
-
+            app:layout_scrollFlags="scroll">
             <include layout="@layout/view_search_top" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
         <RelativeLayout
@@ -28,17 +27,18 @@
                 android:layout_height="45dp"
                 android:minHeight="45dp"
                 app:tabIndicatorColor="@color/colorAccent"
-                app:tabIndicatorHeight="4dp"
+                app:tabIndicatorHeight="3.5dp"
                 app:tabMode="scrollable"
                 app:tabBackground="@color/white"
                 app:tabIndicatorFullWidth="false"
-                app:tabPaddingStart="15dp"
-                app:tabSelectedTextColor="#4D4D4D"
-                app:tabTextColor="#A7A7A7" />
+                app:tabTextAppearance="@style/TabLayoutTextSize"
+                app:tabPaddingStart="12dp"
+                app:tabSelectedTextColor="#474747"
+                app:tabTextColor="#757575" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/divider_line" />
         </RelativeLayout>

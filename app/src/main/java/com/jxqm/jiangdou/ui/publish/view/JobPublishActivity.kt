@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.bhx.common.base.BaseActivity
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
-import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_publish.*
 
@@ -142,7 +142,7 @@ class JobPublishActivity : BaseActivity(), OnJobPublishCallBack {
     }
 
     override fun jobContactsNextStep() {
-        startActivity<JobPreviewActivity>()
+        startActivity<JobDetailsActivity>()
     }
 
     override fun onBackPressed() {

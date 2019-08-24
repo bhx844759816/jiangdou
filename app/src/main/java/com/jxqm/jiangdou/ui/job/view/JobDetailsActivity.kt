@@ -1,4 +1,4 @@
-package com.jxqm.jiangdou.ui.publish.view
+package com.jxqm.jiangdou.ui.job.view
 
 import android.view.View
 import com.bhx.common.base.BaseActivity
@@ -10,10 +10,10 @@ import com.bhx.common.utils.DensityUtil
 
 
 /**
- * 兼职预览界面
+ * 预览详情界面
  * Created By bhx On 2019/8/12 0012 10:56
  */
-class JobPreviewActivity : BaseActivity() {
+class JobDetailsActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_job_preview
 
 
@@ -21,7 +21,7 @@ class JobPreviewActivity : BaseActivity() {
         super.initView()
         StatusBarUtil.setTranslucentForImageView(this, 0, toolbar)
         val layoutParams = nestedScrollView.layoutParams as CoordinatorLayout.LayoutParams
-        layoutParams.bottomMargin = getStatusBarHeight() + DensityUtil.dip2px(this,50f)
+        layoutParams.bottomMargin = getStatusBarHeight() + DensityUtil.dip2px(this, 60f)
         nestedScrollView.fullScroll(View.FOCUS_UP)
     }
 
@@ -29,7 +29,6 @@ class JobPreviewActivity : BaseActivity() {
         val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
         return resources.getDimensionPixelSize(resourceId)
     }
-
 
 
 }
