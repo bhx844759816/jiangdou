@@ -45,6 +45,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/llComplainChargeType"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
@@ -80,7 +81,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llComplainMoneyType"
                 android:layout_width="0dp"
+                android:layout_marginLeft="12dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_white_circle_horn_bg"
@@ -122,6 +125,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/llComplainTimeOutType"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
@@ -157,8 +161,10 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llComplainFalseMessageType"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
+                android:layout_marginLeft="12dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_white_circle_horn_bg"
                 android:gravity="center_horizontal"
@@ -193,6 +199,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llComplainOtherType"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="15dp"

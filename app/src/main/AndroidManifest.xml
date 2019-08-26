@@ -28,16 +28,16 @@
         <!--发布兼职模块-->
         <activity android:name=".ui.publish.view.JobPublishActivity" />
         <activity android:name=".ui.job.view.JobDetailsActivity" />
-        <activity android:name=".ui.city.SelectCity">
-
-        </activity>
+        <activity android:name=".ui.city.SelectCity" />
+        <activity android:name=".ui.user.view.ComplainDetailsActivity" />
+        <activity android:name=".ui.user.view.UserComplainActivity" />
         <activity android:name=".ui.job.view.JobSearchActivity">
 
         </activity>
         <activity android:name=".ui.job.view.JobCompanyListActivity">
 
         </activity>
-        <activity android:name=".ui.job.view.CompanyDetailsActivity"/>
+        <activity android:name=".ui.job.view.CompanyDetailsActivity" />
         <activity android:name=".ui.job.view.JobScreenActivity">
 
         </activity>
@@ -62,7 +62,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths_public"/>
+                android:resource="@xml/file_paths_public" />
         </provider>
 
     </application>

@@ -13,9 +13,6 @@ android {
         versionName deps.versions.versionName
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        ndk {
-            abiFilters "armeabi-v7a"
-        }
     }
     buildTypes {
         release {

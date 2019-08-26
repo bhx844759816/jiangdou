@@ -28,6 +28,7 @@
             android:textSize="@dimen/text_title_size" />
 
         <LinearLayout
+            android:id="@+id/llComplainCompany"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"

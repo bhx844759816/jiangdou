@@ -37,42 +37,6 @@ class JobCompanyListActivity : BaseActivity() {
         tvSearchJob.clickWithTrigger {
             startActivity<JobSearchActivity>()
         }
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-//                val title =
-//                    ((tabLayout.getChildAt(0) as LinearLayout).getChildAt(tabLayout.selectedTabPosition) as LinearLayout).getChildAt(
-//                        1
-//                    ) as TextView
-//                title.textSize = resources.getDimension(R.dimen.text_small_size)
-//                title.setTextAppearance(this@JobCompanyListActivity, Typeface.NORMAL)
-                val title = tab?.customView
-                title?.let {
-                    if (it is TextView) {
-                        it.textSize = resources.getDimension(R.dimen.text_small_size)
-                        it.setTextAppearance(this@JobCompanyListActivity, R.style.TabLayoutTextSize)
-                    }
-                }
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                val title = tab?.customView
-                title?.let {
-                    if (it is TextView) {
-                        it.textSize = resources.getDimension(R.dimen.text_default_size)
-                        it.setTextAppearance(this@JobCompanyListActivity, R.style.TabLayoutTextStyle)
-                    }
-                }
-//                val title =
-//                    ((tabLayout.getChildAt(0) as LinearLayout).getChildAt(tabLayout.selectedTabPosition) as LinearLayout).getChildAt(
-//                        1
-//                    ) as TextView
-
-            }
-        })
     }
 
     inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {

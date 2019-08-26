@@ -44,6 +44,8 @@ public abstract class BaseLazyFragment extends Fragment {
         initPrepare();
         return rootView;
     }
+
+
     /**
      * 实例化View
      *

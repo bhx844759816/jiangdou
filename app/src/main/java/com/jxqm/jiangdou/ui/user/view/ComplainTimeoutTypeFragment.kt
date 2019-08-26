@@ -8,10 +8,8 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.utils.DensityUtil
-import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.ui.user.adapter.PhotoListAdapter
-import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.GridItemSpaceDecoration
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
@@ -24,24 +22,26 @@ import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_complain_charge_type.*
+import kotlinx.android.synthetic.main.fragment_complain_timeout_type.*
 import java.io.File
 
 /**
- * 收取费用投诉
- * Created By bhx On 2019/8/24 0024 17:39
+ * 放鸽子投诉
+ * Created By bhx On 2019/8/26 0026 10:14
  */
-class ComplainChargeTypeFragment : BaseLazyFragment() {
+class ComplainTimeoutTypeFragment : BaseLazyFragment() {
     private lateinit var mPhotoLisAdapter: PhotoListAdapter
     private val mPhotoList = mutableListOf<File>()
 
-    override fun getLayoutId(): Int = R.layout.fragment_complain_charge_type
+
+    override fun getLayoutId(): Int = R.layout.fragment_complain_timeout_type
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvPhotoList.layoutManager = GridLayoutManager(mContext, 4)
+        rvPhotoList.layoutManager =GridLayoutManager(mContext,4)
         mPhotoLisAdapter = PhotoListAdapter(mContext, mPhotoList)
+        mPhotoLisAdapter.setMaxSelectCount(8)
         rvPhotoList.addItemDecoration(GridItemSpaceDecoration(DensityUtil.dip2px(mContext, 20f)))
         rvPhotoList.adapter = mPhotoLisAdapter
         mPhotoLisAdapter.setAddCallBack {

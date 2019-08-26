@@ -19,13 +19,14 @@ class PhotoListAdapter(context: Context, fileList: List<File>) : RecyclerView.Ad
     private val mFileList = fileList
     private var mAddCallBack: (() -> Unit)? = null
     private var mDeleteCallBack: ((Int) -> Unit)? = null
+    private var maxSelectPhotoCounts = 9
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val view = mInflater.inflate(R.layout.adapter_photo_list, parent, false)
         return MyHolder(view)
     }
 
     override fun getItemCount(): Int {
-        if (mFileList.size < 9) {
+        if (mFileList.size < maxSelectPhotoCounts) {
             return mFileList.size + 1
         }
         return mFileList.size
@@ -65,4 +66,9 @@ class PhotoListAdapter(context: Context, fileList: List<File>) : RecyclerView.Ad
         val addView: ImageView = itemView.findViewById(R.id.ivAddPhoto)
         val deleteView: ImageView = itemView.findViewById(R.id.ivDeletePhoto)
     }
+
+    public fun setMaxSelectCount(count: Int) {
+        maxSelectPhotoCounts = count
+    }
+
 }

@@ -8,6 +8,9 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.CompanyDetailsModel
 import com.jxqm.jiangdou.ui.job.adapter.CompanyDetailsAdapter
 import com.jxqm.jiangdou.ui.job.vm.CompanyDetailsViewModel
+import com.jxqm.jiangdou.ui.user.view.UserComplainActivity
+import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_company_details.*
 
 /**
@@ -32,6 +35,10 @@ class CompanyDetailsActivity : BaseDataActivity<CompanyDetailsViewModel>() {
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerView.adapter = mAdapter
         mAdapter.setDataList(mData)
+
+        llComplainCompany.clickWithTrigger {
+            startActivity<UserComplainActivity>()
+        }
 
     }
 }
