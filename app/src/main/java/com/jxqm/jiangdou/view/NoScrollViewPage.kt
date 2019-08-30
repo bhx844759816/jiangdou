@@ -8,7 +8,6 @@ import androidx.viewpager.widget.ViewPager
 /**
  * Created by Administrator on 2019/8/20.
  */
-
 class NoScrollViewPage(context: Context, attributeSet: AttributeSet? = null) : ViewPager(context, attributeSet) {
     private var noScroll = true
 

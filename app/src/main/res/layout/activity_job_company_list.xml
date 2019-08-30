@@ -21,21 +21,32 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.google.android.material.tabs.TabLayout
+            <!--<com.google.android.material.tabs.TabLayout-->
+                <!--android:id="@+id/tabLayout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="45dp"-->
+                <!--android:minHeight="45dp"-->
+                <!--app:tabIndicatorColor="@color/colorAccent"-->
+                <!--app:tabIndicatorHeight="3.5dp"-->
+                <!--app:tabMode="scrollable"-->
+                <!--app:tabBackground="@color/white"-->
+                <!--app:tabIndicatorFullWidth="false"-->
+                <!--app:tabTextAppearance="@style/TabLayoutTextSize"-->
+                <!--app:tabPaddingStart="12dp"-->
+                <!--app:tabSelectedTextColor="#474747"-->
+                <!--app:tabTextColor="#757575" />-->
+            <com.jxqm.jiangdou.view.EnhanceTabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:minHeight="45dp"
-                app:tabIndicatorColor="@color/colorAccent"
-                app:tabIndicatorHeight="3.5dp"
-                app:tabMode="scrollable"
-                app:tabBackground="@color/white"
-                app:tabIndicatorFullWidth="false"
-                app:tabTextAppearance="@style/TabLayoutTextSize"
-                app:tabPaddingStart="12dp"
-                app:tabSelectedTextColor="#474747"
-                app:tabTextColor="#757575" />
-
+                android:layout_height="wrap_content"
+                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorWidth="30dp"
+                app:tabTextColor="#757575"
+                app:tab_Mode="mode_fixed"
+                app:tabSelectTextColor="@color/colorPrimary"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabTextSize="12sp"
+               />
 
             <View
                 android:layout_width="match_parent"

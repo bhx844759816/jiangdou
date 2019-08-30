@@ -29,14 +29,14 @@ class JobCompanyListActivity : BaseActivity() {
         mListFragment.add(CompanyListFragment())
         viewPager.offscreenPageLimit = 2
         viewPager.adapter = MyPageAdapter(supportFragmentManager)
-        tabLayout.setupWithViewPager(viewPager)
-
         tvCity.clickWithTrigger {
             startActivity<SelectCity>()
         }
         tvSearchJob.clickWithTrigger {
             startActivity<JobSearchActivity>()
         }
+        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
+        tabLayout.setupWithViewPager(viewPager)
     }
 
     inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
