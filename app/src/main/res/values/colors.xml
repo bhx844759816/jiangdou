@@ -7,6 +7,7 @@
     <color name="text_default">#373737</color>
     <color name="text_title">#474747</color>
     <color name="divider_line">#CDCDCD</color>
+    <color name="divider_vertical_line">#BFC4CB</color>
     <color name="code_line">#F1F1F1</color>
     <color name="text_hint">#9599a2</color>
     <color name="text_new_user_register">#A1A1A1</color>
@@ -23,6 +24,7 @@
     <color name="job_bottom_text_color">#515151</color>
     <color name="job_screen_date_bg">#F7F8FC</color>
     <color name="job_screen_text_color">#BDBDBD</color>
+    <color name="employe_item_refuse_bg">#E9E9E9</color>
     <color name="job_top_title_color">#616161</color>
     <color name="company_details_text_color">#828282</color>
 </resources>

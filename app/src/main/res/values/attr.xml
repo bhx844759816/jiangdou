@@ -16,6 +16,7 @@
         <attr name="horizontalSpacing" format="dimension" />
         <attr name="verticalSpacing" format="dimension" />
     </declare-styleable>
+
     <declare-styleable name="EnhanceTabLayout">
         <attr name="tab_Mode" format="enum">
             <enum name="mode_fixed" value="1"/>
@@ -27,5 +28,6 @@
         <attr name="tabIndicatorHeight" format="dimension"/>
         <attr name="tabIndicatorWidth" format="dimension"/>
         <attr name="tabTextSize" format="dimension"/>
+        <attr name="tabSelectTextSize" format="dimension"/>
     </declare-styleable>
 </resources>

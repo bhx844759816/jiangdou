@@ -35,6 +35,8 @@ class JobCompanyListActivity : BaseActivity() {
         tvSearchJob.clickWithTrigger {
             startActivity<JobSearchActivity>()
         }
+        tabLayout.addTab(mTitles[0])
+        tabLayout.addTab(mTitles[1])
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
         tabLayout.setupWithViewPager(viewPager)
     }

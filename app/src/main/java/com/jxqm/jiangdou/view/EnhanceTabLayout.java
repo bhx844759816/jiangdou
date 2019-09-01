@@ -35,6 +35,7 @@ public class EnhanceTabLayout extends FrameLayout {
     private int mIndicatorWidth;
     private int mTabMode;
     private int mTabTextSize;
+    private int mTabSelectTextSize;
 
     public EnhanceTabLayout(@NonNull Context context) {
         super(context);
@@ -65,6 +66,7 @@ public class EnhanceTabLayout extends FrameLayout {
         mIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabIndicatorHeight, 1);
         mIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabIndicatorWidth, 0);
         mTabTextSize = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabTextSize, 13);
+        mTabSelectTextSize = typedArray.getDimensionPixelSize(R.styleable.EnhanceTabLayout_tabSelectTextSize, 16);
         mTabMode = typedArray.getInt(R.styleable.EnhanceTabLayout_tab_Mode, 2);
         typedArray.recycle();
     }
@@ -75,6 +77,7 @@ public class EnhanceTabLayout extends FrameLayout {
         mCustomViewList = new ArrayList<>();
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_enhance_tablayout, this, true);
         mTabLayout = view.findViewById(R.id.enhance_tab_view);
+
         // 添加属性
         mTabLayout.setTabMode(mTabMode == 1 ? TabLayout.MODE_FIXED : TabLayout.MODE_SCROLLABLE);
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -87,15 +90,13 @@ public class EnhanceTabLayout extends FrameLayout {
                     if (view == null) {
                         return;
                     }
-                    TextView text = (TextView) view.findViewById(R.id.tab_item_text);
-                    View indicator = view.findViewById(R.id.tab_item_indicator);
+                    TextView text = view.findViewById(R.id.tab_item_text);
                     if (i == tab.getPosition()) { // 选中状态
                         text.setTextColor(mSelectTextColor);
-                        indicator.setBackgroundColor(mSelectIndicatorColor);
-                        indicator.setVisibility(View.VISIBLE);
+                        text.setTextSize(mTabSelectTextSize);
                     } else {// 未选中状态
                         text.setTextColor(mUnSelectTextColor);
-                        indicator.setVisibility(View.INVISIBLE);
+                        text.setTextSize(mTabTextSize);
                     }
                 }
 
@@ -177,14 +178,10 @@ public class EnhanceTabLayout extends FrameLayout {
                         return;
                     }
                     TextView text = (TextView) view.findViewById(R.id.tab_item_text);
-                    View indicator = view.findViewById(R.id.tab_item_indicator);
                     if (i == tab.getPosition()) { // 选中状态
                         text.setTextColor(mTabLayout.mSelectTextColor);
-                        indicator.setBackgroundColor(mTabLayout.mSelectIndicatorColor);
-                        indicator.setVisibility(View.VISIBLE);
                     } else {// 未选中状态
                         text.setTextColor(mTabLayout.mUnSelectTextColor);
-                        indicator.setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -211,14 +208,7 @@ public class EnhanceTabLayout extends FrameLayout {
      */
     public static View getTabView(Context context, String text, int indicatorWidth, int indicatorHeight, int textSize) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_enhance_tab_item, null);
-        TextView tabText = (TextView) view.findViewById(R.id.tab_item_text);
-        if (indicatorWidth > 0) {
-            View indicator = view.findViewById(R.id.tab_item_indicator);
-            ViewGroup.LayoutParams layoutParams = indicator.getLayoutParams();
-            layoutParams.width = indicatorWidth;
-            layoutParams.height = indicatorHeight;
-            indicator.setLayoutParams(layoutParams);
-        }
+        TextView tabText = view.findViewById(R.id.tab_item_text);
         tabText.setTextSize(textSize);
         tabText.setText(text);
         return view;

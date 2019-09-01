@@ -38,14 +38,14 @@
             <com.jxqm.jiangdou.view.EnhanceTabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
+                android:minHeight="45dp"
                 app:tabIndicatorHeight="2dp"
                 app:tabIndicatorWidth="30dp"
                 app:tabTextColor="#757575"
-                app:tab_Mode="mode_fixed"
+                app:tab_Mode="mode_scrollable"
                 app:tabSelectTextColor="@color/colorPrimary"
                 app:tabIndicatorColor="@color/colorPrimary"
-                app:tabTextSize="12sp"
                />
 
             <View

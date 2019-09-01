@@ -1,10 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="work"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center_vertical">
+
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="11dp"
+              android:layout_marginRight="10dp"
+              android:background="@drawable/icon_scan_zxing"
+              />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="9dp"
+                android:layout_weight="11"
+                android:background="@drawable/shape_gray_circle_rectage">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/icon_search"/>
+
+                <TextView
+                    android:id="@+id/tvSearchJob"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:text="请输入职位和公司"
+                    android:textColor="@color/text_light_color"
+                    android:textSize="@dimen/text_small_size"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:text="雇员"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/icon_down_arrow"
+                android:textColor="@color/job_top_title_color"
+                android:textSize="@dimen/text_default_size"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_line"/>
+
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/flFragment"
         />
-</FrameLayout>
+</LinearLayout>

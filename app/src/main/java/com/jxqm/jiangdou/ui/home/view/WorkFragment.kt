@@ -1,8 +1,11 @@
 package com.jxqm.jiangdou.ui.home.view
 
+import android.os.Bundle
+import android.view.View
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ui.employee.view.EmployeeListFragment
 import com.jxqm.jiangdou.ui.home.vm.WorkViewModel
 
 /**
@@ -13,4 +16,12 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_work
 
     override fun getEventKey(): Any = Constants.EVENT_KEY_MAIN_WORK
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.add(R.id.flFragment,EmployeeListFragment())
+        transaction.commit()
+    }
 }

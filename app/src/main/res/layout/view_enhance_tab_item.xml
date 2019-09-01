@@ -12,12 +12,4 @@
         android:text="首页"
         android:textColor="#333333"
         android:textSize="13sp" />
-
-    <View
-        android:id="@+id/tab_item_indicator"
-        android:layout_width="30dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorAccent"
-        android:visibility="invisible" />
 </LinearLayout>
