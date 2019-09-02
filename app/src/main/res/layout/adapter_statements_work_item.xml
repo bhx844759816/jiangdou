@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivEmployeeImg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/icon_employee_work_img"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvEmployeeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="18dp"
+        android:text="招聘兼职UI设计师"
+        android:textColor="@color/text_title"
+        android:textSize="@dimen/text_default_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/ivEmployeeImg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="@id/tvEmployeeTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvEmployeeTitle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="郑州"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_small_size" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/divider_vertical_line" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="金水区"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="录用"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="2人"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_small_size" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvJobMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="16dp"
+        android:text="+1000币"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_btn_size"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvJobMoneyDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+1000"
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintLeft_toLeftOf="@id/tvJobMoney"
+        app:layout_constraintTop_toBottomOf="@id/tvJobMoney" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/app_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivEmployeeImg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="待处理"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:id="@+id/tvAccept"
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="接受"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:id="@+id/tvRefuse"
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/tvAccept"
+            android:background="@color/employe_item_refuse_bg"
+            android:gravity="center"
+            android:text="拒绝"
+            android:textColor="@color/text_default"
+            android:textSize="@dimen/text_small_size" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvRefuseTips"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="您已拒绝结算，请等待客服与您联系"
+        android:textColor="@color/text_hint"
+        android:textSize="@dimen/text_big_small_size"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+</androidx.constraintlayout.widget.ConstraintLayout>
