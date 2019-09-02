@@ -10,9 +10,11 @@ import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.model.EmployWorkItem
 import com.jxqm.jiangdou.model.EmployeeWorkBaseItem
 import com.jxqm.jiangdou.model.ReportDutyWorkItem
+import com.jxqm.jiangdou.model.StatementsWorkItem
 import com.jxqm.jiangdou.ui.employee.adapter.EmployWorkListAdapter
 import com.jxqm.jiangdou.ui.employee.adapter.ReportDutyWorkListAdapter
 import com.jxqm.jiangdou.ui.employee.adapter.SignUpWorkListAdapter
+import com.jxqm.jiangdou.ui.employee.adapter.StatementsWorkAdapter
 import kotlinx.android.synthetic.main.fragment_employee_work_list.*
 
 /**
@@ -23,9 +25,11 @@ class EmployeeWorkListFragment : BaseLazyFragment() {
     private var mItemList = arrayListOf<EmployeeWorkBaseItem>()
     private var mEmployWorkItemList = arrayListOf<EmployWorkItem>()
     private var mReportDutyWorkItemList = arrayListOf<ReportDutyWorkItem>()
+    private var mStatementsWorkItemList = arrayListOf<StatementsWorkItem>()
     private lateinit var mSignUpAdapter: SignUpWorkListAdapter
     private lateinit var mEmployWorkAdapter: EmployWorkListAdapter
     private lateinit var mReportDutyWorkAdapter: ReportDutyWorkListAdapter
+    private lateinit var mStatementsWorkAdapter: StatementsWorkAdapter
     private var mType = 0
 
     override fun getLayoutId(): Int = R.layout.fragment_employee_work_list
@@ -50,7 +54,9 @@ class EmployeeWorkListFragment : BaseLazyFragment() {
                 recyclerView.adapter = mReportDutyWorkAdapter
             }
             3 -> {//已结算
-
+                mStatementsWorkAdapter = StatementsWorkAdapter(mContext)
+                mStatementsWorkAdapter.setDataList(mStatementsWorkItemList)
+                recyclerView.adapter = mStatementsWorkAdapter
             }
         }
 
@@ -74,6 +80,11 @@ class EmployeeWorkListFragment : BaseLazyFragment() {
         mReportDutyWorkItemList.add(ReportDutyWorkItem(0))
         mReportDutyWorkItemList.add(ReportDutyWorkItem(1))
         mReportDutyWorkItemList.add(ReportDutyWorkItem(2))
+
+        mStatementsWorkItemList.add(StatementsWorkItem(0,true, isAccept = false))
+        mStatementsWorkItemList.add(StatementsWorkItem(0,false, isAccept = false))
+        mStatementsWorkItemList.add(StatementsWorkItem(0,false, isAccept = true))
+
     }
 
     companion object {

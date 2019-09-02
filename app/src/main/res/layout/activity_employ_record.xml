@@ -13,7 +13,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:gravity="center_vertical">
 
             <ImageView
@@ -22,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/icon_scan_zxing" />
+                android:background="@drawable/icon_back" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -46,21 +45,11 @@
                     android:layout_marginLeft="5dp"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:text="请输入职位和公司"
+                    android:text="搜索用户"
                     android:textColor="@color/text_light_color"
                     android:textSize="@dimen/text_small_size" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvChange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:drawableRight="@drawable/icon_down_arrow"
-                android:drawablePadding="5dp"
-                android:text="雇员"
-                android:textColor="@color/job_top_title_color"
-                android:textSize="@dimen/text_default_size" />
 
         </LinearLayout>
 
@@ -72,8 +61,4 @@
 
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/flFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </LinearLayout>
