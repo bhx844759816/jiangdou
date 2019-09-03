@@ -71,7 +71,10 @@ class EmployerJobListFragment : BaseLazyFragment() {
         mWaitExamineJobItemList.add(WaitExamineJobItem())
         mWaitExamineJobItemList.add(WaitExamineJobItem())
         mWaitExamineJobItemList.add(WaitExamineJobItem())
-
+        //
+        mAdvertiseJobItemList.add(AdvertiseJobItem())
+        mAdvertiseJobItemList.add(AdvertiseJobItem())
+        mAdvertiseJobItemList.add(AdvertiseJobItem())
         //
         mEndSignUpItemList.add(EndSignUpItem(true))
         mEndSignUpItemList.add(EndSignUpItem(false))

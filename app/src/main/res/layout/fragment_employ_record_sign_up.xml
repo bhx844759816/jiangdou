@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<RadioGroup-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:background="@color/white"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<RadioButton-->
+    <!--android:id="@+id/rbInvite"-->
+    <!--android:layout_width="75dp"-->
+    <!--android:layout_height="31dp"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:background="@drawable/select_screen_item_bg"-->
+    <!--android:button="@null"-->
+    <!--android:checked="true"-->
+    <!--android:gravity="center"-->
+    <!--android:text="已邀请"-->
+    <!--android:textColor="@color/select_publish_job_item_textcolor"-->
+    <!--android:textSize="@dimen/text_small_size" />-->
+
+    <!--<RadioButton-->
+    <!--android:id="@+id/rbAccept"-->
+    <!--android:layout_width="75dp"-->
+    <!--android:layout_height="31dp"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:background="@drawable/select_screen_item_bg"-->
+    <!--android:button="@null"-->
+    <!--android:gravity="center"-->
+    <!--android:text="已接受"-->
+    <!--android:textColor="@color/select_publish_job_item_textcolor"-->
+    <!--android:textSize="@dimen/text_small_size" />-->
+    <!--<RadioButton-->
+    <!--android:id="@+id/rbRefuse"-->
+    <!--android:layout_width="75dp"-->
+    <!--android:layout_height="31dp"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:background="@drawable/select_screen_item_bg"-->
+    <!--android:button="@null"-->
+    <!--android:gravity="center"-->
+    <!--android:text="已拒绝"-->
+    <!--android:textColor="@color/select_publish_job_item_textcolor"-->
+    <!--android:textSize="@dimen/text_small_size" />-->
+    <!--</RadioGroup>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:padding="5dp"
+            android:text="全选"
+            android:textColor="@color/text_default" />
+
+        <TextView
+            android:id="@+id/tvAgreeWork"
+            android:layout_width="85dp"
+            android:layout_height="27dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_half_circle_bg"
+            android:gravity="center"
+            android:text="录用"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:id="@+id/tvNotAgreeWork"
+            android:layout_width="85dp"
+            android:layout_height="27dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/tvAgreeWork"
+            android:background="@drawable/shape_no_agree_work_bg"
+            android:gravity="center"
+            android:text="驳回"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_small_size" />
+    </RelativeLayout>
+</LinearLayout>

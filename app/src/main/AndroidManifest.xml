@@ -31,6 +31,7 @@
         <activity android:name=".ui.city.SelectCity" />
         <activity android:name=".ui.user.view.ComplainDetailsActivity" />
         <activity android:name=".ui.user.view.UserComplainActivity" />
+        <activity android:name=".ui.employer.view.EmployRecordActivity" />
         <activity android:name=".ui.job.view.JobSearchActivity">
 
         </activity>

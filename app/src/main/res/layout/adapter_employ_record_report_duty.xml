@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivHeadPhoto"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/icon_head_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="杨兰兰"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_default_size"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@id/ivHeadPhoto"
+                app:layout_constraintTop_toTopOf="@id/ivHeadPhoto" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/icon_girl"
+                app:layout_constraintBottom_toBottomOf="@id/tvUserName"
+                app:layout_constraintLeft_toRightOf="@id/tvUserName"
+                app:layout_constraintTop_toTopOf="@id/tvUserName" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="签到时间：8月15日 14:00"
+                android:textColor="@color/text_hint"
+                android:textSize="@dimen/text_big_small_size"
+                android:layout_marginTop="5dp"
+                app:layout_constraintLeft_toLeftOf="@id/tvUserName"
+                app:layout_constraintTop_toBottomOf="@id/tvUserName"/>
+
+
+            <TextView
+                android:id="@+id/tvSingUpTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="岗位：招聘UI兼职设计师"
+                android:textColor="@color/text_hint"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/text_big_small_size"
+                app:layout_constraintLeft_toLeftOf="@id/tvTime"
+                app:layout_constraintTop_toBottomOf="@id/tvTime" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tvAccept"
+        android:layout_width="85dp"
+        android:layout_height="30dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="联系"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView" />
+
+    <TextView
+        android:id="@+id/tvSignUpRecord"
+        android:layout_width="85dp"
+        android:layout_height="30dp"
+        android:background="@color/employe_item_refuse_bg"
+        android:gravity="center"
+        android:text="详情"
+        android:textColor="@color/protocolDefaultColor"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintRight_toLeftOf="@id/tvAccept"
+        app:layout_constraintTop_toTopOf="@id/tvAccept" />
+</androidx.constraintlayout.widget.ConstraintLayout>

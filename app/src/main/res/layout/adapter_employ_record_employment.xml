@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivHeadPhoto"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/icon_head_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="杨兰兰"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_default_size"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@id/ivHeadPhoto"
+                app:layout_constraintTop_toTopOf="@id/ivHeadPhoto" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/icon_girl"
+                app:layout_constraintBottom_toBottomOf="@id/tvUserName"
+                app:layout_constraintLeft_toRightOf="@id/tvUserName"
+                app:layout_constraintTop_toTopOf="@id/tvUserName" />
+
+            <LinearLayout
+                android:id="@+id/llLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                app:layout_constraintLeft_toLeftOf="@id/tvUserName"
+                app:layout_constraintTop_toBottomOf="@id/tvUserName">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="郑州"
+                    android:textColor="@color/text_hint"
+                    android:textSize="@dimen/text_small_size" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="12dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/divider_vertical_line" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="金水区"
+                    android:textColor="@color/text_hint"
+                    android:textSize="@dimen/text_small_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@drawable/icon_age"
+                    android:drawablePadding="8dp"
+                    android:text="20"
+                    android:textColor="@color/text_hint"
+                    android:textSize="@dimen/text_small_size" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSingUpTime"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:text="2019.08.22 18:23"
+                android:textColor="@color/text_hint"
+                android:textSize="@dimen/text_small_size"
+                app:layout_constraintLeft_toRightOf="@id/tvSingUpTimeTitle"
+                app:layout_constraintTop_toTopOf="@id/tvSingUpTimeTitle" />
+
+            <TextView
+                android:id="@+id/tvSingUpTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:text="报名时间"
+                android:textColor="@color/text_hint"
+                android:textSize="@dimen/text_small_size"
+                app:layout_constraintLeft_toLeftOf="@id/llLocation"
+                app:layout_constraintTop_toBottomOf="@id/llLocation" />
+
+            <TextView
+                android:id="@+id/tvReplySend"
+                android:layout_width="70dp"
+                android:layout_height="26dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/shape_publish_job_item_default"
+                android:gravity="center"
+                android:text="重发"
+                android:textColor="@color/text_hint"
+                android:textSize="@dimen/text_small_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tvAccept"
+        android:layout_width="85dp"
+        android:layout_height="30dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="联系"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView" />
+
+    <TextView
+        android:id="@+id/tvSignUpRecord"
+        android:layout_width="85dp"
+        android:layout_height="30dp"
+        android:background="@color/employe_item_refuse_bg"
+        android:gravity="center"
+        android:text="详情"
+        android:textColor="@color/protocolDefaultColor"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintRight_toLeftOf="@id/tvAccept"
+        app:layout_constraintTop_toTopOf="@id/tvAccept" />
+</androidx.constraintlayout.widget.ConstraintLayout>

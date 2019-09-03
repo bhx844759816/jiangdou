@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white">
+
+        <CheckBox
+            android:id="@+id/cbAllSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:padding="5dp"
+            android:text="全选"
+            android:textColor="@color/text_default" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="18dp"
+            android:layout_toLeftOf="@id/tvAgreeWork"
+            android:layout_toRightOf="@id/cbAllSelect"
+            android:text="若有异常工作情况，请先选择单结，
+余下的可进行合并结算"
+            android:textSize="@dimen/text_big_small_size" />
+
+        <TextView
+            android:id="@+id/tvAgreeWork"
+            android:layout_width="86dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_half_circle_bg"
+            android:gravity="center"
+            android:text="合并结算"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small_size" />
+
+
+    </RelativeLayout>
+</LinearLayout>
