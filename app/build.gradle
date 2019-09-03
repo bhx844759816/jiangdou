@@ -44,6 +44,7 @@ dependencies {
     implementation deps.pickerView
     implementation deps.permission
     implementation deps.bottomNavigationBar
+    implementation deps.viewShadow
     implementation project(':common_base')
     implementation project(':common_photo')
     testImplementation 'junit:junit:4.12'

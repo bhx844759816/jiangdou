@@ -6,6 +6,7 @@
     <dimen name="text_small_size">13sp</dimen>
     <dimen name="text_big_small_size">11sp</dimen>
     <dimen name="text_big_size">20sp</dimen>
+    <dimen name="text_big_title_size">25sp</dimen>
     <dimen name="text_title_size">19sp</dimen>
     <dimen name="actionBarHeight">55dp</dimen>
     <dimen name="cp_index_bar_width">21sp</dimen>
