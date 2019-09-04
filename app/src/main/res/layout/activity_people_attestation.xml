@@ -53,13 +53,14 @@
 
             <com.loopeer.shadow.ShadowView
                 android:layout_width="match_parent"
-                android:layout_height="233dp"
+                android:layout_height="243dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/white"
                 app:shadowColor="#7d82A2FE"
-                app:shadowMarginp="8dp"
+                app:shadowMargin="8dp"
+                app:cornerRadius="8dp"
                 app:shadowRadius="8dp">
 
                 <LinearLayout
@@ -89,13 +90,14 @@
 
             <com.loopeer.shadow.ShadowView
                 android:layout_width="match_parent"
-                android:layout_height="233dp"
+                android:layout_height="243dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="15dp"
                 android:background="@color/white"
                 app:shadowColor="#7d82A2FE"
-                app:shadowMarginp="8dp"
+                app:shadowMargin="8dp"
+                app:cornerRadius="8dp"
                 app:shadowRadius="8dp">
 
                 <LinearLayout

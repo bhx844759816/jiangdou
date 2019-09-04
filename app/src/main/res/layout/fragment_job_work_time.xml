@@ -113,6 +113,7 @@
                 <include layout="@layout/view_data_range_item"></include>
 
                 <TextView
+                    android:id="@+id/tvSelectTimeRange"
                         android:layout_width="116dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="10dp"

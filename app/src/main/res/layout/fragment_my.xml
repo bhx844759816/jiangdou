@@ -1,10 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_my_top_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_my_setting"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="22dp"
+        />
+
+    <ImageView
+        android:id="@+id/ivHeadPhoto"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/icon_head_photo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:text="立即登录"
+        android:textColor="@color/text_title"
+        android:textSize="@dimen/text_big_title_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/ivHeadPhoto"
+        app:layout_constraintTop_toTopOf="@id/ivHeadPhoto" />
+
+    <ImageView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/icon_girl"
+        app:layout_constraintBottom_toBottomOf="@id/tvUserName"
+        app:layout_constraintLeft_toRightOf="@id/tvUserName"
+        app:layout_constraintTop_toTopOf="@id/tvUserName" />
+
+    <TextView
+        android:id="@+id/ivUserResume"
+        android:layout_width="72dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_half_circle_bg"
+        android:drawableLeft="@drawable/icon_people_resume"
+        android:gravity="center"
+        android:paddingLeft="12dp"
+        android:text="简历"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintLeft_toLeftOf="@id/tvUserName"
+
+        app:layout_constraintTop_toBottomOf="@id/tvUserName"
+
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="my"
-        />
-</FrameLayout>
+        android:layout_marginLeft="15dp"
+        android:text="登陆后才可以填写简历哦"
+        android:textColor="@color/my_text_tips"
+        android:textSize="@dimen/text_big_small_size"
+        app:layout_constraintBottom_toBottomOf="@id/ivUserResume"
+        app:layout_constraintLeft_toRightOf="@id/ivUserResume"
+        app:layout_constraintTop_toTopOf="@id/ivUserResume" />
+
+    <LinearLayout
+        android:id="@+id/llMyCollection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivHeadPhoto">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="292"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_title_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="收藏"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_big_small_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@id/ivHeadPhoto"
+        app:layout_constraintRight_toRightOf="@id/ivHeadPhoto"
+        app:layout_constraintTop_toBottomOf="@id/ivHeadPhoto">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="292"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_title_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="金豆"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_big_small_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llFootPrintParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="45dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivHeadPhoto">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="292"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_title_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="足迹"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_big_small_size" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        style="@style/DividerLineTheme"
+        android:layout_marginTop="18dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llFootPrintParent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="17dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/text_title"
+                android:text="我的消息"
+                android:gravity="center_vertical"
+                android:drawablePadding="20dp"
+                android:drawableLeft="@drawable/icon_my_message"
+                android:textSize="@dimen/text_default_size" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/shape_red_circle"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_big_small_size" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/icon_arrow_right" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View style="@style/DividerLineTheme" />
+        <RelativeLayout
+            android:id="@+id/rlMyCollection"
+            android:layout_width="match_parent"
+            android:layout_height="52dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/text_title"
+                android:text="我的收藏"
+                android:gravity="center_vertical"
+                android:drawablePadding="20dp"
+                android:drawableLeft="@drawable/icon_my_collection"
+                android:textSize="@dimen/text_default_size" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/icon_arrow_right" />
+        </RelativeLayout>
+        <View style="@style/DividerLineTheme" />
+        <RelativeLayout
+            android:id="@+id/rlCompanyAttestation"
+            android:layout_width="match_parent"
+            android:layout_height="52dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/text_title"
+                android:text="企业认证"
+                android:gravity="center_vertical"
+                android:drawablePadding="20dp"
+                android:drawableLeft="@drawable/icon_my_company_attestation"
+                android:textSize="@dimen/text_default_size" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/icon_arrow_right" />
+        </RelativeLayout>
+
+        <View style="@style/DividerLineTheme" />
+
+        <RelativeLayout
+            android:id="@+id/rlMyService"
+            android:layout_width="match_parent"
+            android:layout_height="52dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/text_title"
+                android:text="客服"
+                android:gravity="center_vertical"
+                android:drawablePadding="20dp"
+                android:drawableLeft="@drawable/icon_my_service"
+                android:textSize="@dimen/text_default_size" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/icon_arrow_right" />
+        </RelativeLayout>
+
+        <View style="@style/DividerLineTheme" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/text_title"
+                android:text="关于我们"
+                android:gravity="center_vertical"
+                android:drawablePadding="20dp"
+                android:drawableLeft="@drawable/icon_my_about"
+                android:textSize="@dimen/text_default_size" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/icon_arrow_right" />
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

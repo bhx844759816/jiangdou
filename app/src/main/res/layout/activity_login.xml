@@ -115,37 +115,7 @@
         android:textSize="@dimen/text_btn_size"
         app:layout_constraintTop_toBottomOf="@id/rlInputParent" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintLeft_toLeftOf="@id/tvLogin"
-        app:layout_constraintRight_toRightOf="@id/tvLogin"
-        app:layout_constraintTop_toBottomOf="@id/tvLogin">
 
-        <TextView
-            android:id="@+id/tvPublishJob"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_button_default"
-            android:padding="15dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_default_size"
-            android:text="发布兼职" />
-
-        <TextView
-            android:id="@+id/tvPeopleAttestation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_default_size"
-            android:background="@drawable/shape_button_default"
-            android:padding="15dp"
-            android:text="认证界面" />
-    </LinearLayout>
 
     <include layout="@layout/view_third_login" />
 </androidx.constraintlayout.widget.ConstraintLayout>

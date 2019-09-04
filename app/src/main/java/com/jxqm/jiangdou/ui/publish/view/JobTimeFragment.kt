@@ -10,6 +10,7 @@ import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.view.calendar.CalendarRangeSelectDialog
+import com.jxqm.jiangdou.view.dialog.SelectTimeRangeDialog
 import kotlinx.android.synthetic.main.fragment_job_work_time.*
 
 /**
@@ -39,6 +40,9 @@ class JobTimeFragment : BaseLazyFragment() {
                 LogUtils.i("弹出日期选择对话框")
                 CalendarRangeSelectDialog.show(activity!!)
             }
+        }
+        tvSelectTimeRange.clickWithTrigger {
+            SelectTimeRangeDialog.show(activity!!)
         }
     }
 }

@@ -30,12 +30,7 @@ class LoginActivity : BaseDataActivity<LoginViewModel>() {
         tvLogin.clickWithTrigger {
             startActivity<VerifyCodeActivity>()
         }
-        tvPublishJob.clickWithTrigger {
-            startActivity<JobPublishActivity>()
-        }
-        tvPeopleAttestation.clickWithTrigger {
-            startActivity<PeopleAttestationActivity>()
-        }
+
         etInputPhone.addTextChangedListener {
             afterTextChanged {
                 val isEmpty = it?.toString()?.isEmpty()

@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import androidx.fragment.app.FragmentActivity
 import com.bhx.common.base.BaseDialogFragment
 import com.bhx.common.utils.DensityUtil
 import com.contrarywind.adapter.WheelAdapter
@@ -27,7 +28,6 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
     override fun getLayoutId(): Int = R.layout.dialog_select_time_range
 
     override fun initView(view: View?) {
-
         wvStartTime.adapter = ArrayWheelAdapter(mItems)
         wvStartSecond.adapter = ArrayWheelAdapter(mItems)
         wvEndTime.adapter = ArrayWheelAdapter(mItems)
@@ -39,15 +39,37 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
             val window = dialog.window
             if (window != null) {
                 window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                window.decorView.setPadding(DensityUtil.dip2px(context, 30f), 0, DensityUtil.dip2px(context, 15f), 0)
+                window.decorView.setPadding(DensityUtil.dip2px(context, 30f), 0, DensityUtil.dip2px(context, 30f), 0)
                 val params = window.attributes
                 params.width = WindowManager.LayoutParams.MATCH_PARENT
-                params.height = DensityUtil.dip2px(context, 200f)
+                params.height = DensityUtil.dip2px(context, 265f)
                 params.gravity = Gravity.CENTER
                 window.attributes = params
             }
         }
     }
+    companion object {
+        private val TAG = SelectTimeRangeDialog::class.simpleName
 
+        fun show(activity: FragmentActivity) {
+            var fragment = activity.supportFragmentManager.findFragmentByTag(TAG)
+            if (fragment == null) {
+                fragment = SelectTimeRangeDialog()
+            }
+            if (!fragment.isAdded) {
+                val manager = activity.supportFragmentManager
+                val transaction = manager.beginTransaction()
+                transaction.add(fragment, TAG)
+                transaction.commitAllowingStateLoss()
+            }
+        }
+
+        fun dismiss(activity: FragmentActivity?) {
+            val fragment = activity?.supportFragmentManager?.findFragmentByTag(TAG) as SelectTimeRangeDialog
+            if (fragment.isAdded) {
+                fragment.dismissAllowingStateLoss()
+            }
+        }
+    }
 
 }

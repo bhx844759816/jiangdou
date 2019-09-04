@@ -40,8 +40,9 @@
         <activity android:name=".ui.job.view.CompanyDetailsActivity" />
         <activity android:name=".ui.job.view.JobScreenActivity" />
         <activity android:name=".ui.user.view.MyResumeActivity" />
-        <activity android:name=".ui.home.view.MainActivity" />
-        <activity android:name=".ui.attestation.view.PeopleAttestationActivity">
+        <activity android:name=".ui.attestation.view.PeopleAttestationActivity"/>
+        <activity android:name=".ui.attestation.view.CompanyAttestationActivity"/>
+        <activity android:name=".ui.home.view.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -49,6 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <!-- 拍照安装Apk所需要的provider -->
         <provider

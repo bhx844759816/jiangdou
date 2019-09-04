@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorAccent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/icon_back_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="企业认证"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title_size" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:paddingBottom="100dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="31dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="请上传营业执照扫描文件或照片"
+                    android:textColor="@color/text_default"
+                    android:textSize="@dimen/text_btn_size" />
+
+                <FrameLayout
+                    android:layout_width="206dp"
+                    android:layout_height="267dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_company_attestation_bg" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/colorAccent"
+                        android:gravity="center"
+                        android:text="选择"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/badge_text_size" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商家名称"
+                    android:textColor="@color/text_default"
+                    android:textSize="@dimen/text_default_size" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="@null"
+                    android:hint="请输入营业执照上全称"
+                    android:textColor="@color/text_default"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="@dimen/text_small_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingRight="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="商家名称"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@drawable/icon_arrow_right"
+                        android:drawablePadding="8dp"
+                        android:hint="请选择所属行业"
+                        android:textColor="@color/text_publish_sex"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="@dimen/text_small_size" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLineTheme" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingRight="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="企业类型"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@drawable/icon_arrow_right"
+                        android:drawablePadding="8dp"
+                        android:hint="请选择企业类型"
+                        android:textColor="@color/text_publish_sex"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="@dimen/text_small_size" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingRight="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="人员规模"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@drawable/icon_arrow_right"
+                        android:drawablePadding="8dp"
+                        android:hint="请选择人员规模"
+                        android:textColor="@color/text_publish_sex"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="@dimen/text_small_size" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLineTheme" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:gravity="top">
+
+                    <TextView
+                        android:id="@+id/companyIntroduce"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="机构简介"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_toRightOf="@id/companyIntroduce"
+                        android:background="@null"
+                        android:gravity="top"
+                        android:hint="请输入20-200字之间的企业简介"
+                        android:paddingLeft="8dp"
+                        android:textColor="@color/text_default"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="@dimen/text_default_size" />
+                </RelativeLayout>
+
+                <View style="@style/DividerLineTheme" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="工作地址"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_default_size"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="20dp"
+                        android:orientation="vertical"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/colorAccent"
+                                android:text="定位"
+                                android:textSize="@dimen/text_default_size"
+                                android:drawableLeft="@drawable/icon_location"
+                                android:drawablePadding="5dp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_publish_sex"
+                                android:text="河南省，郑州市，金水区"
+                                android:textSize="@dimen/text_default_size"
+                                android:layout_marginLeft="15dp"
+                                />
+                        </LinearLayout>
+                        <View style="@style/DividerLineTheme"
+                            android:layout_marginTop="18dp"
+                            />
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@null"
+                            android:gravity="top"
+                            android:layout_marginTop="10dp"
+                            android:hint="请输入详细工作地址"
+                            android:textColor="@color/text_default"
+                            android:textSize="@dimen/text_default_size"
+                            android:textColorHint="@color/text_hint"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/btn_gray"
+        android:gravity="center"
+        android:text="下一步(1/2)"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_btn_size" />
+</LinearLayout>

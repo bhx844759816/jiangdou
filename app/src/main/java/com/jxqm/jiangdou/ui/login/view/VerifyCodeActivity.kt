@@ -53,7 +53,7 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
                     4 -> {
                         ToastUtils.toastShort("输入完成")
                         tvLogin.isEnabled = true
-                        tvLogin.setBackgroundResource(R.drawable.icon_shadow_btn)
+                        tvLogin.setBackgroundResource(R.drawable.shape_button_select)
                     }
                 }
             } else {
