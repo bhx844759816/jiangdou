@@ -2,15 +2,10 @@ package com.jxqm.jiangdou.ui.employer.view
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhx.common.base.BaseLazyFragment
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.model.*
-import com.jxqm.jiangdou.ui.employee.adapter.EmployWorkListAdapter
-import com.jxqm.jiangdou.ui.employee.adapter.ReportDutyWorkListAdapter
-import com.jxqm.jiangdou.ui.employee.adapter.SignUpWorkListAdapter
-import com.jxqm.jiangdou.ui.employee.adapter.StatementsWorkAdapter
 import com.jxqm.jiangdou.ui.employer.adapter.AdvertiseJobAdapter
 import com.jxqm.jiangdou.ui.employer.adapter.EndSignUpAdapter
 import com.jxqm.jiangdou.ui.employer.adapter.WaitExamineJobAdapter
@@ -20,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_employee_work_list.*
 /**
  * Created by Administrator on 2019/9/2.
  */
-class EmployerJobListFragment : BaseLazyFragment() {
+class EmployJobListFragment : BaseLazyFragment() {
     private var mWaitPublishJobItemList = arrayListOf<WaitPublishJobItem>()
     private var mWaitExamineJobItemList = arrayListOf<WaitExamineJobItem>()
     private var mAdvertiseJobItemList = arrayListOf<AdvertiseJobItem>()
@@ -83,8 +78,8 @@ class EmployerJobListFragment : BaseLazyFragment() {
     }
 
     companion object {
-        fun newInstance(type: Int): EmployerJobListFragment {
-            val fragment = EmployerJobListFragment()
+        fun newInstance(type: Int): EmployJobListFragment {
+            val fragment = EmployJobListFragment()
             val bundle = Bundle()
             bundle.putInt("type", type)
             fragment.arguments = bundle

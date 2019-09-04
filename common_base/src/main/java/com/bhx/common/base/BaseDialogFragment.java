@@ -22,7 +22,7 @@ import com.bhx.common.utils.DensityUtil;
  */
 public abstract class BaseDialogFragment extends DialogFragment {
     private static final int DEFAULT_STYLES = R.style.dialog;
-    Context mContext;
+    public Context mContext;
     private boolean isCanceledOnTouchOutside = true;
     private boolean isCancelable = true;
 
@@ -34,6 +34,12 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null;
     }
 
     @Nullable

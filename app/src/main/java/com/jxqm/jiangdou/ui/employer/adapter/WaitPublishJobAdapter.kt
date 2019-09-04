@@ -2,11 +2,13 @@ package com.jxqm.jiangdou.ui.employer.adapter
 
 import android.content.Context
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.model.WaitPublishJobItem
+import com.jxqm.jiangdou.ui.employer.view.EmployJobPublishActivity
 import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
@@ -26,6 +28,10 @@ class WaitPublishJobAdapter(context: Context) : MultiItemTypeAdapter<WaitPublish
 
             override fun convert(holder: ViewHolder?, t: WaitPublishJobItem?, position: Int) {
                 val tvAccept = holder?.getView<TextView>(R.id.tvAccept)
+                val parent = holder?.getView<ConstraintLayout>(R.id.parent)
+                parent?.clickWithTrigger {
+                    mContext.startActivity<EmployJobPublishActivity>()
+                }
                 tvAccept?.clickWithTrigger {
                     mContext.startActivity<OrderPaymentActivity>()
                 }

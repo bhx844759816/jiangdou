@@ -15,39 +15,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme">
-        <activity android:name=".ui.login.view.LoginActivity">
-
-        </activity>
-        <!--登录注册模块-->
+        <activity android:name=".ui.login.view.LoginActivity" />
         <activity android:name=".ui.login.view.PhoneLoginActivity" />
         <activity android:name=".ui.login.view.ForgetPsdActivity" />
         <activity android:name=".ui.login.view.RegisterActivity" />
         <activity
             android:name=".ui.login.view.VerifyCodeActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" />
-        <!--发布兼职模块-->
         <activity android:name=".ui.publish.view.JobPublishActivity" />
+        <activity android:name=".ui.publish.view.PublishJobPreviewActivity" />
         <activity android:name=".ui.job.view.JobDetailsActivity" />
         <activity android:name=".ui.city.SelectCity" />
         <activity android:name=".ui.user.view.ComplainDetailsActivity" />
         <activity android:name=".ui.user.view.UserComplainActivity" />
+        <activity android:name=".ui.user.view.MyCollectionJobActivity" />
+        <activity android:name=".ui.user.view.CashOutActivity" />
         <activity android:name=".ui.employer.view.EmployRecordActivity" />
+        <activity android:name=".ui.employer.view.EmployJobPublishActivity" />
         <activity android:name=".ui.order.view.OrderPaymentActivity" />
-        <activity android:name=".ui.job.view.JobSearchActivity">
-
-        </activity>
-        <activity android:name=".ui.job.view.JobCompanyListActivity">
-
-        </activity>
+        <activity android:name=".ui.order.view.OrderPaymentSuccessActivity" />
+        <activity android:name=".ui.employee.view.ResumeDetailsActivity" />
+        <activity android:name=".ui.job.view.JobSearchActivity" />
+        <activity android:name=".ui.job.view.JobCompanyListActivity" />
         <activity android:name=".ui.job.view.CompanyDetailsActivity" />
-        <activity android:name=".ui.job.view.JobScreenActivity">
-
-        </activity>
-        <activity android:name=".ui.user.view.MyResumeActivity">
-
-        </activity>
-
-        <activity android:name=".ui.home.view.MainActivity">
+        <activity android:name=".ui.job.view.JobScreenActivity" />
+        <activity android:name=".ui.user.view.MyResumeActivity" />
+        <activity android:name=".ui.home.view.MainActivity" />
+        <activity android:name=".ui.attestation.view.PeopleAttestationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

@@ -3,22 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:background="@color/white"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+
+    <com.loopeer.shadow.ShadowView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardElevation="5dp"
+        android:layout_height="100dp"
+        android:background="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:shadowColor="#7d82A2FE"
+        app:shadowMarginBottom="1dp"
+        app:shadowMarginTop="5dp"
+        app:shadowRadius="4dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            app:layout_gravity="center"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/ivHeadPhoto"
@@ -55,52 +57,55 @@
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="签到时间：8月15日 14:00"
                 android:textColor="@color/text_hint"
                 android:textSize="@dimen/text_big_small_size"
-                android:layout_marginTop="5dp"
                 app:layout_constraintLeft_toLeftOf="@id/tvUserName"
-                app:layout_constraintTop_toBottomOf="@id/tvUserName"/>
-
+                app:layout_constraintTop_toBottomOf="@id/tvUserName" />
 
             <TextView
                 android:id="@+id/tvSingUpTimeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:text="岗位：招聘UI兼职设计师"
                 android:textColor="@color/text_hint"
-                android:layout_marginTop="5dp"
                 android:textSize="@dimen/text_big_small_size"
                 app:layout_constraintLeft_toLeftOf="@id/tvTime"
                 app:layout_constraintTop_toBottomOf="@id/tvTime" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.loopeer.shadow.ShadowView>
 
-
-    <TextView
-        android:id="@+id/tvAccept"
-        android:layout_width="85dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:text="联系"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_small_size"
+        android:background="@color/white"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardView" />
+        app:layout_constraintTop_toBottomOf="@id/cardView">
 
-    <TextView
-        android:id="@+id/tvSignUpRecord"
-        android:layout_width="85dp"
-        android:layout_height="30dp"
-        android:background="@color/employe_item_refuse_bg"
-        android:gravity="center"
-        android:text="详情"
-        android:textColor="@color/protocolDefaultColor"
-        android:textSize="@dimen/text_small_size"
-        app:layout_constraintRight_toLeftOf="@id/tvAccept"
-        app:layout_constraintTop_toTopOf="@id/tvAccept" />
+        <TextView
+            android:id="@+id/tvAccept"
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="联系"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:id="@+id/tvSignUpRecord"
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/tvAccept"
+            android:background="@color/employe_item_refuse_bg"
+            android:gravity="center"
+            android:text="详情"
+            android:textColor="@color/protocolDefaultColor"
+            android:textSize="@dimen/text_small_size" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

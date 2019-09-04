@@ -3,6 +3,7 @@ package com.jxqm.jiangdou.ui.publish.view
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bhx.common.base.BaseActivity
+import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
@@ -142,7 +143,8 @@ class JobPublishActivity : BaseActivity(), OnJobPublishCallBack {
     }
 
     override fun jobContactsNextStep() {
-        startActivity<JobDetailsActivity>()
+        ToastUtils.toastShort("发布成功")
+        finish()
     }
 
     override fun onBackPressed() {

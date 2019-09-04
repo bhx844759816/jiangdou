@@ -384,6 +384,7 @@
             android:background="@color/order_bottom_bar_color"
             />
         <TextView
+            android:id="@+id/tvPay"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

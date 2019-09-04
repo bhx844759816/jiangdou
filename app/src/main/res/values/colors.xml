@@ -28,6 +28,7 @@
     <color name="job_top_title_color">#616161</color>
     <color name="order_text_color">#AAAAB1</color>
     <color name="color_tips">#ff7a45</color>
+    <color name="btn_gray">#BFC4CB</color>
     <color name="order_bottom_bar_color">#35373E</color>
     <color name="company_details_text_color">#828282</color>
 </resources>

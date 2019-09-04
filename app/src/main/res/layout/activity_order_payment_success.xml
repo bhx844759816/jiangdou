@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivTopBg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_order_payment_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/rlTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/icon_back_white" />
+
+        <TextView
+            android:layout_width="71dp"
+            android:layout_height="23dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="13dp"
+            android:background="@drawable/shape_deposit_rule"
+            android:gravity="center"
+            android:text="押金规则"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_big_small_size" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:text="支付成功"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_big_title_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rlTopBar" />
+
+    <TextView
+        android:id="@+id/tvTips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="小豆会在1小时内对发布内容进行审核"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintLeft_toLeftOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <com.loopeer.shadow.ShadowView
+        android:id="@+id/shadowView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/white"
+        app:cornerRadius="4dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTips"
+        app:shadowColor="#82A3FD"
+        app:shadowMargin="5dp"
+        app:shadowRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="13dp"
+            android:paddingTop="18dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_order_details"
+                android:drawablePadding="8dp"
+                android:text="订单明细"
+                android:textColor="@color/text_default"
+                android:textSize="@dimen/text_default_size"
+                android:textStyle="bold"
+
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/divider_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="订单编号"
+                    android:textColor="@color/order_text_color"
+                    android:textSize="@dimen/text_default_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:text="201908121211"
+                    android:textColor="@color/order_text_color"
+                    android:textSize="@dimen/text_default_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/divider_line" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="时薪"
+                    android:textColor="@color/order_text_color"
+                    android:textSize="@dimen/text_default_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:text="10币/时"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_default_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/divider_line" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="招聘人数"
+                    android:textColor="@color/order_text_color"
+                    android:textSize="@dimen/text_default_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:text="4人"
+                    android:textColor="@color/order_text_color"
+                    android:textSize="@dimen/text_default_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/divider_line" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="工作时长"
+                    android:textColor="@color/order_text_color"
+                    android:textSize="@dimen/text_default_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:text="12小时"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_default_size" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/shape_get_verify_code_bg"
+                android:orientation="vertical"
+                android:padding="13dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工作时段："
+                        android:textColor="@color/text_hint"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18dp"
+                        android:text="10:00-12:00"
+                        android:textColor="@color/text_hint"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="14:00-16:00"
+                        android:textColor="@color/text_hint"
+                        android:textSize="@dimen/text_default_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工作日期："
+                        android:textColor="@color/text_hint"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18dp"
+                        android:text="2019.08.12-2019.08.13"
+                        android:textColor="@color/text_hint"
+                        android:textSize="@dimen/text_default_size" />
+                    a
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/divider_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="共计"
+                    android:textColor="@color/text_title"
+                    android:textSize="@dimen/text_default_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="5400豆币"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_big_size" />
+            </RelativeLayout>
+        </LinearLayout>
+    </com.loopeer.shadow.ShadowView>
+
+    <TextView
+        android:id="@+id/tvContinuePublish"
+        android:layout_width="105dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_publish_job_item_default"
+        app:layout_constraintLeft_toLeftOf="@id/shadowView"
+        app:layout_constraintTop_toBottomOf="@id/shadowView"
+        android:gravity="center"
+        android:textColor="@color/text_publish_sex"
+        android:text="继续发布"
+        android:textSize="@dimen/text_default_size"
+        />
+    
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        app:layout_constraintRight_toRightOf="@id/shadowView"
+        app:layout_constraintTop_toTopOf="@id/tvContinuePublish"
+        app:layout_constraintLeft_toRightOf="@id/tvContinuePublish"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/shape_publish_job_item_checked"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_default_size"
+        android:gravity="center"
+        android:text="返回工作台"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

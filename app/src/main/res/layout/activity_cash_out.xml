@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorAccent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/icon_back_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="提现"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title_size" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:text="提取豆币"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_default_size" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入提取数量，最多可提取1000豆币"
+                android:textColor="@color/text_default"
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:text="支付宝账号"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_default_size" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="188****8888"
+                android:textColor="@color/text_default"
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
+        </LinearLayout>
+
+        <View style="@style/DividerLineTheme" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:text="姓名"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_default_size" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="何莉莉"
+                android:textColor="@color/text_default"
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:text="手机号码"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_default_size" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="188****8888"
+                android:textColor="@color/text_default"
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
+        </LinearLayout>
+
+        <View style="@style/DividerLineTheme" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:text="验证码"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_default_size" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="11"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入短信验证码"
+                android:inputType="number"
+                android:maxEms="8"
+                android:maxLines="1"
+                android:textColor="@color/text_default"
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
+
+            <TextView
+                android:layout_width="82dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/shape_cash_code_verify_code_default_bg"
+                android:gravity="center"
+                android:text="发送验证码"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_big_small_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minEms="5"
+                android:text="折合"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_default_size" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:paddingRight="21dp"
+                android:text="$0"
+                android:textColor="@color/text_default"
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="确认提现"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_btn_size" />
+</LinearLayout>

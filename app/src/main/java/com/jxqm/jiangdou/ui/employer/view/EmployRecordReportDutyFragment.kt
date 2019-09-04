@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.utils.DensityUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.model.EmployRecordReportDutyItem
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordReportDutyAdapter
+import com.jxqm.jiangdou.utils.SpaceItemDecoration
 import kotlinx.android.synthetic.main.fragment_employ_record_report_duty.*
 
 /**
@@ -28,7 +30,9 @@ class EmployRecordReportDutyFragment : BaseLazyFragment() {
         mAdapter = EmployRecordReportDutyAdapter(mContext)
         mAdapter.setDataList(mEmployRecordReportDutyItems)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
+        recyclerView.addItemDecoration(SpaceItemDecoration(DensityUtil.dip2px(mContext, 10f)))
         recyclerView.adapter = mAdapter
     }
+
 
 }

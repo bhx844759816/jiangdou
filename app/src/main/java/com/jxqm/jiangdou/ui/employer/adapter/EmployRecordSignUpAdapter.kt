@@ -1,11 +1,15 @@
 package com.jxqm.jiangdou.ui.employer.adapter
 
 import android.content.Context
+import android.widget.ImageView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.model.EmployRecordSignUpItem
+import com.jxqm.jiangdou.ui.employee.view.ResumeDetailsActivity
+import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
 
 /**
  * 雇佣记录 - 报名
@@ -22,6 +26,10 @@ class EmployRecordSignUpAdapter(context: Context) : MultiItemTypeAdapter<EmployR
             override fun isViewForType(item: EmployRecordSignUpItem?, position: Int): Boolean = true
 
             override fun convert(holder: ViewHolder?, t: EmployRecordSignUpItem?, position: Int) {
+                val ivHeadPhoto = holder?.getView<ImageView>(R.id.ivHeadPhoto)
+                ivHeadPhoto?.clickWithTrigger {
+                    mContext.startActivity<ResumeDetailsActivity>()
+                }
             }
 
         })

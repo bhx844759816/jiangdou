@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.RadioGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.model.EmployRecordPayItem
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordPayAdapter
@@ -22,22 +23,25 @@ class EmployRecordPayFragment : BaseLazyFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mAdapter = EmployRecordPayAdapter(mContext)
-        mAdapter.setDataList(mEmployRecordPayItems)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
+        rgSelectState.check(R.id.rbInvite)
+        showPayFinish()
         rgSelectState.setOnCheckedChangeListener { _, radioButtonId ->
             when (radioButtonId) {
                 R.id.rbInvite -> {
+                    LogUtils.i("rgSelectState select 出账")
                     showPayFinish()
                 }
                 R.id.rbAccept -> {
+                    LogUtils.i("rgSelectState select 接受")
                     showPayWait()
                 }
                 R.id.rbRefuse -> {
+                    LogUtils.i("rgSelectState select 拒绝")
                     showPayRefuse()
                 }
             }
-
         }
     }
 
@@ -45,19 +49,20 @@ class EmployRecordPayFragment : BaseLazyFragment() {
         mEmployRecordPayItems.clear()
         mEmployRecordPayItems.add(EmployRecordPayItem(0))
         mEmployRecordPayItems.add(EmployRecordPayItem(0))
+        mAdapter.updateDatas(mEmployRecordPayItems)
     }
 
     private fun showPayWait() {
         mEmployRecordPayItems.clear()
         mEmployRecordPayItems.add(EmployRecordPayItem(1))
         mEmployRecordPayItems.add(EmployRecordPayItem(1))
-        mAdapter.notifyDataSetChanged()
+        mAdapter.updateDatas(mEmployRecordPayItems)
     }
 
     private fun showPayRefuse() {
         mEmployRecordPayItems.clear()
         mEmployRecordPayItems.add(EmployRecordPayItem(2))
         mEmployRecordPayItems.add(EmployRecordPayItem(2))
-        mAdapter.notifyDataSetChanged()
+        mAdapter.updateDatas(mEmployRecordPayItems)
     }
 }

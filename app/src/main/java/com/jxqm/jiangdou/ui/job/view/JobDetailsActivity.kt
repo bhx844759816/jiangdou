@@ -10,7 +10,7 @@ import com.bhx.common.utils.DensityUtil
 
 
 /**
- * 预览详情界面
+ * 工作详情界面
  * Created By bhx On 2019/8/12 0012 10:56
  */
 class JobDetailsActivity : BaseActivity() {

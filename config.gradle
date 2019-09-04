@@ -38,6 +38,8 @@ version.pickerView = "4.1.8"
 version.statusBarUtil = "1.4.0"
 version.bottomNavigationBar = "2.1.0"
 version.viewShadow = "0.0.4-beta3"
+version.smartRefresh = "2.0.0-alpha-1"
+
 deps.versions = version
 //系统库
 def support = [:]
@@ -88,5 +90,7 @@ deps.statusBarUtil = "com.jaeger.statusbarutil:library:$version.statusBarUtil"
 deps.permission = "com.tbruyelle.rxpermissions2:rxpermissions:$version.permission"
 //卡片阴影布局
 deps.viewShadow = "com.loopeer.lib:shadow:$version.viewShadow"
+//上下拉刷新
+deps.smartRefresh = "com.scwang.smart:refresh-layout-kernel:$version.smartRefresh"
 //底部导航
 deps.bottomNavigationBar = "com.ashokvarma.android:bottom-navigation-bar:$version.bottomNavigationBar"
