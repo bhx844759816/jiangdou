@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/aboutUsBack"
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/icon_back" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="关于我们"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_title_size" />
+
+        <View
+            style="@style/DividerLineTheme"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:background="@mipmap/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:text="小豆   V1.0.0"
+        android:textColor="@color/text_title"
+        android:textSize="@dimen/text_default_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="28dp"
+        android:lineHeight="25dp"
+        android:text="小豆 ---一款专业服务大学生的筑梦APP。\n 依托大学生兼职为切入点，围绕着大学生活全方面展开服务。包括学习培训、社群活动、创业支持、校内交友等等，大学生可以在这里定制属于自己独一无二的大学生活！我们始终以大学生需求为导向，将尽我们所能，助力大学生由校园到社会完美转型，引领更多的大学生释放个人价值，走向人生巅峰！"
+        android:textColor="#999999"
+        android:textSize="@dimen/text_small_size" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/icon_wx_code"
+        android:layout_marginTop="15dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_small_size"
+        android:text="匠心其妙公众号"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:lineHeight="25dp"
+        android:text="降浮躁，洗铅华，树信仰，传承匠心之道！\n致青春、助成长、圆梦想，汇聚匠心之人！\n回初心，溯根源，跨时空，成就匠心之作！"
+        />
+</LinearLayout>

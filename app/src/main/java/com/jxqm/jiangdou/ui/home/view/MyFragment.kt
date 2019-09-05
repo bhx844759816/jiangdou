@@ -8,10 +8,7 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.attestation.view.CompanyAttestationActivity
 import com.jxqm.jiangdou.ui.home.vm.MyViewModel
 import com.jxqm.jiangdou.ui.login.view.LoginActivity
-import com.jxqm.jiangdou.ui.user.view.CashOutActivity
-import com.jxqm.jiangdou.ui.user.view.MyCollectionJobActivity
-import com.jxqm.jiangdou.ui.user.view.MyResumeActivity
-import com.jxqm.jiangdou.ui.user.view.SettingActivity
+import com.jxqm.jiangdou.ui.user.view.*
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.MyServiceDialog
@@ -59,6 +56,9 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
         //
         ivSetting.clickWithTrigger {
             startActivity<SettingActivity>()
+        }
+        rlAboutUs.clickWithTrigger {
+            startActivity<AboutUsActivity>()
         }
 
     }

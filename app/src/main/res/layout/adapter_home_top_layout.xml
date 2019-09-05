@@ -23,11 +23,11 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            app:cbi_itemBackgroundColor="#192D3C63"
-            app:cbi_itemForegroundColor="#3A4E73"
-            app:cbi_itemHeight="8dp"
+            app:cbi_itemBackgroundColor="@color/text_hint"
+            app:cbi_itemForegroundColor="@color/colorAccent"
+            app:cbi_itemHeight="6dp"
             app:cbi_itemSpace="4dp"
-            app:cbi_itemWidth="8dp" />
+            app:cbi_itemWidth="6dp" />
     </com.jxqm.jiangdou.view.banner.BannerView>
 
     <LinearLayout

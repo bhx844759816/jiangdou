@@ -26,7 +26,6 @@ class MainActivity : BaseActivity() {
     override fun initView() {
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
-        requestPermission()
         mListFragment.add(HomeFragment())
         mListFragment.add(WorkFragment())
         mListFragment.add(MyFragment())
@@ -52,16 +51,5 @@ class MainActivity : BaseActivity() {
     }
 
 
-    /**
-     * 请求权限 SD卡存储和拍照权限
-     */
-    private fun requestPermission() {
-        val disposable =
-            RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-                .subscribe {
 
-                }
-        addDisposable(disposable)
-
-    }
 }

@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bhx.common.adapter.rv.listener.OnItemClickListener
 import com.bhx.common.base.BaseFragment
 import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.utils.LogUtils
@@ -18,6 +20,7 @@ import com.jxqm.jiangdou.model.HomeTopModel
 import com.jxqm.jiangdou.ui.city.SelectCity
 import com.jxqm.jiangdou.ui.home.adapter.HomeAdapter
 import com.jxqm.jiangdou.ui.job.view.JobCompanyListActivity
+import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.LoadingDialog
@@ -42,6 +45,16 @@ class HomeFragment : BaseFragment() {
         mHomeModelList.add(HomeItemModel(1))
         mHomeModelList.add(HomeItemModel(1))
         mAdapter = HomeAdapter(mContext)
+
+        mAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(view: View?, holder: ViewHolder?, position: Int) {
+                 startActivity<JobDetailsActivity>()
+            }
+
+            override fun onItemLongClick(view: View?, holder: ViewHolder?, position: Int): Boolean {
+                return false
+            }
+        })
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
 

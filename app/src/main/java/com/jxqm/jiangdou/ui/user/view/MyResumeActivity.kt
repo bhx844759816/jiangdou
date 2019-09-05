@@ -62,7 +62,7 @@ class MyResumeActivity : BaseActivity(){
     override fun getLayoutId(): Int = R.layout.activity_my_resume
 
     override fun initView() {
-        StatusBarUtil.setColor(this, resources.getColor(R.color.colorAccent))
+        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
         mPhotoLisAdapter = PhotoListAdapter(this, mPhotoList)
         mPhotoLisAdapter.setAddCallBack {
             selectHeadPhoto(9, 0x02)
