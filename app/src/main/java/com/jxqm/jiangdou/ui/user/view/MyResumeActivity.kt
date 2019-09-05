@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.DensityUtil
 import com.bhx.common.utils.LogUtils
 import com.bigkoo.pickerview.builder.TimePickerBuilder
@@ -48,7 +49,7 @@ import java.util.*
  * 我的简历
  * Created By bhx On 2019/8/19 0019 14:06
  */
-class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
+class MyResumeActivity : BaseActivity(){
     private val mSexList = arrayListOf("男", "女")
     private val mEducationList = arrayListOf("小学", "初中", "专科", "本科", "硕士", "博士")
     private val mHeightList = mutableListOf<String>()
@@ -60,10 +61,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
 
     override fun getLayoutId(): Int = R.layout.activity_my_resume
 
-    override fun getEventKey(): Any = Constants.EVENT_KEY_MY_RESUME
-
     override fun initView() {
-        super.initView()
         StatusBarUtil.setColor(this, resources.getColor(R.color.colorAccent))
         mPhotoLisAdapter = PhotoListAdapter(this, mPhotoList)
         mPhotoLisAdapter.setAddCallBack {
@@ -76,6 +74,9 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         rvPhotoList.layoutManager = GridLayoutManager(this, 4)
         rvPhotoList.addItemDecoration(GridItemSpaceDecoration(DensityUtil.dip2px(this, 20f)))
         rvPhotoList.adapter = mPhotoLisAdapter
+        myResumeBack.clickWithTrigger {
+            finish()
+        }
         rlHeadPhotoParent.clickWithTrigger {
             onViewClick(it)
         }
@@ -100,6 +101,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         rlUserLocationParent.clickWithTrigger {
             onViewClick(it)
         }
+
     }
 
     private fun onViewClick(view: View) {

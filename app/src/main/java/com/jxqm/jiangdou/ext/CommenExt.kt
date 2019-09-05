@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 
@@ -21,6 +22,14 @@ fun Button.isEnable(et: EditText, method: () -> Boolean) {
     et.addTextChangedListener {
         afterTextChanged {
             btn.isEnabled = method()
+        }
+    }
+}
+fun TextView.isEnable(et: EditText, method: () -> Boolean) {
+    val textView = this
+    et.addTextChangedListener {
+        afterTextChanged {
+            textView.isEnabled = method()
         }
     }
 }

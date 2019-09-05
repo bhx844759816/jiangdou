@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.DensityUtil
+import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.ui.city.adapter.SectionItemDecoration
 import com.jxqm.jiangdou.ui.city.db.DBManager
@@ -13,6 +14,8 @@ import com.jxqm.jiangdou.ui.city.model.City
 import com.jxqm.jiangdou.ui.city.model.HotCity
 import com.jxqm.jiangdou.ui.city.model.LocatedCity
 import com.jxqm.jiangdou.ui.city.view.SideIndexBar
+import com.jxqm.jiangdou.utils.StatusBarTextUtils
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_select_city.*
 import java.util.ArrayList
 
@@ -22,27 +25,34 @@ import java.util.ArrayList
 /**
  * 城市选择界面
  */
-class SelectCity : BaseActivity(),SideIndexBar.OnIndexTouchedChangedListener{
+class SelectCity : BaseActivity(), SideIndexBar.OnIndexTouchedChangedListener {
 
 
     private lateinit var mDbManager: DBManager
     private lateinit var mAdapter: CityAdapter
     private var mAllCities: ArrayList<City> = arrayListOf()
     private lateinit var mLocatedCity: City
+    private lateinit var mLayoutManager: LinearLayoutManager
     private var mHotCities: ArrayList<HotCity> = arrayListOf()
     override fun getLayoutId(): Int = R.layout.activity_select_city
 
     override fun initView() {
         super.initView()
-        rvCityList.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-//        rvCityList.addItemDecoration(DividerItemDecoration(this, RecyclerView.VERTICAL))
-        val sectionItemDecoration = SectionItemDecoration(this, mAllCities, Color.parseColor("#EDEDED"),
-                DensityUtil.dip2px(this, 32f), DensityUtil.dip2px(this, 13f), Color.parseColor("#999999"))
+        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
+        StatusBarTextUtils.setLightStatusBar(this, true)
+        mLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        rvCityList.layoutManager = mLayoutManager
+        val sectionItemDecoration = SectionItemDecoration(
+            this, mAllCities, Color.parseColor("#F1F1F1"),
+            DensityUtil.dip2px(this, 25f), DensityUtil.dip2px(this, 13f), Color.parseColor("#474747")
+        )
         rvCityList.addItemDecoration(sectionItemDecoration)
         mAdapter = CityAdapter(this, mAllCities, mHotCities)
+        mAdapter.setLayoutManager(mLayoutManager)
         rvCityList.adapter = mAdapter
         sideIndexBar.setOverlayTextView(tvOverlay)
-                .setOnIndexChangedListener(this)
+            .setOnIndexChangedListener(this)
+        selectCityBack.clickWithTrigger { finish() }
     }
 
     override fun initData() {
@@ -69,7 +79,7 @@ class SelectCity : BaseActivity(),SideIndexBar.OnIndexTouchedChangedListener{
         mAdapter.notifyDataSetChanged()
     }
 
-    override fun onIndexChanged(index: String?, position: Int) {
-
+    override fun onIndexChanged(index: String, position: Int) {
+        mAdapter.scrollToSection(index)
     }
 }

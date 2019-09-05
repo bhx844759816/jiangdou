@@ -17,5 +17,8 @@ class PublishJobPreviewActivity : BaseActivity() {
 
     override fun initView() {
         StatusBarUtil.setTranslucentForImageView(this, 0, toolbar)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 }

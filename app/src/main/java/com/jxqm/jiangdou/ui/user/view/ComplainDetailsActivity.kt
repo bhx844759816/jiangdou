@@ -2,7 +2,10 @@ package com.jxqm.jiangdou.ui.user.view
 
 import androidx.fragment.app.Fragment
 import com.bhx.common.base.BaseActivity
+import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.utils.StatusBarTextUtils
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_complain_details.*
 
 /**
@@ -14,6 +17,8 @@ class ComplainDetailsActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_complain_details
 
     override fun initView() {
+        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
+        StatusBarTextUtils.setLightStatusBar(this, true)
         when (intent.getIntExtra("ComplainType", -1)) {
             0 -> {
                 mFragment = ComplainChargeTypeFragment()
@@ -39,5 +44,9 @@ class ComplainDetailsActivity : BaseActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.flFragmentParent, mFragment)
         transaction.commit()
+        complainDetailsBack.clickWithTrigger {
+            finish()
+        }
+
     }
 }

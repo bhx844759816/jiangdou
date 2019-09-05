@@ -99,11 +99,11 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     }
 
-    void setIsCanceledOnTouchOutside(boolean isCanceledOnTouchOutside) {
+    public void setIsCanceledOnTouchOutside(boolean isCanceledOnTouchOutside) {
         this.isCanceledOnTouchOutside = isCanceledOnTouchOutside;
     }
 
-    void setIsCancelable(boolean isCancelable) {
+    public  void setIsCancelable(boolean isCancelable) {
         this.isCancelable = isCancelable;
     }
 }

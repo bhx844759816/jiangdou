@@ -8,8 +8,10 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.attestation.view.CompanyAttestationActivity
 import com.jxqm.jiangdou.ui.home.vm.MyViewModel
 import com.jxqm.jiangdou.ui.login.view.LoginActivity
+import com.jxqm.jiangdou.ui.user.view.CashOutActivity
 import com.jxqm.jiangdou.ui.user.view.MyCollectionJobActivity
 import com.jxqm.jiangdou.ui.user.view.MyResumeActivity
+import com.jxqm.jiangdou.ui.user.view.SettingActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.MyServiceDialog
@@ -26,23 +28,37 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //用户名称
         tvUserName.clickWithTrigger {
             startActivity<LoginActivity>()
         }
+        //用户简历
         ivUserResume.clickWithTrigger {
             startActivity<MyResumeActivity>()
         }
+        //收藏数
         llMyCollection.clickWithTrigger {
             startActivity<MyCollectionJobActivity>()
         }
+        //我的收藏
         rlMyCollection.clickWithTrigger {
             startActivity<MyCollectionJobActivity>()
         }
+        //企业认证
         rlCompanyAttestation.clickWithTrigger {
             startActivity<CompanyAttestationActivity>()
         }
+        //客服
         rlMyService.clickWithTrigger {
             activity?.let { activity -> MyServiceDialog.show(activity) }
+        }
+        //提现
+        llMyMoney.clickWithTrigger {
+            startActivity<CashOutActivity>()
+        }
+        //
+        ivSetting.clickWithTrigger {
+            startActivity<SettingActivity>()
         }
 
     }

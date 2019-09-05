@@ -5,7 +5,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.bhx.common.base.BaseActivity
 import com.google.android.material.tabs.TabLayout
+import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.utils.StatusBarTextUtils
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_employ_record.*
 
 /**
@@ -18,6 +21,8 @@ class EmployRecordActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_employ_record
 
     override fun initView() {
+        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
+        StatusBarTextUtils.setLightStatusBar(this, true)
         mListFragment.add(EmployRecordSignUpFragment())
         mListFragment.add(EmployRecordEmploymentFragment())
         mListFragment.add(EmployRecordReportDutyFragment())
@@ -32,6 +37,9 @@ class EmployRecordActivity : BaseActivity() {
         tabLayout.addTab(mTitles[4])
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
         tabLayout.setupWithViewPager(viewPager)
+        myEmployRecordBack.clickWithTrigger {
+            finish()
+        }
     }
 
     inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {

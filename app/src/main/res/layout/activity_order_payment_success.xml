@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical">
 
     <ImageView
@@ -16,28 +17,37 @@
 
     <RelativeLayout
         android:id="@+id/rlTopBar"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:id="@+id/orderPaymentSuccessBack"
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:background="@drawable/icon_back_white" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/icon_back_white" />
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="71dp"
             android:layout_height="23dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             android:layout_marginRight="13dp"
             android:background="@drawable/shape_deposit_rule"
             android:gravity="center"
             android:text="押金规则"
+            android:layout_marginTop="10dp"
             android:textColor="@color/white"
             android:textSize="@dimen/text_big_small_size" />
 

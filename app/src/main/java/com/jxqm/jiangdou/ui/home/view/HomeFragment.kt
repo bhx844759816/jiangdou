@@ -2,86 +2,70 @@ package com.jxqm.jiangdou.ui.home.view
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
-import com.bhx.common.adapter.rv.BaseSwipeRvFragment
-import com.bhx.common.adapter.rv.LoadMoreAdapter
-import com.bhx.common.adapter.rv.MultiItemTypeAdapter
-import com.bhx.common.adapter.rv.holder.ViewHolder
-import com.bhx.common.adapter.rv.listener.OnItemClickListener
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bhx.common.base.BaseFragment
+import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.R
-import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.HomeItemModel
 import com.jxqm.jiangdou.model.HomeItemTypeModel
 import com.jxqm.jiangdou.model.HomeModel
 import com.jxqm.jiangdou.model.HomeTopModel
 import com.jxqm.jiangdou.ui.city.SelectCity
 import com.jxqm.jiangdou.ui.home.adapter.HomeAdapter
-import com.jxqm.jiangdou.ui.home.vm.HomeViewModel
 import com.jxqm.jiangdou.ui.job.view.JobCompanyListActivity
-import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
+import com.jxqm.jiangdou.view.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
- * 首页Fragment
- * Created by Administrator on 2019/8/20.
+ * Created By bhx On 2019/9/5 0005 14:38
  */
-class HomeFragment : BaseSwipeRvFragment<HomeViewModel>() {
+
+class HomeFragment : BaseFragment() {
+
+
     private val mHomeModelList = arrayListOf<HomeModel>()
-    override fun createRecycleViewAdapter(): MultiItemTypeAdapter<*> = HomeAdapter(mContext)
-
-    override fun refresh() {
-        Handler().postDelayed({
-            rvViewHelper.dismissSwipeRefresh()
-        }, 2000)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        llSearch.clickWithTrigger {
-            startActivity<JobCompanyListActivity>()
-        }
-        tvLocationCity.clickWithTrigger {
-            startActivity<SelectCity>()
-        }
-        
-        rvViewHelper.adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(view: View?, holder: ViewHolder?, position: Int) {
-                context?.startActivity<JobDetailsActivity>()
-            }
-
-            override fun onItemLongClick(view: View?, holder: ViewHolder?, position: Int): Boolean {
-                return false
-            }
-        })
-    }
-
-    override fun createItemDecoration(): RecyclerView.ItemDecoration? = null
-
-    override fun loadMore() {
-        Handler().postDelayed({
-            rvViewHelper.setOnLoadMoreState(LoadMoreAdapter.LOADING_END)
-        }, 2000)
-    }
-
+    private lateinit var mAdapter: HomeAdapter
     override fun getLayoutId(): Int = R.layout.fragment_home
-
-    override fun getEventKey(): Any = Constants.EVENT_KEY_MAIN_HOME
-
-    override fun isSupportPaging(): Boolean = true
-
-    /**
-     * 页面第一次显示的时候加载
-     */
-    override fun onFirstUserVisible() {
-        super.onFirstUserVisible()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mHomeModelList.add(HomeTopModel(0))
         mHomeModelList.add(HomeItemTypeModel(2))
         mHomeModelList.add(HomeItemModel(1))
         mHomeModelList.add(HomeItemModel(1))
         mHomeModelList.add(HomeItemModel(1))
         mHomeModelList.add(HomeItemModel(1))
-        notifyAdapterDataSetChanged(mHomeModelList)
+        mAdapter = HomeAdapter(mContext)
+        recyclerView.layoutManager = LinearLayoutManager(mContext)
+        recyclerView.adapter = mAdapter
+
+        swipeRefreshLayout.setOnRefreshListener { refreshLayout ->
+            refreshLayout.finishRefresh(2000)//传入false表示刷新失败
+        }
+
+        tvLocationCity.clickWithTrigger {
+            startActivity<SelectCity>()
+        }
+
+        llSearch.clickWithTrigger {
+            startActivity<JobCompanyListActivity>()
+        }
+
+
     }
+
+    override fun fetchData() {
+        LoadingDialog.show(activity!!)
+        Handler().postDelayed({
+            LoadingDialog.dismiss(activity)
+            mAdapter.setDataList(mHomeModelList)
+        }, 2000)
+    }
+
 }

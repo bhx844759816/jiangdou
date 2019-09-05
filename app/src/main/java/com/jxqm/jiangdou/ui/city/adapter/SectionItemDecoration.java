@@ -14,10 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jxqm.jiangdou.ui.city.model.City;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SectionItemDecoration extends RecyclerView.ItemDecoration {
-    private List<City> mData;
+    private ArrayList<City> mData;
     private Paint mBgPaint;
     private TextPaint mTextPaint;
     private Rect mBounds;
@@ -27,7 +28,7 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
     private int mTextColor;
     private int mTextSize;
 
-    public SectionItemDecoration(Context context, List<City> data, int bgColor, int sectionHeight, int textSize, int textColor) {
+    public SectionItemDecoration(Context context, ArrayList<City> data, int bgColor, int sectionHeight, int textSize, int textColor) {
         this.mData = data;
         this.mContext = context;
         this.mBgColor = bgColor;
@@ -42,7 +43,7 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
         this.mBounds = new Rect();
     }
 
-    public void setData(List<City> data) {
+    public void setData(ArrayList<City> data) {
         this.mData = data;
     }
 

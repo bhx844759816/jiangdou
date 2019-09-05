@@ -3,8 +3,11 @@ package com.jxqm.jiangdou.ui.employee.view
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.common.base.BaseActivity
+import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.ui.employee.adapter.ResumeDetailsAdapter
+import com.jxqm.jiangdou.utils.StatusBarTextUtils
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_resume_details.*
 
 /**
@@ -16,9 +19,15 @@ class ResumeDetailsActivity : BaseActivity() {
     private lateinit var mAdapter: ResumeDetailsAdapter
     override fun getLayoutId(): Int = R.layout.activity_resume_details
     override fun initView() {
+        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
+        StatusBarTextUtils.setLightStatusBar(this, true)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         mAdapter = ResumeDetailsAdapter(this)
         mAdapter.setDataList(mPhotoList)
         recyclerView.adapter = mAdapter
+
+        resumeDetailsBack.clickWithTrigger {
+            finish()
+        }
     }
 }

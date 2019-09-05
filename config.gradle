@@ -39,6 +39,8 @@ version.statusBarUtil = "1.4.0"
 version.bottomNavigationBar = "2.1.0"
 version.viewShadow = "0.0.4-beta3"
 version.smartRefresh = "2.0.0-alpha-1"
+//
+version.gifDrawable= "1.2.17"
 
 deps.versions = version
 //系统库
@@ -92,5 +94,7 @@ deps.permission = "com.tbruyelle.rxpermissions2:rxpermissions:$version.permissio
 deps.viewShadow = "com.loopeer.lib:shadow:$version.viewShadow"
 //上下拉刷新
 deps.smartRefresh = "com.scwang.smart:refresh-layout-kernel:$version.smartRefresh"
+//gif图
+deps.gifDrawable = "pl.droidsonroids.gif:android-gif-drawable:$version.gifDrawable"
 //底部导航
 deps.bottomNavigationBar = "com.ashokvarma.android:bottom-navigation-bar:$version.bottomNavigationBar"

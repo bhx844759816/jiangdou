@@ -2,13 +2,19 @@ package com.jxqm.jiangdou.view.refresh
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
+import com.jxqm.jiangdou.R
 import com.scwang.smart.refresh.layout.api.RefreshHeader
 import com.scwang.smart.refresh.layout.api.RefreshKernel
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.constant.RefreshState
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle
+import pl.droidsonroids.gif.GifDrawable
+import pl.droidsonroids.gif.GifImageView
 
 /**
  * 刷新头
@@ -19,8 +25,17 @@ class BaseRefreshHeader @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0
 ) : LinearLayout(context, attributeSet, defStyle), RefreshHeader {
-    override fun onFinish(refreshLayout: RefreshLayout, success: Boolean): Int {
+    private  var gifImageView: GifImageView
+    private var gifFromAssets: GifDrawable? = null
 
+    init {
+        val view = LayoutInflater.from(context).inflate(R.layout.view_refresh_header,this)
+        gifImageView  =  view.findViewById(R.id.gifImageView)
+        gifFromAssets = GifDrawable(context.assets, "loading/gif_refresh.gif")
+        gifImageView.setImageDrawable(gifFromAssets)
+    }
+
+    override fun onFinish(refreshLayout: RefreshLayout, success: Boolean): Int {
         return 500 //延迟500ms在回弹
     }
 
@@ -31,9 +46,11 @@ class BaseRefreshHeader @JvmOverloads constructor(
     }
 
     override fun onReleased(refreshLayout: RefreshLayout, height: Int, maxDragHeight: Int) {
+
     }
 
     override fun setPrimaryColors(vararg colors: Int) {
+
     }
 
     override fun onStartAnimator(refreshLayout: RefreshLayout, height: Int, maxDragHeight: Int) {

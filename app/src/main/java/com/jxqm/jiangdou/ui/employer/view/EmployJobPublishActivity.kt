@@ -22,5 +22,9 @@ class EmployJobPublishActivity : BaseActivity() {
         tvPayMoney.clickWithTrigger {
             startActivity<OrderPaymentActivity>()
         }
+
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 }

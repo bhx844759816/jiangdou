@@ -7,8 +7,11 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.LogUtils
+import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
+import kotlinx.android.synthetic.main.activity_job_preview.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -21,7 +24,8 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView() {
-        super.initView()
+        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
+        StatusBarTextUtils.setLightStatusBar(this, true)
         requestPermission()
         mListFragment.add(HomeFragment())
         mListFragment.add(WorkFragment())

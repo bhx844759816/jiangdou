@@ -3,7 +3,9 @@ package com.jxqm.jiangdou.ui.user.view
 import android.os.Bundle
 import android.view.View
 import com.bhx.common.base.BaseActivity
+import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_user_complain.*
@@ -17,6 +19,12 @@ class UserComplainActivity : BaseActivity() {
 
     override fun initView() {
         super.initView()
+        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
+        StatusBarTextUtils.setLightStatusBar(this, true)
+        userComplainBack.clickWithTrigger {
+            finish()
+        }
+
         llComplainChargeType.clickWithTrigger {
             onViewChick(it)
         }

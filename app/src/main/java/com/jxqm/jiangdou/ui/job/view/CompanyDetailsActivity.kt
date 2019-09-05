@@ -39,6 +39,8 @@ class CompanyDetailsActivity : BaseDataActivity<CompanyDetailsViewModel>() {
         llComplainCompany.clickWithTrigger {
             startActivity<UserComplainActivity>()
         }
-
+        toolBar.setNavigationOnClickListener {
+            finish()
+        }
     }
 }

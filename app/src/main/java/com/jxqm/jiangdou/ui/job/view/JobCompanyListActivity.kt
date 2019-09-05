@@ -6,8 +6,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.bhx.common.base.BaseActivity
 import com.google.android.material.tabs.TabLayout
+import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.ui.city.SelectCity
+import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_job_company_list.*
@@ -25,6 +27,8 @@ class JobCompanyListActivity : BaseActivity() {
 
     override fun initView() {
         super.initView()
+        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
+        StatusBarTextUtils.setLightStatusBar(this, true)
         mListFragment.add(JobListFragment())
         mListFragment.add(CompanyListFragment())
         viewPager.offscreenPageLimit = 2
@@ -39,6 +43,10 @@ class JobCompanyListActivity : BaseActivity() {
         tabLayout.addTab(mTitles[1])
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
         tabLayout.setupWithViewPager(viewPager)
+
+        cancel.clickWithTrigger {
+            finish()
+        }
     }
 
     inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {

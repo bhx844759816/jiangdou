@@ -23,6 +23,10 @@ class JobDetailsActivity : BaseActivity() {
         val layoutParams = nestedScrollView.layoutParams as CoordinatorLayout.LayoutParams
         layoutParams.bottomMargin = getStatusBarHeight() + DensityUtil.dip2px(this, 60f)
         nestedScrollView.fullScroll(View.FOCUS_UP)
+
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     private fun getStatusBarHeight(): Int {

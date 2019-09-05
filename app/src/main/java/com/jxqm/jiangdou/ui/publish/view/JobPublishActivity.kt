@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.ToastUtils
+import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
@@ -29,6 +30,7 @@ class JobPublishActivity : BaseActivity(), OnJobPublishCallBack {
 
     override fun initView() {
         super.initView()
+        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
         toolBar.setNavigationOnClickListener {
             onBackPressed()
         }

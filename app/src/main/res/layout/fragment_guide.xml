@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/ivGuideBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_guide_bg_01"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="108dp"
+        />
+    <TextView
+        android:id="@+id/tvGuideTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_big_size"
+        android:text="日结工作，现劳现结"
+        />
+    <TextView
+        android:id="@+id/tvGuideDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/text_big_small_size"
+        android:textColor="@color/job_top_title_color"
+        android:layout_marginTop="14dp"
+        android:text="海量优质日结工作任你选"
+        />
+</LinearLayout>

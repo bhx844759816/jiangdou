@@ -10,6 +10,7 @@ import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import com.jxqm.jiangdou.ui.publish.view.JobPublishActivity
+import com.jxqm.jiangdou.view.dialog.LoadingDialog
 
 
 /**
@@ -24,11 +25,15 @@ class LoginActivity : BaseDataActivity<LoginViewModel>() {
     override fun initView() {
         super.initView()
         tvLogin.isClickable = false
+        myLoginBack.clickWithTrigger {
+            finish()
+        }
         tvAccountLogin.clickWithTrigger {
             startActivity<PhoneLoginActivity>()
         }
         tvLogin.clickWithTrigger {
             startActivity<VerifyCodeActivity>()
+//            LoadingDialog.show(this)
         }
 
         etInputPhone.addTextChangedListener {

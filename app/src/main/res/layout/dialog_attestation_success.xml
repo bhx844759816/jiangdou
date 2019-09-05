@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/flBottomBg"
+        android:layout_width="match_parent"
+        android:layout_height="345dp"
+        android:background="@drawable/shape_dialog_bg"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:text="资料提交成功！"
+        android:textColor="@color/text_title"
+        android:textSize="@dimen/text_big_title_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/flBottomBg"
+        app:layout_constraintRight_toRightOf="@id/flBottomBg"
+        app:layout_constraintTop_toTopOf="@id/flBottomBg" />
+
+    <TextView
+        android:id="@+id/tvContentOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="您的资料已成功提交～"
+        android:textColor="@color/text_hint"
+        android:textSize="@dimen/text_default_size"
+        app:layout_constraintLeft_toLeftOf="@id/flBottomBg"
+        app:layout_constraintRight_toRightOf="@id/flBottomBg"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <TextView
+        android:id="@+id/tvContentTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="小豆同学将在1-3个工作日内给您审核结果"
+        android:textColor="@color/text_hint"
+        android:textSize="@dimen/text_default_size"
+        app:layout_constraintLeft_toLeftOf="@id/flBottomBg"
+        app:layout_constraintRight_toRightOf="@id/flBottomBg"
+        app:layout_constraintTop_toBottomOf="@id/tvContentOne" />
+
+    <TextView
+        android:id="@+id/tvSubmitConfirm"
+        android:layout_width="216dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/shape_button_select"
+        android:gravity="center"
+        android:text="我知道啦"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_btn_size"
+        app:layout_constraintLeft_toLeftOf="@id/flBottomBg"
+        app:layout_constraintRight_toRightOf="@id/flBottomBg"
+        app:layout_constraintTop_toBottomOf="@id/tvContentTwo" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+
+        android:background="@drawable/icon_attestation_success_bg"
+        app:layout_constraintBottom_toTopOf="@id/tvTitle"
+        app:layout_constraintLeft_toLeftOf="@id/flBottomBg"
+        app:layout_constraintRight_toRightOf="@id/flBottomBg" />
+</androidx.constraintlayout.widget.ConstraintLayout>

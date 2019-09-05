@@ -2,6 +2,7 @@ package com.jxqm.jiangdou.ui.home.view
 
 import android.os.Bundle
 import android.view.View
+import com.bhx.common.base.BaseFragment
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
@@ -15,12 +16,9 @@ import kotlinx.android.synthetic.main.fragment_work.*
  * 工作台界面
  * Created by Administrator on 2019/8/20.
  */
-class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
+class WorkFragment : BaseFragment() {
     private var isEmployee = false
     override fun getLayoutId(): Int = R.layout.fragment_work
-
-    override fun getEventKey(): Any = Constants.EVENT_KEY_MAIN_WORK
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,8 +34,11 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
                 showEmployeeFragment()
             }
         }
-
         showEmployeeFragment()
+    }
+
+    override fun fetchData() {
+
     }
 
     private fun showEmployeeFragment() {
