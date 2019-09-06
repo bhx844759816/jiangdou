@@ -33,10 +33,6 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
         ivUserResume.clickWithTrigger {
             startActivity<MyResumeActivity>()
         }
-        //收藏数
-        llMyCollection.clickWithTrigger {
-            startActivity<MyCollectionJobActivity>()
-        }
         //我的收藏
         rlMyCollection.clickWithTrigger {
             startActivity<MyCollectionJobActivity>()
@@ -51,7 +47,7 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
         }
         //提现
         llMyMoney.clickWithTrigger {
-            startActivity<CashOutActivity>()
+            startActivity<UserWalletActivity>()
         }
         //
         ivSetting.clickWithTrigger {

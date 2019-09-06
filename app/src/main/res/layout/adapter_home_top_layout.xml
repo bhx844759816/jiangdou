@@ -3,18 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingBottom="15dp">
+    android:orientation="vertical">
 
     <com.jxqm.jiangdou.view.banner.BannerView
         android:id="@+id/bannerView"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         app:bv_intervalInMillis="3000"
-        app:bv_viewCornerRadius="5dp"
+        app:bv_scrollMode="INTERVAL"
+        app:bv_viewCornerRadius="0dp"
         app:bv_viewHeight="130dp">
 
         <com.jxqm.jiangdou.view.banner.indicator.CrossBarIndicator
@@ -31,9 +28,12 @@
     </com.jxqm.jiangdou.view.banner.BannerView>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -44,215 +44,186 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_dispatch"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="派单"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_sale"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="销售"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_shop_guide"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="导购"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_waiter"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="服务员"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_model"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="模特"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_teacher"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
-                android:text="家教"
+                android:text="家庭导师"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_designer"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="设计"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_service"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="客服"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_internship"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="实习"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/icon_dispatch"
-                android:drawablePadding="8dp"
+                android:drawableTop="@drawable/icon_home_all_job"
+                android:drawablePadding="15dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="全部"
                 android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_small_size" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:background="@color/white"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/shape_home_item_one">
+            android:background="@drawable/icon_home_search_job_item">
 
             <TextView
-                android:id="@+id/tvItemOneTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="职业测试"
-                android:textColor="@color/text_default"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:lineHeight="20dp"
+                android:text="求职\n指南"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_small_size" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvItemOneTitle"
-                android:layout_alignLeft="@id/tvItemOneTitle"
-                android:layout_marginTop="5dp"
-                android:text="择业不难"
-                android:textColor="@color/text_hint"
-                android:textSize="@dimen/text_big_small_size" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:layout_weight="1"
-            android:background="@drawable/shape_home_item_two">
+            android:background="@drawable/icon_home_task_center_item">
 
             <TextView
-                android:id="@+id/tvItemTwoTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="优选公司"
-                android:textColor="@color/text_default"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:lineHeight="20dp"
+                android:text="任务\n中心"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_small_size" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvItemTwoTitle"
-                android:layout_alignLeft="@id/tvItemTwoTitle"
-                android:layout_marginTop="5dp"
-                android:text="轻松高薪"
-                android:textColor="@color/text_hint"
-                android:textSize="@dimen/text_big_small_size" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/shape_home_item_three">
+            android:background="@drawable/icon_home_job_help_item">
 
             <TextView
-                android:id="@+id/tvItemThreeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="兼职贴士"
-                android:textColor="@color/text_default"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:lineHeight="20dp"
+                android:text="帮组\n中心"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_small_size" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvItemThreeTitle"
-                android:layout_alignLeft="@id/tvItemThreeTitle"
-                android:layout_marginTop="5dp"
-                android:text="安全可靠"
-                android:textColor="@color/text_hint"
-                android:textSize="@dimen/text_big_small_size" />
         </RelativeLayout>
     </LinearLayout>
 

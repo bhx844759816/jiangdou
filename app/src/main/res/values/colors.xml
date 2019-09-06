@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#82A2FE</color>
     <color name="colorAccent">#82A2FE</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_24">#3dFFFFFF</color>
+    <color name="white_73">#c8FFFFFF</color>
     <color name="text_default">#373737</color>
     <color name="text_title">#474747</color>
     <color name="divider_line">#CDCDCD</color>
@@ -30,6 +32,8 @@
     <color name="color_tips">#ff7a45</color>
     <color name="btn_gray">#BFC4CB</color>
     <color name="my_text_tips">#8b8b8b</color>
+    <color name="bottom_bar_select_text">#2D2D2D</color>
+    <color name="bottom_bar_default_text">#AFAFAF</color>
     <color name="order_bottom_bar_color">#35373E</color>
     <color name="company_details_text_color">#828282</color>
 </resources>

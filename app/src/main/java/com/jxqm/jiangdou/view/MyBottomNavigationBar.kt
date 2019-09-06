@@ -35,22 +35,22 @@ class MyBottomNavigationBar @JvmOverloads constructor(
             R.drawable.icon_home_select,
             "首页"
         ).setInactiveIconResource(R.drawable.icon_home_default)
-            .setActiveColorResource(R.color.colorAccent)
-            .setInActiveColorResource(R.color.text_hint)
+            .setActiveColorResource(R.color.bottom_bar_select_text)
+            .setInActiveColorResource(R.color.bottom_bar_default_text)
 
         val workItemView = BottomNavigationItem(
             R.drawable.icon_work_select,
             "工作台"
         ).setInactiveIconResource(R.drawable.icon_work_default)
-            .setActiveColorResource(R.color.colorAccent)
-            .setInActiveColorResource(R.color.text_hint)
+            .setActiveColorResource(R.color.bottom_bar_select_text)
+            .setInActiveColorResource(R.color.bottom_bar_default_text)
 
         val myItemView = BottomNavigationItem(
             R.drawable.icon_my_select,
             "我的"
         ).setInactiveIconResource(R.drawable.icon_my_default)
-            .setActiveColorResource(R.color.colorAccent)
-            .setInActiveColorResource(R.color.text_hint)
+            .setActiveColorResource(R.color.bottom_bar_select_text)
+            .setInActiveColorResource(R.color.bottom_bar_default_text)
         addItem(homeItemView)
             .addItem(workItemView)
             .addItem(myItemView)

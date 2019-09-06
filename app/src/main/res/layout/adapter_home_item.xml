@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="6dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -23,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="20dp"
             android:layout_toRightOf="@id/ivJobListImg"
             android:text="招聘兼职UI设计师"
             android:textColor="@color/text_title"
@@ -57,5 +58,4 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <View style="@style/DividerLineTheme" />
 </LinearLayout>

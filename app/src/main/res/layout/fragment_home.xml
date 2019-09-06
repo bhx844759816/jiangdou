@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:background="@drawable/icon_search" />
 
             <TextView
@@ -54,13 +54,11 @@
                 android:textSize="@dimen/text_big_small_size" />
         </LinearLayout>
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
-            android:text="使用指南"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_small_size" />
+            android:background="@drawable/icon_home_help" />
     </LinearLayout>
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
