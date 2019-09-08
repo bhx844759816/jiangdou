@@ -5,7 +5,6 @@
         android:id="@+id/ivGuideBg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/icon_guide_bg_01"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="108dp"
         />

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_view_state_network_error" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="网络被绑架啦～"
+            android:textColor="#777777"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvRetryAgain"
+            android:layout_width="124dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_button_select"
+            android:clickable="true"
+            android:drawableLeft="@drawable/icon_view_state_network_error_refresh"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="26dp"
+            android:text="点击刷新"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+
+            />
+    </LinearLayout>
+</FrameLayout>

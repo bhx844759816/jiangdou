@@ -24,6 +24,7 @@ import android.view.ViewGroup
  */
 abstract class BaseDataActivity<T : BaseViewModel<*>> : BaseMVVMActivity<T>() {
     override fun initView() {
+        super.initView()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
     }

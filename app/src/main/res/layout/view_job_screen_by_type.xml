@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <CheckBox
+                android:layout_width="75dp"
+                android:layout_height="32dp"
+                android:background="@drawable/select_screen_item_bg"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/select_publish_job_item_textcolor"
+                android:textSize="@dimen/text_small_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:drawableLeft="@drawable/icon_job_screen_title_one"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="简单易做"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_btn_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="调研"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:drawableLeft="@drawable/icon_job_screen_title_two"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="市场推广"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_btn_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="调研"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:drawableLeft="@drawable/icon_job_screen_title_three"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="餐饮服务"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_btn_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="调研"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:drawableLeft="@drawable/icon_job_screen_title_four"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="模特礼仪"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_btn_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="调研"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="调研"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:drawableLeft="@drawable/icon_job_screen_title_five"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="职业技能"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_btn_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="调研"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="调研"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:drawableLeft="@drawable/icon_job_screen_title_six"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="其他"
+                android:textColor="@color/text_title"
+                android:textSize="@dimen/text_btn_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="调研"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_screen_item_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="拍单"
+                    android:textColor="@color/select_publish_job_item_textcolor"
+                    android:textSize="@dimen/text_small_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_button_select"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_btn_size" />
+
+</LinearLayout>

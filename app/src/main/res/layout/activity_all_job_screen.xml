@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/aboutUsBack"
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/icon_back" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="关于我们"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_title_size" />
+
+        <View
+            style="@style/DividerLineTheme"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="11"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:button="@null"
+                    android:drawableRight="@drawable/select_drop_down_select_bg"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:text="类型"
+                    android:textColor="@color/select_job_list_sort_rule" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/divider_line" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:button="@null"
+                    android:drawableRight="@drawable/select_drop_down_select_bg"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:text="类型"
+                    android:textColor="@color/select_job_list_sort_rule" />
+            </FrameLayout>
+
+            <View
+
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/divider_line" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:button="@null"
+                    android:drawableRight="@drawable/select_drop_down_select_bg"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:text="类型"
+                    android:textColor="@color/select_job_list_sort_rule" />
+            </FrameLayout>
+
+        </RadioGroup>
+
+        <FrameLayout
+            android:id="@+id/rlScreenJob"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_get_verify_code_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="筛选"
+                android:textColor="@color/job_top_title_color"
+                android:textSize="@dimen/text_small_size" />
+
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="right|bottom"
+                android:layout_margin="2dp"
+                android:background="@drawable/icon_right_down_arrow" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

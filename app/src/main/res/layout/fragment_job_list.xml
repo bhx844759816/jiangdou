@@ -69,8 +69,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="筛选"
                 android:layout_gravity="center"
+                android:text="筛选"
                 android:textColor="@color/job_top_title_color"
                 android:textSize="@dimen/text_small_size" />
 
@@ -79,8 +79,7 @@
                 android:layout_height="5dp"
                 android:layout_gravity="right|bottom"
                 android:layout_margin="2dp"
-                android:background="@drawable/icon_right_down_arrow"
-                />
+                android:background="@drawable/icon_right_down_arrow" />
         </FrameLayout>
 
     </RelativeLayout>

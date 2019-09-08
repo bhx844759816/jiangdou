@@ -21,6 +21,12 @@ class Constants {
         /**
          *     ************************LiveBus事件对象***************************************
          */
+        //对话框的
+        const val EVENT_KEY_LOADING_DIALOG = "event_key_loading_dialog"
+        const val TAG_LOADING_DIALOG = "tag_loading_dialog"
+        //http请求报错
+        const val EVENT_KEY_HTTP_REQUEST_ERROR = "event_key_http_request_error"
+        const val TAG_HTTP_REQUEST_ERROR = "tag_http_request_error"
         //
         const val EVENT_KEY_LOGIN = "event_key_login" //登录界面
         const val TAG_LOGIN_RESULT = "tag_login_result" //

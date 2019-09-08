@@ -26,6 +26,7 @@ class GuideFragment : BaseLazyFragment() {
         super.onViewCreated(view, savedInstanceState)
         mType = arguments?.getInt("type")!!
         tvGuideTitle.text = mTitles[mType]
+        ivGuideBg.setBackgroundResource(mBgRes[mType])
         val spannableString = SpannableString(mDescriptions[mType])
         val colorAccent = ForegroundColorSpan(resources.getColor(R.color.colorAccent))
         spannableString.setSpan(colorAccent, 2, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

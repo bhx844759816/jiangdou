@@ -20,7 +20,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug{
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -51,6 +51,7 @@ dependencies {
     implementation deps.viewShadow
     implementation deps.smartRefresh
     implementation deps.gifDrawable
+    implementation deps.uiStatus
     implementation project(':common_base')
     implementation project(':common_photo')
     testImplementation 'junit:junit:4.12'

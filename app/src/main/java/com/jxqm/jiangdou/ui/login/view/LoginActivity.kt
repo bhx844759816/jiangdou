@@ -32,8 +32,9 @@ class LoginActivity : BaseDataActivity<LoginViewModel>() {
             startActivity<PhoneLoginActivity>()
         }
         tvLogin.clickWithTrigger {
-            startActivity<VerifyCodeActivity>()
-//            LoadingDialog.show(this)
+            val phone = etInputPhone.text.toString().trim()
+            mViewModel.sendSmsCode("100", phone)
+//            startActivity<VerifyCodeActivity>()
         }
 
         etInputPhone.addTextChangedListener {

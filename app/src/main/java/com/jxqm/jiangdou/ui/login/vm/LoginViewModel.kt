@@ -10,8 +10,9 @@ class LoginViewModel : BaseViewModel<LoginRepository>() {
     /**
      * 调用登录接口
      */
-    fun doLogin(phone: String) {
-
+    fun sendSmsCode(deviceId: String, phone: String) {
+        val params = mapOf("phone" to phone, "deviceId" to deviceId, "smsType" to "0")
+        mRepository.sendSmsCode(params)
     }
 
     /**

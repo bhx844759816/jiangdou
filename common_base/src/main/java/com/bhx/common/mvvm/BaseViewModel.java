@@ -9,7 +9,7 @@ import com.bhx.common.utils.ReflexUtils;
  * BaseViewModel
  */
 public class BaseViewModel<T extends BaseRepository> extends ViewModel {
-    T mRepository;
+    public T mRepository;
 
     public BaseViewModel() {
         mRepository = ReflexUtils.getNewInstance(this, 0);

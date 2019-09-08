@@ -20,7 +20,7 @@ import java.util.List;
  * @param <T>
  */
 public abstract class BaseMVVMActivity<T extends BaseViewModel> extends BaseActivity {
-    protected T mViewModel;
+    public T mViewModel;
     private List<Object> eventKeys = new ArrayList<>();
 
     @Override
