@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.http
 
 import com.jxqm.jiangdou.model.TokenModel
+import com.jxqm.jiangdou.model.UserModel
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -20,6 +21,9 @@ interface ApiService {
     @Headers("Content-type:application/json")
     @POST(Api.SEND_SMS_CODE)
     fun register(@Body body: RequestBody): Observable<HttpResult<Any>>
+
+    @GET(Api.USER_INFO)
+    fun getUserInfo():Observable<HttpResult<UserModel>>
 
     /**
      * username

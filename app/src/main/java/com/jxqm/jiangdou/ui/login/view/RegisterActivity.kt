@@ -76,7 +76,7 @@ class RegisterActivity : BaseDataActivity<RegisterViewModel>() {
         val passWord = etPassword.text.toString().trim()
         return !isSendCodeSuccess and PhoneUtils.isMobile(phone) and code.isNotEmpty() and passWord.isNotEmpty() and (passWord.length > 6)
     }
-
+   
     override fun dataObserver() {
         registerObserver(Constants.TAG_REGISTER_GET_CODE_SUCCESS, Boolean::class.java).observe(this, Observer {
             //发送验证码成功
@@ -100,6 +100,7 @@ class RegisterActivity : BaseDataActivity<RegisterViewModel>() {
             Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take((mCount + 1).toLong()) //
                 .doOnSubscribe {
+                    isSendCodeSuccess = true
                     tvCodeReSend.isEnabled = false
                 }.subscribeOn(AndroidSchedulers.mainThread())
                 .compose(applySchedulers())

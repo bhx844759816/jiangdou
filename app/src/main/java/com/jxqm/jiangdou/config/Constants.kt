@@ -16,6 +16,8 @@ class Constants {
         //    public static final String DEVICE_WIFI_SSID = "benbb";
         const val DEVICE_WIFI_PASSWORD = "dadpat@123"
         const val APP_DOWNLAND_NAME = "dadpat.apk"
+        const val ACCESS_TOKEN = "access_token"
+        const val REFRESH_TOKEN = "refresh_token"
 
 
         /**
@@ -32,7 +34,7 @@ class Constants {
         const val TAG_LOGIN_CODE_SUCCESS = "tag_login_code_success" //
 
         const val EVENT_KEY_PHONE_LOGIN = "event_key_phone_login" //手机号登录几面
-
+        const val TAG_PHONE_LOGIN_SUCCESS = "tag_phone_login_success" //
 
         const val EVENT_KEY_VERIFY_CODE = "event_key_verify_code" //验证码界面
         const val TAG_SEND_SMS_CODE_RESULT = "tag_send_sms_code_result" //发送验证码结果

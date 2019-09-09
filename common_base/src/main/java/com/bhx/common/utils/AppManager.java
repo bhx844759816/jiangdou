@@ -129,7 +129,15 @@ public class AppManager {
             }
         }
     }
-
+    public void finishOthersActivity(Class<?> clazz) {
+        Iterator<Activity> iterator = activityStack.iterator();
+        while (iterator.hasNext()) {
+            Activity activity_ = iterator.next();
+            if (!activity_.getClass().equals(clazz)) {
+                finishActivity(activity_);
+            }
+        }
+    }
     /**
      * 退出应用程序
      */

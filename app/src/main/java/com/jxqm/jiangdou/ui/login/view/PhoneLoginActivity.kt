@@ -14,10 +14,15 @@ import android.text.Spannable
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.text.method.TransformationMethod
+import androidx.lifecycle.Observer
+import com.bhx.common.utils.AppManager
+import com.bhx.common.utils.DeviceUtils
 import com.bhx.common.utils.PhoneUtils
 import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ext.isEnable
+import com.jxqm.jiangdou.model.UserModel
+import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.utils.click
 import kotlinx.android.synthetic.main.activity_forget_psd.*
 import kotlinx.android.synthetic.main.activity_login.*
@@ -31,11 +36,7 @@ import kotlinx.android.synthetic.main.activity_phone_login.tvLogin
  * Created By bhx On 2019/8/6 0006 09:32
  */
 class PhoneLoginActivity : BaseDataActivity<PhoneLoginViewModel>() {
-
     var isEyeOpen = false
-    private var isPhoneInput = false
-    private var isPasswordInput = false
-
 
     override fun getEventKey(): Any = Constants.EVENT_KEY_PHONE_LOGIN
 
@@ -64,11 +65,14 @@ class PhoneLoginActivity : BaseDataActivity<PhoneLoginViewModel>() {
             startActivity<ForgetPsdActivity>()
         }
         tvRegister.clickWithTrigger {
-            startActivity<RegisterActivity>()
-        }
-        tvLogin.clickWithTrigger {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivityForResult(intent, REQUEST_CODE)
+        }
+        tvLogin.clickWithTrigger {
+            val phone = etInputPhone.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+            val deviceId = DeviceUtils.getDeviceId(this)
+            mViewModel.doLogin(phone, password, deviceId)
         }
     }
 
@@ -81,7 +85,6 @@ class PhoneLoginActivity : BaseDataActivity<PhoneLoginViewModel>() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-
 
     private fun isLoginState(): Boolean {
         val phone = etInputPhone.text.toString().trim()
@@ -101,6 +104,14 @@ class PhoneLoginActivity : BaseDataActivity<PhoneLoginViewModel>() {
         if (spanText != null) {
             Selection.setSelection(spanText, spanText.length)
         }
+    }
+
+    override fun dataObserver() {
+        registerObserver(Constants.TAG_PHONE_LOGIN_SUCCESS, UserModel::class.java).observe(this, Observer {
+            //登录成功
+            //发送登录成功得消息
+            AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
+        })
     }
 
     companion object {
