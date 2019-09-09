@@ -1,5 +1,7 @@
 package com.jxqm.jiangdou.ui.login.view
 
+import android.app.Activity
+import android.content.Intent
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
@@ -12,12 +14,16 @@ import android.text.Spannable
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.text.method.TransformationMethod
+import com.bhx.common.utils.PhoneUtils
 import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.ext.addTextChangedListener
+import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.utils.click
 import kotlinx.android.synthetic.main.activity_forget_psd.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_phone_login.etInputPhone
 import kotlinx.android.synthetic.main.activity_phone_login.etPassword
+import kotlinx.android.synthetic.main.activity_phone_login.tvLogin
 
 
 /**
@@ -52,39 +58,35 @@ class PhoneLoginActivity : BaseDataActivity<PhoneLoginViewModel>() {
             }
             checkPasswordShowState()
         }
+        tvLogin.isEnable(etInputPhone) { isLoginState() }
+        tvLogin.isEnable(etPassword) { isLoginState() }
         tvForgetPsd.clickWithTrigger {
             startActivity<ForgetPsdActivity>()
         }
         tvRegister.clickWithTrigger {
             startActivity<RegisterActivity>()
         }
-        etInputPhone.addTextChangedListener {
-            afterTextChanged {
-                val isEmpty = it?.toString()?.isEmpty()
-                isPasswordInput = isEmpty == null || isEmpty
-                changeBtnState()
-            }
-        }
-        etPassword.addTextChangedListener {
-            afterTextChanged {
-                val isEmpty = it?.toString()?.isEmpty()
-                isPasswordInput = isEmpty == null || isEmpty
-                changeBtnState()
-            }
-        }
         tvLogin.clickWithTrigger {
-            ToastUtils.toastShort("登录成功")
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE)
         }
     }
 
-    private fun changeBtnState() {
-        if (isPhoneInput && isPasswordInput) {
-            tvLogin.isEnabled = true
-            tvLogin.setBackgroundResource(R.drawable.icon_shadow_btn)
-        } else {
-            tvLogin.isEnabled = false
-            tvLogin.setBackgroundResource(R.drawable.shape_button_default)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val phone = data?.getStringExtra("phone")
+            phone?.let {
+                etInputPhone.setText(it)
+            }
         }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
+    private fun isLoginState(): Boolean {
+        val phone = etInputPhone.text.toString().trim()
+        val password = etPassword.text.toString().trim()
+        return PhoneUtils.isMobile(phone) and password.isNotEmpty()
     }
 
     private fun checkPasswordShowState() {
@@ -99,5 +101,9 @@ class PhoneLoginActivity : BaseDataActivity<PhoneLoginViewModel>() {
         if (spanText != null) {
             Selection.setSelection(spanText, spanText.length)
         }
+    }
+
+    companion object {
+        const val REQUEST_CODE = 0x01
     }
 }

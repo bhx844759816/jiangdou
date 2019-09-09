@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentActivity
 import com.bhx.common.base.BaseDialogFragment
 import com.bhx.common.utils.DensityUtil
 import com.jxqm.jiangdou.R
-import com.jxqm.jiangdou.view.dialog.UserAgreementDialog
 import kotlinx.android.synthetic.main.dialog_calendar_range_select.*
 
 /**

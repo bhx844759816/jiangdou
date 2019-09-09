@@ -194,6 +194,10 @@
 -dontwarn android.support.**
 -keep class android.support.** {*; }
 -dontwarn javax.annotation.**
+# 百度地图混淆配置
+-keep class com.baidu.** {*;}
+-keep class mapsdkvi.com.** {*;}
+-dontwarn com.baidu.**
 # 删除log代码
 -assumenosideeffects class android.util.Log {
     public static boolean isLoggable(java.lang.String, int);

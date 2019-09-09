@@ -1,31 +1,32 @@
 package com.jxqm.jiangdou.ui.login.view
 
-import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
-import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.http.applySchedulers
+import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.ui.login.vm.VerifyCodeViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
-import com.jxqm.jiangdou.utils.startActivity
-import com.jxqm.jiangdou.view.dialog.UserAgreementDialog
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_verify_code.*
+import java.util.concurrent.TimeUnit
 
 /**
  * 验证码界面
  * Created By bhx On 2019/8/6 0006 09:35
  */
 class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
+    private var mCount = 60
+    private var mPhone: String? = null
+    private var mDeviceId: String? = null
     val codeArras = arrayListOf<String>()
     override fun getLayoutId(): Int = R.layout.activity_verify_code
 
@@ -51,7 +52,6 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
                         requestFocus(etInputNumFour)
                     }
                     4 -> {
-                        ToastUtils.toastShort("输入完成")
                         tvLogin.isEnabled = true
                         tvLogin.setBackgroundResource(R.drawable.shape_button_select)
                     }
@@ -89,15 +89,28 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
 
     override fun dataObserver() {
         super.dataObserver()
-        registerObserver(Constants.TAG_AGREE_CONTINUE, Boolean::class.java).observe(this, Observer {
+        registerObserver(Constants.TAG_SEND_SMS_CODE_RESULT, Boolean::class.java).observe(this, Observer {
             if (it) {
-                startActivity<RegisterActivity>()
+                mCount = 60
+                ToastUtils.toastShort("发送验证码成功")
+                smsCodeCountDown()
             }
+        })
+        registerObserver(Constants.TAG_GET_TOKEN_RESULT, TokenModel::class.java).observe(this, Observer {
+            if (it is TokenModel) {
+                ToastUtils.toastShort("登录成功")
+            }
+        })
+        registerObserver(Constants.TAG_GET_TOKEN_RESULT_ERROR, Throwable::class.java).observe(this, Observer {
+            ToastUtils.toastShort("验证失败，请重新发送")
         })
     }
 
     override fun initView() {
         super.initView()
+        mPhone = intent.getStringExtra("phone")
+        mDeviceId = intent.getStringExtra("deviceId")
+        smsCodeCountDown()
         flBack.clickWithTrigger {
             finish()
         }
@@ -139,8 +152,43 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
             return@setOnKeyListener false
         }
         tvLogin.clickWithTrigger {
-            ToastUtils.toastShort("登录成功")
+            if (mPhone.isNullOrEmpty() || mDeviceId.isNullOrEmpty()) {
+                return@clickWithTrigger
+            }
+            val code = codeArras.joinToString("")
+            LogUtils.i("验证码$code")
+            mViewModel.getToken(mDeviceId!!, mPhone!!, code)
         }
+        tvCodeReSend.clickWithTrigger {
+            if (mPhone.isNullOrEmpty() || mDeviceId.isNullOrEmpty()) {
+                return@clickWithTrigger
+            }
+            mViewModel.sendSmsCode(mPhone!!, mDeviceId!!)
+        }
+    }
+
+    /**
+     * 发送验证码成功后的倒计时
+     */
+    private fun smsCodeCountDown() {
+        addDisposable(
+            Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take((mCount + 1).toLong()) //
+                .doOnSubscribe {
+                    tvCodeReSend.isEnabled = false
+                }.subscribeOn(AndroidSchedulers.mainThread())
+                .compose(applySchedulers())
+                .subscribe({
+                    mCount--
+                    tvCodeReSend.text = String.format("%ss后可重新发送", mCount)
+                }, {
+                    tvCodeReSend.isEnabled = true
+                    tvCodeReSend.text = "点击重新发送"
+                }, {
+                    tvCodeReSend.isEnabled = true
+                    tvCodeReSend.text = "点击重新发送"
+                })
+        )
     }
 
 

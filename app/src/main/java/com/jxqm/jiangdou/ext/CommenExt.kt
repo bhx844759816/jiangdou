@@ -5,11 +5,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
+import com.jxqm.jiangdou.R
 
 /**
  * Created By bhx On 2019/8/19 0019 09:15
@@ -25,6 +27,10 @@ fun Button.isEnable(et: EditText, method: () -> Boolean) {
         }
     }
 }
+
+/**
+ * 判断是否可以点击
+ */
 fun TextView.isEnable(et: EditText, method: () -> Boolean) {
     val textView = this
     et.addTextChangedListener {
@@ -45,6 +51,15 @@ internal fun Context.dpf2pxf(dpValue: Float): Float {
     if (dpValue == 0f) return 0f
     val scale = resources.displayMetrics.density
     return (dpValue * scale + 0.5f)
+}
+
+internal fun EditText.showSoftInput() {
+    this.isFocusable = true
+    this.isFocusableInTouchMode = true
+    this.requestFocus()
+    val inputManager =
+        this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputManager.showSoftInput(this, 0)
 }
 
 /**

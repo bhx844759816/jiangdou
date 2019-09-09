@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white"
     android:layout_height="match_parent">
 
@@ -82,10 +83,9 @@
                 android:textSize="@dimen/text_default_size" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
+                style="@style/DividerLineTheme"
                 android:layout_alignParentBottom="true"
-                android:background="@color/divider_line" />
+               />
 
 
         </RelativeLayout>
@@ -106,11 +106,11 @@
                 android:textColorHint="@color/text_hint"
                 android:textSize="@dimen/text_default_size" />
 
+
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
+                style="@style/DividerLineTheme"
                 android:layout_alignParentBottom="true"
-                android:background="@color/divider_line" />
+                />
 
             <TextView
                 android:id="@+id/tvGetCode"
@@ -121,11 +121,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/shape_get_verify_code_bg"
+                android:background="@drawable/select_textview_enabled_bg"
                 android:enabled="false"
                 android:gravity="center"
                 android:text="@string/getVerifyCode"
-                android:textColor="@color/white"
+                android:textColor="@color/select_publish_job_item_textcolor"
                 android:textSize="@dimen/text_big_small_size" />
         </RelativeLayout>
 
@@ -147,11 +147,11 @@
                 android:textColorHint="@color/text_hint"
                 android:textSize="@dimen/text_default_size" />
 
+
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
+                style="@style/DividerLineTheme"
                 android:layout_alignParentBottom="true"
-                android:background="@color/divider_line" />
+                />
 
         </RelativeLayout>
     </LinearLayout>
@@ -194,7 +194,7 @@
         android:layout_marginLeft="18dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="18dp"
-        android:background="@drawable/shape_button_default"
+        android:background="@drawable/select_button_bg"
         android:enabled="false"
         android:gravity="center"
         android:text="@string/confirmRegister"

@@ -11,7 +11,7 @@ class LoginViewModel : BaseViewModel<LoginRepository>() {
      * 调用登录接口
      */
     fun sendSmsCode(deviceId: String, phone: String) {
-        val params = mapOf("phone" to phone, "deviceId" to deviceId, "smsType" to "0")
+        val params = mapOf("phone" to phone, "deviceId" to deviceId, "smsType" to "1")
         mRepository.sendSmsCode(params)
     }
 

@@ -1,17 +1,34 @@
 package com.jxqm.jiangdou.http
 
+import com.jxqm.jiangdou.model.TokenModel
 import io.reactivex.Observable
-import retrofit2.http.FieldMap
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 /**
  * Created by Administrator on 2019/9/8.
  */
 interface ApiService {
-    @FormUrlEncoded
+    @Headers("Content-type:application/json")
     @POST(Api.SEND_SMS_CODE)
-    fun sendSmsCode(@FieldMap map: Map<String, String>): Observable<HttpResult<Any>>
+    fun sendSmsCode(@Body body: RequestBody): Observable<HttpResult<Any>>
 
+    @Multipart
+    @POST(Api.GET_TOKEN)
+    fun getToken(@PartMap params: MutableMap<String, RequestBody>): Observable<TokenModel>
 
+    @Headers("Content-type:application/json")
+    @POST(Api.SEND_SMS_CODE)
+    fun register(@Body body: RequestBody): Observable<HttpResult<Any>>
+
+    /**
+     * username
+    password=pasword(密码）/code(验证码）
+    grant_type=password
+    client_id=jxdou_web
+    client_secret=123456
+    auth_type= password/sms
+    device_id = //设备ID
+
+     */
 }

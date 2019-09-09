@@ -130,7 +130,7 @@ class ErrorResumeFunction<T> : Function<Throwable, ObservableSource<out HttpResu
 
 class ResponseFunction<T> : Function<HttpResult<T>, ObservableSource<T>> {
     override fun apply(t: HttpResult<T>): ObservableSource<T> {
-        return if (t.success) {
+        return if (t.code == "0") {
             if (t.data == null) {
                 Observable.just(Any() as T)
             } else {

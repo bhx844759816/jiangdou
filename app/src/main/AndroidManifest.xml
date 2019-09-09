@@ -17,13 +17,14 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme">
-        <activity android:name=".ui.login.view.LoginActivity" />
+        <activity android:name=".ui.login.view.LoginActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
         <activity android:name=".ui.login.view.PhoneLoginActivity" />
         <activity android:name=".ui.login.view.ForgetPsdActivity" />
         <activity android:name=".ui.login.view.RegisterActivity" />
         <activity
             android:name=".ui.login.view.LoadingActivity"
-            android:theme="@style/FullScreen">
+                android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

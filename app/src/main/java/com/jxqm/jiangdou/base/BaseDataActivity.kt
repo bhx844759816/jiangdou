@@ -16,6 +16,12 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import com.bhx.common.http.ApiException
+import com.bhx.common.utils.LogUtils
+import com.bhx.common.utils.ToastUtils
+import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.view.dialog.LoadingDialog
 
 
 /**
@@ -29,9 +35,40 @@ abstract class BaseDataActivity<T : BaseViewModel<*>> : BaseMVVMActivity<T>() {
         StatusBarTextUtils.setLightStatusBar(this, true)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        process()
+
+    override fun onResume() {
+        super.onResume()
+        LogUtils.i("${this.javaClass.simpleName},onResume")
+        //注册加载对话框监听
+        registerObserver(Constants.EVENT_KEY_LOADING_DIALOG, Constants.TAG_LOADING_DIALOG, Boolean::class.java).observe(
+            this, Observer {
+                if (it != null && it) {
+                    LoadingDialog.show(this)
+                } else {
+                    LoadingDialog.dismiss(this)
+                }
+            })
+        // 注册Http请求得监听
+        registerObserver(
+            Constants.EVENT_KEY_HTTP_REQUEST_ERROR,
+            Constants.TAG_HTTP_REQUEST_ERROR,
+            Throwable::class.java
+        ).observe(
+            this, Observer {
+                if (it is ApiException) {
+                    val code = it.code
+                    ToastUtils.toastShort(it.message)
+                }
+            }
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LogUtils.i("${this.javaClass.simpleName},onPause")
+        //页面不显示的时候取消注册对话框监听
+        unRegisterObserver(Constants.EVENT_KEY_LOADING_DIALOG, Constants.TAG_LOADING_DIALOG)
+        unRegisterObserver(Constants.EVENT_KEY_HTTP_REQUEST_ERROR, Constants.TAG_HTTP_REQUEST_ERROR)
     }
 
     fun process() {

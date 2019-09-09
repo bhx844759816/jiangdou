@@ -1,9 +1,15 @@
 package com.jxqm.jiangdou.ui.login.view
 
+import android.os.Bundle
+import androidx.lifecycle.Observer
+import com.bhx.common.utils.DeviceUtils
+import com.bhx.common.utils.PhoneUtils
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.addTextChangedListener
+import com.jxqm.jiangdou.ext.isEnable
+import com.jxqm.jiangdou.ext.showSoftInput
 import com.jxqm.jiangdou.ui.attestation.view.PeopleAttestationActivity
 import com.jxqm.jiangdou.ui.login.vm.LoginViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -33,22 +39,27 @@ class LoginActivity : BaseDataActivity<LoginViewModel>() {
         }
         tvLogin.clickWithTrigger {
             val phone = etInputPhone.text.toString().trim()
-            mViewModel.sendSmsCode("100", phone)
-//            startActivity<VerifyCodeActivity>()
+            val deviceId = DeviceUtils.getDeviceId(this)
+            mViewModel.sendSmsCode(deviceId, phone)
         }
+        tvLogin.isEnable(etInputPhone) {
+            val phone = etInputPhone.text.toString().trim()
+            PhoneUtils.isMobile(phone)
+        }
+        etInputPhone.showSoftInput()
+    }
 
-        etInputPhone.addTextChangedListener {
-            afterTextChanged {
-                val isEmpty = it?.toString()?.isEmpty()
-                if (isEmpty == null || isEmpty) {
-                    tvLogin.setBackgroundResource(R.drawable.shape_button_default)
-                    tvLogin.isEnabled = false
-                } else {
-                    tvLogin.setBackgroundResource(R.drawable.shape_button_select)
-                    tvLogin.isEnabled = true
-                }
+    override fun dataObserver() {
+        //注册发送验证码结果的接受者
+        registerObserver(Constants.TAG_LOGIN_CODE_SUCCESS, Boolean::class.java).observe(this, Observer {
+            if (it) {
+                val bundle = Bundle()
+                val phone = etInputPhone.text.toString().trim()
+                bundle.putString("phone", phone)
+                bundle.putString("deviceId", "101")
+                startActivity<VerifyCodeActivity>(bundle)
             }
-        }
+        })
     }
 
 
