@@ -60,7 +60,7 @@ class RegisterActivity : BaseDataActivity<RegisterViewModel>() {
         }
         tvGetCode.isEnable(etInputPhone) {
             val phone = etInputPhone.text.toString().trim()
-            PhoneUtils.isMobile(phone)
+            !isSendCodeSuccess and PhoneUtils.isMobile(phone)
         }
         tvSubmit.isEnable(etInputPhone) { onSubmitTextState() }
         tvSubmit.isEnable(etCode) { onSubmitTextState() }
@@ -74,7 +74,7 @@ class RegisterActivity : BaseDataActivity<RegisterViewModel>() {
         val phone = etInputPhone.text.toString().trim()
         val code = etCode.text.toString().trim()
         val passWord = etPassword.text.toString().trim()
-        return !isSendCodeSuccess and PhoneUtils.isMobile(phone) and code.isNotEmpty() and passWord.isNotEmpty() and (passWord.length > 6)
+        return  PhoneUtils.isMobile(phone) and code.isNotEmpty() and passWord.isNotEmpty() and (passWord.length > 6)
     }
    
     override fun dataObserver() {
@@ -101,18 +101,18 @@ class RegisterActivity : BaseDataActivity<RegisterViewModel>() {
                 .take((mCount + 1).toLong()) //
                 .doOnSubscribe {
                     isSendCodeSuccess = true
-                    tvCodeReSend.isEnabled = false
+                    tvGetCode.isEnabled = false
                 }.subscribeOn(AndroidSchedulers.mainThread())
                 .compose(applySchedulers())
                 .subscribe({
                     mCount--
                     tvGetCode.text = String.format("%ss", mCount)
                 }, {
-                    tvCodeReSend.isEnabled = true
+                    tvGetCode.isEnabled = true
                     tvGetCode.text = "重新发送"
                     isSendCodeSuccess = false
                 }, {
-                    tvCodeReSend.isEnabled = true
+                    tvGetCode.isEnabled = true
                     tvGetCode.text = "重新发送"
                     isSendCodeSuccess = false
                 })

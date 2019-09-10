@@ -124,12 +124,14 @@ class ErrorResumeFunction<T> : Function<Throwable, ObservableSource<out HttpResu
         if (t is ApiException) {
             return Observable.error(t)
         }
+        LogUtils.i("error:${t.localizedMessage}")
         return Observable.error(CustomException.handleException(t))
     }
 }
 
 class ResponseFunction<T> : Function<HttpResult<T>, ObservableSource<T>> {
     override fun apply(t: HttpResult<T>): ObservableSource<T> {
+        LogUtils.i("httpResult:$t")
         return if (t.code == "0") {
             if (t.data == null) {
                 Observable.just(Any() as T)

@@ -19,7 +19,7 @@ interface ApiService {
     fun getToken(@PartMap params: MutableMap<String, RequestBody>): Observable<TokenModel>
 
     @Headers("Content-type:application/json")
-    @POST(Api.SEND_SMS_CODE)
+    @POST(Api.REGISTER)
     fun register(@Body body: RequestBody): Observable<HttpResult<Any>>
 
     @GET(Api.USER_INFO)

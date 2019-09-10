@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.login.vm
 
 import com.bhx.common.mvvm.BaseViewModel
+import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.ui.login.vm.repository.RegisterRepository
 
 /**
@@ -21,6 +22,7 @@ class RegisterViewModel : BaseViewModel<RegisterRepository>() {
      */
     fun register(phone: String, deviceId: String, password: String, smsCode: String) {
         val params = mapOf("deviceId" to deviceId, "password" to password, "phone" to phone, "smsCode" to smsCode)
+        LogUtils.i("register params $params")
         mRepository.register(params)
     }
 }

@@ -28,11 +28,10 @@ class PhoneLoginRepository : BaseEventRepository() {
         addDisposable(
             apiService.getToken(requestBodyMaps)
                 .flatMap {
-                    //存储TokenModel
                     MyApplication.instance().saveToken(it)
                     return@flatMap apiService.getUserInfo()
                 }.action {
-                    sendData(Constants.EVENT_KEY_VERIFY_CODE, Constants.TAG_GET_TOKEN_RESULT, it)
+                    sendData(Constants.EVENT_KEY_PHONE_LOGIN, Constants.TAG_PHONE_LOGIN_SUCCESS, it)
                 }
         )
     }

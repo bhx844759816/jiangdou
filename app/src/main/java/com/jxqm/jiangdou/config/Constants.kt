@@ -38,7 +38,7 @@ class Constants {
 
         const val EVENT_KEY_VERIFY_CODE = "event_key_verify_code" //验证码界面
         const val TAG_SEND_SMS_CODE_RESULT = "tag_send_sms_code_result" //发送验证码结果
-        const val TAG_GET_TOKEN_RESULT = "tag_get_token_result"
+        const val TAG_GET_USER_INFO_SUCCESS = "tag_get_token_result"
         const val TAG_GET_TOKEN_RESULT_ERROR = "tag_get_token_result_error"
 
         const val EVENT_KEY_FORGET_PSD = "event_key_forget_psd" //忘记密码界面
@@ -72,6 +72,7 @@ class Constants {
         const val EVENT_KEY_MAIN_WORK = "event_key_main_work"//工作台界面
 
         const val EVENT_KEY_MAIN_MY = "event_key_main_my"//我的界面
+        const val TAG_USER_INFO_UPDATE = "tag_user_info_update"//用户信息
 
 
     }

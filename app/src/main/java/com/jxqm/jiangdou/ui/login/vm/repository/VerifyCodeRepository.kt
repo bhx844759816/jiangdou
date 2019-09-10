@@ -6,6 +6,7 @@ import com.bhx.common.event.LiveBus
 import com.bhx.common.mvvm.BaseRepository
 import com.bhx.common.utils.LogUtils
 import com.google.gson.Gson
+import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
 import com.jxqm.jiangdou.http.action
@@ -40,26 +41,12 @@ class VerifyCodeRepository : BaseEventRepository() {
             val requestBody = RequestBody.create(okhttp3.MediaType.parse("multipart/form-data"), it.value)
             requestBodyMaps[key] = requestBody
         }
-        addDisposable(
-            apiService.getToken(requestBodyMaps)
-                .compose(applySchedulers())
-                .doOnSubscribe {
-                    if (!it.isDisposed) {
-                        LiveBus.getDefault()
-                            .postEvent(Constants.EVENT_KEY_LOADING_DIALOG, Constants.TAG_LOADING_DIALOG, true)
-                    }
-                }
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .doFinally {
-                    LiveBus.getDefault()
-                        .postEvent(Constants.EVENT_KEY_LOADING_DIALOG, Constants.TAG_LOADING_DIALOG, false)
-                }
-                .subscribe({
-                    sendData(Constants.EVENT_KEY_VERIFY_CODE, Constants.TAG_GET_TOKEN_RESULT, it)
-                }, {
-                    LogUtils.i("获取Token失败:${it.message}")
-                    sendData(Constants.EVENT_KEY_VERIFY_CODE, Constants.TAG_GET_TOKEN_RESULT_ERROR, it)
-                })
-        )
+        addDisposable(apiService.getToken(requestBodyMaps)
+            .flatMap {
+                MyApplication.instance().saveToken(it)
+                return@flatMap apiService.getUserInfo()
+            }.action {
+                sendData(Constants.EVENT_KEY_VERIFY_CODE, Constants.TAG_GET_USER_INFO_SUCCESS, it)
+            })
     }
 }

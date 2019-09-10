@@ -16,10 +16,6 @@ import retrofit2.Response;
  */
 public class RxHelper {
     public static <T> ObservableTransformer<T, T> io_main() {
-
-
-
-
         return observable -> observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -58,7 +54,7 @@ public class RxHelper {
         @Override
         public ObservableSource<T> apply(BaseResponse<T> tResponse) throws Exception {
             int code = tResponse.getCode();
-            if (code == 200) {
+            if (code == 0) {
                 return Observable.just(tResponse.getData());
             }
             return Observable.error(new ApiException(code, tResponse.getMessage()));

@@ -67,6 +67,7 @@ class MyApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         accessToken = SPUtils.get(this.applicationContext, Constants.ACCESS_TOKEN, "") as String?
         //配置Http请求
         val builder = RetrofitManager.Builder()

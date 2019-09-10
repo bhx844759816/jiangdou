@@ -56,6 +56,10 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
         rlAboutUs.clickWithTrigger {
             startActivity<AboutUsActivity>()
         }
-
     }
+
+    override fun initView(bundle: Bundle?) {
+        super.initView(bundle)
+    }
+
 }

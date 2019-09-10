@@ -5,6 +5,7 @@ import android.text.TextWatcher
 import android.view.KeyEvent
 import android.widget.EditText
 import androidx.lifecycle.Observer
+import com.bhx.common.utils.AppManager
 import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.R
@@ -12,6 +13,8 @@ import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.model.TokenModel
+import com.jxqm.jiangdou.model.UserModel
+import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.ui.login.vm.VerifyCodeViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import io.reactivex.Observable
@@ -96,13 +99,9 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
                 smsCodeCountDown()
             }
         })
-        registerObserver(Constants.TAG_GET_TOKEN_RESULT, TokenModel::class.java).observe(this, Observer {
-            if (it is TokenModel) {
-                ToastUtils.toastShort("登录成功")
-            }
-        })
-        registerObserver(Constants.TAG_GET_TOKEN_RESULT_ERROR, Throwable::class.java).observe(this, Observer {
-            ToastUtils.toastShort("验证失败，请重新发送")
+        registerObserver(Constants.TAG_GET_USER_INFO_SUCCESS, UserModel::class.java).observe(this, Observer {
+            AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
+            //发送消息到MainFragment
         })
     }
 
