@@ -51,7 +51,7 @@ public class CustomException {
             return ex;
         } else if (e instanceof ConnectException) {
             //网络错误
-            ex = new ApiException(NETWORK_ERROR,"网络错误");
+            ex = new ApiException(NETWORK_ERROR, "网络错误");
             return ex;
         } else if (e instanceof NetworkOnMainThreadException) {
             ex = new ApiException(NETWORK_ON_MAIN_ERROR, "网络错误");
@@ -62,7 +62,7 @@ public class CustomException {
             return ex;
         } else {
             //未知错误
-            ex = new ApiException(UNKNOWN, "服务器异常");
+            ex = new ApiException(UNKNOWN, e.getLocalizedMessage());
             return ex;
         }
     }
