@@ -15,4 +15,10 @@ object Api {
     const val REGISTER = "/register"
     //用户信息
     const val USER_INFO = "/me"
+    //企业类型
+    const val COMPANY_TYPE = "/code/qylx"
+    //人员规模
+    const val COMPANY_PEOPLE = "/code/rygm"
+    //所属行业
+    const val COMPANY_JOB_TYPE = "/code/hyfl"
 }

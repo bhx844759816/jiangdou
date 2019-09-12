@@ -19,6 +19,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tvCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_publish_job_item_default"
@@ -31,6 +32,7 @@
                 android:textSize="@dimen/text_default_size" />
 
             <TextView
+                android:id="@+id/tvConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

@@ -66,7 +66,7 @@ class MapActivity : BaseActivity() {
     private val mLocationListener = object : BDAbstractLocationListener() {
         override fun onReceiveLocation(bdLocation: BDLocation?) {
             bdLocation?.let {
-                LogUtils.i("bdLocation${bdLocation.latitude}")
+                LogUtils.i("bdLocation$bdLocation")
                 // 定位数据
                 val locationData = MyLocationData.Builder()
                     .direction(it.direction)//设置方向信息

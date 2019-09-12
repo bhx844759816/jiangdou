@@ -48,8 +48,14 @@ class Constants {
         const val TAG_REGISTER_SUCCESS = "tag_register_success"//注册成功
 
         const val EVENT_KEY_SELECT_JOB_TYPE = "event_key_select_job_type"//选择兼职类型
+        //
+        const val EVENT_KEY_COMPANY_ATTESTATION = "event_key_company_attestation" // 企业认证
+        const val TAG_GET_COMPANY_TYPE_RESULT = "tag_get_company_type_result"//企业类型
+        const val TAG_GET_COMPANY_PEOPLE_RESULT = "tag_get_company_people_result"//人员规模
+        const val TAG_GET_COMPANY_JOB_TYPE_RESULT = "tag_get_company_job_type_result"//所属行业
 
-        const val EVENT_KEY_PEOPLE_ATTESTATION = "event_key_people_attestation" // 企业认证
+        // 身份认证
+        const val EVENT_KEY_PEOPLE_ATTESTATION = "event_key_people_attestation" // 身份认证
 
         const val EVENT_KEY_JOB_MANAGER = "event_key_job_manager" // 兼职管理界面
 

@@ -1,5 +1,6 @@
 package com.jxqm.jiangdou.http
 
+import com.jxqm.jiangdou.model.CompanyTypeModel
 import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.model.UserModel
 import io.reactivex.Observable
@@ -23,7 +24,16 @@ interface ApiService {
     fun register(@Body body: RequestBody): Observable<HttpResult<Any>>
 
     @GET(Api.USER_INFO)
-    fun getUserInfo():Observable<HttpResult<UserModel>>
+    fun getUserInfo(): Observable<HttpResult<UserModel>>
+
+    @GET(Api.COMPANY_TYPE)
+    fun getCompanyType(): Observable<HttpResult<List<CompanyTypeModel>>>
+
+    @GET(Api.COMPANY_PEOPLE)
+    fun getCompanyPeople(): Observable<HttpResult<List<CompanyTypeModel>>>
+
+    @GET(Api.COMPANY_JOB_TYPE)
+    fun getCompanyJobType(): Observable<HttpResult<List<CompanyTypeModel>>>
 
     /**
      * username

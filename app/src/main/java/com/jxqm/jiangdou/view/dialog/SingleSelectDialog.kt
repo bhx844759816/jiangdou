@@ -10,6 +10,8 @@ import com.bhx.common.base.BaseDialogFragment
 import com.bhx.common.utils.DensityUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.adapter.ArrayWheelAdapter
+import com.jxqm.jiangdou.model.SingleSelectModel
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.dialog_single_select.*
 
 /**
@@ -18,9 +20,9 @@ import kotlinx.android.synthetic.main.dialog_single_select.*
  */
 class SingleSelectDialog : BaseDialogFragment() {
 
-    private val mItems = mutableListOf<String>()
     private var mLabel: String = ""
-
+    private val mItems = mutableListOf<String>()
+    private var mConfirmCallback: ((Int) -> Unit)? = null
     override fun getLayoutId(): Int = R.layout.dialog_single_select
 
     override fun initView(view: View?) {
@@ -32,6 +34,14 @@ class SingleSelectDialog : BaseDialogFragment() {
             wheelView.setLabel(mLabel)
         }
         wheelView.setCyclic(false)
+        tvCancel.clickWithTrigger {
+            dismissAllowingStateLoss()
+        }
+        tvConfirm.clickWithTrigger {
+            val index = wheelView.currentItem
+            mConfirmCallback?.invoke(index)
+            dismissAllowingStateLoss()
+        }
     }
 
     fun setData(list: List<String>) {
@@ -55,10 +65,12 @@ class SingleSelectDialog : BaseDialogFragment() {
     companion object {
         private val TAG = SingleSelectDialog::class.simpleName
 
-        fun show(activity: FragmentActivity, list: List<String>, lable: String = "") {
+        fun  show(activity: FragmentActivity, list: List<String>, lable: String = "",callBack: ((Int) -> Unit)) {
             var fragment = activity.supportFragmentManager.findFragmentByTag(TAG)
             if (fragment == null) {
-                fragment = SingleSelectDialog()
+                val fragment_ = SingleSelectDialog()
+                fragment_.mConfirmCallback = callBack
+                fragment = fragment_
             }
             if (!fragment.isAdded) {
                 (fragment as SingleSelectDialog).setData(list)
@@ -69,13 +81,7 @@ class SingleSelectDialog : BaseDialogFragment() {
                 transaction.commitAllowingStateLoss()
             }
         }
-
-        fun dismiss(activity: FragmentActivity?) {
-            val fragment = activity?.supportFragmentManager?.findFragmentByTag(TAG) as SingleSelectDialog
-            if (fragment.isAdded) {
-                fragment.dismissAllowingStateLoss()
-            }
-        }
     }
+
 
 }

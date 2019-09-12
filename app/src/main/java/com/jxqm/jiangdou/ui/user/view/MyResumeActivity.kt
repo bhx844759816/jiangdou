@@ -49,7 +49,7 @@ import java.util.*
  * 我的简历
  * Created By bhx On 2019/8/19 0019 14:06
  */
-class MyResumeActivity : BaseActivity(){
+class MyResumeActivity : BaseActivity() {
     private val mSexList = arrayListOf("男", "女")
     private val mEducationList = arrayListOf("小学", "初中", "专科", "本科", "硕士", "博士")
     private val mHeightList = mutableListOf<String>()
@@ -110,7 +110,9 @@ class MyResumeActivity : BaseActivity(){
                 requestPermission()
             }
             R.id.rlUserSexParent -> { //修改性别
-                SingleSelectDialog.show(this, mSexList)
+                SingleSelectDialog.show(this, mSexList) {
+
+                }
             }
             R.id.rlUserBirthdayParent -> {//修改出生年月
                 showTimePickedDialog()
@@ -119,15 +121,21 @@ class MyResumeActivity : BaseActivity(){
 
             }
             R.id.rlUserEducationParent -> {//修改学历
-                SingleSelectDialog.show(this, mEducationList)
+                SingleSelectDialog.show(this, mEducationList) {
+
+                }
             }
             R.id.rlUserHeightParent -> {//修改身高
                 initHeightList()
-                SingleSelectDialog.show(this, mHeightList, "cm")
+                SingleSelectDialog.show(this, mHeightList, "cm") {
+
+                }
             }
             R.id.rlUserWeightParent -> {//修改体重
                 initWeightList()
-                SingleSelectDialog.show(this, mWeightList, "kg")
+                SingleSelectDialog.show(this, mWeightList, "kg") {
+
+                }
             }
             R.id.rlUserLocationParent -> {//修改出生地
                 SelectCityDialog.showDialog(this)
