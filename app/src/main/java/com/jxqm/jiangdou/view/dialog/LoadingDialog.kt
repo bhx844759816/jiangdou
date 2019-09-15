@@ -53,9 +53,12 @@ class LoadingDialog : BaseDialogFragment() {
         }
 
         fun dismiss(activity: FragmentActivity?) {
-            val fragment = activity?.supportFragmentManager?.findFragmentByTag(TAG) as LoadingDialog
-            if (fragment.isAdded) {
-                fragment.dismissAllowingStateLoss()
+            val dialog = activity?.supportFragmentManager?.findFragmentByTag(TAG)
+            dialog?.let {
+                val fragment = dialog as LoadingDialog
+                if (fragment.isAdded) {
+                    fragment.dismissAllowingStateLoss()
+                }
             }
         }
     }

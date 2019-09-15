@@ -21,4 +21,8 @@ object Api {
     const val COMPANY_PEOPLE = "/code/rygm"
     //所属行业
     const val COMPANY_JOB_TYPE = "/code/hyfl"
+    //提交认证
+    const val ATTESTATION_SUBMIT  ="/employer/register"
+    //发布兼职 - 兼职类型
+    const val PUBLISH_JOB_TYPE = "/code/job_types_l2"
 }

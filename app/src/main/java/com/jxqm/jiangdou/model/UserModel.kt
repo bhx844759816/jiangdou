@@ -14,7 +14,7 @@ data class UserModel(
 //"data": {
 //    "avatar": "string",
 //    "balance": 0, //余额
-//    "phone": "string",
+//    "phone": "string",//手机号
 //    "rankPoints": 0,
 //    "username": "string"
 //}

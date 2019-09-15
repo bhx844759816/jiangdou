@@ -1,5 +1,10 @@
 package com.jxqm.jiangdou.ui.map
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Rect
+import android.opengl.Visibility
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
@@ -15,7 +20,16 @@ import com.baidu.mapapi.search.core.PoiInfo
 import com.baidu.mapapi.search.geocode.*
 import com.bhx.common.utils.LogUtils
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption
+import com.baidu.mapapi.search.poi.*
+import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bhx.common.adapter.rv.listener.OnItemClickListener
+import com.bhx.common.utils.DensityUtil
+import com.bhx.common.utils.FileUtils
+import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ui.map.adapter.MapAdapter
+import com.jxqm.jiangdou.ui.map.adapter.MapSearchAdapter
+import com.jxqm.jiangdou.utils.clickWithTrigger
 
 
 /**
@@ -30,8 +44,12 @@ class MapActivity : BaseActivity() {
     private var isFirstLocation = true //是否是第一次定位刷新地图显示
     private var mLocationLatLng: LatLng? = null//定位的经纬度信息
     private var mPoiInfoList = mutableListOf<PoiInfo>() //poi检索的结果集
+    private var mSearchPoiInfoList = mutableListOf<PoiInfo>() //poiSearch检索的结果集
     private var mMarker: Marker? = null
     private lateinit var mAdapter: MapAdapter
+    private lateinit var mSearchAdapter: MapSearchAdapter
+    private var mPoiSearch: PoiSearch? = null
+    private var mSelectPoiInfo: PoiInfo? = null
 
     private val mMapStatusChangeListener = object : BaiduMap.OnMapStatusChangeListener {
         override fun onMapStatusChangeStart(p0: MapStatus?) {
@@ -46,6 +64,7 @@ class MapActivity : BaseActivity() {
         override fun onMapStatusChangeFinish(mapStatus: MapStatus?) {
             mapStatus?.let {
                 if (!isFirstLocation) {
+                    mSelectPoiInfo = null
                     mMarker?.startAnimation()
                     mMarker?.position = it.target
                     val cenpt = it.target
@@ -116,6 +135,9 @@ class MapActivity : BaseActivity() {
                 if (poiInfoList != null) {
                     LogUtils.i("poiInfoList$poiInfoList")
                     mPoiInfoList.clear()
+                    if (mSelectPoiInfo != null) {
+                        mPoiInfoList.add(mSelectPoiInfo!!)
+                    }
                     mPoiInfoList.addAll(poiInfoList)
                     mAdapter.updateDatas(mPoiInfoList)
                 }
@@ -124,10 +146,69 @@ class MapActivity : BaseActivity() {
         }
     }
 
+    private val mGetPoiSearchListener = object : OnGetPoiSearchResultListener {
+        override fun onGetPoiResult(p0: PoiResult?) {
+            p0?.let {
+                val list = it.allPoi
+                LogUtils.i("搜索关键字结果:$list")
+                mSearchPoiInfoList.clear()
+                if (list != null && list.isNotEmpty()) {
+                    mSearchPoiInfoList.addAll(list)
+                }
+                mSearchAdapter.updateDatas(mSearchPoiInfoList, mLocationLatLng)
+            }
+        }
+
+        override fun onGetPoiDetailResult(p0: PoiDetailResult?) {
+        }
+
+        override fun onGetPoiDetailResult(p0: PoiDetailSearchResult?) {
+        }
+
+        override fun onGetPoiIndoorResult(p0: PoiIndoorResult?) {
+
+        }
+
+    }
+
     override fun getLayoutId(): Int = R.layout.activity_map
 
     override fun initView() {
         initRecyclerView()
+        initMap()
+        initSearch()
+    }
+
+    private fun initSearch() {
+        etSearchPoiInfo.addTextChangedListener {
+            afterTextChanged {
+                searchPoiInfo(it.toString().trim())
+            }
+        }
+        etSearchPoiInfo.setOnFocusChangeListener { _, t ->
+            if (t) {
+                tvCancelSearch.visibility = View.VISIBLE
+                flMapParent.visibility = View.GONE
+                flSearchParent.visibility = View.VISIBLE
+
+            }
+        }
+        tvCancelSearch.clickWithTrigger {
+            tvCancelSearch.visibility = View.GONE
+            flMapParent.visibility = View.VISIBLE
+            flSearchParent.visibility = View.GONE
+            etSearchPoiInfo.text = null
+        }
+        flSearchParent.clickWithTrigger {
+            tvCancelSearch.visibility = View.GONE
+            flMapParent.visibility = View.VISIBLE
+            flSearchParent.visibility = View.GONE
+            etSearchPoiInfo.text = null
+        }
+
+    }
+
+    private fun initMap() {
         mapView.logoPosition = LogoPosition.logoPostionleftBottom
         mapView.showScaleControl(false)
         mapView.showZoomControls(false)
@@ -173,6 +254,78 @@ class MapActivity : BaseActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         mAdapter = MapAdapter(this)
         recyclerView.adapter = mAdapter
+        rvSearchRecyclerView.layoutManager = LinearLayoutManager(this)
+        mSearchAdapter = MapSearchAdapter(this)
+        rvSearchRecyclerView.adapter = mSearchAdapter
+
+        mAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(view: View?, holder: ViewHolder?, position: Int) {
+                val poiInfo = mPoiInfoList[position]
+                selectArea(poiInfo)
+            }
+
+            override fun onItemLongClick(view: View?, holder: ViewHolder?, position: Int): Boolean {
+                return false
+            }
+        })
+
+        mSearchAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(view: View?, holder: ViewHolder?, position: Int) {
+                tvCancelSearch.visibility = View.GONE
+                flMapParent.visibility = View.VISIBLE
+                flSearchParent.visibility = View.GONE
+                etSearchPoiInfo.text = null
+                mSelectPoiInfo = mSearchPoiInfoList[position]
+                mSelectPoiInfo?.let {
+                    val msu = MapStatusUpdateFactory.newLatLngZoom(it.location, 15f)
+                    mMap.animateMapStatus(msu)
+                }
+            }
+
+            override fun onItemLongClick(view: View?, holder: ViewHolder?, position: Int): Boolean {
+                return false
+            }
+        })
+    }
+
+    private fun selectArea(poiInfo: PoiInfo) {
+        val rect = Rect(
+            0, DensityUtil.dip2px(this, 60f)
+            , mapView.width, mapView.height - DensityUtil.dip2px(this, 60f)
+        )
+        //截图
+        mMap.snapshotScope(rect) {
+            // 保存图片
+            FileUtils.saveBitmap(it,Constants.APP_SAVE_DIR,Constants.MAPVIEW_FILENAME)
+            val intent = Intent()
+            LogUtils.i("sleectArea$poiInfo")
+            intent.putExtra("address", poiInfo.address)
+            intent.putExtra("name", poiInfo.name)
+            intent.putExtra("latLng", poiInfo.location)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
+
+    }
+
+    /**
+     * 搜索指定得关键字信息
+     */
+    private fun searchPoiInfo(keyWords: String) {
+        if (mPoiSearch == null) {
+            mPoiSearch = PoiSearch.newInstance()
+            mPoiSearch!!.setOnGetPoiSearchResultListener(mGetPoiSearchListener)
+        }
+        val mPoiSearchConfig = PoiCitySearchOption()
+        mPoiSearchConfig.apply {
+            keyword(keyWords) // 关键字
+            city(mLocationCity)// 城市
+            pageCapacity(20)  // 设置每页容量，默认为每页10条
+
+        }
+        LogUtils.i("开始搜索关键字:$keyWords")
+        mPoiSearch!!.searchInCity(mPoiSearchConfig!!)
     }
 
     override fun onResume() {

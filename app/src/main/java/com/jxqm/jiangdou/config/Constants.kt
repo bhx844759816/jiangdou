@@ -8,9 +8,9 @@ class Constants {
     companion object {
         const val BASE_URL = "http://www.dadpat.com/"
         const val BASE_URL2 = "https://www.goofypapa.com"
-        val APP_SAVE_DIR = (Environment.getDataDirectory().path + File.separator + "benbaba"
-                + File.separator + "apk" + File.separator)
+        val APP_SAVE_DIR = (Environment.getExternalStorageDirectory().absolutePath + File.separator + "jiangdou" + File.separator)
 
+        val MAPVIEW_FILENAME = "map.png"
 
         const val DEVICE_WIFI_SSID = "dadpat"
         //    public static final String DEVICE_WIFI_SSID = "benbb";
@@ -47,7 +47,15 @@ class Constants {
         const val TAG_REGISTER_GET_CODE_SUCCESS = "tag_register_get_code_success"//获取验证码成功
         const val TAG_REGISTER_SUCCESS = "tag_register_success"//注册成功
 
+        const val EVENT_KEY_JOB_PUBLISH = "event_key_job_publish"//发布兼职
+        const val TAG_PUBLISH_JOB_TYPE = "tag_publish_job_type" //发布兼职中得兼职类型
+        const val TAG_PUBLISH_JOB_MESSAGE = "tag_publish_job_message" //发布兼职中得兼职类型
+
+
         const val EVENT_KEY_SELECT_JOB_TYPE = "event_key_select_job_type"//选择兼职类型
+        const val TAG_SELECT_JOB_TYPE_HOT = "tag_select_job_type_hot"//获取热门类型
+        const val TAG_SELECT_JOB_TYPE_MORE = "tag_select_job_type_more"//获取更多类型
+
         //
         const val EVENT_KEY_COMPANY_ATTESTATION = "event_key_company_attestation" // 企业认证
         const val TAG_GET_COMPANY_TYPE_RESULT = "tag_get_company_type_result"//企业类型
@@ -56,6 +64,7 @@ class Constants {
 
         // 身份认证
         const val EVENT_KEY_PEOPLE_ATTESTATION = "event_key_people_attestation" // 身份认证
+        const val TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS = "tag_people_attestation_submit_success" //上传成功
 
         const val EVENT_KEY_JOB_MANAGER = "event_key_job_manager" // 兼职管理界面
 
@@ -78,6 +87,8 @@ class Constants {
         const val EVENT_KEY_MAIN_WORK = "event_key_main_work"//工作台界面
 
         const val EVENT_KEY_MAIN_MY = "event_key_main_my"//我的界面
+        const val TAG_MAIN_MY_LOGIN_SUCCESS = "tag_main_my_login_success"
+
         const val TAG_USER_INFO_UPDATE = "tag_user_info_update"//用户信息
 
 

@@ -5,14 +5,15 @@ import android.text.TextWatcher
 import android.view.KeyEvent
 import android.widget.EditText
 import androidx.lifecycle.Observer
+import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.AppManager
 import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.ToastUtils
+import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.applySchedulers
-import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.model.UserModel
 import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.ui.login.vm.VerifyCodeViewModel
@@ -100,6 +101,8 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
             }
         })
         registerObserver(Constants.TAG_GET_USER_INFO_SUCCESS, UserModel::class.java).observe(this, Observer {
+            MyApplication.instance().userModel = it
+            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_MAIN_MY, Constants.TAG_MAIN_MY_LOGIN_SUCCESS, it)
             AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
             //发送消息到MainFragment
         })

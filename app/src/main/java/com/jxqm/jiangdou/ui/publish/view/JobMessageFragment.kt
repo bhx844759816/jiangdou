@@ -1,11 +1,24 @@
 package com.jxqm.jiangdou.ui.publish.view
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.baidu.location.BDAbstractLocationListener
+import com.baidu.location.BDLocation
+import com.baidu.location.LocationClient
+import com.baidu.location.LocationClientOption
+import com.baidu.mapapi.model.LatLng
 import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.event.LiveBus
+import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ext.addTextChangedListener
+import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
+import com.jxqm.jiangdou.ui.attestation.view.CompanyAttestationActivity
+import com.jxqm.jiangdou.ui.map.MapActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.view.dialog.SelectSexDialog
 import kotlinx.android.synthetic.main.fragment_job_message.*
@@ -17,6 +30,9 @@ import kotlinx.android.synthetic.main.fragment_job_message.*
 class JobMessageFragment : BaseLazyFragment() {
 
     private var mCallback: OnJobPublishCallBack? = null
+    private var mLocationLatLng: LatLng? = null//定位的经纬度信息
+    private var mSex = "不限"
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is OnJobPublishCallBack) {
@@ -26,17 +42,75 @@ class JobMessageFragment : BaseLazyFragment() {
 
     override fun getLayoutId(): Int = R.layout.fragment_job_message
 
+    override fun initView(bundle: Bundle?) {
+        super.initView(bundle)
+    }
+
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
-
         tvNextStep.clickWithTrigger {
+            val params = mutableMapOf<String, String>()
+            params["title "] = tvJopTitleContent.text.toString().trim() //兼职标题
+            params["content"] = tvJopDescriptionContent.text.toString().trim()//兼职描述
+            params["sex"] = mSex
+            params["area"] = tvLocationArea.text.toString().trim()
+            params["address"] = etDetailAddress.text.toString().trim()
+            params["longitude"] = mLocationLatLng?.longitude.toString()
+            params["latitude"] = mLocationLatLng?.latitude.toString()
+            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_MESSAGE, params)
             mCallback?.jobMessageNextStep()
         }
-
         rlSelectSex.clickWithTrigger {
             activity?.let {
-                SelectSexDialog.show(it)
+                SelectSexDialog.show(it) { sex ->
+                    mSex = sex
+                }
             }
         }
+        //兼职标题
+        tvJopTitleContent.addTextChangedListener {
+            afterTextChanged {
+                val content = it?.toString()?.trim()
+                tvJopTitleCount.text = "${content?.length}/20"
+            }
+        }
+        //兼职内容
+        tvJopDescriptionContent.addTextChangedListener {
+            afterTextChanged {
+                val content = it?.toString()?.trim()
+                tvJopDescriptionCount.text = "${content?.length}/2000"
+            }
+        }
+        //点击定位
+        tvLocationArea.clickWithTrigger {
+            val intent = Intent(mContext, MapActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_SELECT_AREA)
+        }
+        //判断下一步是否可以被点击
+        tvNextStep.isEnable(tvJopTitleContent) { isNetStepState() }
+        tvNextStep.isEnable(tvJopDescriptionContent) { isNetStepState() }
+    }
+
+    private fun isNetStepState(): Boolean {
+        return tvJopTitleContent.text.isNotEmpty() and (tvJopDescriptionContent.text.toString().length >= 20)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_CODE_SELECT_AREA -> {
+                data?.let {
+                    tvLocationArea.text = it.getStringExtra("name")
+                    mLocationLatLng = it.getParcelableExtra("latLng")
+                    LogUtils.i("选择地区$mLocationLatLng")
+                }
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    companion object {
+        const val REQUEST_CODE_SELECT_AREA = 0x01
     }
 }

@@ -18,16 +18,22 @@ import kotlinx.android.synthetic.main.dialog_select_sex.*
  */
 
 class SelectSexDialog : BaseDialogFragment() {
+    private var mCallback: ((String) -> Unit)? = null
+
     override fun getLayoutId(): Int = R.layout.dialog_select_sex
 
     override fun initView(view: View?) {
         tvNoSex.clickWithTrigger {
+            mCallback?.invoke("不限")
             dismissAllowingStateLoss()
         }
         tvBoy.clickWithTrigger {
+            mCallback?.invoke("男")
             dismissAllowingStateLoss()
+
         }
         tvGirl.clickWithTrigger {
+            mCallback?.invoke("女")
             dismissAllowingStateLoss()
         }
 
@@ -41,7 +47,7 @@ class SelectSexDialog : BaseDialogFragment() {
                 window.decorView.setPadding(DensityUtil.dip2px(context, 30f), 0, DensityUtil.dip2px(context, 30f), 0)
                 val params = window.attributes
                 params.width = WindowManager.LayoutParams.MATCH_PARENT
-                params.height= DensityUtil.dip2px(mContext,210f)
+                params.height = DensityUtil.dip2px(mContext, 210f)
                 params.gravity = Gravity.CENTER
                 window.attributes = params
             }
@@ -51,10 +57,12 @@ class SelectSexDialog : BaseDialogFragment() {
     companion object {
         private val TAG = SelectSexDialog::class.simpleName
 
-        fun show(activity: FragmentActivity) {
+        fun show(activity: FragmentActivity, callBack: ((String) -> Unit)) {
             var fragment = activity.supportFragmentManager.findFragmentByTag(TAG)
             if (fragment == null) {
-                fragment = SelectSexDialog()
+                val dialog = SelectSexDialog()
+                dialog.mCallback = callBack
+                fragment = dialog
             }
             if (!fragment.isAdded) {
                 val manager = activity.supportFragmentManager

@@ -74,6 +74,7 @@
 
                     <ImageView
                         android:id="@+id/ivAttestationImg"
+                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/icon_company_attestation_bg" />
@@ -95,6 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="15dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp">

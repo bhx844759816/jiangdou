@@ -1,103 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:background="@android:color/transparent"
-        android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_dialog_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:background="@drawable/shape_dialog_bg"
-            android:orientation="vertical"
-            android:layout_gravity="center">
-        <RelativeLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-        >
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="请添加工作日期"
-                      android:textColor="@color/text_default"
-                      android:textSize="@dimen/text_default_size"
-                      android:layout_centerVertical="true"
-            />
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_alignParentRight="true"
-                      android:layout_marginRight="10dp"
-                      android:text="8月 2019"
-                      android:textStyle="bold"
-                      android:textColor="@color/text_default"
-                      android:textSize="@dimen/text_big_size"
-            />
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="请添加工作日期"
+                android:textColor="@color/text_default"
+                android:textSize="@dimen/text_default_size" />
+
+            <TextView
+                android:id="@+id/tvCurrentDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:text="8月 2019"
+                android:textColor="@color/text_default"
+                android:textSize="@dimen/text_big_size"
+                android:textStyle="bold" />
 
         </RelativeLayout>
-        <View android:layout_width="match_parent"
-              android:layout_height="0.5dp"
-              android:background="@color/text_light_color"
-        />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/text_light_color" />
+
         <com.haibin.calendarview.CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="11"
-                android:background="#fff"
-                app:calendar_height="38dp"
-                app:calendar_padding="10dp"
-                app:current_month_lunar_text_color="#CFCFCF"
-                app:current_month_text_color="#4f4f4f"
-                app:day_text_size="18sp"
-                app:max_select_range="-1"
-                app:min_select_range="-1"
-                app:month_view="com.jxqm.jiangdou.view.calendar.CustomRangeMonthView"
-                app:month_view_show_mode="mode_fix"
-                app:other_month_text_color="#e1e1e1"
-                app:scheme_text="假"
-                app:scheme_text_color="#333"
-                app:scheme_theme_color="#333"
-                app:select_mode="range_mode"
-                app:selected_text_color="#fff"
-                app:selected_theme_color="#EE7621"
-                app:week_background="#fff"
-                app:week_text_color="#111"
-                app:week_view="com.jxqm.jiangdou.view.calendar.CustomRangeWeekView"
-                app:year_view_day_text_color="#333333"
-                app:year_view_day_text_size="9sp"
-                app:year_view_month_text_color="#ff0000"
-                app:calendar_show_mode="only_month_view"
-                app:year_view_month_text_size="20sp"
-                app:year_view_scheme_color="#f17706"/>
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="11"
+            android:background="#fff"
+            app:calendar_height="38dp"
+            app:calendar_padding="10dp"
+            app:calendar_show_mode="only_month_view"
+            app:current_month_lunar_text_color="#CFCFCF"
+            app:current_month_text_color="#4f4f4f"
+            app:day_text_size="18sp"
+            app:max_select_range="-1"
+            app:min_select_range="-1"
+            app:month_view="com.jxqm.jiangdou.view.calendar.CustomRangeMonthView"
+            app:month_view_show_mode="mode_fix"
+            app:other_month_text_color="#e1e1e1"
+            app:scheme_text="假"
+            app:scheme_text_color="#333"
+            app:scheme_theme_color="#333"
+            app:select_mode="range_mode"
+            app:selected_text_color="#fff"
+            app:selected_theme_color="#EE7621"
+            app:week_background="#fff"
+            app:week_text_color="#111"
+            app:week_view="com.jxqm.jiangdou.view.calendar.CustomRangeWeekView"
+            app:year_view_day_text_color="#333333"
+            app:year_view_day_text_size="9sp"
+            app:year_view_month_text_color="#ff0000"
+            app:year_view_month_text_size="20sp"
+            app:year_view_scheme_color="#f17706" />
+
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:paddingRight="10dp"
-                android:layout_height="40dp">
-            <TextView
-                    android:id="@+id/cancel"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/text_small_size"
-                    android:textColor="@color/white"
-                    android:text="确定"
-                    android:gravity="center"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/shape_button_select"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingRight="10dp">
 
             <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:text="取消"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_small_size"
-                    android:textColor="@color/white"
-                    android:layout_toLeftOf="@id/cancel"
-                    android:layout_marginRight="30dp"
-                    android:background="@drawable/shape_button_default"
-            />
+
+                android:id="@+id/tvConfirm"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_button_select"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small_size" />
+
+            <TextView
+                android:id="@+id/tvCancel"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@id/cancel"
+                android:background="@drawable/shape_button_default"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small_size" />
 
         </RelativeLayout>
     </LinearLayout>

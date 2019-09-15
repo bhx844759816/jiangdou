@@ -1,294 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-       android:background="@color/white"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="11">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="33dp"
+                android:text="@string/publishJobTitleThree"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_big_size"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvDataTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/jobData"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_default_size"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+            <LinearLayout
+                android:id="@+id/llDataParent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="27dp"
+                android:layout_marginRight="38dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toRightOf="@id/tvDataTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"></LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSelectDate"
+                android:layout_width="116dp"
+                android:layout_height="30dp"
+                android:background="@color/colorAccent"
+                android:drawableLeft="@drawable/icon_add"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:text="添加工作时段"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small_size"
+                app:layout_constraintLeft_toLeftOf="@id/llDataParent"
+                app:layout_constraintTop_toBottomOf="@id/llDataParent" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="32dp"
+                android:background="@color/data_range_item_bg"
+                app:layout_constraintLeft_toLeftOf="@id/tvDataTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSelectDate" />
+
+            <TextView
+
+                android:id="@+id/tvTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/jobTime"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_default_size"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@id/line1"
+                app:layout_constraintTop_toBottomOf="@id/line1" />
+
+            <LinearLayout
+                android:id="@+id/llTimeParent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="38dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toRightOf="@id/tvTimeTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line1">
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSelectTimeRange"
+                android:layout_width="116dp"
+                android:layout_height="30dp"
+                android:background="@color/colorAccent"
+                android:drawableLeft="@drawable/icon_add"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:text="添加上班时段"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small_size"
+                app:layout_constraintLeft_toLeftOf="@id/llTimeParent"
+                app:layout_constraintTop_toBottomOf="@id/llTimeParent" />
+
+
+            <View
+                android:id="@+id/line2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="33dp"
-                    android:layout_marginTop="33dp"
-                    android:text="@string/publishJobTitleThree"
-                    android:textColor="@color/text_publish_job"
-                    android:textSize="@dimen/text_big_size"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                    android:id="@+id/tvDataTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/jobData"
-                    android:textColor="@color/text_publish_job"
-                    android:textSize="@dimen/text_default_size"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="@id/tvTitle"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle"/>
-
-            <LinearLayout
-                    android:id="@+id/llDataParent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginTop="27dp"
-                    android:layout_marginRight="38dp"
-                    android:orientation="vertical"
-                    app:layout_constraintLeft_toRightOf="@id/tvDataTitle"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle">
-
-                <include layout="@layout/view_data_range_item"></include>
-
-                <include layout="@layout/view_data_range_item"></include>
-
-                <TextView
-                        android:id="@+id/tvSelectDate"
-                        android:layout_width="116dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/colorAccent"
-                        android:drawableLeft="@drawable/icon_add"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
-                        android:text="添加工作时段"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_small_size">
-
-                </TextView>
-            </LinearLayout>
-
-            <View
-                    android:id="@+id/line1"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="32dp"
-                    android:background="@color/data_range_item_bg"
-                    app:layout_constraintLeft_toLeftOf="@id/tvDataTitle"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/llDataParent"/>
-
-            <TextView
-
-                    android:id="@+id/tvTimeTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/jobTime"
-                    android:textColor="@color/text_publish_job"
-                    android:textSize="@dimen/text_default_size"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="@id/line1"
-                    app:layout_constraintTop_toBottomOf="@id/line1"/>
-
-            <LinearLayout
-                    android:id="@+id/llTimeParent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="38dp"
-                    android:orientation="vertical"
-                    app:layout_constraintLeft_toRightOf="@id/tvTimeTitle"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line1">
-
-                <include layout="@layout/view_data_range_item"></include>
-
-                <include layout="@layout/view_data_range_item"></include>
-
-                <TextView
-                    android:id="@+id/tvSelectTimeRange"
-                        android:layout_width="116dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/colorAccent"
-                        android:drawableLeft="@drawable/icon_add"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
-                        android:text="添加上班时段"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_small_size">
-
-                </TextView>
-            </LinearLayout>
-
-
-            <View
-                    android:id="@+id/line2"
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@color/app_bg"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/llTimeParent"/>
+                android:layout_height="15dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/app_bg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSelectTimeRange" />
 
             <FrameLayout
-                    android:id="@+id/flMoneyParent"
-                    android:layout_width="match_parent"
-                    android:layout_height="67dp"
-                    android:paddingLeft="33dp"
-                    android:paddingRight="31dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/flMoneyParent"
+                android:layout_width="match_parent"
+                android:layout_height="67dp"
+                android:paddingLeft="33dp"
+                android:paddingRight="31dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
 
-                    app:layout_constraintTop_toBottomOf="@id/line2">
+                app:layout_constraintTop_toBottomOf="@id/line2">
 
                 <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/jobMoney"
-                        android:textColor="@color/text_publish_job"
-                        android:textSize="@dimen/text_default_size"
-                        android:textStyle="bold"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/jobMoney"
+                    android:textColor="@color/text_publish_job"
+                    android:textSize="@dimen/text_default_size"
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="right">
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right">
 
                     <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:background="@null"
-                            android:gravity="center_vertical"
-                            android:hint="请输入工资"
-                            android:textColor="@color/text_default"
-                            android:textColorHint="@color/text_light_color"
-                            android:textSize="@dimen/text_small_size"/>
+                        android:id="@+id/etPayMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="right|center_vertical"
+                        android:hint="请输入工资"
+                        android:inputType="number"
+                        android:maxEms="8"
+                        android:maxLines="1"
+                        android:textColor="@color/text_default"
+                        android:textColorHint="@color/text_light_color"
+                        android:textSize="@dimen/text_small_size" />
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="17dp"
-                            android:text="元/小时"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/text_default_size"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="17dp"
+                        android:text="币/小时"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_default_size" />
                 </LinearLayout>
 
                 <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.6dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/divider_vertical_line"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/divider_vertical_line" />
             </FrameLayout>
 
             <LinearLayout
-                    android:id="@+id/llWelfareParent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="33dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="28dp"
-                    android:orientation="vertical"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/flMoneyParent">
+                android:id="@+id/llWelfareParent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="28dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flMoneyParent">
 
                 <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/jobWelfare"
-                        android:textColor="@color/text_publish_job"
-                        android:textSize="@dimen/text_default_size"
-                        android:textStyle="bold"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/jobWelfare"
+                    android:textColor="@color/text_publish_job"
+                    android:textSize="@dimen/text_default_size"
+                    android:textStyle="bold" />
 
                 <com.jxqm.jiangdou.view.MultipleRadioGroup
-                        android:id="@+id/rgHotTypeGroup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="11dp"
-                        android:paddingBottom="10dp"
-                        app:isSupportMultiple="true"
-                        app:layout_constraintRight_toRightOf="parent">
+                    android:id="@+id/rgHotTypeGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:paddingBottom="10dp"
+                    app:isSupportMultiple="true"
+                    app:layout_constraintRight_toRightOf="parent">
 
                     <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <RadioButton
-                                android:id="@+id/rb03"
-                                android:layout_width="93dp"
-                                android:layout_height="36dp"
-                                android:layout_marginRight="13dp"
-                                android:background="@drawable/select_publish_job_item_bg"
-                                android:button="@null"
-                                android:checked="true"
-                                android:gravity="center"
-                                android:text="包吃"
-                                android:textColor="@color/select_publish_job_item_textcolor"
-                                android:textSize="@dimen/text_default_size"/>
+                            android:id="@+id/rb03"
+                            android:layout_width="93dp"
+                            android:layout_height="36dp"
+                            android:layout_marginRight="13dp"
+                            android:background="@drawable/select_publish_job_item_bg"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:text="包吃"
+                            android:textColor="@color/select_publish_job_item_textcolor"
+                            android:textSize="@dimen/text_default_size" />
 
                         <RadioButton
-                                android:id="@+id/rb04"
-                                android:layout_width="93dp"
-                                android:layout_height="36dp"
-                                android:layout_marginRight="13dp"
-                                android:background="@drawable/select_publish_job_item_bg"
-                                android:button="@null"
-                                android:gravity="center"
-                                android:text="包住"
-                                android:textColor="@color/select_publish_job_item_textcolor"
-                                android:textSize="@dimen/text_default_size"/>
+                            android:id="@+id/rb04"
+                            android:layout_width="93dp"
+                            android:layout_height="36dp"
+                            android:layout_marginRight="13dp"
+                            android:background="@drawable/select_publish_job_item_bg"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="包住"
+                            android:textColor="@color/select_publish_job_item_textcolor"
+                            android:textSize="@dimen/text_default_size" />
 
                         <RadioButton
-                                android:id="@+id/rb05"
-                                android:layout_width="93dp"
-                                android:layout_height="36dp"
-                                android:background="@drawable/select_publish_job_item_bg"
-                                android:button="@null"
-                                android:gravity="center"
-                                android:text="交通补贴"
-                                android:textColor="@color/select_publish_job_item_textcolor"
-                                android:textSize="@dimen/text_default_size"/>
+                            android:id="@+id/rb05"
+                            android:layout_width="93dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/select_publish_job_item_bg"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="交通补贴"
+                            android:textColor="@color/select_publish_job_item_textcolor"
+                            android:textSize="@dimen/text_default_size" />
                     </LinearLayout>
 
                     <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="11dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="11dp">
 
                         <RadioButton
-                                android:id="@+id/rb06"
-                                android:layout_width="93dp"
-                                android:layout_height="36dp"
-                                android:layout_marginRight="13dp"
-                                android:background="@drawable/select_publish_job_item_bg"
-                                android:button="@null"
-                                android:gravity="center"
-                                android:text="有提成"
-                                android:textColor="@color/select_publish_job_item_textcolor"
-                                android:textSize="@dimen/text_default_size"/>
+                            android:id="@+id/rb06"
+                            android:layout_width="93dp"
+                            android:layout_height="36dp"
+                            android:layout_marginRight="13dp"
+                            android:background="@drawable/select_publish_job_item_bg"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="有提成"
+                            android:textColor="@color/select_publish_job_item_textcolor"
+                            android:textSize="@dimen/text_default_size" />
 
                         <RadioButton
-                                android:id="@+id/rb07"
-                                android:layout_width="93dp"
-                                android:layout_height="36dp"
-                                android:layout_marginRight="11dp"
-                                android:background="@drawable/select_publish_job_item_bg"
-                                android:button="@null"
-                                android:gravity="center"
-                                android:text="免费培训"
-                                android:textColor="@color/select_publish_job_item_textcolor"
-                                android:textSize="@dimen/text_default_size"/>
+                            android:id="@+id/rb07"
+                            android:layout_width="93dp"
+                            android:layout_height="36dp"
+                            android:layout_marginRight="11dp"
+                            android:background="@drawable/select_publish_job_item_bg"
+                            android:button="@null"
+                            android:gravity="center"
+                            android:text="免费培训"
+                            android:textColor="@color/select_publish_job_item_textcolor"
+                            android:textSize="@dimen/text_default_size" />
 
 
                     </LinearLayout>
@@ -300,13 +297,14 @@
     </androidx.core.widget.NestedScrollView>
 
     <TextView
-            android:id="@+id/tvNextStep"
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:layout_gravity="bottom"
-            android:background="@color/text_light_color"
-            android:gravity="center"
-            android:text="@string/nextSteps"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_btn_size"/>
+        android:id="@+id/tvNextStep"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/select_button_bg"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/nextSteps"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_btn_size" />
 </LinearLayout>

@@ -23,6 +23,7 @@
     <color name="jobPublishLine">#E2E2E2 </color>
     <color name="transparent">#00000000</color>
     <color name="halfTransparent">#30000000</color>
+    <color name="bgTransparent">#60000000</color>
     <color name="job_bottom_text_color">#515151</color>
     <color name="job_screen_date_bg">#F7F8FC</color>
     <color name="job_screen_text_color">#BDBDBD</color>

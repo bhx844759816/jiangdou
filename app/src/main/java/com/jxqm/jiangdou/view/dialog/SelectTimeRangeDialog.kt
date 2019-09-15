@@ -12,6 +12,7 @@ import com.bhx.common.utils.DensityUtil
 import com.contrarywind.adapter.WheelAdapter
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.adapter.ArrayWheelAdapter
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.dialog_select_time_range.*
 
 /**
@@ -20,18 +21,41 @@ import kotlinx.android.synthetic.main.dialog_select_time_range.*
  */
 class SelectTimeRangeDialog : BaseDialogFragment() {
 
-    val mItems = arrayListOf(
-            "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14",
-            "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"
+    private val mItems = arrayListOf(
+        "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14",
+        "15", "16", "17", "18", "19", "20", "21", "22", "23"
     )
-
+    private val mSecondItems = arrayListOf("00", "10", "20", "30", "40", "50")
+    private var mCallBack: ((String, String) -> Unit)? = null
     override fun getLayoutId(): Int = R.layout.dialog_select_time_range
 
     override fun initView(view: View?) {
         wvStartTime.adapter = ArrayWheelAdapter(mItems)
-        wvStartSecond.adapter = ArrayWheelAdapter(mItems)
+        wvStartSecond.adapter = ArrayWheelAdapter(mSecondItems)
         wvEndTime.adapter = ArrayWheelAdapter(mItems)
-        wvEndSecond.adapter = ArrayWheelAdapter(mItems)
+        wvEndSecond.adapter = ArrayWheelAdapter(mSecondItems)
+        wvStartTime.currentItem = 8
+        wvEndTime?.currentItem = wvStartTime.currentItem +
+                ((mItems.size - wvStartTime.currentItem) / 2)
+        wvStartTime.setOnItemSelectedListener {
+            wvEndTime?.currentItem = it + ((mItems.size - it) / 2)
+            wvStartSecond?.currentItem = 3
+        }
+        wvEndTime.setOnItemSelectedListener {
+            wvEndSecond?.currentItem = 3
+        }
+        tvCancel.clickWithTrigger {
+            dismissAllowingStateLoss()
+        }
+        tvConfirm.clickWithTrigger {
+            if (wvStartTime.currentItem > wvEndTime.currentItem) {
+                return@clickWithTrigger
+            }
+            val startTime = "${mItems[wvStartTime.currentItem]} : ${mSecondItems[wvStartSecond.currentItem]}"
+            val endTime = "${mItems[wvEndTime.currentItem]} : ${mSecondItems[wvEndSecond.currentItem]}"
+            mCallBack?.invoke(startTime, endTime)
+            dismissAllowingStateLoss()
+        }
     }
 
     override fun initWindow() {
@@ -48,13 +72,16 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
             }
         }
     }
+
     companion object {
         private val TAG = SelectTimeRangeDialog::class.simpleName
 
-        fun show(activity: FragmentActivity) {
+        fun show(activity: FragmentActivity, callBack: (String, String) -> Unit) {
             var fragment = activity.supportFragmentManager.findFragmentByTag(TAG)
             if (fragment == null) {
-                fragment = SelectTimeRangeDialog()
+                val dialog = SelectTimeRangeDialog()
+                dialog.mCallBack = callBack
+                fragment = dialog
             }
             if (!fragment.isAdded) {
                 val manager = activity.supportFragmentManager

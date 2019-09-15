@@ -8,6 +8,11 @@ import android.location.LocationManager
 import android.os.Build
 import android.provider.Settings
 import androidx.lifecycle.Observer
+import com.baidu.location.BDAbstractLocationListener
+import com.baidu.location.BDLocation
+import com.baidu.location.LocationClient
+import com.baidu.location.LocationClientOption
+import com.baidu.mapapi.model.LatLng
 import com.bhx.common.mvvm.BaseMVVMActivity
 import com.bhx.common.utils.LogUtils
 import com.bumptech.glide.Glide
@@ -50,8 +55,7 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
     private var mSelectCompanyPeople: CompanyTypeModel? = null
     private var mSelectCompanyJobType: CompanyTypeModel? = null
     private var mSelectFile: File? = null//选择的营业执照的图片
-    private var mCompanyArea: String? = null //公司地址
-    private var mCompanyScreenShot: String? = null//公司地址的截图
+    private var mLocationLatLng: LatLng? = null//定位的经纬度信息
 
     override fun getEventKey(): Any = Constants.EVENT_KEY_COMPANY_ATTESTATION
 
@@ -62,7 +66,28 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
         //下一步
         tvNextStep.clickWithTrigger {
-            startActivity<PeopleAttestationActivity>()
+            val intent = Intent(this@CompanyAttestationActivity, PeopleAttestationActivity::class.java)
+            //公司名称
+            val companyName = etCompanyName.text.toString().trim()
+            //机构简介
+            val companyDescription = etCompanyDescription.text.toString().trim()
+            //详细工作地址
+            val locationDetails = etDetailsAddress.text.toString().trim()
+            //选择地区
+            val locationArea = tvLocationArea.text.toString().trim()
+            intent.apply {
+                putExtra("businessLicense", mSelectFile?.absolutePath)
+                putExtra("companyName", companyName)
+                putExtra("companyDescription", companyDescription)
+                putExtra("locationDetails", locationDetails)
+                putExtra("locationArea", locationArea)
+                putExtra("selectCompanyType", mSelectCompanyType?.id)
+                putExtra("selectCompanyPeople", mSelectCompanyPeople?.id)
+                putExtra("selectCompanyJobType", mSelectCompanyJobType?.id)
+                putExtra("locationLat", mLocationLatLng?.latitude)
+                putExtra("locationLon", mLocationLatLng?.longitude)
+            }
+            startActivity(intent)
         }
         //返回
         companyAttestationBack.clickWithTrigger {
@@ -106,16 +131,35 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
                 isNextStepEnable()
             }
         }
+        etCompanyDescription.addTextChangedListener {
+            afterTextChanged {
+                isNextStepEnable()
+            }
+        }
     }
 
+
+    /**
+     * 初始化数据
+     */
+    override fun initData() {
+        mViewModel.getCompanyPeople()
+        mViewModel.getCompanyJobType()
+        mViewModel.getCompanyType()
+    }
+
+    /**
+     * 是否可以点击
+     */
     private fun isNextStepEnable() {
         val companyName = etCompanyName.text.toString().trim()
-        if (mSelectFile != null && companyName.isNotEmpty()
-            && mSelectCompanyType != null && mSelectCompanyPeople != null
-            && mSelectCompanyJobType != null
-        ) {
-            tvNextStep.isEnabled = true
-        }
+        val companyDescription = etCompanyDescription.text.toString().trim()
+        tvNextStep.isEnabled = mSelectFile != null && companyName.isNotEmpty() &&
+                companyDescription.isNotEmpty() &&
+                companyDescription.length >= 20 &&
+                mSelectCompanyType != null &&
+                mSelectCompanyPeople != null &&
+                mSelectCompanyJobType != null
     }
 
     /**
@@ -143,22 +187,13 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
             .capture(true)
             .captureStrategy(CaptureStrategy(true, "com.jxqm.jiangdou.fileprovider"))
             .maxSelectable(maxSelectable)
-            .isCrop(true)
+            .isCrop(false)
             .cropStyle(CropImageView.Style.CIRCLE)
             .isCropSaveRectangle(false)
             .thumbnailScale(0.6f)
             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
             .imageEngine(GlideEngine())
             .forResult(requestCode)
-    }
-
-    /**
-     * 初始化数据
-     */
-    override fun initData() {
-        mViewModel.getCompanyPeople()
-        mViewModel.getCompanyJobType()
-        mViewModel.getCompanyType()
     }
 
     /**
@@ -171,17 +206,18 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         val locManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
                         if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                            LogUtils.i("获取定位权限")
                             val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                            startActivityForResult(intent, 0x01) // 设置完成后返回到原来的界面
+                            startActivityForResult(intent, REQUEST_CODE_LOCATION_SETTING) // 设置完成后返回到原来的界面
                         } else {
                             LogUtils.i("获取定位权限成功")
-                            startActivity<MapActivity>()
+                            val intent = Intent(this@CompanyAttestationActivity, MapActivity::class.java)
+                            startActivityForResult(intent, REQUEST_CODE_SELECT_AREA)
                         }
                     }
                 }
             })
     }
+
 
     /**
      * 注册Observer监听
@@ -227,11 +263,20 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
                     isNextStepEnable()
                 }
             }
+            REQUEST_CODE_SELECT_AREA -> {
+                data?.let {
+                    tvLocationArea.text = it.getStringExtra("name")
+                    mLocationLatLng = it.getParcelableExtra("latLng")
+                }
+
+            }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
 
     companion object {
         const val REQUEST_CODE_SELECT_IMAGE = 0x01
+        const val REQUEST_CODE_LOCATION_SETTING = 0x03
+        const val REQUEST_CODE_SELECT_AREA = 0x02 // 选择工作地址
     }
 }

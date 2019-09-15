@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="11">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -60,6 +61,7 @@
                 android:background="@null"
                 android:drawableBottom="@drawable/shape_et_bottom_line"
                 android:hint="请输入兼职标题"
+                android:maxEms="20"
                 android:textColor="@color/text_default"
                 android:textColorHint="@color/text_light_color"
                 android:textSize="@dimen/text_default_size"
@@ -99,6 +101,7 @@
                 android:background="@null"
                 android:gravity="top"
                 android:hint="请输入相关的工作内容，岗位要求等，20-2000字"
+                android:maxEms="2000"
                 android:textColor="@color/text_default"
                 android:textColorHint="@color/text_light_color"
                 android:textSize="@dimen/text_default_size"
@@ -225,11 +228,13 @@
                     android:textSize="@dimen/text_default_size" />
 
                 <TextView
+                    android:id="@+id/tvLocationArea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="河南省，郑州市，金水区"
+                    android:hint="请点击选择"
                     android:textColor="@color/text_publish_sex"
+                    android:textColorHint="@color/text_hint"
                     android:textSize="@dimen/text_default_size" />
             </LinearLayout>
 
@@ -267,7 +272,8 @@
         android:layout_width="match_parent"
         android:layout_height="53dp"
         android:layout_marginTop="20dp"
-        android:background="@color/text_light_color"
+        android:background="@drawable/select_button_bg"
+        android:enabled="true"
         android:gravity="center"
         android:text="@string/nextSteps"
         android:textColor="@color/white"

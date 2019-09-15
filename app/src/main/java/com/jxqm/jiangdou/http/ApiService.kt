@@ -1,9 +1,11 @@
 package com.jxqm.jiangdou.http
 
 import com.jxqm.jiangdou.model.CompanyTypeModel
+import com.jxqm.jiangdou.model.JobTypeModel
 import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.model.UserModel
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 
@@ -35,14 +37,10 @@ interface ApiService {
     @GET(Api.COMPANY_JOB_TYPE)
     fun getCompanyJobType(): Observable<HttpResult<List<CompanyTypeModel>>>
 
-    /**
-     * username
-    password=pasword(密码）/code(验证码）
-    grant_type=password
-    client_id=jxdou_web
-    client_secret=123456
-    auth_type= password/sms
-    device_id = //设备ID
+    @GET(Api.PUBLISH_JOB_TYPE)
+    fun getJobType(): Observable<HttpResult<List<JobTypeModel>>>
 
-     */
+    @Multipart
+    @POST(Api.ATTESTATION_SUBMIT)
+    fun submitAttestation(body: MultipartBody): Observable<HttpResult<Any>>
 }

@@ -2,12 +2,17 @@ package com.jxqm.jiangdou.ui.publish.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.ToastUtils
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.base.BaseDataActivity
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
+import com.jxqm.jiangdou.model.JobTypeModel
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
+import com.jxqm.jiangdou.ui.publish.vm.JobPublishViewModel
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_publish.*
 
@@ -15,18 +20,18 @@ import kotlinx.android.synthetic.main.activity_publish.*
  * 发布兼职的界面
  * Created By bhx On 2019/8/8 0008 09:00
  */
-class JobPublishActivity : BaseActivity(), OnJobPublishCallBack {
-
-
+class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublishCallBack {
     private var mJobTypeFragment: JobTypeFragment? = null
     private var mJobMessageFragment: JobMessageFragment? = null
     private var mJobTimeFragment: JobTimeFragment? = null
     private var mJobContactsFragment: JobContactsFragment? = null
     private var mCurrentFragment: Fragment? = null
-
+    private var mSelectJobTypeModel: JobTypeModel? = null
+    private var mParams = mutableMapOf<String, String>()
 
     override fun getLayoutId(): Int = R.layout.activity_publish
 
+    override fun getEventKey(): Any = Constants.EVENT_KEY_JOB_PUBLISH
 
     override fun initView() {
         super.initView()
@@ -35,6 +40,17 @@ class JobPublishActivity : BaseActivity(), OnJobPublishCallBack {
             onBackPressed()
         }
         showSelectJobTypeFragment()
+    }
+
+    override fun dataObserver() {
+        registerObserver(Constants.TAG_PUBLISH_JOB_TYPE, JobTypeModel::class.java).observe(this, Observer {
+            mParams["jobTypeId "] = it.id.toString()
+            mSelectJobTypeModel = it
+        })
+
+        registerObserver(Constants.TAG_PUBLISH_JOB_MESSAGE, Map::class.java).observe(this, Observer {
+            mParams.putAll(it as Map<String, String>)
+        })
     }
 
     /**

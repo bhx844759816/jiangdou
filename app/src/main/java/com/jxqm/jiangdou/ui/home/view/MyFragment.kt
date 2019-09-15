@@ -2,9 +2,11 @@ package com.jxqm.jiangdou.ui.home.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.model.UserModel
 import com.jxqm.jiangdou.ui.attestation.view.CompanyAttestationActivity
 import com.jxqm.jiangdou.ui.home.vm.MyViewModel
 import com.jxqm.jiangdou.ui.login.view.LoginActivity
@@ -60,6 +62,11 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
 
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
+        registerObserver(Constants.TAG_MAIN_MY_LOGIN_SUCCESS, UserModel::class.java).observe(this, Observer {
+            tvUserName.text = it.username
+        })
+
     }
+
 
 }

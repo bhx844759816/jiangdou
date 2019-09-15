@@ -17,6 +17,7 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.http.TokenInterceptor
 import com.jxqm.jiangdou.model.TokenModel
+import com.jxqm.jiangdou.model.UserModel
 import com.jxqm.jiangdou.view.refresh.BaseRefreshHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
@@ -27,6 +28,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 class MyApplication : BaseApplication() {
 
     private var accessToken: String? = null
+    var userModel: UserModel? = null //存储用户信息
 
     private val mActivityCallBack = object : ActivityLifecycleCallbacks {
         override fun onActivityPaused(p0: Activity) {
@@ -110,5 +112,6 @@ class MyApplication : BaseApplication() {
     }
 
     fun getAccessToken(): String? = accessToken
+
 
 }

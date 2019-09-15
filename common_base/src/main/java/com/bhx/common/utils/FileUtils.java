@@ -2,6 +2,7 @@ package com.bhx.common.utils;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.util.Log;
 import okhttp3.OkHttpClient;
 
@@ -22,8 +23,6 @@ public class FileUtils {
 
     /**
      * 解压assets的zip压缩文件到指定目录
-     *
-     * @throws IOException
      */
     public static void unZip(Context context, String assetName,
                              String outputDirectory, boolean isReWrite) throws IOException {
@@ -138,6 +137,27 @@ public class FileUtils {
 
         }
         return false;
+    }
+
+    public static void saveBitmap(Bitmap bmp, String savePath, String saveName) {
+        File dir = new File(savePath);
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+        File f = new File(dir,saveName);
+        if (f.exists()) {
+            f.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(f);
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
