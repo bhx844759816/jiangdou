@@ -7,6 +7,11 @@ import com.jxqm.jiangdou.ui.attestation.vm.repository.CompanyAttestationReposito
  * Created By bhx On 2019/9/12 0012 15:30
  */
 class CompanyAttestationViewModel : BaseViewModel<CompanyAttestationRepository>() {
+
+    fun getAttestationStatus() {
+        mRepository.getCompanyJobType()
+    }
+
     /**
      * 获取企业类型
      */

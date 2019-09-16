@@ -76,22 +76,45 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/ivPeopleCardPositive"
+                    <FrameLayout
                         android:layout_width="270dp"
                         android:layout_height="150dp"
-                        android:layout_marginTop="25dp"
-                        android:background="@drawable/icon_people_card_front"
-                        android:scaleType="fitXY" />
+                        android:layout_marginTop="25dp">
+
+                        <ImageView
+                            android:id="@+id/ivPeopleCardPositive"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/icon_people_card_front"
+                            android:scaleType="fitXY" />
+
+                        <FrameLayout
+                            android:id="@+id/flCardPositiveStatusParent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#7d1c1c1c">
+
+                            <TextView
+                                android:id="@+id/tvCardPositiveStatusText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="已上传"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_btn_size" />
+                        </FrameLayout>
+                    </FrameLayout>
+
 
                     <TextView
                         android:id="@+id/tvPeopleCardPositive"
                         android:layout_width="136dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/shape_button_select"
+                        android:background="@drawable/select_button_bg"
                         android:gravity="center"
                         android:text="选择"
+
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_default_size" />
 
@@ -116,20 +139,41 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/ivPeopleCardBack"
+                    <FrameLayout
                         android:layout_width="270dp"
                         android:layout_height="150dp"
-                        android:layout_marginTop="25dp"
-                        android:background="@drawable/icon_people_card_back"
-                        android:scaleType="fitXY" />
+                        android:layout_marginTop="25dp">
+
+                        <ImageView
+                            android:id="@+id/ivPeopleCardBack"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/icon_people_card_front"
+                            android:scaleType="fitXY" />
+
+                        <FrameLayout
+                            android:id="@+id/flCardBackStatusParent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#7d1c1c1c">
+
+                            <TextView
+                                android:id="@+id/tvCardBackStatusText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="已上传"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_btn_size" />
+                        </FrameLayout>
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/tvPeopleCardBack"
                         android:layout_width="136dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/shape_button_select"
+                        android:background="@drawable/select_button_bg"
                         android:gravity="center"
                         android:text="选择"
                         android:textColor="@color/white"
@@ -431,8 +475,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/select_button_bg"
-        android:gravity="center"
         android:enabled="false"
+        android:gravity="center"
         android:text="提交"
         android:textColor="@color/white"
         android:textSize="@dimen/text_btn_size" />

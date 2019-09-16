@@ -121,10 +121,11 @@ fun <T> handleResultForLoadingDialog(): ObservableTransformer<HttpResult<T>, T> 
 
 class ErrorResumeFunction<T> : Function<Throwable, ObservableSource<out HttpResult<T>>> {
     override fun apply(t: Throwable): ObservableSource<out HttpResult<T>> {
+        LogUtils.i("error:${t.localizedMessage}")
         if (t is ApiException) {
             return Observable.error(t)
         }
-        LogUtils.i("error:${t.localizedMessage}")
+
         return Observable.error(CustomException.handleException(t))
     }
 }

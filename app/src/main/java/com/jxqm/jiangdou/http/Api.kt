@@ -22,7 +22,11 @@ object Api {
     //所属行业
     const val COMPANY_JOB_TYPE = "/code/hyfl"
     //提交认证
-    const val ATTESTATION_SUBMIT  ="/employer/register"
+    const val ATTESTATION_SUBMIT = "/employer/register"
+    //获取认证状态
+    const val GET_ATTESTATION_STATUS = "/employer/status"
+    //获取认证信息
+    const val GET_ATTESTATION_DETAILS = "/employer"
     //发布兼职 - 兼职类型
     const val PUBLISH_JOB_TYPE = "/code/job_types_l2"
 }

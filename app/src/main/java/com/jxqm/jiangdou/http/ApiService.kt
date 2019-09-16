@@ -8,6 +8,12 @@ import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
+import retrofit2.http.PartMap
+import com.google.gson.JsonObject
+import retrofit2.http.POST
+import retrofit2.http.Multipart
+
+
 
 /**
  * Created by Administrator on 2019/9/8.
@@ -40,7 +46,18 @@ interface ApiService {
     @GET(Api.PUBLISH_JOB_TYPE)
     fun getJobType(): Observable<HttpResult<List<JobTypeModel>>>
 
+    @POST(Api.ATTESTATION_SUBMIT)
+    fun submitAttestation(@Body body: MultipartBody): Observable<HttpResult<Any>>
+
+    @GET(Api.GET_ATTESTATION_DETAILS)
+    fun getAttestationDetails():Observable<HttpResult<Any>>
+
+    @GET(Api.GET_ATTESTATION_STATUS)
+    fun getAttestationStatus():Observable<HttpResult<Any>>
+
     @Multipart
     @POST(Api.ATTESTATION_SUBMIT)
-    fun submitAttestation(body: MultipartBody): Observable<HttpResult<Any>>
+    fun submitAttestation(@PartMap partMap: Map<String, RequestBody>,
+                          @Part vararg files: MultipartBody.Part): Observable<JsonObject>
+
 }

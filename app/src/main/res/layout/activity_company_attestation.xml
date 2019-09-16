@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/app_bg"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -74,10 +74,26 @@
 
                     <ImageView
                         android:id="@+id/ivAttestationImg"
-                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/icon_company_attestation_bg" />
+                        android:background="@drawable/icon_company_attestation_bg"
+                        android:scaleType="fitXY" />
+
+                    <FrameLayout
+                        android:id="@+id/flAttestationStatusParent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#7d1c1c1c">
+
+                        <TextView
+                            android:id="@+id/tvAttestationStatusText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="已上传"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_btn_size" />
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/tvSelectAttestationImg"
@@ -96,9 +112,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="15dp"
+                android:background="@color/white"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp">
 

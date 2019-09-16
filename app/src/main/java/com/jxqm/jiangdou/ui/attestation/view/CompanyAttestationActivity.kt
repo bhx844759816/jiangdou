@@ -75,15 +75,16 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
             val locationDetails = etDetailsAddress.text.toString().trim()
             //选择地区
             val locationArea = tvLocationArea.text.toString().trim()
+
             intent.apply {
                 putExtra("businessLicense", mSelectFile?.absolutePath)
                 putExtra("companyName", companyName)
                 putExtra("companyDescription", companyDescription)
                 putExtra("locationDetails", locationDetails)
                 putExtra("locationArea", locationArea)
-                putExtra("selectCompanyType", mSelectCompanyType?.id)
-                putExtra("selectCompanyPeople", mSelectCompanyPeople?.id)
-                putExtra("selectCompanyJobType", mSelectCompanyJobType?.id)
+                putExtra("selectCompanyType", mSelectCompanyType?.id.toString())
+                putExtra("selectCompanyPeople", mSelectCompanyPeople?.id.toString())
+                putExtra("selectCompanyJobType", mSelectCompanyJobType?.id.toString())
                 putExtra("locationLat", mLocationLatLng?.latitude)
                 putExtra("locationLon", mLocationLatLng?.longitude)
             }

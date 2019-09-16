@@ -69,9 +69,10 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             paramsMaps["latitude"] = locationLat.toString()
             paramsMaps["longitude"] = locationLon.toString()
             //上传的文件
-            fileMaps["businessLicense"] = File(businessLicensePath)
-            fileMaps["idcardBack"] = mIdBackImgFile!!
-            fileMaps["idcardFront"] = mIdFrontImgFile!!
+            fileMaps["businessLicense"] = File(businessLicensePath!!) //
+            fileMaps["idcardBack"] = mIdBackImgFile!!//身份证反面
+            fileMaps["idcardFront"] = mIdFrontImgFile!! //身份证正面
+            fileMaps["mapImg"] = File(Constants.APP_SAVE_DIR,Constants.MAPVIEW_FILENAME)
             mViewModel.submit(fileMaps, paramsMaps)
         }
 
@@ -159,7 +160,6 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             .imageEngine(GlideEngine())
             .forResult(requestCode)
     }
-
 
     private fun isSubmitState(): Boolean {
         return mIdFrontImgFile != null &&

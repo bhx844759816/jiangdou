@@ -165,7 +165,7 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
             if (mPhone.isNullOrEmpty() || mDeviceId.isNullOrEmpty()) {
                 return@clickWithTrigger
             }
-            mViewModel.sendSmsCode(mPhone!!, mDeviceId!!)
+            mViewModel.sendSmsCode(mDeviceId!!, mPhone!!)
         }
     }
 

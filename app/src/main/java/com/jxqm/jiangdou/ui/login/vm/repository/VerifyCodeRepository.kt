@@ -43,6 +43,7 @@ class VerifyCodeRepository : BaseEventRepository() {
         }
         addDisposable(apiService.getToken(requestBodyMaps)
             .flatMap {
+                LogUtils.i("获取token:${it.access_token}")
                 MyApplication.instance().saveToken(it)
                 return@flatMap apiService.getUserInfo()
             }.action {
