@@ -69,10 +69,10 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             paramsMaps["latitude"] = locationLat.toString()
             paramsMaps["longitude"] = locationLon.toString()
             //上传的文件
-            fileMaps["businessLicense"] = File(businessLicensePath!!) //
-            fileMaps["idcardBack"] = mIdBackImgFile!!//身份证反面
-            fileMaps["idcardFront"] = mIdFrontImgFile!! //身份证正面
-            fileMaps["mapImg"] = File(Constants.APP_SAVE_DIR,Constants.MAPVIEW_FILENAME)
+            fileMaps["businessLicenseFile"] = File(businessLicensePath!!) //
+            fileMaps["idcardBackFile"] = mIdBackImgFile!!//身份证反面
+            fileMaps["idcardFrontFile"] = mIdFrontImgFile!! //身份证正面
+            fileMaps["mapImgFile"] = File(Constants.APP_SAVE_DIR,Constants.MAPVIEW_FILENAME)
             mViewModel.submit(fileMaps, paramsMaps)
         }
 

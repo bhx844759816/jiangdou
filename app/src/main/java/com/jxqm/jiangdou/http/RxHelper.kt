@@ -140,12 +140,12 @@ class ResponseFunction<T> : Function<HttpResult<T>, ObservableSource<T>> {
                 Observable.just(t.data)
             }
         } else {
-            LogUtils.i("http error:" + t.msg)
+            LogUtils.i("http error:" + t.message)
             var code = 0
             if (!TextUtils.isEmpty(t.code)) {
                 code = Integer.parseInt(t.code)
             }
-            Observable.error(ApiException(code, t.msg))
+            Observable.error(ApiException(code, t.message))
         }
     }
 

@@ -81,7 +81,7 @@ public class RetrofitManager {
     public static class Builder {
         String url;
         List<Interceptor> interceptorList;
-        int timeOut = 5;
+        int timeOut = 30;
         InputStream[] httpsInputStreams;
 
         public Builder setBaseUrl(String url) {

@@ -14,6 +14,7 @@ class TokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val token = MyApplication.instance().getAccessToken()
+
         LogUtils.i("token:$token")
         if (!TextUtils.isEmpty(token)) {
             val request = originalRequest

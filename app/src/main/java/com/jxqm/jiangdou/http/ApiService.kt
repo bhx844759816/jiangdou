@@ -14,7 +14,6 @@ import retrofit2.http.POST
 import retrofit2.http.Multipart
 
 
-
 /**
  * Created by Administrator on 2019/9/8.
  */
@@ -50,14 +49,9 @@ interface ApiService {
     fun submitAttestation(@Body body: MultipartBody): Observable<HttpResult<Any>>
 
     @GET(Api.GET_ATTESTATION_DETAILS)
-    fun getAttestationDetails():Observable<HttpResult<Any>>
+    fun getAttestationDetails(): Observable<HttpResult<Any>>
 
     @GET(Api.GET_ATTESTATION_STATUS)
-    fun getAttestationStatus():Observable<HttpResult<Any>>
-
-    @Multipart
-    @POST(Api.ATTESTATION_SUBMIT)
-    fun submitAttestation(@PartMap partMap: Map<String, RequestBody>,
-                          @Part vararg files: MultipartBody.Part): Observable<JsonObject>
+    fun getAttestationStatus(): Observable<HttpResult<Any>>
 
 }

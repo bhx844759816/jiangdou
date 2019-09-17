@@ -16,21 +16,24 @@ import java.io.File
 class PeopleAttestationRepository : BaseEventRepository() {
 
     fun submit(fileMaps: Map<String, File>, paramsMaps: Map<String, String>) {
-        val mulBody = MultipartBody.Builder().apply {
-            fileMaps.forEach {
-                val body = RequestBody.create(MediaType.parse("multipart/form-data"), it.value)
-                val part = MultipartBody.Part.createFormData(it.key, it.value.name, body)
-                addPart(part)
-            }
-            paramsMaps.map {
-                addFormDataPart(it.key, it.value)
-            }
-        }.build()
+        val mulBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .apply {
+                fileMaps.forEach {
+                    val body = RequestBody.create(MediaType.parse("multipart/form-data"), it.value)
+//                val part = MultipartBody.Part.createFormData(it.key, it.value.name, body)
+                    addFormDataPart(it.key, it.value.name, body)
+                }
+                paramsMaps.map {
+                    addFormDataPart(it.key, it.value)
+                }
+            }.build()
 
         apiService.submitAttestation(mulBody).action {
             LogUtils.i("提交成功$it")
         }
 
     }
+
 
 }

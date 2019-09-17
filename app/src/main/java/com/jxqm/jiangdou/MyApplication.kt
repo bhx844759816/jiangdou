@@ -8,6 +8,7 @@ import com.baidu.mapapi.SDKInitializer
 import com.bhx.common.BaseApplication
 import com.bhx.common.http.RetrofitManager
 import com.bhx.common.utils.AppManager
+import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.NetworkUtils
 import com.bhx.common.utils.SPUtils
 import com.fengchen.uistatus.UiStatusManager
@@ -36,7 +37,6 @@ class MyApplication : BaseApplication() {
 
         override fun onActivityStarted(p0: Activity) {
         }
-
 
         override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) {
         }
@@ -71,6 +71,7 @@ class MyApplication : BaseApplication() {
         super.onCreate()
         instance = this
         accessToken = SPUtils.get(this.applicationContext, Constants.ACCESS_TOKEN, "") as String?
+        LogUtils.i("token$accessToken")
         //配置Http请求
         val builder = RetrofitManager.Builder()
             .setInterceptorList(listOf(TokenInterceptor()))
