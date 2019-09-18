@@ -53,9 +53,8 @@ class Constants {
         const val TAG_SELECT_JOB_TYPE_HOT = "tag_select_job_type_hot"//获取热门类型
         const val TAG_SELECT_JOB_TYPE_MORE = "tag_select_job_type_more"//获取更多类型
         const val EVENT_KEY_COMPANY_ATTESTATION = "event_key_company_attestation" // 企业认证
-        const val TAG_GET_COMPANY_TYPE_RESULT = "tag_get_company_type_result"//企业类型
-        const val TAG_GET_COMPANY_PEOPLE_RESULT = "tag_get_company_people_result"//人员规模
-        const val TAG_GET_COMPANY_JOB_TYPE_RESULT = "tag_get_company_job_type_result"//所属行业
+        const val TAG_GET_COMPANY_ITEM_RESULT ="tag_get_company_item_result"
+        const val TAG_GET_COMPANY_ATTESTATION_STATUS ="tag_get_company_attestation_status"
         const val EVENT_KEY_PEOPLE_ATTESTATION = "event_key_people_attestation" // 身份认证
         const val TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS = "tag_people_attestation_submit_success" //上传成功
         const val EVENT_KEY_EMPLOYER_JOB_LIST = "event_key_employer_job_list"//雇主兼职列表

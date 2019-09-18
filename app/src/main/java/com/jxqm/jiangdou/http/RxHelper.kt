@@ -34,6 +34,14 @@ fun <T> Observable<HttpResult<T>>.action(
 
         })
 }
+//fun <T> Flowable<HttpResult<T>>.action(onNext: (T) -> Unit):Disposable{
+//    return this.compose(handleResultForLoadingDialog())
+//        .subscribe(Consumer(onNext), Consumer {
+//            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_HTTP_REQUEST_ERROR, Constants.TAG_HTTP_REQUEST_ERROR, it)
+//        }, Action {
+//
+//        })
+//}
 
 /**
  * 扩展RxJava得线程切换

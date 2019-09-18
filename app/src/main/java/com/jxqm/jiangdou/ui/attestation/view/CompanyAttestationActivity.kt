@@ -7,11 +7,8 @@ import android.content.pm.ActivityInfo
 import android.location.LocationManager
 import android.os.Build
 import android.provider.Settings
+import android.view.View
 import androidx.lifecycle.Observer
-import com.baidu.location.BDAbstractLocationListener
-import com.baidu.location.BDLocation
-import com.baidu.location.LocationClient
-import com.baidu.location.LocationClientOption
 import com.baidu.mapapi.model.LatLng
 import com.bhx.common.mvvm.BaseMVVMActivity
 import com.bhx.common.utils.LogUtils
@@ -20,12 +17,11 @@ import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.addTextChangedListener
-import com.jxqm.jiangdou.ext.isEnable
-import com.jxqm.jiangdou.model.CompanyTypeModel
+import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
+import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.attestation.vm.CompanyAttestationViewModel
 import com.jxqm.jiangdou.ui.map.MapActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
-import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.SingleSelectDialog
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zhihu.matisse.Matisse
@@ -56,6 +52,7 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
     private var mSelectCompanyJobType: CompanyTypeModel? = null
     private var mSelectFile: File? = null//选择的营业执照的图片
     private var mLocationLatLng: LatLng? = null//定位的经纬度信息
+    private var mAttestationStatus: AttestationStatusModel? = null
 
     override fun getEventKey(): Any = Constants.EVENT_KEY_COMPANY_ATTESTATION
 
@@ -87,6 +84,7 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
                 putExtra("selectCompanyJobType", mSelectCompanyJobType?.id.toString())
                 putExtra("locationLat", mLocationLatLng?.latitude)
                 putExtra("locationLon", mLocationLatLng?.longitude)
+                putExtra("AttestationStatus", mAttestationStatus?.toJson())
             }
             startActivity(intent)
         }
@@ -144,9 +142,11 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
      * 初始化数据
      */
     override fun initData() {
-        mViewModel.getCompanyPeople()
-        mViewModel.getCompanyJobType()
-        mViewModel.getCompanyType()
+//        mViewModel.getAttestationStatus()
+//        mViewModel.getCompanyPeople()
+//        mViewModel.getCompanyJobType()
+//        mViewModel.getCompanyType()
+        mViewModel.getAttestationData()
     }
 
     /**
@@ -224,33 +224,63 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
      * 注册Observer监听
      */
     override fun dataObserver() {
-        registerObserver(Constants.TAG_GET_COMPANY_TYPE_RESULT, List::class.java).observe(this, Observer {
+        registerObserver(Constants.TAG_GET_COMPANY_ITEM_RESULT, List::class.java).observe(this, Observer {
             val list = it as List<CompanyTypeModel>
-            mCompanyTypeList.clear()
-            mCompanyTypeList.addAll(list)
-            mCompanyTypeItemList.clear()
-            mCompanyTypeList.forEach { item ->
-                mCompanyTypeItemList.add(item.codeName)
+            if (mCompanyTypeList.isEmpty()) {
+                mCompanyTypeList.addAll(list)
+                mCompanyTypeList.forEach { item ->
+                    mCompanyTypeItemList.add(item.codeName)
+                }
+                return@Observer
             }
-        })
-        registerObserver(Constants.TAG_GET_COMPANY_PEOPLE_RESULT, List::class.java).observe(this, Observer {
-            val list = it as List<CompanyTypeModel>
-            mCompanyPeopleList.clear()
-            mCompanyPeopleList.addAll(list)
-            mCompanyPeopleItemList.clear()
-            mCompanyPeopleList.forEach { item ->
-                mCompanyPeopleItemList.add(item.codeName)
+            if (mCompanyPeopleList.isEmpty()) {
+                mCompanyPeopleList.addAll(list)
+                mCompanyPeopleList.forEach { item ->
+                    mCompanyPeopleItemList.add(item.codeName)
+                }
+                return@Observer
             }
-        })
-        registerObserver(Constants.TAG_GET_COMPANY_JOB_TYPE_RESULT, List::class.java).observe(this, Observer {
-            val list = it as List<CompanyTypeModel>
-            mCompanyJobTypeList.clear()
-            mCompanyJobTypeList.addAll(list)
-            mCompanyJobTypeItemList.clear()
-            mCompanyJobTypeList.forEach { item ->
-                mCompanyJobTypeItemList.add(item.codeName)
+            if (mCompanyJobTypeList.isEmpty()) {
+                mCompanyJobTypeList.addAll(list)
+                mCompanyJobTypeList.forEach { item ->
+                    mCompanyJobTypeItemList.add(item.codeName)
+                }
             }
+            showState()
         })
+
+        registerObserver(Constants.TAG_GET_COMPANY_ATTESTATION_STATUS, AttestationStatusModel::class.java).observe(
+            this,
+            Observer {
+                mAttestationStatus = it
+            })
+//        registerObserver(Constants.TAG_GET_COMPANY_TYPE_RESULT, List::class.java).observe(this, Observer {
+//            val list = it as List<CompanyTypeModel>
+//            mCompanyTypeList.clear()
+//            mCompanyTypeList.addAll(list)
+//            mCompanyTypeItemList.clear()
+//            mCompanyTypeList.forEach { item ->
+//                mCompanyTypeItemList.add(item.codeName)
+//            }
+//        })
+//        registerObserver(Constants.TAG_GET_COMPANY_PEOPLE_RESULT, List::class.java).observe(this, Observer {
+//            val list = it as List<CompanyTypeModel>
+//            mCompanyPeopleList.clear()
+//            mCompanyPeopleList.addAll(list)
+//            mCompanyPeopleItemList.clear()
+//            mCompanyPeopleList.forEach { item ->
+//                mCompanyPeopleItemList.add(item.codeName)
+//            }
+//        })
+//        registerObserver(Constants.TAG_GET_COMPANY_JOB_TYPE_RESULT, List::class.java).observe(this, Observer {
+//            val list = it as List<CompanyTypeModel>
+//            mCompanyJobTypeList.clear()
+//            mCompanyJobTypeList.addAll(list)
+//            mCompanyJobTypeItemList.clear()
+//            mCompanyJobTypeList.forEach { item ->
+//                mCompanyJobTypeItemList.add(item.codeName)
+//            }
+//        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -273,6 +303,47 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun showState() {
+        mAttestationStatus?.let {
+            flAttestationStatusParent.visibility = View.VISIBLE
+            tvAttestationStatusText.text = it.status
+            tvNextStep.isEnabled = true
+            etCompanyName.setText(it.employerName)
+            //企业类型
+            mSelectCompanyType = mCompanyTypeList.find { companyTypeModel ->
+                companyTypeModel.id == it.qylx.toInt()
+            }
+            mSelectCompanyType?.let { companyTypeModel ->
+                tvCompanyType.text = companyTypeModel.codeName
+            }
+            //行业类型
+            mSelectCompanyJobType = mCompanyJobTypeList.find { companyJobTypeModel ->
+                companyJobTypeModel.id == it.hyfl.toInt()
+            }
+            mSelectCompanyJobType?.let { companyJobTypeModel ->
+                tvCompanyJobType.text = companyJobTypeModel.codeName
+            }
+            //人员规模
+            mSelectCompanyPeople = mCompanyPeopleList.find { companyPeopleModel ->
+                companyPeopleModel.id == it.rygm.toInt()
+            }
+            mSelectCompanyPeople?.let { companyPeopleModel ->
+                tvCompanyPeople.text = companyPeopleModel.codeName
+            }
+            //定位数据
+            tvLocationArea.text = it.area
+            etDetailsAddress.setText(it.address)
+            when (it.statusCode) {
+                1 -> {//审核中
+                    tvSelectAttestationImg.isEnabled = false
+                }
+                2 -> {//已认证
+                    tvSelectAttestationImg.isEnabled = false
+                }
+            }
+        }
     }
 
     companion object {

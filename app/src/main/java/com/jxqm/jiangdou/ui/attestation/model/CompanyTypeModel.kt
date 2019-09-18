@@ -1,4 +1,4 @@
-package com.jxqm.jiangdou.model
+package com.jxqm.jiangdou.ui.attestation.model
 
 import com.google.gson.annotations.SerializedName
 

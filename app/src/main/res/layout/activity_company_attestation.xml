@@ -83,6 +83,7 @@
                         android:id="@+id/flAttestationStatusParent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:visibility="gone"
                         android:background="#7d1c1c1c">
 
                         <TextView
@@ -100,11 +101,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_gravity="bottom"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/select_textview_enable_bg"
                         android:gravity="center"
+                        android:enabled="true"
                         android:text="选择"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/badge_text_size" />
+                        android:textSize="@dimen/text_big_size" />
                 </FrameLayout>
             </LinearLayout>
 

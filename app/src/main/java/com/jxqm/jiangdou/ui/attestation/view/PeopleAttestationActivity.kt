@@ -2,12 +2,15 @@ package com.jxqm.jiangdou.ui.attestation.view
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.view.View
 import com.bumptech.glide.Glide
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
+import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.isEnable
+import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.attestation.vm.PeopleAttestationViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.view.dialog.AttestationSuccessDialog
@@ -41,6 +44,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
     private var mSelectCompanyJobType: String? = null//所属行业
     private var locationLat: Double = 0.0
     private var locationLon: Double = 0.0
+    private var mAttestationStatus: AttestationStatusModel? = null
 
     override fun initView() {
         super.initView()
@@ -73,7 +77,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             fileMaps["businessLicenseFile"] = File(businessLicensePath!!) //
             fileMaps["idcardBackFile"] = mIdBackImgFile!!//身份证反面
             fileMaps["idcardFrontFile"] = mIdFrontImgFile!! //身份证正面
-            fileMaps["mapImgFile"] = File(Constants.APP_SAVE_DIR,Constants.MAPVIEW_FILENAME)
+            fileMaps["mapImgFile"] = File(Constants.APP_SAVE_DIR, Constants.MAPVIEW_FILENAME)
             mViewModel.submit(fileMaps, paramsMaps)
         }
 
@@ -107,6 +111,18 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             mSelectCompanyJobType = getStringExtra("selectCompanyJobType")
             locationLat = getDoubleExtra("locationLat", 0.0)
             locationLon = getDoubleExtra("locationLon", 0.0)
+            getStringExtra("AttestationStatus")?.let {
+                mAttestationStatus = CommonConfig.fromJson(it, AttestationStatusModel::class.java)
+            }
+            showState()
+        }
+    }
+
+    private fun showState() {
+        mAttestationStatus?.let {
+            flCardPositiveStatusParent.visibility = View.VISIBLE
+
+
         }
     }
 

@@ -1,6 +1,6 @@
 package com.jxqm.jiangdou.http
 
-import com.jxqm.jiangdou.model.CompanyTypeModel
+import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
 import com.jxqm.jiangdou.model.JobTypeModel
 import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.model.UserModel
@@ -9,7 +9,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 import retrofit2.http.PartMap
-import com.google.gson.JsonObject
 import retrofit2.http.POST
 import retrofit2.http.Multipart
 
