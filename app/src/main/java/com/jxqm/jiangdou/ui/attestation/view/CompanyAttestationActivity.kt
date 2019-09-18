@@ -311,6 +311,7 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
             tvAttestationStatusText.text = it.status
             tvNextStep.isEnabled = true
             etCompanyName.setText(it.employerName)
+            etCompanyDescription.setText(it.introduction)
             //企业类型
             mSelectCompanyType = mCompanyTypeList.find { companyTypeModel ->
                 companyTypeModel.id == it.qylx.toInt()

@@ -99,7 +99,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="已上传"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_btn_size" />
                         </FrameLayout>
@@ -114,7 +113,7 @@
                         android:background="@drawable/select_button_bg"
                         android:gravity="center"
                         android:text="选择"
-
+                        android:enabled="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_default_size" />
 
@@ -162,7 +161,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="已上传"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_btn_size" />
                         </FrameLayout>

@@ -20,6 +20,7 @@ import com.zhihu.matisse.compress.FileUtil
 import com.zhihu.matisse.engine.impl.GlideEngine
 import com.zhihu.matisse.internal.entity.CaptureStrategy
 import com.zhihu.matisse.internal.ui.widget.CropImageView
+import kotlinx.android.synthetic.main.activity_company_attestation.*
 import kotlinx.android.synthetic.main.activity_people_attestation.*
 import java.io.File
 
@@ -121,8 +122,20 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
     private fun showState() {
         mAttestationStatus?.let {
             flCardPositiveStatusParent.visibility = View.VISIBLE
-
-
+            flCardBackStatusParent.visibility = View.VISIBLE
+            tvCardPositiveStatusText.text = it.status
+            tvCardBackStatusText.text = it.status
+            when (it.statusCode) {
+                1, 2 -> {//审核中 //已认证
+                    tvPeopleCardPositive.isEnabled = false
+                    tvPeopleCardBack.isEnabled = false
+                }
+            }
+            //
+            etUserName.setText(it.contact)
+            etContacts.setText(it.contact)
+            etIdNum.setText(it.idcard)
+            etPayNumber.setText(it.alipay)
         }
     }
 

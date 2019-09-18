@@ -50,8 +50,8 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
         super.onViewCreated(view, bundle)
         //点击下一步
         tvNextStep.clickWithTrigger {
-//            LiveBus.getDefault()
-//                .postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_TYPE, mSelectJobModel)
+            LiveBus.getDefault()
+                .postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_TYPE, mSelectJobModel)
             mCallback?.jobTypNextStep()
         }
         rgHotJobType.setOnCheckedChangeListener { p0, id ->
