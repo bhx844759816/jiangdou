@@ -9,7 +9,7 @@ import com.jxqm.jiangdou.ui.attestation.vm.repository.CompanyAttestationReposito
 class CompanyAttestationViewModel : BaseViewModel<CompanyAttestationRepository>() {
 
     fun getAttestationStatus() {
-        mRepository.getCompanyJobType()
+        mRepository.getAttestationStatus()
     }
 
     /**

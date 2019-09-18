@@ -64,6 +64,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             paramsMaps["qylx"] = mSelectCompanyType!!
             paramsMaps["rygm"] = mSelectCompanyPeople!!
             paramsMaps["name"] = name
+            paramsMaps["tel"] = phone
             paramsMaps["introduction"] = companyDescription!!
             paramsMaps["idcard"] = idCardNum
             paramsMaps["latitude"] = locationLat.toString()

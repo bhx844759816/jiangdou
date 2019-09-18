@@ -1,5 +1,6 @@
 package com.jxqm.jiangdou.ui.attestation.vm.repository
 
+import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.*
 import io.reactivex.Observable
@@ -9,7 +10,7 @@ import io.reactivex.functions.Consumer
  * Created By bhx On 2019/9/12 0012 15:30
  */
 class CompanyAttestationRepository : BaseEventRepository() {
-    fun getAttstationStatus() {
+    fun getAttestationStatus() {
         addDisposable(
             apiService.getAttestationStatus()
                 .compose(handleResultForLoadingDialog())
@@ -23,7 +24,7 @@ class CompanyAttestationRepository : BaseEventRepository() {
                 }
                 .compose(handleResult())
                 .subscribe {
-
+                  LogUtils.i("获取企业认证状态")
                 }
         )
     }
