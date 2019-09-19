@@ -29,6 +29,7 @@ data class AttestationStatusModel(
     val idcardBack: String,
     val businessLicense: String,
     val contact: String,
+    val duty: String,
     val idcard: String,
     val alipay: String,
     val tel: String

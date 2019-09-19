@@ -3,6 +3,8 @@ package com.jxqm.jiangdou.ui.attestation.view
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.view.View
+import androidx.lifecycle.Observer
+import com.bhx.common.utils.AppManager
 import com.bumptech.glide.Glide
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
@@ -10,6 +12,7 @@ import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.isEnable
+import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.attestation.vm.PeopleAttestationViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -52,7 +55,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
         tvSubmit.clickWithTrigger {
             //提交认证信息
-            val name = etUserName.text.toString().trim()//姓名
+            val duty = etUserName.text.toString().trim()//负责人
             val idCardNum = etIdNum.text.toString().trim()//身份证号
             val alipay = etPayNumber.text.toString().trim()//支付宝账号
             val contacts = etContacts.text.toString().trim()//招聘联系人
@@ -68,7 +71,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             paramsMaps["hylx"] = mSelectCompanyJobType!!
             paramsMaps["qylx"] = mSelectCompanyType!!
             paramsMaps["rygm"] = mSelectCompanyPeople!!
-            paramsMaps["name"] = name
+            paramsMaps["duty"] = duty
             paramsMaps["tel"] = phone
             paramsMaps["introduction"] = companyDescription!!
             paramsMaps["idcard"] = idCardNum
@@ -81,7 +84,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             fileMaps["mapImgFile"] = File(Constants.APP_SAVE_DIR, Constants.MAPVIEW_FILENAME)
             mViewModel.submit(fileMaps, paramsMaps)
         }
-
+        //back
         peopleAttestationBack.clickWithTrigger {
             finish()
         }
@@ -125,6 +128,10 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             flCardBackStatusParent.visibility = View.VISIBLE
             tvCardPositiveStatusText.text = it.status
             tvCardBackStatusText.text = it.status
+            Glide.with(this).load(Api.HTTP_BASE_URL + it.idcardFront)
+                .into(ivPeopleCardPositive)
+            Glide.with(this).load(Api.HTTP_BASE_URL + it.idcardBack)
+                .into(ivPeopleCardBack)
             when (it.statusCode) {
                 1, 2 -> {//审核中 //已认证
                     tvPeopleCardPositive.isEnabled = false
@@ -132,10 +139,11 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
                 }
             }
             //
-            etUserName.setText(it.contact)
+            etUserName.setText(it.duty)
             etContacts.setText(it.contact)
             etIdNum.setText(it.idcard)
             etPayNumber.setText(it.alipay)
+            etContactsPhone.setText(it.tel)
         }
     }
 
@@ -145,7 +153,6 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
                 data?.let {
                     showIdCardImg(it, true)
                 }
-
             }
             REQUEST_CODE_SELECT_IMAGE_BACK -> {
                 data?.let {
@@ -191,7 +198,13 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             .forResult(requestCode)
     }
 
+    /**
+     * 是否是提交状态
+     */
     private fun isSubmitState(): Boolean {
+        if (mAttestationStatus != null) {
+            return false
+        }
         return mIdFrontImgFile != null &&
                 mIdBackImgFile != null &&
                 etUserName.text.toString().trim().isNotEmpty() &&
@@ -199,6 +212,15 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
                 etPayNumber.text.toString().trim().isNotEmpty() &&
                 etContacts.text.toString().trim().isNotEmpty() &&
                 etContactsPhone.text.toString().trim().isNotEmpty()
+    }
+
+    override fun dataObserver() {
+        registerObserver(Constants.TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS, Boolean::class.java).observe(this, Observer {
+            AttestationSuccessDialog.show(this@PeopleAttestationActivity) {
+                AppManager.getAppManager().finishActivity(CompanyAttestationActivity::class.java)
+                finish()
+            }
+        })
     }
 
     companion object {

@@ -50,13 +50,14 @@ class JobMessageFragment : BaseLazyFragment() {
         super.onViewCreated(view, bundle)
         tvNextStep.clickWithTrigger {
             val params = mutableMapOf<String, String>()
-            params["title "] = tvJopTitleContent.text.toString().trim() //兼职标题
+            params["title"] = tvJopTitleContent.text.toString().trim() //兼职标题
             params["content"] = tvJopDescriptionContent.text.toString().trim()//兼职描述
-            params["sex"] = mSex
-            params["area"] = tvLocationArea.text.toString().trim()
-            params["address"] = etDetailAddress.text.toString().trim()
-            params["longitude"] = mLocationLatLng?.longitude.toString()
-            params["latitude"] = mLocationLatLng?.latitude.toString()
+            params["gender"] = mSex
+            params["recruitNum"] = etWorkPeopleNum.text.toString().trim()//招聘人数
+            params["area"] = tvLocationArea.text.toString().trim() //定位地点
+            params["address"] = etDetailAddress.text.toString().trim()//详细地址
+            params["longitude"] = mLocationLatLng?.longitude.toString()//经度
+            params["latitude"] = mLocationLatLng?.latitude.toString()//维度
             LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_MESSAGE, params)
             mCallback?.jobMessageNextStep()
         }
@@ -64,6 +65,7 @@ class JobMessageFragment : BaseLazyFragment() {
             activity?.let {
                 SelectSexDialog.show(it) { sex ->
                     mSex = sex
+                    tvSex.text = sex
                 }
             }
         }
@@ -89,10 +91,16 @@ class JobMessageFragment : BaseLazyFragment() {
         //判断下一步是否可以被点击
         tvNextStep.isEnable(tvJopTitleContent) { isNetStepState() }
         tvNextStep.isEnable(tvJopDescriptionContent) { isNetStepState() }
+        tvNextStep.isEnable(etWorkPeopleNum) { isNetStepState() }
+        tvNextStep.isEnable(etDetailAddress) { isNetStepState() }
     }
 
     private fun isNetStepState(): Boolean {
-        return tvJopTitleContent.text.isNotEmpty() and (tvJopDescriptionContent.text.toString().length >= 20)
+        return tvLocationArea.text.isNotEmpty() &&
+                etDetailAddress.text.isNotEmpty() &&
+                tvNextStep.text.isNotEmpty() &&
+                tvJopTitleContent.text.isNotEmpty() &&
+                (tvJopDescriptionContent.text.toString().length >= 20)
     }
 
 
@@ -103,8 +111,8 @@ class JobMessageFragment : BaseLazyFragment() {
                     tvLocationArea.text = it.getStringExtra("name")
                     mLocationLatLng = it.getParcelableExtra("latLng")
                     LogUtils.i("选择地区$mLocationLatLng")
+                    tvNextStep.isEnabled = isNetStepState()
                 }
-
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

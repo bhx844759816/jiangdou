@@ -4,6 +4,7 @@ import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
 import com.jxqm.jiangdou.model.JobTypeModel
 import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.model.UserModel
+import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -48,9 +49,6 @@ interface ApiService {
     fun submitAttestation(@Body body: MultipartBody): Observable<HttpResult<Any>>
 
     @GET(Api.GET_ATTESTATION_DETAILS)
-    fun getAttestationDetails(): Observable<HttpResult<Any>>
-
-    @GET(Api.GET_ATTESTATION_STATUS)
-    fun getAttestationStatus(): Observable<HttpResult<Any>>
+    fun getAttestationStatus(): Observable<HttpResult<AttestationStatusModel>>
 
 }

@@ -137,6 +137,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvSex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -181,12 +182,18 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/etWorkPeopleNum"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:text="10人" />
+                    android:hint="请输入工作人数"
+                    android:inputType="number"
+                    android:maxEms="5"
+                    android:textColor="@color/text_publish_sex"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="@dimen/text_default_size" />
             </LinearLayout>
 
             <View

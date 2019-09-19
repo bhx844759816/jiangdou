@@ -6,7 +6,7 @@ package com.jxqm.jiangdou.http
 object Api {
 
 
-    const val HTTP_BASE_URL = "http://jxdou.natapp1.cc"
+    const val HTTP_BASE_URL = "http://jxdou.natapp1.cc/"
 
     const val SEND_SMS_CODE = "/send-validate-code"
     //登录并获取token

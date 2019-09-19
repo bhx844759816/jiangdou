@@ -17,9 +17,11 @@ import kotlinx.android.synthetic.main.dialog_attestation_success.*
  * Created By bhx On 2019/9/5 0005 09:08
  */
 class AttestationSuccessDialog : BaseDialogFragment() {
+    private var mCallBack: (() -> Unit)? = null
     override fun getLayoutId(): Int = R.layout.dialog_attestation_success
     override fun initView(view: View?) {
         tvSubmitConfirm.clickWithTrigger {
+            mCallBack?.invoke()
             dismissAllowingStateLoss()
         }
     }
@@ -40,10 +42,12 @@ class AttestationSuccessDialog : BaseDialogFragment() {
     companion object {
         private val TAG = AttestationSuccessDialog::class.simpleName
 
-        fun show(activity: FragmentActivity) {
+        fun show(activity: FragmentActivity, callBack: () -> Unit) {
             var fragment = activity.supportFragmentManager.findFragmentByTag(TAG)
             if (fragment == null) {
-                fragment = AttestationSuccessDialog()
+                val dialog = AttestationSuccessDialog()
+                dialog.mCallBack = callBack
+                fragment = dialog
             }
             if (!fragment.isAdded) {
                 val manager = activity.supportFragmentManager

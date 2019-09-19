@@ -14,4 +14,6 @@ class SelectJobTypeViewModel : BaseViewModel<SelectJobTypeRepository>() {
     fun getJobType() {
         mRepository.getJobType()
     }
+
+
 }

@@ -30,7 +30,10 @@ class PeopleAttestationRepository : BaseEventRepository() {
             }.build()
 
         apiService.submitAttestation(mulBody).action {
-            LogUtils.i("提交成功$it")
+            sendData(
+                Constants.EVENT_KEY_PEOPLE_ATTESTATION,
+                Constants.TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS, true
+            )
         }
 
     }

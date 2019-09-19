@@ -45,20 +45,24 @@ class Constants {
         const val EVENT_KEY_REGISTER = "event_key_register" //注册界面
         const val TAG_REGISTER_GET_CODE_SUCCESS = "tag_register_get_code_success"//获取验证码成功
         const val TAG_REGISTER_SUCCESS = "tag_register_success"//注册成功
-        //雇主
+        //发布兼职模块
         const val EVENT_KEY_JOB_PUBLISH = "event_key_job_publish"//发布兼职
+        const val TAG_PUBLISH_JOB_ATTESTATION_DETAILS = "tag_publish_job_attestation_details" //发布兼职中得兼职类型
         const val TAG_PUBLISH_JOB_TYPE = "tag_publish_job_type" //发布兼职中得兼职类型
         const val TAG_PUBLISH_JOB_MESSAGE = "tag_publish_job_message" //发布兼职中得兼职类型
+        const val TAG_PUBLISH_JOB_TIME = "tag_publish_job_time"//发布兼职的工作时间选择
+        const val TAG_PUBLISH_JOB_EMPLOYER_PREVIEW = "tag_publish_job_employer_preview"//预览简历
+        const val TAG_PUBLISH_JOB_EMPLOYER_PUBLISH = "tag_publish_job_employer_publish"//立即发布
         const val EVENT_KEY_SELECT_JOB_TYPE = "event_key_select_job_type"//选择兼职类型
         const val TAG_SELECT_JOB_TYPE_HOT = "tag_select_job_type_hot"//获取热门类型
         const val TAG_SELECT_JOB_TYPE_MORE = "tag_select_job_type_more"//获取更多类型
+        //
         const val EVENT_KEY_COMPANY_ATTESTATION = "event_key_company_attestation" // 企业认证
-        const val TAG_GET_COMPANY_ITEM_RESULT ="tag_get_company_item_result"
-        const val TAG_GET_COMPANY_ATTESTATION_STATUS ="tag_get_company_attestation_status"
+        const val TAG_GET_COMPANY_ITEM_RESULT = "tag_get_company_item_result"
+        const val TAG_GET_COMPANY_ATTESTATION_STATUS = "tag_get_company_attestation_status"
         const val EVENT_KEY_PEOPLE_ATTESTATION = "event_key_people_attestation" // 身份认证
         const val TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS = "tag_people_attestation_submit_success" //上传成功
         const val EVENT_KEY_EMPLOYER_JOB_LIST = "event_key_employer_job_list"//雇主兼职列表
-
 
 
         const val EVENT_KEY_JOB_MANAGER = "event_key_job_manager" // 兼职管理界面

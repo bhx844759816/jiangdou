@@ -4,6 +4,7 @@ import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.*
 import com.jxqm.jiangdou.model.CompanyDetailsModel
+import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
 import io.reactivex.Observable
 
@@ -31,19 +32,20 @@ class CompanyAttestationRepository : BaseEventRepository() {
                 apiService.getCompanyJobType()
             ).compose(applySchedulersForLoadingDialog())
                 .subscribe({
-                    if (it.code == " 0") {
+                    if (it.code == "0") {
                         //获取数据成功
-                        if (it.data is CompanyDetailsModel) {
+                        if (it.data is AttestationStatusModel) {
                             //认证信息
                             sendData(
                                 Constants.EVENT_KEY_COMPANY_ATTESTATION,
                                 Constants.TAG_GET_COMPANY_ATTESTATION_STATUS,
-                                it
+                                it.data
                             )
                         }
                         if (it.data is List<*>) {
                             //获取所属行业，企业类型，人员规模数据
-                            sendData(Constants.EVENT_KEY_COMPANY_ATTESTATION, Constants.TAG_GET_COMPANY_ITEM_RESULT, it)
+                            sendData(Constants.EVENT_KEY_COMPANY_ATTESTATION,
+                                Constants.TAG_GET_COMPANY_ITEM_RESULT, it.data)
                         }
                     }
                 }, {

@@ -20,6 +20,7 @@ import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
+import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.view.calendar.CalendarRangeSelectDialog
 import com.jxqm.jiangdou.view.dialog.SelectTimeRangeDialog
@@ -51,18 +52,17 @@ class JobTimeFragment : BaseLazyFragment() {
         tvNextStep.clickWithTrigger {
             //发送选择的日期区间和时间区间以及工资 [2019-9-13,]
             val params = mutableMapOf<String, String>()
-            val dataArray = arrayListOf<String>()
+            val dataArray = arrayListOf<TimeRangeModel>()
             mRangeDateList.forEach {
                 val startTime = "${it.first().year}-${it.first().month}-${it.first().day}"
                 val endTime = "${it.last().year}-${it.last().month}-${it.last().day}"
-                dataArray.add(startTime)
-                dataArray.add(endTime)
+                dataArray.add(TimeRangeModel(startTime,endTime))
             }
             val gson = Gson()
-            params["dates "] = gson.toJson(dataArray)
+            params["dates"] = gson.toJson(dataArray)
             params["times"] = gson.toJson(mRangeTimeList)
             params["salary"] = etPayMoney.text.toString().trim()
-            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_MESSAGE, params)
+            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_TIME, params)
             mCallback?.jobTimeNextStep()
         }
         tvSelectDate.clickWithTrigger {

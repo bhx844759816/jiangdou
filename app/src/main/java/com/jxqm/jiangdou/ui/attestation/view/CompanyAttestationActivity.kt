@@ -15,8 +15,10 @@ import com.bhx.common.utils.LogUtils
 import com.bumptech.glide.Glide
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.addTextChangedListener
+import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
 import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.attestation.vm.CompanyAttestationViewModel
@@ -37,7 +39,7 @@ import java.io.File
  * 企业认证
  * Created By bhx On 2019/9/4 0004 18:15
  */
-class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>() {
+class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>() {
     //企业类型
     private var mCompanyTypeList = mutableListOf<CompanyTypeModel>()
     private val mCompanyTypeItemList = mutableListOf<String>()
@@ -142,10 +144,6 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
      * 初始化数据
      */
     override fun initData() {
-//        mViewModel.getAttestationStatus()
-//        mViewModel.getCompanyPeople()
-//        mViewModel.getCompanyJobType()
-//        mViewModel.getCompanyType()
         mViewModel.getAttestationData()
     }
 
@@ -153,6 +151,10 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
      * 是否可以点击
      */
     private fun isNextStepEnable() {
+        if (mAttestationStatus != null) {
+            tvNextStep.isEnabled = true
+            return
+        }
         val companyName = etCompanyName.text.toString().trim()
         val companyDescription = etCompanyDescription.text.toString().trim()
         tvNextStep.isEnabled = mSelectFile != null && companyName.isNotEmpty() &&
@@ -249,7 +251,10 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
             showState()
         })
 
-        registerObserver(Constants.TAG_GET_COMPANY_ATTESTATION_STATUS, AttestationStatusModel::class.java).observe(
+        registerObserver(
+            Constants.TAG_GET_COMPANY_ATTESTATION_STATUS,
+            AttestationStatusModel::class.java
+        ).observe(
             this,
             Observer {
                 mAttestationStatus = it
@@ -306,10 +311,13 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
     }
 
     private fun showState() {
+        LogUtils.i("showState$mAttestationStatus")
         mAttestationStatus?.let {
             flAttestationStatusParent.visibility = View.VISIBLE
             tvAttestationStatusText.text = it.status
-            tvNextStep.isEnabled = true
+            LogUtils.i(Api.HTTP_BASE_URL + it.businessLicense)
+            Glide.with(this).load(Api.HTTP_BASE_URL + it.businessLicense)
+                .into(ivAttestationImg)
             etCompanyName.setText(it.employerName)
             etCompanyDescription.setText(it.introduction)
             //企业类型
@@ -344,6 +352,7 @@ class CompanyAttestationActivity : BaseMVVMActivity<CompanyAttestationViewModel>
                     tvSelectAttestationImg.isEnabled = false
                 }
             }
+            tvNextStep.isEnabled = true
         }
     }
 
