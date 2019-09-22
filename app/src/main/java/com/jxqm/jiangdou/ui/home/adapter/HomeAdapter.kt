@@ -107,7 +107,6 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
 
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                Log.d("BannerView", "onPageSelected interval >>> $position")
             }
 
         })

@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
-import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -15,11 +14,9 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
 import com.jxqm.jiangdou.model.JobTypeModel
 import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
-import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
-import com.jxqm.jiangdou.ui.publish.model.JobDetailsModel
+import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.publish.vm.JobPublishViewModel
-import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_publish.*
 
 /**
@@ -63,6 +60,7 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
             mJobDetailsModel.gender = params.getValue("gender")
             mJobDetailsModel.recruitNum = params.getValue("recruitNum")
             mJobDetailsModel.area = params.getValue("area")
+            mJobDetailsModel.areaCode = params.getValue("areaCode")
             mJobDetailsModel.address = params.getValue("address")
             mJobDetailsModel.longitude = params.getValue("longitude")
             mJobDetailsModel.latitude = params.getValue("latitude")
@@ -70,18 +68,15 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
         //接收兼职的时间
         registerObserver(Constants.TAG_PUBLISH_JOB_TIME, Map::class.java).observe(this, Observer {
             val params = it as Map<String, String>
-
             mJobDetailsModel.salary = params.getValue("salary")
-            mJobDetailsModel.datesJson = params.getValue("dates")
-            mJobDetailsModel.timesJson = params.getValue("times")
-            mJobDetailsModel.dates = gson.fromJson(
-                params.getValue("dates")
-                , object : TypeToken<List<String>>() {
-                }.type
-            )
             mJobDetailsModel.times = gson.fromJson(
                 params.getValue("times")
                 , object : TypeToken<List<TimeRangeModel>>() {
+                }.type
+            )
+            mJobDetailsModel.dates = gson.fromJson(
+                params.getValue("dates")
+                , object : TypeToken<List<String>>() {
                 }.type
             )
         })
@@ -91,7 +86,9 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
             mJobDetailsModel.contact = params.getValue("contact")
             mJobDetailsModel.tel = params.getValue("tel")
             mJobDetailsModel.email = params.getValue("email")
-
+            mJobDetailsModel.status = "0"
+            val mapFilePath = Constants.APP_SAVE_DIR + Constants.MAPVIEW_FILENAME
+            mViewModel.publishJob(mapFilePath, mJobDetailsModel)
         })
         //预览建立
         registerObserver(Constants.TAG_PUBLISH_JOB_EMPLOYER_PREVIEW, Map::class.java).observe(this, Observer {
@@ -99,6 +96,7 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
             mJobDetailsModel.contact = params.getValue("contact")
             mJobDetailsModel.tel = params.getValue("tel")
             mJobDetailsModel.email = params.getValue("email")
+
             val intent = Intent(
                 this@JobPublishActivity,
                 PublishJobPreviewActivity::class.java

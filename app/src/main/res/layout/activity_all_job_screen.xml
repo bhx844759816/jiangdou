@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="关于我们"
+            android:text="全部兼职"
             android:textColor="@color/text_title"
             android:textSize="@dimen/text_title_size" />
 
@@ -51,11 +51,13 @@
             android:orientation="horizontal">
 
             <FrameLayout
+                android:id="@+id/flJobType"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <RadioButton
+                    android:id="@+id/rbJobType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -75,8 +77,8 @@
                 android:background="@color/divider_line" />
 
             <FrameLayout
+                android:id="@+id/flJobArea"
                 android:layout_width="0dp"
-
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
@@ -88,12 +90,11 @@
                     android:drawableRight="@drawable/select_drop_down_select_bg"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="类型"
+                    android:text="区域"
                     android:textColor="@color/select_job_list_sort_rule" />
             </FrameLayout>
 
             <View
-
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="12dp"
@@ -113,7 +114,7 @@
                     android:drawableRight="@drawable/select_drop_down_select_bg"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="类型"
+                    android:text="排序"
                     android:textColor="@color/select_job_list_sort_rule" />
             </FrameLayout>
 

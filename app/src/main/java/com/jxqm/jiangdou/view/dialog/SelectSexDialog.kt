@@ -18,22 +18,22 @@ import kotlinx.android.synthetic.main.dialog_select_sex.*
  */
 
 class SelectSexDialog : BaseDialogFragment() {
-    private var mCallback: ((String) -> Unit)? = null
+    private var mCallback: ((String,Int) -> Unit)? = null
 
     override fun getLayoutId(): Int = R.layout.dialog_select_sex
 
     override fun initView(view: View?) {
         tvNoSex.clickWithTrigger {
-            mCallback?.invoke("不限")
+            mCallback?.invoke("不限",2)
             dismissAllowingStateLoss()
         }
         tvBoy.clickWithTrigger {
-            mCallback?.invoke("男")
+            mCallback?.invoke("男",1)
             dismissAllowingStateLoss()
 
         }
         tvGirl.clickWithTrigger {
-            mCallback?.invoke("女")
+            mCallback?.invoke("女",0)
             dismissAllowingStateLoss()
         }
 
@@ -57,7 +57,7 @@ class SelectSexDialog : BaseDialogFragment() {
     companion object {
         private val TAG = SelectSexDialog::class.simpleName
 
-        fun show(activity: FragmentActivity, callBack: ((String) -> Unit)) {
+        fun show(activity: FragmentActivity, callBack: ((String,Int) -> Unit)) {
             var fragment = activity.supportFragmentManager.findFragmentByTag(TAG)
             if (fragment == null) {
                 val dialog = SelectSexDialog()

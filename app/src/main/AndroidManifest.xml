@@ -46,13 +46,9 @@
             android:name=".ui.login.view.VerifyCodeActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity android:name=".ui.publish.view.JobPublishActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+
         <activity android:name=".ui.publish.view.PublishJobPreviewActivity" />
         <activity android:name=".ui.job.view.JobDetailsActivity" />
         <activity android:name=".ui.city.SelectCity" />
@@ -81,7 +77,12 @@
         <activity
             android:name=".ui.home.view.MainActivity"
             android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
 

@@ -2,15 +2,19 @@ package com.jxqm.jiangdou.view.refresh
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import com.jxqm.jiangdou.R
 import com.scwang.smart.refresh.layout.api.RefreshFooter
 import com.scwang.smart.refresh.layout.api.RefreshHeader
 import com.scwang.smart.refresh.layout.api.RefreshKernel
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.constant.RefreshState
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle
+import pl.droidsonroids.gif.GifDrawable
+import pl.droidsonroids.gif.GifImageView
 
 /**
  * Created By bhx On 2019/9/5 0005 11:21
@@ -20,8 +24,16 @@ class BaseRefreshFooter @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0
 ) : FrameLayout(context, attributeSet, defStyle), RefreshFooter {
-    init {
+    private var gifImageView: GifImageView
+    private var llLoading: LinearLayout
+    private var gifFromAssets: GifDrawable? = null
 
+    init {
+        val view = LayoutInflater.from(context).inflate(R.layout.view_refresh_footer, this)
+        gifImageView = view.findViewById(R.id.ivNoMoreData)
+        llLoading = view.findViewById(R.id.llLoading)
+        gifFromAssets = GifDrawable(context.assets, "loading/gif_refresh.gif")
+        gifImageView.setImageDrawable(gifFromAssets)
     }
 
     override fun getSpinnerStyle(): SpinnerStyle = SpinnerStyle.Translate

@@ -23,22 +23,21 @@ class EmployerListFragment : BaseLazyFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_employer_job_list
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        mListFragment.add(EmployerJobListFragment.newInstance(0))
-//        mListFragment.add(EmployerJobListFragment.newInstance(1))
-//        mListFragment.add(EmployerJobListFragment.newInstance(2))
-//        mListFragment.add(EmployerJobListFragment.newInstance(3))
-//        viewPager.offscreenPageLimit = 4
-//        viewPager.adapter = MyPageAdapter(childFragmentManager)
-//        tabLayout.addTab(mTitles[0])
-//        tabLayout.addTab(mTitles[1])
-//        tabLayout.addTab(mTitles[2])
-//        tabLayout.addTab(mTitles[3])
-//        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
-//        tabLayout.setupWithViewPager(viewPager)
-//
-//        ivPublishJob.clickWithTrigger {
-//            startActivity<JobPublishActivity>()
-//        }
+        mListFragment.add(WaitPublishFragment())
+        mListFragment.add(WaitExamineFragment())
+        mListFragment.add(PublishingFragment())
+        mListFragment.add(EndSignUpFragment())
+        viewPager.offscreenPageLimit = 4
+        viewPager.adapter = MyPageAdapter(childFragmentManager)
+        tabLayout.addTab(mTitles[0])
+        tabLayout.addTab(mTitles[1])
+        tabLayout.addTab(mTitles[2])
+        tabLayout.addTab(mTitles[3])
+        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
+        tabLayout.setupWithViewPager(viewPager)
+        ivPublishJob.clickWithTrigger {
+            startActivity<JobPublishActivity>()
+        }
     }
 
     inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {

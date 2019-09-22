@@ -62,8 +62,25 @@ class Constants {
         const val TAG_GET_COMPANY_ATTESTATION_STATUS = "tag_get_company_attestation_status"
         const val EVENT_KEY_PEOPLE_ATTESTATION = "event_key_people_attestation" // 身份认证
         const val TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS = "tag_people_attestation_submit_success" //上传成功
-        const val EVENT_KEY_EMPLOYER_JOB_LIST = "event_key_employer_job_list"//雇主兼职列表
 
+        const val EVENT_KEY_WAIT_PUBLISH_JOB = "event_key_wait_publish_job"//等待发布
+        const val TAG_GET_WAIT_PUBLISH_JOB_LIST_SUCCESS = "tag_get_wait_publish_job_list_success"//
+        const val TAG_GET_WAIT_PUBLISH_JOB_LIST_ERROR = "tag_get_wait_publish_job_list_error"//
+
+        const val EVENT_KEY_WAIT_EXAMINE_JOB = "event_key_wait_examine_job"//等待审核
+        const val TGA_GET_WAIT_EXAMINE_JOB_LIST_SUCCESS = "tga_get_wait_examine_job_list_success"
+        const val TAG_GET_WAIT_EXAMINE_JOB_LIST_ERROR = "tag_get_wait_examine_job_list_error"
+
+        const val EVENT_KEY_PUBLISHING_JOB = "event_key_publishing_job"//正在招聘
+        const val TAG_GET_PUBLISHING_JOB_LIST_SUCCESS = "tag_get_publishing_job_list_success"
+        const val TAG_GET_PUBLISHING_JOB_LIST_ERROR = "tag_get_publishing_job_list_error"
+
+        const val EVENT_KEY_END_SIGN_UP = "event_key_end_sign_up"//截止报名
+        const val TAG_GET_END_SIGN_UP_JOB_LIST_SUCCESS = "tag_get_end_sign_up_job_list_success"
+        const val TAG_GET_END_SIGN_UP_JOB_LIST_ERROR = "tag_get_end_sign_up_job_list_error"
+
+        //订单
+        const val EVENT_KEY_PAYMENT_ORDER = "event_key_end_sign_up"//支付订单
 
         const val EVENT_KEY_JOB_MANAGER = "event_key_job_manager" // 兼职管理界面
 

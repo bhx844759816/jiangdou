@@ -301,6 +301,8 @@ class MapActivity : BaseActivity() {
             LogUtils.i("sleectArea$poiInfo")
             intent.putExtra("address", poiInfo.address)
             intent.putExtra("name", poiInfo.name)
+            intent.putExtra("city", poiInfo.city)
+            intent.putExtra("area", poiInfo.area)
             intent.putExtra("latLng", poiInfo.location)
             setResult(Activity.RESULT_OK, intent)
             finish()

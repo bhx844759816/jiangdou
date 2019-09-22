@@ -1,7 +1,7 @@
 package com.jxqm.jiangdou.ui.publish.vm
 
-import android.content.Context
 import com.bhx.common.mvvm.BaseViewModel
+import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.ui.publish.vm.repository.JobPublishRepository
 
 /**
@@ -14,5 +14,9 @@ class JobPublishViewModel : BaseViewModel<JobPublishRepository>() {
      */
     fun getAttestationDetails() {
         mRepository.getAttestationDetails()
+    }
+
+    fun publishJob(mapFilePath: String, jobDetailsModel: JobDetailsModel) {
+        mRepository.publishJob(mapFilePath, jobDetailsModel)
     }
 }

@@ -31,7 +31,9 @@ class JobMessageFragment : BaseLazyFragment() {
 
     private var mCallback: OnJobPublishCallBack? = null
     private var mLocationLatLng: LatLng? = null//定位的经纬度信息
-    private var mSex = "不限"
+    private var mLocationCity: String? = null
+    private var mLocationArea: String? = null
+    private var mSex: Int = 2
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -52,9 +54,10 @@ class JobMessageFragment : BaseLazyFragment() {
             val params = mutableMapOf<String, String>()
             params["title"] = tvJopTitleContent.text.toString().trim() //兼职标题
             params["content"] = tvJopDescriptionContent.text.toString().trim()//兼职描述
-            params["gender"] = mSex
+            params["gender"] = mSex.toString()
             params["recruitNum"] = etWorkPeopleNum.text.toString().trim()//招聘人数
             params["area"] = tvLocationArea.text.toString().trim() //定位地点
+            params["areaCode"] = "$mLocationCity,$mLocationArea"
             params["address"] = etDetailAddress.text.toString().trim()//详细地址
             params["longitude"] = mLocationLatLng?.longitude.toString()//经度
             params["latitude"] = mLocationLatLng?.latitude.toString()//维度
@@ -63,8 +66,8 @@ class JobMessageFragment : BaseLazyFragment() {
         }
         rlSelectSex.clickWithTrigger {
             activity?.let {
-                SelectSexDialog.show(it) { sex ->
-                    mSex = sex
+                SelectSexDialog.show(it) { sex, sexCode ->
+                    mSex = sexCode
                     tvSex.text = sex
                 }
             }

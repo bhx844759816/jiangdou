@@ -52,15 +52,21 @@ class JobTimeFragment : BaseLazyFragment() {
         tvNextStep.clickWithTrigger {
             //发送选择的日期区间和时间区间以及工资 [2019-9-13,]
             val params = mutableMapOf<String, String>()
-            val dataArray = arrayListOf<TimeRangeModel>()
+            val dataArray = arrayListOf<String>()
+            val timeArray = arrayListOf<TimeRangeModel>()
             mRangeDateList.forEach {
                 val startTime = "${it.first().year}-${it.first().month}-${it.first().day}"
                 val endTime = "${it.last().year}-${it.last().month}-${it.last().day}"
-                dataArray.add(TimeRangeModel(startTime,endTime))
+                dataArray.add(startTime)
+                dataArray.add(endTime)
+            }
+            for (i in 0 until mRangeTimeList.size step 2) {
+                val rangeTimeMode = TimeRangeModel(mRangeTimeList[i], mRangeTimeList[i + 1])
+                timeArray.add(rangeTimeMode)
             }
             val gson = Gson()
             params["dates"] = gson.toJson(dataArray)
-            params["times"] = gson.toJson(mRangeTimeList)
+            params["times"] = gson.toJson(timeArray)
             params["salary"] = etPayMoney.text.toString().trim()
             LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_TIME, params)
             mCallback?.jobTimeNextStep()

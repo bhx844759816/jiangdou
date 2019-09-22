@@ -7,7 +7,5 @@ import com.bhx.common.base.BaseActivity
  * Created By bhx On 2019/9/5 0005 09:59
  */
 class OrderDetailsActivity : BaseActivity() {
-    override fun getLayoutId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getLayoutId(): Int = 0
 }
