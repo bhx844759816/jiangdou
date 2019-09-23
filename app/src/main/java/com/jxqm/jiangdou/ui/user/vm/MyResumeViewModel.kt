@@ -7,4 +7,12 @@ import com.jxqm.jiangdou.ui.user.vm.repository.MyResumeRepository
  * Created By bhx On 2019/8/19 0019 14:07
  */
 class MyResumeViewModel : BaseViewModel<MyResumeRepository>() {
+
+    fun getEduList() {
+        mRepository.getEduList()
+    }
+
+    fun getUserResume() {
+        mRepository.getUserResume()
+    }
 }

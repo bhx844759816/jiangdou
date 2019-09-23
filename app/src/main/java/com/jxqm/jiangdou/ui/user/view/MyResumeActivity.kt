@@ -6,8 +6,10 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bhx.common.base.BaseActivity
+import com.bhx.common.mvvm.BaseMVVMActivity
 import com.bhx.common.utils.DensityUtil
 import com.bhx.common.utils.LogUtils
 import com.bigkoo.pickerview.builder.TimePickerBuilder
@@ -18,7 +20,10 @@ import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.model.UserModel
 import com.jxqm.jiangdou.ui.user.adapter.PhotoListAdapter
+import com.jxqm.jiangdou.ui.user.model.EduModel
+import com.jxqm.jiangdou.ui.user.model.ResumeModel
 import com.jxqm.jiangdou.ui.user.vm.MyResumeViewModel
 import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.GridItemSpaceDecoration
@@ -36,20 +41,16 @@ import com.zhihu.matisse.internal.ui.widget.CropImageView
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_my_resume.*
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * 我的简历
  * Created By bhx On 2019/8/19 0019 14:06
  */
-class MyResumeActivity : BaseActivity() {
+class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
     private val mSexList = arrayListOf("男", "女")
     private val mEducationList = arrayListOf("小学", "初中", "专科", "本科", "硕士", "博士")
     private val mHeightList = mutableListOf<String>()
@@ -57,11 +58,15 @@ class MyResumeActivity : BaseActivity() {
     private lateinit var mPhotoLisAdapter: PhotoListAdapter
     private var mTimePickView: TimePickerView? = null
     private var mPhotoFile: File? = null
-    private val mPhotoList = mutableListOf<File>()
+    private lateinit var mResumeModel: ResumeModel
+    private val mPhotoList = mutableListOf<Any>()
 
     override fun getLayoutId(): Int = R.layout.activity_my_resume
+    override fun getEventKey(): Any = Constants.EVENT_KEY_MY_RESUME
+
 
     override fun initView() {
+        super.initView()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
         mPhotoLisAdapter = PhotoListAdapter(this, mPhotoList)
         mPhotoLisAdapter.setAddCallBack {
@@ -76,6 +81,9 @@ class MyResumeActivity : BaseActivity() {
         rvPhotoList.adapter = mPhotoLisAdapter
         myResumeBack.clickWithTrigger {
             finish()
+        }
+        tvUploadResume.clickWithTrigger {
+            onViewClick(it)
         }
         rlHeadPhotoParent.clickWithTrigger {
             onViewClick(it)
@@ -104,8 +112,71 @@ class MyResumeActivity : BaseActivity() {
 
     }
 
+    override fun initData() {
+        mViewModel.getEduList()
+        mViewModel.getUserResume()
+    }
+
+    override fun dataObserver() {
+        registerObserver(Constants.TAG_GET_EDU_LIST_RESULT, List::class.java).observe(
+            this, Observer {
+                val list = it as List<EduModel>
+
+            })
+        registerObserver(Constants.TAG_GET_USER_RESUME_RESULT, ResumeModel::class.java).observe(this, Observer {
+            mResumeModel = it
+            showUserResume()
+        })
+    }
+
+    private fun showUserResume() {
+        etUserName.setText(mResumeModel.name)
+        tvUserSex.text = mResumeModel.gender
+        tvUserBirthday.text = mResumeModel.birthday
+        tvUserAge.text = mResumeModel.star
+        etUserPhone.setText(mResumeModel.tel)
+        etUserEducation.text = mResumeModel.academic
+        tvUserHeight.text = mResumeModel.height
+        tvUserWeight.text = mResumeModel.weight
+        etUserLocation.text = mResumeModel.area
+        etPeopleIntroduce.setText(mResumeModel.content)
+        mPhotoList.addAll(mResumeModel.images)
+        mPhotoLisAdapter.notifyDataSetChanged()
+    }
+
+    private fun uploadUserResume() {
+        val paramsMap = mutableMapOf<String, String>()
+        paramsMap["name"] = etUserName.text.toString().trim()
+        paramsMap["gender"] = tvUserSex.text.toString().trim()
+        paramsMap["birthday"] = tvUserBirthday.text.toString().trim()
+        paramsMap["star"] = tvUserAge.text.toString().trim()
+        paramsMap["tel"] = etUserPhone.text.toString().trim()
+        paramsMap["academic"] = etUserEducation.text.toString().trim()
+        paramsMap["height"] = tvUserHeight.text.toString().trim()
+        paramsMap["weight"] = tvUserWeight.text.toString().trim()
+        paramsMap["area"] = etUserLocation.text.toString().trim()
+        paramsMap["content"] = etPeopleIntroduce.text.toString().trim()
+        //头像
+        val fileMap = mutableMapOf<String, File>()
+        if (mPhotoFile != null) {
+            fileMap["avatar"] = mPhotoFile!!
+        }
+        //图片数组
+        val fileList = mutableListOf<File>()
+        if (mPhotoList.isNotEmpty()) {
+            mPhotoList.forEach {
+                if (it is File) {
+                    fileList.add(it)
+                }
+            }
+        }
+    }
+
     private fun onViewClick(view: View) {
         when (view.id) {
+            R.id.tvUploadResume -> {
+
+            }
             R.id.rlHeadPhotoParent -> { //修改头像
                 requestPermission()
             }
@@ -143,6 +214,7 @@ class MyResumeActivity : BaseActivity() {
         }
     }
 
+
     /**
      * 初始化身高的数据
      */
@@ -174,7 +246,7 @@ class MyResumeActivity : BaseActivity() {
                 run {
                     val format = SimpleDateFormat("yyyy-MM-dd")
                     val time = format.format(date)
-                    etUserBirthday.setText(time)
+                    tvUserBirthday.text = time
                 }
             }).build()
         }
@@ -256,7 +328,8 @@ class MyResumeActivity : BaseActivity() {
             }
             it.onNext(Any())
             it.onComplete()
-        }).subscribeOn(Schedulers.io())
+        })
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .unsubscribeOn(Schedulers.io())
             .subscribe {

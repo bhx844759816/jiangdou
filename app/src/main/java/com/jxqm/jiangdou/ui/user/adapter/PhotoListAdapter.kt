@@ -13,7 +13,7 @@ import java.io.File
 /**
  * Created By bhx On 2019/8/19 0019 15:28
  */
-class PhotoListAdapter(context: Context, fileList: List<File>) : RecyclerView.Adapter<PhotoListAdapter.MyHolder>() {
+class PhotoListAdapter(context: Context, fileList: List<Any>) : RecyclerView.Adapter<PhotoListAdapter.MyHolder>() {
     private val mContext: Context = context
     private val mInflater = LayoutInflater.from(context)
     private val mFileList = fileList

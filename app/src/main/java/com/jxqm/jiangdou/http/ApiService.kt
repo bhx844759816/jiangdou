@@ -3,6 +3,7 @@ package com.jxqm.jiangdou.http
 import com.jxqm.jiangdou.model.*
 import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
 import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
+import com.jxqm.jiangdou.ui.user.model.EduModel
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -110,4 +111,43 @@ interface ApiService {
      */
     @GET(Api.GET_ACCOUNT_BALANCE)
     fun getAccountBalance(): Observable<HttpResult<Any>>
+
+    /**
+     * 获取学历列表
+     */
+    @GET(Api.GET_EDU_LIST)
+    fun getEduList(): Observable<HttpResult<List<EduModel>>>
+
+    /**
+     * 上传用户简历
+     */
+    @POST(Api.UPLOAD_USER_RESUME)
+    fun uploadUserResume(@Body body: MultipartBody): Observable<HttpResult<Any>>
+
+    /**
+     * 获取用户简历
+     */
+    @GET(Api.GET_USER_RESUME)
+    fun getUserResume(): Observable<HttpResult<Any>>
+
+    /**
+     * 报名工作
+     */
+    @POST(Api.SING_UP_JOB)
+    fun singUpJob(@Part("jobResumeId") jobId: String): Observable<HttpResult<Any>>
+
+    /**
+     * 接受offer
+     */
+    @Multipart
+    @POST(Api.ACCEPT_OFFER)
+    fun acceptOffer(@Part("jobResumeId") jobId: String): Observable<HttpResult<Any>>
+
+    /**
+     * 拒绝Offer
+     */
+    @Multipart
+    @POST(Api.REFUSE_OFFER)
+    fun refuseOffer(@Part("jobResumeId") jobId: String): Observable<HttpResult<Any>>
+
 }

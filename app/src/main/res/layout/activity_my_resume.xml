@@ -36,6 +36,7 @@
             />
 
         <TextView
+            android:id="@+id/tvUploadResume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -100,6 +101,8 @@
                     android:layout_toLeftOf="@id/ivUserNameArrow"
                     android:background="@null"
                     android:gravity="right"
+                    android:maxLines="1"
+                    android:maxLength="15"
                     android:hint="请输入您的姓名"
                     android:textColor="@color/text_default"
                     android:textColorHint="@color/text_hint"
@@ -131,7 +134,7 @@
                     android:textSize="@dimen/text_default_size" />
 
                 <TextView
-                    android:id="@+id/etUserSex"
+                    android:id="@+id/tvUserSex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -169,7 +172,7 @@
                     android:textSize="@dimen/text_default_size" />
 
                 <TextView
-                    android:id="@+id/etUserBirthday"
+                    android:id="@+id/tvUserBirthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -208,7 +211,7 @@
                     android:textSize="@dimen/text_default_size" />
 
                 <TextView
-                    android:id="@+id/etUserAge"
+                    android:id="@+id/tvUserAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -327,7 +330,7 @@
                     android:textSize="@dimen/text_default_size" />
 
                 <TextView
-                    android:id="@+id/etUserHeight"
+                    android:id="@+id/tvUserHeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -365,7 +368,7 @@
                     android:textSize="@dimen/text_default_size" />
 
                 <TextView
-                    android:id="@+id/etUserWeight"
+                    android:id="@+id/tvUserWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

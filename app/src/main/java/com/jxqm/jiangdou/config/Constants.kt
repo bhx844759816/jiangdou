@@ -95,12 +95,14 @@ class Constants {
         const val EVENT_KEY_COMPANY_DETAILS = "event_key_company_details"//公司详情界面
 
 
-        const val EVENT_KEY_MY_RESUME = "event_key_my_resume"//公司详情界面
+        const val EVENT_KEY_MY_RESUME = "event_key_my_resume"//简历详情
+        const val TAG_GET_EDU_LIST_RESULT = "tag_get_edu_list_result"//获取学历列表
+        const val TAG_GET_USER_RESUME_RESULT = "tag_get_user_resume_result"//获取用户简历详情
+        const val TAG_UPLOAD_RESUME_RESULT = "tag_get_user_resume_result"//上传简历结果
 
         const val EVENT_KEY_MAIN_HOME = "event_key_main_home"//首页界面
 
         const val EVENT_KEY_MAIN_WORK = "event_key_main_work"//工作台界面
-
 
         const val TAG_USER_INFO_UPDATE = "tag_user_info_update"//用户信息
 
