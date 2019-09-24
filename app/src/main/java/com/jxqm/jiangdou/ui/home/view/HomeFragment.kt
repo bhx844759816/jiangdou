@@ -11,14 +11,17 @@ import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bhx.common.adapter.rv.listener.OnItemClickListener
 import com.bhx.common.base.BaseFragment
 import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.mvvm.BaseMVVMFragment
 import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.HomeItemModel
 import com.jxqm.jiangdou.model.HomeItemTypeModel
 import com.jxqm.jiangdou.model.HomeModel
 import com.jxqm.jiangdou.model.HomeTopModel
 import com.jxqm.jiangdou.ui.city.SelectCity
 import com.jxqm.jiangdou.ui.home.adapter.HomeAdapter
+import com.jxqm.jiangdou.ui.home.vm.HomeViewModel
 import com.jxqm.jiangdou.ui.job.view.JobCompanyListActivity
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -30,8 +33,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
  * Created By bhx On 2019/9/5 0005 14:38
  */
 
-class HomeFragment : BaseFragment() {
-
+class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
+    override fun getEventKey(): Any = Constants.EVENT_KEY_MAIN_HOME
 
     private val mHomeModelList = arrayListOf<HomeModel>()
     private lateinit var mAdapter: HomeAdapter
@@ -48,7 +51,7 @@ class HomeFragment : BaseFragment() {
 
         mAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View?, holder: ViewHolder?, position: Int) {
-                 startActivity<JobDetailsActivity>()
+                startActivity<JobDetailsActivity>()
             }
 
             override fun onItemLongClick(view: View?, holder: ViewHolder?, position: Int): Boolean {
@@ -73,12 +76,11 @@ class HomeFragment : BaseFragment() {
 
     }
 
-    override fun fetchData() {
-        LoadingDialog.show(activity!!)
-        Handler().postDelayed({
-            LoadingDialog.dismiss(activity)
-            mAdapter.setDataList(mHomeModelList)
-        }, 2000)
+    /**
+     * 请求数据 -
+     */
+    override fun onFirstUserVisible() {
+
     }
 
 }

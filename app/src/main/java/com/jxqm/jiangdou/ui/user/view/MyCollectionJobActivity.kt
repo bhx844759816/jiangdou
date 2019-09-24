@@ -20,7 +20,9 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 class MyCollectionJobActivity : BaseActivity() {
     private val mCollectionItems = arrayListOf<CollectionItem>()
     private lateinit var mAdapter: CollectionAdapter
+
     override fun getLayoutId(): Int = R.layout.activity_my_collection
+
     override fun initView() {
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)

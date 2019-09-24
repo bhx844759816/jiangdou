@@ -35,13 +35,17 @@ class MyResumeRepository : BaseEventRepository() {
     /**
      * 上传用户简历
      */
-    fun upLoadResume(paramsMap: Map<String, String>, fileMaps: Map<String, File>) {
+    fun upLoadResume(paramsMap: Map<String, String>, fileMaps: Map<String, File>, fileList: List<File>) {
         val mulBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .apply {
                 fileMaps.forEach {
                     val body = RequestBody.create(MediaType.parse("multipart/form-data"), it.value)
                     addFormDataPart(it.key, it.value.name, body)
+                }
+                fileList.forEach {
+                    val body = RequestBody.create(MediaType.parse("multipart/form-data"), it)
+                    addFormDataPart("photos", it.name, body)
                 }
                 paramsMap.map {
                     addFormDataPart(it.key, it.value)

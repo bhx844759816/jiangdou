@@ -5,17 +5,22 @@ import android.view.View
 import android.widget.RadioGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.mvvm.BaseMVVMActivity
+import com.bhx.common.mvvm.BaseMVVMFragment
 import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.EmployRecordPayItem
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordPayAdapter
+import com.jxqm.jiangdou.ui.employer.vm.EmployRecordPayViewModel
 import kotlinx.android.synthetic.main.fragment_employ_record_pay.*
 
 /**
  * 雇佣记录 - 已结算
  * Created By bhx On 2019/9/3 0003 09:01
  */
-class EmployRecordPayFragment : BaseLazyFragment() {
+class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
+    override fun getEventKey(): Any = Constants.EVENT_KEY_EMPLOY_RECORD_PAY
     private val mEmployRecordPayItems = arrayListOf<EmployRecordPayItem>()
     private lateinit var mAdapter: EmployRecordPayAdapter
     override fun getLayoutId(): Int = R.layout.fragment_employ_record_pay
