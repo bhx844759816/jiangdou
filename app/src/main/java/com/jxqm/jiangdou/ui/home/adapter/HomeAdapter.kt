@@ -10,10 +10,12 @@ import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
-import com.jxqm.jiangdou.model.HomeItemModel
-import com.jxqm.jiangdou.model.HomeItemTypeModel
-import com.jxqm.jiangdou.model.HomeModel
-import com.jxqm.jiangdou.model.HomeTopModel
+import com.jxqm.jiangdou.http.Api
+import com.jxqm.jiangdou.ui.home.model.HomeJobDetailsTitleModel
+import com.jxqm.jiangdou.ui.home.model.HomeJobTypeModel
+import com.jxqm.jiangdou.ui.home.model.HomeModel
+import com.jxqm.jiangdou.ui.home.model.HomeSwipeModel
+import com.jxqm.jiangdou.view.GridRadioGroup
 import com.jxqm.jiangdou.view.banner.BannerView
 import com.jxqm.jiangdou.view.banner.IBannerView
 
@@ -29,14 +31,42 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
     )
 
     init {
+        addItemViewType(object : ItemViewType<HomeModel> {
+            override fun getItemViewLayoutId(): Int = R.layout.adapter_home_swiper_layout
+            override fun isItemClickable(): Boolean = false
+
+            override fun isViewForType(item: HomeModel, position: Int): Boolean = item.type == 1
+
+            override fun convert(holder: ViewHolder?, homeModel: HomeModel?, position: Int) {
+                holder?.let {
+                    setBanner(it.getView(R.id.bannerView), homeModel as HomeSwipeModel)
+                }
+            }
+
+        })
+
+        addItemViewType(object : ItemViewType<HomeModel> {
+            override fun getItemViewLayoutId(): Int = R.layout.adapter_home_job_type_layout
+
+            override fun isItemClickable(): Boolean = false
+
+            override fun isViewForType(item: HomeModel, position: Int): Boolean = item.type == 2
+
+            override fun convert(holder: ViewHolder?, t: HomeModel, position: Int) {
+                holder?.let {
+                    setJobTypeList(it.getView(R.id.rgJobTypeParent), t as HomeJobTypeModel)
+                }
+            }
+
+        })
+
         //添加顶部的布局
         addItemViewType(object : ItemViewType<HomeModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_home_top_layout
 
             override fun isItemClickable(): Boolean = false
 
-            override fun isViewForType(item: HomeModel?, position: Int): Boolean =
-                position < mDatas.size && (mDatas[position] is HomeTopModel)
+            override fun isViewForType(item: HomeModel?, position: Int): Boolean = item?.type == 1
 
             override fun convert(holder: ViewHolder?, t: HomeModel?, position: Int) {
                 holder?.let {
@@ -51,7 +81,7 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
             override fun isItemClickable(): Boolean = false
 
             override fun isViewForType(item: HomeModel?, position: Int): Boolean =
-                position < mDatas.size && (mDatas[position] is HomeItemTypeModel)
+                position < mDatas.size && (mDatas[position] is HomeJobDetailsTitleModel)
 
             override fun convert(holder: ViewHolder?, t: HomeModel?, position: Int) {
             }
@@ -71,10 +101,19 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
 
     }
 
-    private fun setBanner(bannerView: BannerView) {
+    private fun setJobTypeList(gridGroup: GridRadioGroup, homeJobTypeModel: HomeJobTypeModel) {
+        val list = homeJobTypeModel.jobTypeModeList
+        list.forEach {
+
+        }
+    }
+
+
+    private fun setBanner(bannerView: BannerView, swipeModel: HomeSwipeModel) {
+        val list = swipeModel.swpierModel
         bannerView.setBannerViewImpl(object : IBannerView {
             override fun getCount(): Int {
-                return imageList.size
+                return list.size
             }
 
             override fun getItemView(context: Context): View {
@@ -84,13 +123,10 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
             override fun onBindView(itemView: View, position: Int) {
                 if (itemView is ImageView) {
                     itemView.scaleType = ImageView.ScaleType.CENTER_CROP
-
                     Glide.with(itemView.context)
-                        .load(imageList[position])
+                        .load(Api.HTTP_BASE_URL + "/" + list[position].imageUrl)
                         .into(itemView)
-
                     itemView.setOnClickListener {
-                        Log.d("BannerView", "itemView onClick >>> $position")
                     }
                 }
             }

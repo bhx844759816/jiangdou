@@ -3,6 +3,7 @@ package com.jxqm.jiangdou.http
 import com.jxqm.jiangdou.model.*
 import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
 import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
+import com.jxqm.jiangdou.model.SwpierModel
 import com.jxqm.jiangdou.ui.user.model.EduModel
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -154,13 +155,16 @@ interface ApiService {
      * 获取首页轮播图
      */
     @GET(Api.HOME_SWIPER)
-    fun getHomeSwiper(): Observable<HttpResult<Any>>
+    fun getHomeSwiper(): Observable<HttpResult<List<SwpierModel>>>
 
     /**
      * 获取首页推荐列表
      */
     @GET(Api.HOME_JOB_RECOMMEND)
-    fun getHomeRecomment(): Observable<HttpResult<Any>>
+    fun getHomeRecommend(
+        @Query("pageNo") pageNo: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<HttpResult<JobDetailsWrapModel>>
 
     /**
      * 获取职位分类导航
@@ -173,7 +177,7 @@ interface ApiService {
      *
      */
     @GET(Api.JOB_TYPES)
-    fun getHomeJobType(): Observable<HttpResult<Any>>
+    fun getHomeJobType(): Observable<HttpResult<List<JobTypeModel>>>
 
 
 }

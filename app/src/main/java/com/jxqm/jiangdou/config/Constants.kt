@@ -122,7 +122,13 @@ class Constants {
         const val TAG_GET_USER_RESUME_RESULT = "tag_get_user_resume_result"//获取用户简历详情
         const val TAG_UPLOAD_RESUME_RESULT = "tag_get_user_resume_result"//上传简历结果
 
+        const val EVENT_KEY_MAIN = "event_key_main"//主界面
+
         const val EVENT_KEY_MAIN_HOME = "event_key_main_home"//首页界面
+        const val TAG_GET_HOME_SWIPER = "tag_get_home_swiper"//首页轮播图
+        const val TAG_GET_HOME_JOB_TYPE = "tag_get_home_job_type"//首页兼职类型列表
+        const val TAG_GET_HOME_RECOMMEND_LIST = "tag_get_home_recommend_list"//首页兼职推荐列表
+
 
         const val EVENT_KEY_MAIN_WORK = "event_key_main_work"//工作台界面
 

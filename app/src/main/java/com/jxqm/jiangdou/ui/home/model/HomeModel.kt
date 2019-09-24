@@ -1,4 +1,4 @@
-package com.jxqm.jiangdou.model
+package com.jxqm.jiangdou.ui.home.model
 
 /**
  * Created By bhx On 2019/8/21 0021 14:24

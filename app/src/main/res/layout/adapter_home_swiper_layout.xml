@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jxqm.jiangdou.view.banner.BannerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bannerView"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    app:bv_intervalInMillis="3000"
+    app:bv_scrollMode="INTERVAL"
+    app:bv_viewCornerRadius="0dp"
+    app:bv_viewHeight="130dp">
+
+    <com.jxqm.jiangdou.view.banner.indicator.CrossBarIndicator
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        app:cbi_itemBackgroundColor="@color/text_hint"
+        app:cbi_itemForegroundColor="@color/colorAccent"
+        app:cbi_itemHeight="6dp"
+        app:cbi_itemSpace="4dp"
+        app:cbi_itemWidth="6dp" />
+
+</com.jxqm.jiangdou.view.banner.BannerView>

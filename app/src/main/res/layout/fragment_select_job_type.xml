@@ -33,11 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
-        app:horizontalSpacing="15dp"
         app:layout_constraintLeft_toLeftOf="@id/tvHotTypeTitle"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvHotTypeTitle"
         app:numColumns="3"
+        app:horizontalSpacing="15dp"
         app:verticalSpacing="15dp">
 
     </com.jxqm.jiangdou.view.GridRadioGroup>

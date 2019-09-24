@@ -9,6 +9,9 @@ import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.LogUtils
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.base.BaseDataActivity
+import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ui.home.vm.MainViewModel
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_job_preview.*
@@ -18,7 +21,9 @@ import kotlinx.android.synthetic.main.activity_main.*
  *主页面
  * Created by Administrator on 2019/8/20.
  */
-class MainActivity : BaseActivity() {
+class MainActivity : BaseDataActivity<MainViewModel>() {
+    override fun getEventKey(): Any= Constants.EVENT_KEY_MAIN
+
     private var mListFragment = arrayListOf<Fragment>()
 
     override fun getLayoutId(): Int = R.layout.activity_main
