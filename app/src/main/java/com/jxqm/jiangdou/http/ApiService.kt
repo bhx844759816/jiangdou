@@ -150,4 +150,30 @@ interface ApiService {
     @POST(Api.REFUSE_OFFER)
     fun refuseOffer(@Part("jobResumeId") jobId: String): Observable<HttpResult<Any>>
 
+    /**
+     * 获取首页轮播图
+     */
+    @GET(Api.HOME_SWIPER)
+    fun getHomeSwiper(): Observable<HttpResult<Any>>
+
+    /**
+     * 获取首页推荐列表
+     */
+    @GET(Api.HOME_JOB_RECOMMEND)
+    fun getHomeRecomment(): Observable<HttpResult<Any>>
+
+    /**
+     * 获取职位分类导航
+     * @param jobTypeId 职位分类ID
+     */
+    @GET(Api.HOME_JOB_CAT + "/{jobTypeId}")
+    fun getHomeJobCat(@Path("jobTypeId") jobTypeId: String): Observable<HttpResult<Any>>
+
+    /**
+     *
+     */
+    @GET(Api.JOB_TYPES)
+    fun getHomeJobType(): Observable<HttpResult<Any>>
+
+
 }

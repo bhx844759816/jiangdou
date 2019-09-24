@@ -53,9 +53,22 @@ class Constants {
         const val TAG_PUBLISH_JOB_TIME = "tag_publish_job_time"//发布兼职的工作时间选择
         const val TAG_PUBLISH_JOB_EMPLOYER_PREVIEW = "tag_publish_job_employer_preview"//预览简历
         const val TAG_PUBLISH_JOB_EMPLOYER_PUBLISH = "tag_publish_job_employer_publish"//立即发布
+        const val TAG_PUBLISH_JOB_SUCCESS = "tag_publish_job_success"//发布成功
         const val EVENT_KEY_SELECT_JOB_TYPE = "event_key_select_job_type"//选择兼职类型
         const val TAG_SELECT_JOB_TYPE_HOT = "tag_select_job_type_hot"//获取热门类型
         const val TAG_SELECT_JOB_TYPE_MORE = "tag_select_job_type_more"//获取更多类型
+
+        const val EVENT_KEY_EMPLOY_RECORD_SIGN_UP = "event_key_employ_record_sign_up"//雇佣记录 - 已报名
+
+        const val EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT = "event_key_employ_record_employment"//雇佣记录 - 已录用
+
+        const val EVENT_KEY_EMPLOY_RECORD_REPORT_DUTY = "event_key_employ_record_report_duty"//雇佣记录 - 已到岗
+
+        const val EVENT_KEY_EMPLOY_RECORD_WAIT_PAY = "event_key_employ_record_wait_pay" //雇佣记录 - 待结算
+
+        const val EVENT_KEY_EMPLOY_RECORD_PAY = "event_key_employ_record_pay"//雇佣记录已结算
+
+
         //
         const val EVENT_KEY_COMPANY_ATTESTATION = "event_key_company_attestation" // 企业认证
         const val TAG_GET_COMPANY_ITEM_RESULT = "tag_get_company_item_result"
@@ -81,6 +94,15 @@ class Constants {
 
         //订单
         const val EVENT_KEY_PAYMENT_ORDER = "event_key_end_sign_up"//支付订单
+
+        //雇员  EmployeeSignUp
+        const val EVENT_KEY_EMPLOYEE_SIGN_UP = "event_key_employee_sign_up"//雇员-已报名
+
+        const val EVENT_KEY_EMPLOYEE_EMPLOYMENT = "event_key_employee_employment"//雇员 - 已录用
+
+        const val EVENT_KEY_EMPLOYEE_REPORT_DUTY = "event_key_employee_report_duty"//雇员 - 已到岗
+
+        const val EVENT_KEY_EMPLOYEE_PAY_FINISH = "event_key_employee_pay_finish"//雇员 - 已结算
 
         const val EVENT_KEY_JOB_MANAGER = "event_key_job_manager" // 兼职管理界面
 

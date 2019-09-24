@@ -52,7 +52,7 @@ import java.text.SimpleDateFormat
  */
 class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
     private val mSexList = arrayListOf("男", "女")
-    private val mEducationList = arrayListOf("小学", "初中", "专科", "本科", "硕士", "博士")
+    private val mEducationList = mutableListOf<String>()
     private val mHeightList = mutableListOf<String>()
     private val mWeightList = mutableListOf<String>()
     private lateinit var mPhotoLisAdapter: PhotoListAdapter
@@ -121,7 +121,9 @@ class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
         registerObserver(Constants.TAG_GET_EDU_LIST_RESULT, List::class.java).observe(
             this, Observer {
                 val list = it as List<EduModel>
-
+                list.forEach { eduModel ->
+                    mEducationList.add(eduModel.codeName)
+                }
             })
         registerObserver(Constants.TAG_GET_USER_RESUME_RESULT, ResumeModel::class.java).observe(this, Observer {
             mResumeModel = it
@@ -170,19 +172,21 @@ class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
                 }
             }
         }
+        //上传简历
+        mViewModel.uploadUserResume(paramsMap, fileMap, fileList)
     }
 
     private fun onViewClick(view: View) {
         when (view.id) {
-            R.id.tvUploadResume -> {
-
+            R.id.tvUploadResume -> {//保存用户简历
+                uploadUserResume()
             }
             R.id.rlHeadPhotoParent -> { //修改头像
                 requestPermission()
             }
             R.id.rlUserSexParent -> { //修改性别
                 SingleSelectDialog.show(this, mSexList) {
-
+                    tvUserSex.text = mSexList[it]
                 }
             }
             R.id.rlUserBirthdayParent -> {//修改出生年月
@@ -193,23 +197,25 @@ class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
             }
             R.id.rlUserEducationParent -> {//修改学历
                 SingleSelectDialog.show(this, mEducationList) {
-
+                    tvUserHeight.text = mEducationList[it]
                 }
             }
             R.id.rlUserHeightParent -> {//修改身高
                 initHeightList()
                 SingleSelectDialog.show(this, mHeightList, "cm") {
-
+                    tvUserHeight.text = mHeightList[it]
                 }
             }
             R.id.rlUserWeightParent -> {//修改体重
                 initWeightList()
                 SingleSelectDialog.show(this, mWeightList, "kg") {
-
+                    tvUserWeight.text = mHeightList[it]
                 }
             }
             R.id.rlUserLocationParent -> {//修改出生地
-                SelectCityDialog.showDialog(this)
+                SelectCityDialog.showDialog(this) {
+                    etUserLocation.text = it
+                }
             }
         }
     }

@@ -43,8 +43,10 @@ object Api {
     const val GET_ATTESTATION_STATUS = "/employer/status"
     //获取认证信息
     const val GET_ATTESTATION_DETAILS = "/employer"
-    //发布兼职 - 兼职类型
+    //发布兼职 - 兼职类型 - 2级列表
     const val PUBLISH_JOB_TYPE = "/code/job_types_l2"
+    //职位类型
+    const val JOB_TYPES = "/code/job_types"
     //发布工作
     const val PUBLISH_JOB = "/employer/job"
     //等待发布
@@ -61,5 +63,12 @@ object Api {
     const val PUBLISH_PAY_JOB_ORDER = "/employer/order/pay"
     //获取账户余额
     const val GET_ACCOUNT_BALANCE = "/account/balance"
+    //首页轮播图
+    const val HOME_SWIPER = "/home/swiper"
+    //首页职位推荐
+    const val HOME_JOB_RECOMMEND = "/home/job/recommend"
+    //职位分类导航
+    const val HOME_JOB_CAT = "/home/job/cat"
+
 
 }

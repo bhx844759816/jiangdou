@@ -51,7 +51,7 @@ class JobPublishRepository : BaseEventRepository() {
                     )
                     return@flatMap apiService.uploadPublishJob(body).compose(applySchedulers())
                 }.action {
-
+                    sendData(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_SUCCESS, true)
                 }
         )
 

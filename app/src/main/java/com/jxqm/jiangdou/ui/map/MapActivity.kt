@@ -120,6 +120,49 @@ class MapActivity : BaseActivity() {
                 }
             }
         }
+
+        override fun onLocDiagnosticMessage(locType: Int, diagnosticType: Int, diagnosticMessage: String?) {
+            super.onLocDiagnosticMessage(locType, diagnosticType, diagnosticMessage)
+            val sb = StringBuffer(256)
+            sb.append("诊断结果: ")
+            if (locType === BDLocation.TypeNetWorkLocation) {
+                if (diagnosticType === 1) {
+                    sb.append("网络定位成功，没有开启GPS，建议打开GPS会更好")
+                    sb.append("\n" + diagnosticMessage)
+                } else if (diagnosticType === 2) {
+                    sb.append("网络定位成功，没有开启Wi-Fi，建议打开Wi-Fi会更好")
+                    sb.append("\n" + diagnosticMessage)
+                }
+            } else if (locType === BDLocation.TypeOffLineLocationFail) {
+                if (diagnosticType === 3) {
+                    sb.append("定位失败，请您检查您的网络状态")
+                    sb.append("\n" + diagnosticMessage)
+                }
+            } else if (locType === BDLocation.TypeCriteriaException) {
+                if (diagnosticType === 4) {
+                    sb.append("定位失败，无法获取任何有效定位依据")
+                    sb.append("\n" + diagnosticMessage)
+                } else if (diagnosticType === 5) {
+                    sb.append("定位失败，无法获取有效定位依据，请检查运营商网络或者Wi-Fi网络是否正常开启，尝试重新请求定位")
+                    sb.append(diagnosticMessage)
+                } else if (diagnosticType === 6) {
+                    sb.append("定位失败，无法获取有效定位依据，请尝试插入一张sim卡或打开Wi-Fi重试")
+                    sb.append("\n" + diagnosticMessage)
+                } else if (diagnosticType === 7) {
+                    sb.append("定位失败，飞行模式下无法获取有效定位依据，请关闭飞行模式重试")
+                    sb.append("\n" + diagnosticMessage)
+                } else if (diagnosticType === 9) {
+                    sb.append("定位失败，无法获取任何有效定位依据")
+                    sb.append("\n" + diagnosticMessage)
+                }
+            } else if (locType === BDLocation.TypeServerError) {
+                if (diagnosticType === 8) {
+                    sb.append("定位失败，请确认您定位的开关打开状态，是否赋予APP定位权限")
+                    sb.append("\n" + diagnosticMessage)
+                }
+            }
+            LogUtils.i("定位失败$sb")
+        }
     }
 
     private val mGeoCoderListener = object : OnGetGeoCoderResultListener {
@@ -241,6 +284,7 @@ class MapActivity : BaseActivity() {
         option.setIsNeedLocationPoiList(true)
         //设置定位模式 Battery_Saving 低功耗模式 Device_Sensors 仅设备(Gps)模式 Hight_Accuracy 高精度模式
         option.locationMode = LocationClientOption.LocationMode.Hight_Accuracy
+        option.priority = LocationClientOption.GpsFirst //GPS优先
         // 设置是否打开gps进行定位
         option.isOpenGps = true
         // 设置扫描间隔，单位是毫秒 当<1000(1s)时，定时定位无效
@@ -296,7 +340,7 @@ class MapActivity : BaseActivity() {
         //截图
         mMap.snapshotScope(rect) {
             // 保存图片
-            FileUtils.saveBitmap(it,Constants.APP_SAVE_DIR,Constants.MAPVIEW_FILENAME)
+            FileUtils.saveBitmap(it, Constants.APP_SAVE_DIR, Constants.MAPVIEW_FILENAME)
             val intent = Intent()
             LogUtils.i("sleectArea$poiInfo")
             intent.putExtra("address", poiInfo.address)

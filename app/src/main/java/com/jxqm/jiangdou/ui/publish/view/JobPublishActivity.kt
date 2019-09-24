@@ -112,6 +112,12 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
             Observer {
                 mAttestationStatusModel = it
             })
+        //发布成功 TAG_PUBLISH_JOB_SUCCESS
+        registerObserver(Constants.TAG_PUBLISH_JOB_SUCCESS, Boolean::class.java).observe(this, Observer {
+            //需要jobId
+
+        })
+
     }
 
     /**
@@ -224,6 +230,7 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
     override fun jobContactsNextStep() {
         ToastUtils.toastShort("发布成功")
         finish()
+
     }
 
     override fun onBackPressed() {

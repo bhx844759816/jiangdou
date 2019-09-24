@@ -30,7 +30,7 @@ object SelectCityDialog {
     private val options3Items = ArrayList<ArrayList<ArrayList<String>>>()
 
 
-    public fun showDialog(context: Context) {
+    public fun showDialog(context: Context, callBack: (String) -> Unit) {
         if (options1Items.isEmpty() || options2Items.isEmpty() || options3Items.isEmpty()) {
             Observable.create(ObservableOnSubscribe<Any> {
                 val jsonData = FileUtils.getJsonFromAssets(context, "province.json")
@@ -60,10 +60,10 @@ object SelectCityDialog {
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe {
-                    showRealDialog(context)
+                    showRealDialog(context, callBack)
                 }
         } else {
-            showRealDialog(context)
+            showRealDialog(context, callBack)
         }
     }
 
@@ -83,8 +83,8 @@ object SelectCityDialog {
         return detail
     }
 
-    private fun showRealDialog(context: Context) {
-        val pvOptions:OptionsPickerView<Any> = OptionsPickerBuilder(context,
+    private fun showRealDialog(context: Context, callBack: (String) -> Unit) {
+        val pvOptions: OptionsPickerView<Any> = OptionsPickerBuilder(context,
             OnOptionsSelectListener { options1, options2, options3, _ ->
                 //返回的分别是三个级别的选中位置
                 val opt1tx = if (options1Items.size > 0)
@@ -103,13 +103,15 @@ object SelectCityDialog {
                 else
                     ""
                 val tx = opt1tx + opt2tx + opt3tx
+                callBack.invoke(tx)
             })
             .setTitleText("城市选择")
             .setDividerColor(Color.BLACK)
             .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
             .setContentTextSize(20)
             .build()
-        pvOptions.setPicker(options1Items as List<Any>?, options2Items as List<MutableList<Any>>?,
+        pvOptions.setPicker(
+            options1Items as List<Any>?, options2Items as List<MutableList<Any>>?,
             options3Items as List<MutableList<MutableList<Any>>>?
         )//三级选择器
         pvOptions.show()
