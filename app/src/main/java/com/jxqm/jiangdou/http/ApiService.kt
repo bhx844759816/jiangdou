@@ -6,6 +6,7 @@ import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
 import com.jxqm.jiangdou.model.SwpierModel
 import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
 import com.jxqm.jiangdou.ui.user.model.EduModel
+import com.jxqm.jiangdou.ui.user.model.ResumeModel
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -131,7 +132,7 @@ interface ApiService {
      * 获取用户简历
      */
     @GET(Api.GET_USER_RESUME)
-    fun getUserResume(): Observable<HttpResult<Any>>
+    fun getUserResume(): Observable<HttpResult<ResumeModel>>
 
     /**
      * 报名工作

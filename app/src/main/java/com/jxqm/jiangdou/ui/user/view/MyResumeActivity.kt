@@ -50,7 +50,7 @@ import java.text.SimpleDateFormat
  * 我的简历
  * Created By bhx On 2019/8/19 0019 14:06
  */
-class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
+class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
     private val mSexList = arrayListOf("男", "女")
     private val mEducationList = mutableListOf<String>()
     private val mHeightList = mutableListOf<String>()
@@ -133,17 +133,18 @@ class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
 
     private fun showUserResume() {
         etUserName.setText(mResumeModel.name)
-        tvUserSex.text = mResumeModel.gender
         tvUserBirthday.text = mResumeModel.birthday
         tvUserAge.text = mResumeModel.star
         etUserPhone.setText(mResumeModel.tel)
-        etUserEducation.text = mResumeModel.academic
+        tvUserEducation.text = mResumeModel.academic
         tvUserHeight.text = mResumeModel.height
         tvUserWeight.text = mResumeModel.weight
         etUserLocation.text = mResumeModel.area
         etPeopleIntroduce.setText(mResumeModel.content)
-        mPhotoList.addAll(mResumeModel.images)
-        mPhotoLisAdapter.notifyDataSetChanged()
+        if (!mResumeModel.images.isNullOrEmpty()) {
+            mPhotoList.addAll(mResumeModel.images)
+            mPhotoLisAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun uploadUserResume() {
@@ -153,25 +154,25 @@ class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
         paramsMap["birthday"] = tvUserBirthday.text.toString().trim()
         paramsMap["star"] = tvUserAge.text.toString().trim()
         paramsMap["tel"] = etUserPhone.text.toString().trim()
-        paramsMap["academic"] = etUserEducation.text.toString().trim()
+        paramsMap["academic"] = tvUserEducation.text.toString().trim()
         paramsMap["height"] = tvUserHeight.text.toString().trim()
         paramsMap["weight"] = tvUserWeight.text.toString().trim()
         paramsMap["area"] = etUserLocation.text.toString().trim()
         paramsMap["content"] = etPeopleIntroduce.text.toString().trim()
         //头像
         val fileMap = mutableMapOf<String, File>()
-        if (mPhotoFile != null) {
-            fileMap["avatar"] = mPhotoFile!!
-        }
+//        if (mPhotoFile != null) {
+//            fileMap["avatar"] = mPhotoFile!!
+//        }
         //图片数组
         val fileList = mutableListOf<File>()
-        if (mPhotoList.isNotEmpty()) {
-            mPhotoList.forEach {
-                if (it is File) {
-                    fileList.add(it)
-                }
-            }
-        }
+//        if (mPhotoList.isNotEmpty()) {
+//            mPhotoList.forEach {
+//                if (it is File) {
+//                    fileList.add(it)
+//                }
+//            }
+//        }
         //上传简历
         mViewModel.uploadUserResume(paramsMap, fileMap, fileList)
     }
@@ -197,7 +198,7 @@ class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
             }
             R.id.rlUserEducationParent -> {//修改学历
                 SingleSelectDialog.show(this, mEducationList) {
-                    tvUserHeight.text = mEducationList[it]
+                    tvUserEducation.text = mEducationList[it]
                 }
             }
             R.id.rlUserHeightParent -> {//修改身高
@@ -209,7 +210,7 @@ class MyResumeActivity : BaseMVVMActivity<MyResumeViewModel>() {
             R.id.rlUserWeightParent -> {//修改体重
                 initWeightList()
                 SingleSelectDialog.show(this, mWeightList, "kg") {
-                    tvUserWeight.text = mHeightList[it]
+                    tvUserWeight.text = mWeightList[it]
                 }
             }
             R.id.rlUserLocationParent -> {//修改出生地

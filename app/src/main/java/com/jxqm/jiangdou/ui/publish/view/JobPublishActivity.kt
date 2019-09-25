@@ -60,7 +60,7 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
             mJobDetailsModel.gender = params.getValue("gender")
             mJobDetailsModel.recruitNum = params.getValue("recruitNum")
             mJobDetailsModel.area = params.getValue("area")
-            mJobDetailsModel.areaCode = params.getValue("areaCode")
+//            mJobDetailsModel.areaCode = params.getValue("areaCode")
             mJobDetailsModel.address = params.getValue("address")
             mJobDetailsModel.longitude = params.getValue("longitude")
             mJobDetailsModel.latitude = params.getValue("latitude")

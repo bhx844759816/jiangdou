@@ -1,7 +1,6 @@
 package com.jxqm.jiangdou.ui.employer.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -11,9 +10,7 @@ import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
-import com.jxqm.jiangdou.ui.employer.view.EmployJobPublishActivity
 import com.jxqm.jiangdou.ui.employer.view.EmployRecordActivity
-import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
 import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
@@ -24,6 +21,7 @@ import com.jxqm.jiangdou.utils.startActivity
 class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<JobDetailsModel>(context) {
     var paymentCallBack: ((String) -> Unit)? = null
     var cancelPublish: ((String) -> Unit)? = null
+    var contentClickCallBack: ((JobDetailsModel) -> Unit)? = null
 
     init {
         when (type) {
@@ -75,6 +73,11 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
                     tvRefuse.clickWithTrigger {
                         cancelPublish?.invoke(jobDetailsModel.id)
                     }
+
+                    parent.clickWithTrigger {
+                        contentClickCallBack?.invoke(jobDetailsModel)
+                    }
+
                 }
 
             }

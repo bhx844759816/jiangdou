@@ -68,8 +68,10 @@ class Constants {
 
         const val EVENT_KEY_EMPLOY_RECORD_PAY = "event_key_employ_record_pay"//雇佣记录已结算
 
+        const val EVENT_KEY_JOB_PUBLISH_DETAILS = "event_key_job_publish_details" //发布兼职支付押金的详情界面
 
-        //
+
+        //认证
         const val EVENT_KEY_COMPANY_ATTESTATION = "event_key_company_attestation" // 企业认证
         const val TAG_GET_COMPANY_ITEM_RESULT = "tag_get_company_item_result"
         const val TAG_GET_COMPANY_ATTESTATION_STATUS = "tag_get_company_attestation_status"

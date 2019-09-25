@@ -58,7 +58,7 @@
         <activity android:name=".ui.user.view.MyCollectionJobActivity" />
         <activity android:name=".ui.user.view.CashOutActivity" />
         <activity android:name=".ui.employer.view.EmployRecordActivity" />
-        <activity android:name=".ui.employer.view.EmployJobPublishActivity" />
+        <activity android:name=".ui.publish.view.JobPublishDetailsActivity" />
         <activity android:name=".ui.order.view.OrderPaymentActivity" />
         <activity android:name=".ui.order.view.OrderPaymentSuccessActivity" />
         <activity android:name=".ui.employee.view.ResumeDetailsActivity" />

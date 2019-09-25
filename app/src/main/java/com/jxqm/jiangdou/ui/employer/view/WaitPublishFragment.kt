@@ -15,6 +15,8 @@ import com.jxqm.jiangdou.model.JobDetailsWrapModel
 import com.jxqm.jiangdou.ui.employer.adapter.JobPublishListAdapter
 import com.jxqm.jiangdou.ui.employer.vm.WaitPublishViewModel
 import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
+import com.jxqm.jiangdou.ui.publish.view.JobPublishDetailsActivity
+import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_employee_work_list.*
 import kotlinx.android.synthetic.main.fragment_wait_publish_layout.*
 import kotlinx.android.synthetic.main.fragment_wait_publish_layout.recyclerView
@@ -84,6 +86,9 @@ class WaitPublishFragment : BaseMVVMFragment<WaitPublishViewModel>() {
         //取消发布
         mJobPublishListAdapter.cancelPublish = {
 
+        }
+        mJobPublishListAdapter.contentClickCallBack = {
+            mContext.startActivity<JobPublishDetailsActivity>("JobDetailsModel" to it.toJson())
         }
         swipeRefreshLayout.setOnLoadMoreListener {
             isRefresh = false

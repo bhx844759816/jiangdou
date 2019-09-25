@@ -57,7 +57,7 @@
     <string name="leftArrow"><![CDATA[<]]></string>
     <string name="rightArrow"><![CDATA[>]]></string>
     <string name="cancel">取消</string>
-    <string name="myResume">我的简历</string>
+    <string name="myResume">个人简历</string>
     <string name="save">保存</string>
     <string name="userName">姓名</string>
     <string name="userSex">性别</string>

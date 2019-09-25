@@ -38,7 +38,7 @@
                     app:layout_collapseParallaxMultiplier="0.7">
 
                     <TextView
-                        android:id="@+id/tvJobTitle"
+                        android:id="@+id/tvJobType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
@@ -51,8 +51,8 @@
                         android:id="@+id/tvJobMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tvJobTitle"
-                        android:layout_alignLeft="@id/tvJobTitle"
+                        android:layout_below="@id/tvJobType"
+                        android:layout_alignLeft="@id/tvJobType"
                         android:layout_marginTop="2dp"
                         android:text="30币/小时"
                         android:textColor="@color/jobPublishMoney"
@@ -95,13 +95,13 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="90dp"
                 android:orientation="vertical">
                 <!--招聘要求-->
                 <LinearLayout
@@ -125,6 +125,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tvRecruitPeoples"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_job_publish_preview_text_bg"
@@ -137,6 +138,7 @@
                             android:textSize="@dimen/text_small_size" />
 
                         <TextView
+                            android:id="@+id/tvJobSex"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -150,7 +152,7 @@
                             android:textSize="@dimen/text_small_size" />
                     </LinearLayout>
                 </LinearLayout>
-
+                <!--工作内容-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -187,6 +189,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tvJobTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -195,44 +198,13 @@
                         android:textSize="@dimen/text_default_size" />
 
                     <TextView
+                        android:id="@+id/tvJobContent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="公司官网改版，招聘兼职UI设计师"
                         android:textColor="@color/text_default"
                         android:textSize="@dimen/text_small_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="工作内容"
-                        android:textColor="@color/text_default"
-                        android:textSize="@dimen/text_small_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="13dp"
-                        android:layout_marginTop="5dp"
-                        android:text="工作包括网站首页、二级栏目、详情页、产品展示等一共20多个页面"
-                        android:textColor="@color/text_default" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="待遇及要求"
-                        android:textColor="@color/text_default"
-                        android:textSize="@dimen/text_small_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="13dp"
-                        android:layout_marginTop="5dp"
-                        android:text="底薪每小时30元，要求平均2小时设计一个页面。"
-                        android:textColor="@color/text_default" />
 
                     <View
                         android:layout_width="match_parent"
@@ -248,6 +220,7 @@
                         android:textColor="@color/colorAccent"
                         android:textSize="@dimen/text_big_small_size" />
                 </LinearLayout>
+
                 <!--工作时间-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -284,8 +257,58 @@
                             android:background="@color/jobPublishLine" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/llDateParent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
+                    </LinearLayout>
 
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp">
+
+                        <ImageView
+                            android:id="@+id/ivMapView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY" />
+
+                        <LinearLayout
+                            android:layout_width="350dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:paddingRight="15dp"
+                            android:background="@drawable/shape_white_circle_rectage">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="12dp"
+                                android:background="@drawable/icon_location" />
+
+                            <TextView
+                                android:id="@+id/tvJobArea"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="11"
+                                android:text="河南省郑州市金水区木华广场"
+                                android:textColor="@color/text_publish_sex"
+                                android:textSize="@dimen/text_default_size" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/icon_arrow_right" />
+                        </LinearLayout>
+
+                    </FrameLayout>
                 </LinearLayout>
                 <!--公司详情-->
                 <LinearLayout
@@ -400,6 +423,5 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_default_size" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

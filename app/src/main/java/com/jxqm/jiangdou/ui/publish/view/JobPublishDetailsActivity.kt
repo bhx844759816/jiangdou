@@ -1,51 +1,42 @@
-package com.jxqm.jiangdou.ui.job.view
+package com.jxqm.jiangdou.ui.publish.view
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import com.bhx.common.base.BaseActivity
-import com.jaeger.library.StatusBarUtil
-import com.jxqm.jiangdou.R
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.DensityUtil
-import com.bhx.common.utils.LogUtils
 import com.bhx.common.view.FlowLayout
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.jaeger.library.StatusBarUtil
+import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobDetailsModel
+import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
 import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
-import kotlinx.android.synthetic.main.activity_job_details.*
-import kotlinx.android.synthetic.main.activity_job_details.ivMapView
-import kotlinx.android.synthetic.main.activity_job_details.llDateParent
-import kotlinx.android.synthetic.main.activity_job_details.nestedScrollView
-import kotlinx.android.synthetic.main.activity_job_details.toolbar
-import kotlinx.android.synthetic.main.activity_job_details.tvJobArea
-import kotlinx.android.synthetic.main.activity_job_details.tvJobContent
-import kotlinx.android.synthetic.main.activity_job_details.tvJobMoney
-import kotlinx.android.synthetic.main.activity_job_details.tvJobTips
-import kotlinx.android.synthetic.main.activity_job_details.tvJobTitle
-import kotlinx.android.synthetic.main.activity_job_details.tvJobType
-import kotlinx.android.synthetic.main.activity_job_details.tvRecruitPeoples
-import kotlinx.android.synthetic.main.activity_order_payment.*
-import kotlinx.android.synthetic.main.activity_publish_job_preview.*
-
-import java.io.File
-import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-import android.view.ViewGroup
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-
+import com.jxqm.jiangdou.ui.publish.vm.JobPublishDetailsViewModel
+import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
+import kotlinx.android.synthetic.main.activity_employ_job_publish.*
 
 /**
- * 工作详情界面
- * Created By bhx On 2019/8/12 0012 10:56
+ * 发布兼职的详情界面
+ * 可以取消发布 以及支付押金
+ * Created By bhx On 2019/9/4 0004 16:20
  */
-class JobDetailsActivity : BaseActivity() {
+class JobPublishDetailsActivity : BaseDataActivity<JobPublishDetailsViewModel>() {
+
     private val gson = Gson()
+    override fun getEventKey(): Any = Constants.EVENT_KEY_JOB_PUBLISH_DETAILS
+
     private var mJobDetailsModel: JobDetailsModel? = null
-    override fun getLayoutId(): Int = R.layout.activity_job_details
+    override fun getLayoutId(): Int = R.layout.activity_employ_job_publish
 
     override fun initView() {
         super.initView()
@@ -75,14 +66,13 @@ class JobDetailsActivity : BaseActivity() {
             Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.mapImg).into(ivMapView)
         }
 
+        tvPayMoney.clickWithTrigger {
+           startActivity<OrderPaymentActivity>("JobId" to mJobDetailsModel!!.id)
+        }
+
         toolbar.setNavigationOnClickListener {
             finish()
         }
-    }
-
-    private fun getStatusBarHeight(): Int {
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        return resources.getDimensionPixelSize(resourceId)
     }
 
     private fun showDateRange(dates: List<String>, times: List<TimeRangeModel>) {
@@ -119,4 +109,8 @@ class JobDetailsActivity : BaseActivity() {
         flowLayout.addView(textView)
     }
 
+    private fun getStatusBarHeight(): Int {
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        return resources.getDimensionPixelSize(resourceId)
+    }
 }
