@@ -94,6 +94,9 @@ class Constants {
 
         //订单
         const val EVENT_KEY_PAYMENT_ORDER = "event_key_end_sign_up"//支付订单
+        const val TAG_GET_ORDER_DETAILS_SUCCESS = "tag_get_order_details_success"//获取订单详情成功
+        const val TAG_GET_USER_ACCOUNT_BALANCE_SUCCESS = "tag_get_user_account_balance_success"//获取账户余额
+        const val TAG_PAY_ORDER_SUCCESS = "tag_pay_order_success"//支付订单成功
 
         //雇员  EmployeeSignUp
         const val EVENT_KEY_EMPLOYEE_SIGN_UP = "event_key_employee_sign_up"//雇员-已报名
@@ -128,10 +131,7 @@ class Constants {
         const val TAG_GET_HOME_SWIPER = "tag_get_home_swiper"//首页轮播图
         const val TAG_GET_HOME_JOB_TYPE = "tag_get_home_job_type"//首页兼职类型列表
         const val TAG_GET_HOME_RECOMMEND_LIST = "tag_get_home_recommend_list"//首页兼职推荐列表
-
-
         const val EVENT_KEY_MAIN_WORK = "event_key_main_work"//工作台界面
-
         const val TAG_USER_INFO_UPDATE = "tag_user_info_update"//用户信息
 
 

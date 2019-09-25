@@ -47,7 +47,7 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
     }
 
     override fun dataObserver() {
-        //接收选择的
+        //接收选择的兼职类型
         registerObserver(Constants.TAG_PUBLISH_JOB_TYPE, JobTypeModel::class.java).observe(this, Observer {
             mJobDetailsModel.jobTypeId = it.id.toString()
             mJobDetailsModel.jobTypeValue = it.jobTypeName

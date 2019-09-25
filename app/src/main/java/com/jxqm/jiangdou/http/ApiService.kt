@@ -4,6 +4,7 @@ import com.jxqm.jiangdou.model.*
 import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
 import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
 import com.jxqm.jiangdou.model.SwpierModel
+import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
 import com.jxqm.jiangdou.ui.user.model.EduModel
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -99,19 +100,20 @@ interface ApiService {
      * 获取订单详情
      */
     @GET(Api.PUBLISH_JOB_ORDER_DETAILS + "/{jobId}")
-    fun getOrderDetails(@Path("jobId") jobId: String): Observable<HttpResult<Any>>
+    fun getOrderDetails(@Path("jobId") jobId: String): Observable<HttpResult<OrderDetailsModel>>
 
     /**
      * 支付订单
      */
+    @Multipart
     @POST(Api.PUBLISH_PAY_JOB_ORDER)
-    fun payOrder(): Observable<HttpResult<Any>>
+    fun payOrder(@Part("id") orderId: String,@Part("jobId") jobId: String): Observable<HttpResult<Any>>
 
     /**
      * 获取账户余额
      */
     @GET(Api.GET_ACCOUNT_BALANCE)
-    fun getAccountBalance(): Observable<HttpResult<Any>>
+    fun getAccountBalance(): Observable<HttpResult<String>>
 
     /**
      * 获取学历列表

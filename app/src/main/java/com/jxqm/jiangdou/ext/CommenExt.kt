@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
+import com.google.gson.Gson
 import com.jxqm.jiangdou.R
 
 /**
@@ -84,3 +85,10 @@ internal fun Paint.utilReset(colorString: String? = null, @ColorInt color: Int? 
     this.style = Paint.Style.FILL
     this.strokeWidth = 0f
 }
+
+
+
+/**
+ * 扩展gson解析
+ */
+inline fun <reified T> Gson.fromJson(json: String) = fromJson(json, T::class.java)

@@ -3,27 +3,19 @@ package com.jxqm.jiangdou.ui.home.vm.repository
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
 import com.jxqm.jiangdou.http.action
+import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.http.applySchedulersForLoadingDialog
 import com.jxqm.jiangdou.model.JobDetailsWrapModel
 import com.jxqm.jiangdou.model.JobTypeModel
 import com.jxqm.jiangdou.model.SwpierModel
 import io.reactivex.Observable
+import io.reactivex.functions.Consumer
 
 /**
  * 主页面数据
  * Created by Administrator on 2019/8/20.
  */
 class HomeRepository : BaseEventRepository() {
-    /**
-     * 获取首页轮播图
-     */
-    fun getHomeSwiper() {
-        addDisposable(
-            apiService.getHomeSwiper().action {
-
-            }
-        )
-    }
 
     /**
      * 获取首页推荐列表
@@ -31,18 +23,32 @@ class HomeRepository : BaseEventRepository() {
     fun getHomeRecommend(pageNo: Int, pageSize: Int, callBack: () -> Unit) {
         addDisposable(
             apiService.getHomeRecommend(pageNo, pageSize)
-                .action {
-                    if (it.records.size < it.total) {
-                        callBack.invoke()
+                .compose(applySchedulers())
+                .subscribe({
+                    if (it.code == "0") {
+                        val records = it.data.records
+                        if (records.size < it.data.total) {
+                            callBack.invoke()
+                        }
+                        sendData(
+                            Constants.EVENT_KEY_MAIN_HOME,
+                            Constants.TAG_GET_HOME_RECOMMEND_LIST, records
+                        )
                     }
-                    sendData(
-                        Constants.EVENT_KEY_MAIN_HOME,
-                        Constants.TAG_GET_HOME_RECOMMEND_LIST, it.records
-                    )
-                }
+
+                }, {
+
+                })
         )
     }
 
+    /**
+     * 获取首页第一次加载的所有数据
+     * 轮播图
+     * 兼职类型
+     * 兼职帮助Item
+     * 推荐列表
+     */
     fun getHomeData(pageNo: Int, pageSize: Int, callBack: () -> Unit) {
         addDisposable(
             Observable.concat(
@@ -64,19 +70,19 @@ class HomeRepository : BaseEventRepository() {
                         }
 
                         if (it.data is List<*>) {
-                            val list = it.data as List<*>
+                            val list = it.data
                             val model = list[0]
                             if (model is JobTypeModel) {
                                 //兼职类型
                                 sendData(
                                     Constants.EVENT_KEY_MAIN_HOME,
-                                    Constants.TAG_GET_HOME_SWIPER, it.data
+                                    Constants.TAG_GET_HOME_JOB_TYPE, it.data
                                 )
                             } else if (model is SwpierModel) {
                                 //轮播图
                                 sendData(
                                     Constants.EVENT_KEY_MAIN_HOME,
-                                    Constants.TAG_GET_HOME_JOB_TYPE, it.data
+                                    Constants.TAG_GET_HOME_SWIPER, it.data
                                 )
                             }
                         }
@@ -86,4 +92,5 @@ class HomeRepository : BaseEventRepository() {
                 })
         )
     }
+
 }

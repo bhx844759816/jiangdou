@@ -14,7 +14,7 @@ class JobDetailsModel : CommonConfig() {
     var contact: String = ""
     var content: String = ""
     var createTime: String = ""
-    var dates: List<String> = arrayListOf()
+    var dates: List<String> = listOf()
     var datesJson: String = ""
     var email: String = ""
     var employerId: String = ""

@@ -6,7 +6,7 @@ package com.jxqm.jiangdou.http
 object Api {
 
 
-    const val HTTP_BASE_URL = "http://jxdou.natapp1.cc/"
+    const val HTTP_BASE_URL = "http://jxdou.natapp1.cc"
 
     //    const val HTTP_BASE_URL = "http://192.168.0.100:8080"
     const val SEND_SMS_CODE = "/send-validate-code"
@@ -60,7 +60,9 @@ object Api {
     //订单详情
     const val PUBLISH_JOB_ORDER_DETAILS = "/employer/order"
     //支付订单
-    const val PUBLISH_PAY_JOB_ORDER = "/employer/order/pay"
+//    const val PUBLISH_PAY_JOB_ORDER = "/employer/order/pay"
+    //支付订单
+    const val PUBLISH_PAY_JOB_ORDER = "/employer/order/frozen-deposit"
     //获取账户余额
     const val GET_ACCOUNT_BALANCE = "/account/balance"
     //首页轮播图

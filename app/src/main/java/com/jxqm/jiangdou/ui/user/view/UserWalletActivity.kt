@@ -5,7 +5,7 @@ import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
-import kotlinx.android.synthetic.main.activity_job_preview.*
+import kotlinx.android.synthetic.main.activity_job_details.*
 import kotlinx.android.synthetic.main.activity_user_wallet.*
 import kotlinx.android.synthetic.main.activity_user_wallet.toolbar
 

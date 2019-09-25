@@ -1,5 +1,6 @@
 package com.jxqm.jiangdou.ui.home.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import com.jxqm.jiangdou.ui.home.model.*
 import com.jxqm.jiangdou.ui.home.vm.HomeViewModel
 import com.jxqm.jiangdou.ui.job.view.JobCompanyListActivity
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
+import com.jxqm.jiangdou.ui.publish.view.PublishJobPreviewActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -36,32 +38,30 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mAdapter = HomeAdapter(mContext)
-        mAdapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(view: View?, holder: ViewHolder?, position: Int) {
-                startActivity<JobDetailsActivity>()
-            }
-
-            override fun onItemLongClick(view: View?, holder: ViewHolder?, position: Int): Boolean {
-                return false
-            }
-        })
         mAdapter.setDataList(mHomeModelList)
+        mAdapter.jobDetailsCallBack = {
+            val intent = Intent(
+                mContext,
+                JobDetailsActivity::class.java
+            )
+            intent.putExtra("JobDetailsModel", it.toJson())
+            startActivity(intent)
+        }
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
-
         swipeRefreshLayout.setOnRefreshListener {
+            mHomeModelList.clear()
             isRefresh = true
-            mViewModel.getRecommend(isRefresh)
+            mViewModel.getHomeData()
         }
+        swipeRefreshLayout.setEnableLoadMore(false)
         swipeRefreshLayout.setOnLoadMoreListener {
             isRefresh = false
             mViewModel.getRecommend(isRefresh)
         }
-
         tvLocationCity.clickWithTrigger {
             startActivity<SelectCity>()
         }
-
         llSearch.clickWithTrigger {
             startActivity<JobCompanyListActivity>()
         }
@@ -74,20 +74,19 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             val list = it as List<SwpierModel>
             val homeSwipeModel = HomeSwipeModel(list)
             mHomeModelList.add(homeSwipeModel)
-            mAdapter.notifyDataSetChanged()
+            mAdapter.updateDatas(mHomeModelList)
         })
         //获取兼职类型
-        registerObserver(Constants.TAG_GET_HOME_SWIPER, List::class.java).observe(this, Observer {
+        registerObserver(Constants.TAG_GET_HOME_JOB_TYPE, List::class.java).observe(this, Observer {
             val list = it as List<JobTypeModel>
             val jobTypeModel = HomeJobTypeModel(list)
             mHomeModelList.add(jobTypeModel)
             mHomeModelList.add(HomeJobHelpModel())
             mHomeModelList.add(HomeJobDetailsTitleModel())
-            //在添加个
-            mAdapter.notifyDataSetChanged()
+            mAdapter.updateDatas(mHomeModelList)
         })
         //获取推荐兼职列表
-        registerObserver(Constants.TAG_GET_HOME_SWIPER, List::class.java).observe(this, Observer {
+        registerObserver(Constants.TAG_GET_HOME_RECOMMEND_LIST, List::class.java).observe(this, Observer {
             val list = it as List<JobDetailsModel>
             val homeJobDetailsModelList = mutableListOf<HomeJobDetailsModel>()
             list.forEach { jobDetailsModel ->
@@ -99,16 +98,19 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
                 val iterator = mHomeModelList.iterator()
                 while (iterator.hasNext()) {
                     val homeModel = iterator.next()
-                    if (homeModel.type == 4) {
+                    if (homeModel.type == 5) {
                         iterator.remove()
                     }
+                }
+                if (list.size >= 10) {
+                    swipeRefreshLayout.setEnableLoadMore(true)
                 }
                 mHomeModelList.addAll(homeJobDetailsModelList)
             } else {
                 swipeRefreshLayout.finishLoadMore()
                 mHomeModelList.addAll(homeJobDetailsModelList)
             }
-            mAdapter.notifyDataSetChanged()
+            mAdapter.updateDatas(mHomeModelList)
         })
 
     }

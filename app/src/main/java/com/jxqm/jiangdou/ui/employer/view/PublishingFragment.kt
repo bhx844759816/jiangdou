@@ -63,7 +63,7 @@ class PublishingFragment : BaseMVVMFragment<PublishingViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
-        mJobPublishListAdapter = JobPublishListAdapter(mContext, 0)
+        mJobPublishListAdapter = JobPublishListAdapter(mContext, 2)
         recyclerView.adapter = mJobPublishListAdapter
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true

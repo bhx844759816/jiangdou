@@ -160,71 +160,71 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:background="@color/white"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:background="@color/white"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:background="@drawable/icon_home_search_job_item">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:background="@drawable/icon_home_search_job_item">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:lineHeight="20dp"
-                android:text="求职\n指南"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_small_size" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:lineHeight="20dp"
+            android:text="求职\n指南"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small_size" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_weight="1"
-            android:background="@drawable/icon_home_task_center_item">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_weight="1"
+        android:background="@drawable/icon_home_task_center_item">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:lineHeight="20dp"
-                android:text="任务\n中心"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_small_size" />
-        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:lineHeight="20dp"
+            android:text="任务\n中心"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small_size" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:background="@drawable/icon_home_job_help_item">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:background="@drawable/icon_home_job_help_item">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:lineHeight="20dp"
-                android:text="帮组\n中心"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_small_size" />
-        </RelativeLayout>
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:lineHeight="20dp"
+            android:text="帮组\n中心"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small_size" />
+    </RelativeLayout>
+</LinearLayout>
 
 </LinearLayout>

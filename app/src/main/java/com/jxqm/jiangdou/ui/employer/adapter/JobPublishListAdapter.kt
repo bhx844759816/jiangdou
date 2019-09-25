@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.employer.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +22,9 @@ import com.jxqm.jiangdou.utils.startActivity
  * Created by Administrator on 2019/9/22.
  */
 class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<JobDetailsModel>(context) {
+    var paymentCallBack: ((String) -> Unit)? = null
+    var cancelPublish: ((String) -> Unit)? = null
+
     init {
         when (type) {
             0 -> {
@@ -62,15 +66,14 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
                     tvEmployeeTitle.text = jobDetailsModel.title
                     tvJobMoney.text = "${jobDetailsModel.salary}币/小时"
                     tvSingUpTime.text = jobDetailsModel.createTime
-
-                    parent?.clickWithTrigger {
-                        mContext.startActivity<EmployJobPublishActivity>()
-                    }
+                    //支付押金
                     tvAccept?.clickWithTrigger {
-                        mContext.startActivity<OrderPaymentActivity>()
-                    }
-                    tvRefuse.clickWithTrigger {
+                        paymentCallBack?.invoke(jobDetailsModel.id)
 
+                    }
+                    //取消发布
+                    tvRefuse.clickWithTrigger {
+                        cancelPublish?.invoke(jobDetailsModel.id)
                     }
                 }
 

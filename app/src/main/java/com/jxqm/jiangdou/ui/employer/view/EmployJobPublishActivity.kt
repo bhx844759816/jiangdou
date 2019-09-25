@@ -7,8 +7,8 @@ import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_employ_job_publish.*
-import kotlinx.android.synthetic.main.activity_job_preview.*
-import kotlinx.android.synthetic.main.activity_job_preview.toolbar
+import kotlinx.android.synthetic.main.activity_job_details.*
+import kotlinx.android.synthetic.main.activity_job_details.toolbar
 
 /**
  * 兼职预览发布界面

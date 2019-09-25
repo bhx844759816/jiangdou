@@ -14,7 +14,7 @@ import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_guide.*
-import kotlinx.android.synthetic.main.activity_job_preview.*
+import kotlinx.android.synthetic.main.activity_job_details.*
 
 /**
  * 引导页

@@ -24,6 +24,7 @@ inline fun <reified T : Activity> Context.startActivity() {
     val intent = Intent(this, T::class.java)
     startActivity(intent)
 }
+
 /**
  * 扩展StartActivity
  */
@@ -31,9 +32,18 @@ inline fun <reified T : Activity> Fragment.startActivity() {
     val intent = Intent(context, T::class.java)
     startActivity(intent)
 }
+
 inline fun <reified T : Activity> Context.startActivity(bundle: Bundle) {
     val intent = Intent(this, T::class.java)
     intent.putExtras(bundle)
+    startActivity(intent)
+}
+
+inline fun <reified T : Activity> Context.startActivity(vararg params: Pair<String, String>) {
+    val intent = Intent(this, T::class.java)
+    params.forEach {
+        intent.putExtra(it.first, it.second)
+    }
     startActivity(intent)
 }
 

@@ -15,7 +15,6 @@ import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
 
-
 /**
  * 启动页
  * Created By bhx On 2019/9/5 0005 15:29
@@ -60,7 +59,10 @@ class LoadingActivity : BaseActivity() {
      */
     private fun requestPermission() {
         val disposable =
-            RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+            RxPermissions(this).request(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
                 .subscribe {
                     Handler().postDelayed({
                         startActivity<GuideActivity>()

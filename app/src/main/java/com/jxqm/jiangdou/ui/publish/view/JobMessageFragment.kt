@@ -57,7 +57,7 @@ class JobMessageFragment : BaseLazyFragment() {
             params["gender"] = mSex.toString()
             params["recruitNum"] = etWorkPeopleNum.text.toString().trim()//招聘人数
             params["area"] = tvLocationArea.text.toString().trim() //定位地点
-            params["areaCode"] = "$mLocationCity,$mLocationArea"
+//            params["areaCode"] = "$mLocationCity,$mLocationArea"
             params["address"] = etDetailAddress.text.toString().trim()//详细地址
             params["longitude"] = mLocationLatLng?.longitude.toString()//经度
             params["latitude"] = mLocationLatLng?.latitude.toString()//维度
@@ -112,6 +112,8 @@ class JobMessageFragment : BaseLazyFragment() {
             REQUEST_CODE_SELECT_AREA -> {
                 data?.let {
                     tvLocationArea.text = it.getStringExtra("name")
+                    mLocationCity = it.getStringExtra("city")
+                    mLocationArea = it.getStringExtra("area")
                     mLocationLatLng = it.getParcelableExtra("latLng")
                     LogUtils.i("选择地区$mLocationLatLng")
                     tvNextStep.isEnabled = isNetStepState()

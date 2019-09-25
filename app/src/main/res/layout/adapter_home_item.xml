@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="6dp"
+    android:id="@+id/llParent"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -38,15 +39,48 @@
             android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/tvJobCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="金水 |  高新区  |  招2人"
+                android:text="郑州"
                 android:textColor="@color/text_hint"
                 android:textSize="@dimen/text_small_size" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="|"
+                android:textSize="@dimen/text_small_size" />
+
+            <TextView
+                android:id="@+id/tvJobArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="金水"
+                android:textColor="@color/text_hint"
+                android:textSize="@dimen/text_small_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="|"
+                android:textSize="@dimen/text_small_size" />
+
+            <TextView
+                android:id="@+id/tvJobNumbers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="招2人"
+                android:textColor="@color/text_hint"
+                android:textSize="@dimen/text_small_size" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvJobSalary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

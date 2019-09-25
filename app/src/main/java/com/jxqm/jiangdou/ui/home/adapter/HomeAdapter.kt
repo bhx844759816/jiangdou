@@ -2,20 +2,21 @@ package com.jxqm.jiangdou.ui.home.adapter
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bhx.common.adapter.rv.LoadMoreAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
-import com.jxqm.jiangdou.ui.home.model.HomeJobDetailsTitleModel
-import com.jxqm.jiangdou.ui.home.model.HomeJobTypeModel
-import com.jxqm.jiangdou.ui.home.model.HomeModel
-import com.jxqm.jiangdou.ui.home.model.HomeSwipeModel
-import com.jxqm.jiangdou.view.GridRadioGroup
+import com.jxqm.jiangdou.model.JobDetailsModel
+import com.jxqm.jiangdou.ui.home.model.*
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.view.banner.BannerView
 import com.jxqm.jiangdou.view.banner.IBannerView
 
@@ -23,14 +24,11 @@ import com.jxqm.jiangdou.view.banner.IBannerView
  * Created By bhx On 2019/8/21 0021 14:24
  */
 class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
-    private val imageList = arrayListOf(
-        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565003123891&di=6b99987620571a5600e681f1ed9a7e56&imgtype=0&src=http%3A%2F%2Fimg0.ph.126.net%2FqpYuMBtI9tONDBEBXrp6Cg%3D%3D%2F6631251384142500810.jpg",
-        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565003197464&di=7de9e4ce6a18c31469492d743472a1b1&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F5c5a4a0f4f967198c9dd9ccb46174efc61a4707b.jpg",
-        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565003219156&di=5061bb93e67f62b54d0d20b23e1bf425&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201611%2F22%2F20161122082357_sjyKQ.jpeg",
-        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565003180679&di=e567595cdfdbffd601297374aac6e2f5&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201701%2F13%2F20170113092725_AucYf.jpeg"
-    )
+    var jobDetailsCallBack: ((JobDetailsModel) -> Unit)? = null
+
 
     init {
+        //添加轮播图
         addItemViewType(object : ItemViewType<HomeModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_home_swiper_layout
             override fun isItemClickable(): Boolean = false
@@ -44,7 +42,7 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
             }
 
         })
-
+        //添加分类列表
         addItemViewType(object : ItemViewType<HomeModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_home_job_type_layout
 
@@ -54,58 +52,56 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
 
             override fun convert(holder: ViewHolder?, t: HomeModel, position: Int) {
                 holder?.let {
-                    setJobTypeList(it.getView(R.id.rgJobTypeParent), t as HomeJobTypeModel)
+                    setJobTypeList(it.getView(R.id.rvJobTypeParent), t as HomeJobTypeModel)
                 }
             }
 
         })
-
-        //添加顶部的布局
+        //添加帮助Item
         addItemViewType(object : ItemViewType<HomeModel> {
-            override fun getItemViewLayoutId(): Int = R.layout.adapter_home_top_layout
+            override fun getItemViewLayoutId(): Int = R.layout.adapter_home_job_help_item
+            override fun isItemClickable(): Boolean = true
 
-            override fun isItemClickable(): Boolean = false
+            override fun isViewForType(item: HomeModel, position: Int): Boolean = item.type == 3
 
-            override fun isViewForType(item: HomeModel?, position: Int): Boolean = item?.type == 1
-
-            override fun convert(holder: ViewHolder?, t: HomeModel?, position: Int) {
-                holder?.let {
-                    setBanner(it.getView(R.id.bannerView))
-                }
+            override fun convert(holder: ViewHolder?, item: HomeModel?, position: Int) {
             }
 
         })
+        //添加职位列表的topTitle
         addItemViewType(object : ItemViewType<HomeModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_home_item_type
 
             override fun isItemClickable(): Boolean = false
 
-            override fun isViewForType(item: HomeModel?, position: Int): Boolean =
-                position < mDatas.size && (mDatas[position] is HomeJobDetailsTitleModel)
+            override fun isViewForType(item: HomeModel, position: Int): Boolean = item.type == 4
 
             override fun convert(holder: ViewHolder?, t: HomeModel?, position: Int) {
             }
-
         })
-
         //添加Item的布局
         addItemViewType(object : ItemViewType<HomeModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_home_item
             override fun isItemClickable(): Boolean = true
-            override fun isViewForType(item: HomeModel?, position: Int): Boolean =
-                position < mDatas.size && (mDatas[position] is HomeItemModel)
+            override fun isViewForType(item: HomeModel, position: Int): Boolean = item.type == 5
 
-            override fun convert(holder: ViewHolder?, t: HomeModel?, position: Int) {
+            override fun convert(holder: ViewHolder?, homeModel: HomeModel, position: Int) {
+                holder?.let {
+                    it.getView<LinearLayout>(R.id.llParent).clickWithTrigger {
+                        jobDetailsCallBack?.invoke((homeModel as HomeJobDetailsModel).jobDetailsModel)
+                    }
+                    setHomeItem(it, homeModel)
+                }
             }
         })
-
     }
 
-    private fun setJobTypeList(gridGroup: GridRadioGroup, homeJobTypeModel: HomeJobTypeModel) {
+    private fun setJobTypeList(recyclerView: RecyclerView, homeJobTypeModel: HomeJobTypeModel) {
         val list = homeJobTypeModel.jobTypeModeList
-        list.forEach {
-
-        }
+        val homeJobTypeAdapter = HomeJobTypeAdapter(mContext)
+        recyclerView.layoutManager = GridLayoutManager(mContext, 5)
+        recyclerView.adapter = homeJobTypeAdapter
+        homeJobTypeAdapter.setDataList(list)
     }
 
 
@@ -122,9 +118,10 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
 
             override fun onBindView(itemView: View, position: Int) {
                 if (itemView is ImageView) {
+                    val url = Api.HTTP_BASE_URL + "/" + list[position].imageUrl
                     itemView.scaleType = ImageView.ScaleType.CENTER_CROP
                     Glide.with(itemView.context)
-                        .load(Api.HTTP_BASE_URL + "/" + list[position].imageUrl)
+                        .load(url)
                         .into(itemView)
                     itemView.setOnClickListener {
                     }
@@ -146,6 +143,24 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
             }
 
         })
+    }
+
+    private fun setHomeItem(holder: ViewHolder, homeModel: HomeModel) {
+        val jobDetailsModel = (homeModel as HomeJobDetailsModel).jobDetailsModel
+        val ivJobListImg = holder.getView<ImageView>(R.id.ivJobListImg)
+        val tvJobTitle = holder.getView<TextView>(R.id.tvJobTitle)
+        val tvJobCity = holder.getView<TextView>(R.id.tvJobCity)
+        val tvJobArea = holder.getView<TextView>(R.id.tvJobArea)
+        val tvJobNumbers = holder.getView<TextView>(R.id.tvJobNumbers)
+        val tvJobSalary = holder.getView<TextView>(R.id.tvJobSalary)
+        Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImg).into(ivJobListImg)
+        tvJobTitle.text = jobDetailsModel.title
+//        val city = jobDetailsModel.areaCode.split(",")[0]
+//        val area = jobDetailsModel.areaCode.split(",")[1]
+//        tvJobCity.text = jobDetailsModel.areaCode
+//        tvJobArea.text = jobDetailsModel.areaCode
+        tvJobNumbers.text = "招${jobDetailsModel.recruitNum}人"
+        tvJobSalary.text = "${jobDetailsModel.salary}币/时"
     }
 
 }

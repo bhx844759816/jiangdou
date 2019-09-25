@@ -53,25 +53,32 @@ class PublishJobPreviewActivity : BaseActivity() {
             val startData = dates[i]
             val endData = dates[i + 1]
             val view = LayoutInflater.from(this)
-                .inflate(R.layout.view_job_details_data_range, llDateParent)
+                .inflate(R.layout.view_job_details_data_range, null)
             val tvStartDate = view.findViewById<TextView>(R.id.tvStartDate)
             val tvEndDate = view.findViewById<TextView>(R.id.tvEndDate)
             val flTimeRangeParent = view.findViewById<FlowLayout>(R.id.flTimeRangeParent)
             tvStartDate.text = startData
             tvEndDate.text = endData
             times.forEach {
-                addTimeRange(flTimeRangeParent,it)
+                addTimeRange(flTimeRangeParent, it)
             }
+            llDateParent.addView(view)
         }
 
     }
 
     private fun addTimeRange(flowLayout: FlowLayout, timeRange: TimeRangeModel) {
-        var textView = TextView(this)
+        val textView = TextView(this)
+        val layoutParams = ViewGroup.MarginLayoutParams(
+            ViewGroup.MarginLayoutParams.WRAP_CONTENT,
+            ViewGroup.MarginLayoutParams.WRAP_CONTENT
+        )
+        layoutParams.rightMargin = DensityUtil.dip2px(this, 10f)
+        layoutParams.bottomMargin = DensityUtil.dip2px(this, 5f)
         textView.setTextColor(resources.getColor(R.color.text_default))
-        textView.textSize = DensityUtil.dip2px(this, 8f).toFloat()
-        textView.setPadding(0, 0, DensityUtil.dip2px(this, 15f), DensityUtil.dip2px(this, 5f))
+        textView.textSize = DensityUtil.dip2px(this, 5f).toFloat()
         textView.text = "${timeRange.start}-${timeRange.end}"
+        textView.layoutParams = layoutParams
         flowLayout.addView(textView)
     }
 }

@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.home.view
 
 import android.Manifest
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -12,9 +13,11 @@ import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.home.vm.MainViewModel
+import com.jxqm.jiangdou.ui.login.view.GuideActivity
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
+import com.jxqm.jiangdou.utils.startActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
-import kotlinx.android.synthetic.main.activity_job_preview.*
+import kotlinx.android.synthetic.main.activity_job_details.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -22,13 +25,14 @@ import kotlinx.android.synthetic.main.activity_main.*
  * Created by Administrator on 2019/8/20.
  */
 class MainActivity : BaseDataActivity<MainViewModel>() {
-    override fun getEventKey(): Any= Constants.EVENT_KEY_MAIN
+    override fun getEventKey(): Any = Constants.EVENT_KEY_MAIN
 
     private var mListFragment = arrayListOf<Fragment>()
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView() {
+        requestPermission()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
         mListFragment.add(HomeFragment())
@@ -55,6 +59,18 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
         override fun getCount(): Int = mListFragment.size
     }
 
+    /**
+     * 请求权限 SD卡存储和拍照权限
+     */
+    private fun requestPermission() {
+        val disposable =
+            RxPermissions(this).request(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ).subscribe {
+            }
+        addDisposable(disposable)
 
+    }
 
 }
