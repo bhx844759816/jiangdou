@@ -60,6 +60,7 @@
         <activity android:name=".ui.employer.view.EmployRecordActivity" />
         <activity android:name=".ui.publish.view.JobPublishDetailsActivity" />
         <activity android:name=".ui.order.view.OrderPaymentActivity" />
+        <activity android:name=".ui.order.view.OrderDetailsActivity" />
         <activity android:name=".ui.order.view.OrderPaymentSuccessActivity" />
         <activity android:name=".ui.employee.view.ResumeDetailsActivity" />
         <activity android:name=".ui.job.view.JobSearchActivity" />

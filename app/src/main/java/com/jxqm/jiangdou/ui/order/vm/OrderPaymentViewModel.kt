@@ -25,7 +25,7 @@ class OrderPaymentViewModel : BaseViewModel<OrderPaymentRepository>() {
     /**
      * 支付订单
      */
-    fun payOrder(orderId:String,jobId: String) {
-        mRepository.payOrder(orderId,jobId)
+    fun payOrder(jobId: String) {
+        mRepository.payOrder(jobId)
     }
 }

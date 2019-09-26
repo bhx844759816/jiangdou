@@ -29,4 +29,8 @@ class MyResumeViewModel : BaseViewModel<MyResumeRepository>() {
     fun uploadUserResume(paramsMap: Map<String, String>, fileMaps: Map<String, File>, fileList: List<File>) {
         mRepository.upLoadResume(paramsMap, fileMaps, fileList)
     }
+
+    fun updateUserResume(paramsMap: Map<String, String>, fileMaps: Map<String, File>, fileList: List<File>){
+        mRepository.updateResume(paramsMap, fileMaps, fileList)
+    }
 }

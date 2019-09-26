@@ -335,9 +335,9 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 tvCompanyJobType.text = companyJobTypeModel.codeName
             }
             //人员规模
-            mSelectCompanyPeople = mCompanyPeopleList.find { companyPeopleModel ->
-                companyPeopleModel.id == it.rygm.toInt()
-            }
+//            mSelectCompanyPeople = mCompanyPeopleList.find { companyPeopleModel ->
+//                companyPeopleModel.id == it.rygm.toInt()
+//            }
             mSelectCompanyPeople?.let { companyPeopleModel ->
                 tvCompanyPeople.text = companyPeopleModel.codeName
             }

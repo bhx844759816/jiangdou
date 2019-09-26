@@ -41,9 +41,6 @@ class JobPublishDetailsActivity : BaseDataActivity<JobPublishDetailsViewModel>()
     override fun initView() {
         super.initView()
         StatusBarUtil.setTranslucentForImageView(this, 0, toolbar)
-        val layoutParams = nestedScrollView.layoutParams as CoordinatorLayout.LayoutParams
-        layoutParams.bottomMargin = getStatusBarHeight() + DensityUtil.dip2px(this, 60f)
-        nestedScrollView.fullScroll(View.FOCUS_UP)
         val jsonString = intent.getStringExtra("JobDetailsModel")
         mJobDetailsModel = CommonConfig.fromJson(jsonString!!, JobDetailsModel::class.java)
         mJobDetailsModel?.let {

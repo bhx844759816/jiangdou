@@ -1,4 +1,4 @@
-package com.jxqm.jiangdou.http
+package com.jxqm.jiangdou.http.interceptor
 
 import android.text.TextUtils
 import com.bhx.common.utils.LogUtils

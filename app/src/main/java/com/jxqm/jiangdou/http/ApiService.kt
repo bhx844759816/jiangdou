@@ -108,7 +108,7 @@ interface ApiService {
      */
     @Multipart
     @POST(Api.PUBLISH_PAY_JOB_ORDER)
-    fun payOrder(@Part("id") orderId: String,@Part("jobId") jobId: String): Observable<HttpResult<Any>>
+    fun payOrder(@Part("jobId") jobId: Long): Observable<HttpResult<Any>>
 
     /**
      * 获取账户余额
@@ -127,6 +127,12 @@ interface ApiService {
      */
     @POST(Api.UPLOAD_USER_RESUME)
     fun uploadUserResume(@Body body: MultipartBody): Observable<HttpResult<Any>>
+
+    /**
+     * 更新用户简历
+     */
+    @POST(Api.UPDATE_USER_RESUME)
+    fun updateUserResume(@Body body: MultipartBody): Observable<HttpResult<Any>>
 
     /**
      * 获取用户简历

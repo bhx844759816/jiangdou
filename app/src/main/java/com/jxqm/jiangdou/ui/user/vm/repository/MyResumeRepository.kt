@@ -59,6 +59,32 @@ class MyResumeRepository : BaseEventRepository() {
     }
 
     /**
+     * 更新用户简历
+     */
+    fun updateResume(paramsMap: Map<String, String>, fileMaps: Map<String, File>, fileList: List<File>) {
+        val mulBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .apply {
+                fileMaps.forEach {
+                    val body = RequestBody.create(MediaType.parse("multipart/form-data"), it.value)
+                    addFormDataPart(it.key, it.value.name, body)
+                }
+                fileList.forEach {
+                    val body = RequestBody.create(MediaType.parse("multipart/form-data"), it)
+                    addFormDataPart("photos", it.name, body)
+                }
+                paramsMap.map {
+                    addFormDataPart(it.key, it.value)
+                }
+            }.build()
+        addDisposable(
+            apiService.updateUserResume(mulBody).action {
+                LogUtils.i("更新用户简历成功")
+            }
+        )
+    }
+
+    /**
      * 获取用户简历
      */
     fun getUserResume() {

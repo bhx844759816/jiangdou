@@ -13,9 +13,12 @@ import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.model.JobDetailsWrapModel
 import com.jxqm.jiangdou.ui.employer.adapter.JobPublishListAdapter
 import com.jxqm.jiangdou.ui.employer.vm.WaitExamineViewModel
+import com.jxqm.jiangdou.ui.order.view.OrderDetailsActivity
+import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_wait_examine_layout.*
 
 /**
+ * 等待审核
  * Created by Administrator on 2019/9/22.
  */
 class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
@@ -67,6 +70,9 @@ class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         mJobPublishListAdapter = JobPublishListAdapter(mContext, 1)
         recyclerView.adapter = mJobPublishListAdapter
+        mJobPublishListAdapter.orderDetailsCallBack = {
+            mContext.startActivity<OrderDetailsActivity>("JobId" to it.id)
+        }
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
             mViewModel.getWaitExamineJob(isRefresh)

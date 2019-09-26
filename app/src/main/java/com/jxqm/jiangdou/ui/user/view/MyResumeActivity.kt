@@ -58,7 +58,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
     private lateinit var mPhotoLisAdapter: PhotoListAdapter
     private var mTimePickView: TimePickerView? = null
     private var mPhotoFile: File? = null
-    private lateinit var mResumeModel: ResumeModel
+    private var mResumeModel: ResumeModel? = null
     private val mPhotoList = mutableListOf<Any>()
 
     override fun getLayoutId(): Int = R.layout.activity_my_resume
@@ -67,7 +67,6 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
 
     override fun initView() {
         super.initView()
-        StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
         mPhotoLisAdapter = PhotoListAdapter(this, mPhotoList)
         mPhotoLisAdapter.setAddCallBack {
             selectHeadPhoto(9, 0x02)
@@ -132,23 +131,27 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
     }
 
     private fun showUserResume() {
-        etUserName.setText(mResumeModel.name)
-        tvUserBirthday.text = mResumeModel.birthday
-        tvUserAge.text = mResumeModel.star
-        etUserPhone.setText(mResumeModel.tel)
-        tvUserEducation.text = mResumeModel.academic
-        tvUserHeight.text = mResumeModel.height
-        tvUserWeight.text = mResumeModel.weight
-        etUserLocation.text = mResumeModel.area
-        etPeopleIntroduce.setText(mResumeModel.content)
-        if (!mResumeModel.images.isNullOrEmpty()) {
-            mPhotoList.addAll(mResumeModel.images)
-            mPhotoLisAdapter.notifyDataSetChanged()
+        mResumeModel?.let {
+            etUserName.setText(it.name)
+            tvUserBirthday.text = it.birthday
+            tvUserAge.text = it.star
+            etUserPhone.setText(it.tel)
+            tvUserEducation.text = it.academic
+            tvUserHeight.text = it.height
+            tvUserWeight.text = it.weight
+            etUserLocation.text = it.area
+            etPeopleIntroduce.setText(it.content)
+//            if (!it.images.isNullOrEmpty()) {
+//                mPhotoList.addAll(it.images.split(","))
+//                mPhotoLisAdapter.notifyDataSetChanged()
+//            }
         }
+
     }
 
     private fun uploadUserResume() {
         val paramsMap = mutableMapOf<String, String>()
+        paramsMap["id"] = mResumeModel!!.id
         paramsMap["name"] = etUserName.text.toString().trim()
         paramsMap["gender"] = tvUserSex.text.toString().trim()
         paramsMap["birthday"] = tvUserBirthday.text.toString().trim()
@@ -161,20 +164,19 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         paramsMap["content"] = etPeopleIntroduce.text.toString().trim()
         //头像
         val fileMap = mutableMapOf<String, File>()
-//        if (mPhotoFile != null) {
-//            fileMap["avatar"] = mPhotoFile!!
-//        }
+        if (mPhotoFile != null) {
+            fileMap["avatarFile"] = mPhotoFile!!
+        }
         //图片数组
         val fileList = mutableListOf<File>()
-//        if (mPhotoList.isNotEmpty()) {
-//            mPhotoList.forEach {
-//                if (it is File) {
-//                    fileList.add(it)
-//                }
-//            }
-//        }
-        //上传简历
-        mViewModel.uploadUserResume(paramsMap, fileMap, fileList)
+        if (mPhotoList.isNotEmpty()) {
+            mPhotoList.forEach {
+                if (it is File) {
+                    fileList.add(it)
+                }
+            }
+        }
+        mViewModel.updateUserResume(paramsMap, fileMap, fileList)
     }
 
     private fun onViewClick(view: View) {
@@ -331,7 +333,8 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         val disposable = Observable.create(ObservableOnSubscribe<Any> {
             paths.forEach { path ->
                 val file = CompressHelper.getDefault(this).compressToFile(FileUtil.getFileByPath(path))
-                mPhotoList.add(file)
+                val fileCompress = CompressHelper.getDefault(this).compressToFile(file)
+                mPhotoList.add(fileCompress)
             }
             it.onNext(Any())
             it.onComplete()

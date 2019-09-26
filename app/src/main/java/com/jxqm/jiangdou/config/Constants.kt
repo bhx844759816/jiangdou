@@ -100,6 +100,9 @@ class Constants {
         const val TAG_GET_USER_ACCOUNT_BALANCE_SUCCESS = "tag_get_user_account_balance_success"//获取账户余额
         const val TAG_PAY_ORDER_SUCCESS = "tag_pay_order_success"//支付订单成功
 
+        const val EVENT_KEY_ORDER_DETAILS = "event_key_order_details"//订单详情
+
+
         //雇员  EmployeeSignUp
         const val EVENT_KEY_EMPLOYEE_SIGN_UP = "event_key_employee_sign_up"//雇员-已报名
 

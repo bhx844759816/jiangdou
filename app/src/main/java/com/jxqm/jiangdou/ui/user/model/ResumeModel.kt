@@ -10,7 +10,7 @@ data class ResumeModel(
     val academic: String,//学历
     val height: String, val weight: String, val areaCode: String,
     val area: String, val content: String,
-    val images: List<String>, //图片列表
+    val images: String, //图片列表
     val perfectionDegree: String,//简历完善度
     val avatar: String//头像
 )

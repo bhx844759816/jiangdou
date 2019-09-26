@@ -18,10 +18,12 @@ object Api {
     const val REGISTER = "/register"
     //用户信息
     const val USER_INFO = "/me"
-    //获取简历
+    //获取简历 和
     const val GET_USER_RESUME = "/resume"
-    //简历编辑
-    const val UPLOAD_USER_RESUME = "/resume/resume"
+    //提交简历
+    const val UPLOAD_USER_RESUME = "/resume"
+    //更新简历
+    const val UPDATE_USER_RESUME = "/resume/update"
     //报名
     const val SING_UP_JOB = "/resume/sending"
     //接受offer
@@ -71,6 +73,4 @@ object Api {
     const val HOME_JOB_RECOMMEND = "/home/job/recommend"
     //职位分类导航
     const val HOME_JOB_CAT = "/home/job/cat"
-
-
 }

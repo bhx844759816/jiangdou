@@ -16,7 +16,7 @@ import com.fengchen.uistatus.UiStatusNetworkStatusProvider
 import com.fengchen.uistatus.annotation.UiStatus
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.Api
-import com.jxqm.jiangdou.http.TokenInterceptor
+import com.jxqm.jiangdou.http.interceptor.TokenInterceptor
 import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.model.UserModel
 import com.jxqm.jiangdou.view.refresh.BaseRefreshHeader

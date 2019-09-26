@@ -52,9 +52,9 @@ class OrderPaymentRepository : BaseEventRepository() {
     /**
      * 支付订单
      */
-    fun payOrder(orderId:String,jobId: String) {
+    fun payOrder(jobId: String) {
         addDisposable(
-            apiService.payOrder(orderId,jobId)
+            apiService.payOrder(jobId.toLong())
                 .action {
                     sendData(
                         Constants.EVENT_KEY_PAYMENT_ORDER,

@@ -22,6 +22,7 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
     var paymentCallBack: ((String) -> Unit)? = null
     var cancelPublish: ((String) -> Unit)? = null
     var contentClickCallBack: ((JobDetailsModel) -> Unit)? = null
+    var orderDetailsCallBack: ((JobDetailsModel) -> Unit)? = null
 
     init {
         when (type) {
@@ -112,7 +113,7 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
 
                     }
                     tvAccept.clickWithTrigger {
-
+                        orderDetailsCallBack?.invoke(jobDetailsModel)
                     }
                 }
             }

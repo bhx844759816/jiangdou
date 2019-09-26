@@ -52,7 +52,7 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
         tvPay.clickWithTrigger {
             PromptDialog.show(this) {
                 orderDetailsModel?.let {
-                    mViewModel.payOrder(it.id, it.jobId)
+                    mViewModel.payOrder(it.jobId)
                 }
             }
         }
@@ -92,7 +92,7 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
         })
         //支付订单成功
         registerObserver(Constants.TAG_PAY_ORDER_SUCCESS, Boolean::class.java).observe(this, Observer {
-            startActivity<OrderPaymentSuccessActivity>("orderDetailsModel" to orderDetailsModel.toString())
+            startActivity<OrderPaymentSuccessActivity>("orderDetailsModel" to orderDetailsModel!!.toJson())
         })
     }
 

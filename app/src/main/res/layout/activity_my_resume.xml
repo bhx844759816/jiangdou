@@ -57,7 +57,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:background="#C1D1FD"
+                android:textColor="@color/job_top_title_color"
+                android:textSize="@dimen/text_small_size"
+                android:text="*为必填项，简历越完善，录用率越高哦"
+                />
             <RelativeLayout
                 android:id="@+id/rlHeadPhotoParent"
                 android:layout_width="match_parent"
