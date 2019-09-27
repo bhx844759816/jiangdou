@@ -143,10 +143,8 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + jobDetailsModel.typeImg)
                         .into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobDetailsModel.title
-
-
                     tvEmployeeRecord.clickWithTrigger {
-                        mContext.startActivity<EmployRecordActivity>()
+                        mContext.startActivity<EmployRecordActivity>("jobId" to jobDetailsModel.id)
                     }
                 }
 

@@ -20,6 +20,7 @@ import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.UserModel
 import com.jxqm.jiangdou.ui.user.adapter.PhotoListAdapter
 import com.jxqm.jiangdou.ui.user.model.EduModel
@@ -51,7 +52,7 @@ import java.text.SimpleDateFormat
  * Created By bhx On 2019/8/19 0019 14:06
  */
 class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
-    private val mSexList = arrayListOf("男", "女")
+    private val mSexList = arrayListOf("女","男" )
     private val mEducationList = mutableListOf<String>()
     private val mHeightList = mutableListOf<String>()
     private val mWeightList = mutableListOf<String>()
@@ -141,10 +142,17 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             tvUserWeight.text = it.weight
             etUserLocation.text = it.area
             etPeopleIntroduce.setText(it.content)
-//            if (!it.images.isNullOrEmpty()) {
-//                mPhotoList.addAll(it.images.split(","))
-//                mPhotoLisAdapter.notifyDataSetChanged()
-//            }
+            Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.avatar)
+                .transform(GlideCircleTransform(this))
+                .into(ivHeadPhoto)
+            if (!it.images.isNullOrEmpty()) {
+                val images = it.images.split(",").map { image ->
+                    Api.HTTP_BASE_URL + "/" + image
+                }
+                LogUtils.i(images.toString())
+                mPhotoList.addAll(images)
+                mPhotoLisAdapter.notifyDataSetChanged()
+            }
         }
 
     }

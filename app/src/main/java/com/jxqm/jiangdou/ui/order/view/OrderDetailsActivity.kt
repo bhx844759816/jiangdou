@@ -38,6 +38,9 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
         }
     }
 
+    /**
+     * 注册LiveData事件监听
+     */
     override fun dataObserver() {
         //获取订单详情成功
         registerObserver(Constants.TAG_GET_ORDER_DETAILS_SUCCESS, OrderDetailsModel::class.java).observe(
@@ -53,7 +56,8 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
                 //设置下滑线
                 tvCommission.paintFlags = tvCommission.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 val listDates = gson.fromJson<List<String>>(it.datesJson, object : TypeToken<List<String>>() {}.type)
-                val listTimes = gson.fromJson<List<TimeRangeModel>>(it.timesJson, object : TypeToken<List<TimeRangeModel>>() {
+                val listTimes =
+                    gson.fromJson<List<TimeRangeModel>>(it.timesJson, object : TypeToken<List<TimeRangeModel>>() {
                     }.type)
                 addDataRange(listDates)
                 addTimeRange(listTimes)

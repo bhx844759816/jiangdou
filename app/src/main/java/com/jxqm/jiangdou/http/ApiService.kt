@@ -24,7 +24,7 @@ interface ApiService {
     @POST(Api.UPLOAD_IMG)
     fun uploadFile(@Part img: MultipartBody.Part): Observable<HttpResult<String>>
 
-    @Headers("Content-type:application/json")
+    @Headers("Content-type:application/json", "Authorization:")
     @POST(Api.SEND_SMS_CODE)
     fun sendSmsCode(@Body body: RequestBody): Observable<HttpResult<Any>>
 
@@ -143,22 +143,23 @@ interface ApiService {
     /**
      * 报名工作
      */
+    @Multipart
     @POST(Api.SING_UP_JOB)
-    fun singUpJob(@Part("jobResumeId") jobId: String): Observable<HttpResult<Any>>
+    fun singUpJob(@Part("jobId") jobId: Long): Observable<HttpResult<Any>>
 
     /**
      * 接受offer
      */
     @Multipart
     @POST(Api.ACCEPT_OFFER)
-    fun acceptOffer(@Part("jobResumeId") jobId: String): Observable<HttpResult<Any>>
+    fun acceptOffer(@Part("jobId") jobId: String): Observable<HttpResult<Any>>
 
     /**
      * 拒绝Offer
      */
     @Multipart
     @POST(Api.REFUSE_OFFER)
-    fun refuseOffer(@Part("jobResumeId") jobId: String): Observable<HttpResult<Any>>
+    fun refuseOffer(@Part("jobId") jobId: String): Observable<HttpResult<Any>>
 
     /**
      * 获取首页轮播图
@@ -183,10 +184,26 @@ interface ApiService {
     fun getHomeJobCat(@Path("jobTypeId") jobTypeId: String): Observable<HttpResult<Any>>
 
     /**
-     *
+     * 获取首页兼职分类
      */
     @GET(Api.JOB_TYPES)
     fun getHomeJobType(): Observable<HttpResult<List<JobTypeModel>>>
 
+    /**
+     * 获取雇佣记录 - 已报名
+     */
+    @GET(Api.GET_SIGNUP_EMPLOYEE_LIST)
+    fun getSignUpEmployeeList(
+        @Query("jobId") jobId: Long,
+        @Query("pageNo") pageNo: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<HttpResult<EmployeeResumeModelWrap>>
+
+    /**
+     * 录用
+     */
+    @Multipart
+    @POST(Api.ACCEPT_EMPLOYEE)
+    fun acceptResume(@Part("id") jobId: Long): Observable<HttpResult<Any>>
 
 }

@@ -36,13 +36,18 @@ import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.ViewGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.jxqm.jiangdou.base.BaseDataActivity
+import com.jxqm.jiangdou.ui.job.vm.JobDetailsViewModel
+import com.jxqm.jiangdou.utils.clickWithTrigger
 
 
 /**
  * 工作详情界面
  * Created By bhx On 2019/8/12 0012 10:56
  */
-class JobDetailsActivity : BaseActivity() {
+class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
+    override fun getEventKey(): Any = Constants.EVENT_JOB_DETAILS
+
     private val gson = Gson()
     private var mJobDetailsModel: JobDetailsModel? = null
     override fun getLayoutId(): Int = R.layout.activity_job_details
@@ -50,9 +55,9 @@ class JobDetailsActivity : BaseActivity() {
     override fun initView() {
         super.initView()
         StatusBarUtil.setTranslucentForImageView(this, 0, toolbar)
-        val layoutParams = nestedScrollView.layoutParams as CoordinatorLayout.LayoutParams
-        layoutParams.bottomMargin = getStatusBarHeight() + DensityUtil.dip2px(this, 60f)
-        nestedScrollView.fullScroll(View.FOCUS_UP)
+//        val layoutParams = nestedScrollView.layoutParams as CoordinatorLayout.LayoutParams
+//        layoutParams.bottomMargin = getStatusBarHeight() + DensityUtil.dip2px(this, 60f)
+//        nestedScrollView.fullScroll(View.FOCUS_UP)
         val jsonString = intent.getStringExtra("JobDetailsModel")
         mJobDetailsModel = CommonConfig.fromJson(jsonString!!, JobDetailsModel::class.java)
         mJobDetailsModel?.let {
@@ -77,6 +82,10 @@ class JobDetailsActivity : BaseActivity() {
 
         toolbar.setNavigationOnClickListener {
             finish()
+        }
+
+        tvSignUp.clickWithTrigger {
+            mViewModel.signUpJob(mJobDetailsModel!!.id)
         }
     }
 

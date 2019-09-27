@@ -59,7 +59,7 @@ class HomeRepository : BaseEventRepository() {
                 .subscribe({
                     if (it.code == "0") {
                         if (it.data is JobDetailsWrapModel) {
-                            val jobDetailsWrapModel = it.data as JobDetailsWrapModel
+                            val jobDetailsWrapModel = it.data
                             if (jobDetailsWrapModel.records.size < jobDetailsWrapModel.total) {
                                 callBack.invoke()
                             }

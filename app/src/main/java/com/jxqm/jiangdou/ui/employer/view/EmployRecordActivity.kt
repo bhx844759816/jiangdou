@@ -7,6 +7,9 @@ import com.bhx.common.base.BaseActivity
 import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.base.BaseDataActivity
+import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ui.employer.vm.EmployRecordViewModel
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_employ_record.*
@@ -15,15 +18,20 @@ import kotlinx.android.synthetic.main.activity_employ_record.*
  * 雇佣记录
  * Created by Administrator on 2019/9/2.
  */
-class EmployRecordActivity : BaseActivity() {
+class EmployRecordActivity : BaseDataActivity<EmployRecordViewModel>() {
+    override fun getEventKey(): Any = Constants.EVENT_KEY_EMPLOY_RECORD
+
     private val mTitles = arrayListOf("报名", "录用", "到岗", "待结算", "已结算")
     private val mListFragment = arrayListOf<Fragment>()
+    private lateinit var jobId: String
     override fun getLayoutId(): Int = R.layout.activity_employ_record
 
     override fun initView() {
+        super.initView()
+        jobId = intent.getStringExtra("jobId")
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
-        mListFragment.add(EmployRecordSignUpFragment())
+        mListFragment.add(EmployRecordSignUpFragment.newInstance(jobId))
         mListFragment.add(EmployRecordEmploymentFragment())
         mListFragment.add(EmployRecordReportDutyFragment())
         mListFragment.add(EmployRecordWaitPayFragment())

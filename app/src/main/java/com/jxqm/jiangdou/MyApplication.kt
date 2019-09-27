@@ -19,6 +19,7 @@ import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.http.interceptor.TokenInterceptor
 import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.model.UserModel
+import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
 import com.jxqm.jiangdou.view.refresh.BaseRefreshHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
@@ -28,8 +29,10 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
  */
 class MyApplication : BaseApplication() {
 
-    private var accessToken: String? = null
+    var accessToken: String? = null
+    var refreshToken: String? = null
     var userModel: UserModel? = null //存储用户信息
+    var attestationViewModel: AttestationStatusModel? = null
 
     private val mActivityCallBack = object : ActivityLifecycleCallbacks {
         override fun onActivityPaused(p0: Activity) {
@@ -71,7 +74,7 @@ class MyApplication : BaseApplication() {
         super.onCreate()
         instance = this
         accessToken = SPUtils.get(this.applicationContext, Constants.ACCESS_TOKEN, "") as String?
-        LogUtils.i("token$accessToken")
+        refreshToken = SPUtils.get(this.applicationContext, Constants.REFRESH_TOKEN, "") as String?
         //配置Http请求
         val builder = RetrofitManager.Builder()
             .setInterceptorList(listOf(TokenInterceptor()))
@@ -103,16 +106,12 @@ class MyApplication : BaseApplication() {
 
         //百度地图初始化
         SDKInitializer.initialize(this)
-        SDKInitializer.setCoordType(CoordType.BD09LL)
     }
 
     fun saveToken(it: TokenModel) {
         accessToken = it.access_token
+        refreshToken = it.refresh_token
         SPUtils.put(this.applicationContext, Constants.ACCESS_TOKEN, accessToken)
         SPUtils.put(this.applicationContext, Constants.REFRESH_TOKEN, it.refresh_token)
     }
-
-    fun getAccessToken(): String? = accessToken
-
-
 }

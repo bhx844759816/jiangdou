@@ -73,4 +73,11 @@ object Api {
     const val HOME_JOB_RECOMMEND = "/home/job/recommend"
     //职位分类导航
     const val HOME_JOB_CAT = "/home/job/cat"
+    //雇佣记录 - 已报名
+    const val GET_SIGNUP_EMPLOYEE_LIST = "/employer/job/sign"
+    //雇佣记录 - 接受雇佣
+    const val ACCEPT_EMPLOYEE = "/employer/job/offer"
+    //
+
+
 }

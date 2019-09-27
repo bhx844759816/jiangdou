@@ -1,64 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <!--<RadioGroup-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:background="@color/white"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<RadioButton-->
-    <!--android:id="@+id/rbInvite"-->
-    <!--android:layout_width="75dp"-->
-    <!--android:layout_height="31dp"-->
-    <!--android:layout_marginLeft="15dp"-->
-    <!--android:background="@drawable/select_screen_item_bg"-->
-    <!--android:button="@null"-->
-    <!--android:checked="true"-->
-    <!--android:gravity="center"-->
-    <!--android:text="已邀请"-->
-    <!--android:textColor="@color/select_publish_job_item_textcolor"-->
-    <!--android:textSize="@dimen/text_small_size" />-->
-
-    <!--<RadioButton-->
-    <!--android:id="@+id/rbAccept"-->
-    <!--android:layout_width="75dp"-->
-    <!--android:layout_height="31dp"-->
-    <!--android:layout_marginLeft="15dp"-->
-    <!--android:background="@drawable/select_screen_item_bg"-->
-    <!--android:button="@null"-->
-    <!--android:gravity="center"-->
-    <!--android:text="已接受"-->
-    <!--android:textColor="@color/select_publish_job_item_textcolor"-->
-    <!--android:textSize="@dimen/text_small_size" />-->
-    <!--<RadioButton-->
-    <!--android:id="@+id/rbRefuse"-->
-    <!--android:layout_width="75dp"-->
-    <!--android:layout_height="31dp"-->
-    <!--android:layout_marginLeft="15dp"-->
-    <!--android:background="@drawable/select_screen_item_bg"-->
-    <!--android:button="@null"-->
-    <!--android:gravity="center"-->
-    <!--android:text="已拒绝"-->
-    <!--android:textColor="@color/select_publish_job_item_textcolor"-->
-    <!--android:textSize="@dimen/text_small_size" />-->
-    <!--</RadioGroup>-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="11" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/rlBottom"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <RelativeLayout
+        android:id="@+id/rlBottom"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+       android:layout_alignParentBottom="true"
         android:background="@color/white">
 
         <CheckBox
+            android:id="@+id/cbAllSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -93,4 +61,5 @@
             android:textColor="@color/text_hint"
             android:textSize="@dimen/text_small_size" />
     </RelativeLayout>
-</LinearLayout>
+
+</RelativeLayout>

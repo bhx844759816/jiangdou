@@ -13,15 +13,22 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
 import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+import androidx.lifecycle.Observer
+import com.jxqm.jiangdou.base.BaseDataActivity
+import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ui.home.view.MainActivity
+import com.jxqm.jiangdou.ui.login.vm.LoadingViewModel
 
 
 /**
  * 启动页
  * Created By bhx On 2019/9/5 0005 15:29
  */
-class LoadingActivity : BaseActivity() {
+class LoadingActivity : BaseDataActivity<LoadingViewModel>() {
+    override fun getEventKey(): Any = Constants.EVENT_KET_LOADING
     override fun getLayoutId(): Int = R.layout.activity_loading
     override fun initView() {
+        super.initView()
 //        hideBottomUIMenu()
         requestPermission()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -29,7 +36,16 @@ class LoadingActivity : BaseActivity() {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             window.attributes = lp
         }
+        mViewModel.getUserInfo()
+    }
 
+
+    override fun dataObserver() {
+        //获取信息完成
+        registerObserver(Constants.TAG_LOADING_FINISH, Boolean::class.java).observe(this, Observer {
+            startActivity<MainActivity>()
+            finish()
+        })
     }
 
     /**
@@ -62,13 +78,8 @@ class LoadingActivity : BaseActivity() {
             RxPermissions(this).request(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            )
-                .subscribe {
-                    Handler().postDelayed({
-                        startActivity<GuideActivity>()
-                        finish()
-                    }, 2000)
-                }
+            ).subscribe {
+            }
         addDisposable(disposable)
 
     }

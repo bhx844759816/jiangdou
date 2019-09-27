@@ -31,6 +31,8 @@ class Constants {
         const val EVENT_KEY_HTTP_REQUEST_ERROR = "event_key_http_request_error"
         const val TAG_HTTP_REQUEST_ERROR = "tag_http_request_error"
         //个人中心
+        const val EVENT_KET_LOADING = "event_ket_loading"//loading界面
+        const val TAG_LOADING_FINISH = "tag_loading_finish"//登录界面获取信息完成
         const val EVENT_KEY_LOGIN = "event_key_login" //登录界面
         const val TAG_LOGIN_CODE_SUCCESS = "tag_login_code_success" //
         const val EVENT_KEY_MAIN_MY = "event_key_main_my"//我的界面
@@ -58,9 +60,16 @@ class Constants {
         const val TAG_SELECT_JOB_TYPE_HOT = "tag_select_job_type_hot"//获取热门类型
         const val TAG_SELECT_JOB_TYPE_MORE = "tag_select_job_type_more"//获取更多类型
 
+        const val EVENT_KEY_EMPLOY_RECORD = "event_key_employ_record"//雇佣记录
+
         const val EVENT_KEY_EMPLOY_RECORD_SIGN_UP = "event_key_employ_record_sign_up"//雇佣记录 - 已报名
+        const val TAG_GET_EMPLOYEE_LIST_SUCCESS = "tag_get_employee_list_success"//获取报名列表成功
+        const val TAG_GET_EMPLOYEE_LIST_ERROR = "tag_get_employee_list_error"//获取报名列表失败
+        const val TAG_ACCEPT_RESUME_SUCCESS = "tag_accept_resume_success"//录取成功
 
         const val EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT = "event_key_employ_record_employment"//雇佣记录 - 已录用
+        const val TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS = "TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS"//获取录用列表成功
+        const val TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR = "tag_get_employee_accept_list_error"//获取已录用列表数据失败
 
         const val EVENT_KEY_EMPLOY_RECORD_REPORT_DUTY = "event_key_employ_record_report_duty"//雇佣记录 - 已到岗
 
@@ -138,6 +147,8 @@ class Constants {
         const val TAG_GET_HOME_RECOMMEND_LIST = "tag_get_home_recommend_list"//首页兼职推荐列表
         const val EVENT_KEY_MAIN_WORK = "event_key_main_work"//工作台界面
         const val TAG_USER_INFO_UPDATE = "tag_user_info_update"//用户信息
+
+        const val EVENT_JOB_DETAILS = "event_job_details" //工作详情
 
 
     }

@@ -12,9 +12,9 @@ data class UserModel(
     val username: String
 )
 //"data": {
-//    "avatar": "string",
+//    "avatar": "string",//头像
 //    "balance": 0, //余额
 //    "phone": "string",//手机号
-//    "rankPoints": 0,
+//    "rankPoints": 0,//收藏
 //    "username": "string"
 //}
