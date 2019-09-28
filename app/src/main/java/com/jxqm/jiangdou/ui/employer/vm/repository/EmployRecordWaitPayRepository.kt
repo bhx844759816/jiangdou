@@ -7,4 +7,8 @@ import com.jxqm.jiangdou.http.BaseEventRepository
  * Created By bhx On 2019/9/24 0024 15:45
  */
 class EmployRecordWaitPayRepository : BaseEventRepository() {
+
+    fun getWaitPayList(jobId: String, pageNo: Int, pageSize: Int, callBack: () -> Unit) {
+
+    }
 }

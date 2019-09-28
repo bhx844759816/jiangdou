@@ -68,12 +68,17 @@ class Constants {
         const val TAG_ACCEPT_RESUME_SUCCESS = "tag_accept_resume_success"//录取成功
 
         const val EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT = "event_key_employ_record_employment"//雇佣记录 - 已录用
-        const val TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS = "TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS"//获取录用列表成功
+        const val TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS = "tag_get_employee_accept_list_success"//获取录用列表成功
         const val TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR = "tag_get_employee_accept_list_error"//获取已录用列表数据失败
 
         const val EVENT_KEY_EMPLOY_RECORD_REPORT_DUTY = "event_key_employ_record_report_duty"//雇佣记录 - 已到岗
+        const val TAG_GET_REPORT_DUTY_LIST_SUCCESS = "tag_get_report_duty_list_success"//已到岗列表成功
+        const val TAG_GET_REPORT_DUTY_LIST_ERROR = "tag_get_report_duty_list_error"//已到岗列表数据失败
 
         const val EVENT_KEY_EMPLOY_RECORD_WAIT_PAY = "event_key_employ_record_wait_pay" //雇佣记录 - 待结算
+        const val TAG_GET_WAIT_PAY_LIST_SUCCESS = "tag_get_wait_pay_list_success"//待结算列表成功
+        const val TAG_GET_WAIT_PAY_LIST_ERROR = "tag_get_wait_pay_list_error"//待结算列表数据失败
+
 
         const val EVENT_KEY_EMPLOY_RECORD_PAY = "event_key_employ_record_pay"//雇佣记录已结算
 

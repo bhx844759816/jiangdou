@@ -15,9 +15,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shadowColor="#7d82A2FE"
-        app:shadowRadius="3dp"
         app:shadowMarginBottom="1dp"
-        app:shadowMarginTop="3dp">
+        app:shadowMarginTop="3dp"
+        app:shadowRadius="3dp">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -45,6 +46,7 @@
                 app:layout_constraintTop_toTopOf="@id/ivHeadPhoto" />
 
             <ImageView
+                android:id="@+id/ivUserSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -63,27 +65,15 @@
                 app:layout_constraintTop_toBottomOf="@id/tvUserName">
 
                 <TextView
+                    android:id="@+id/tvArea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="郑州"
                     android:textColor="@color/text_hint"
                     android:textSize="@dimen/text_small_size" />
 
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="12dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/divider_vertical_line" />
-
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="金水区"
-                    android:textColor="@color/text_hint"
-                    android:textSize="@dimen/text_small_size" />
-
-                <TextView
+                    android:id="@+id/tvAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -112,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="报名时间"
+                android:text="报名日期"
                 android:textColor="@color/text_hint"
                 android:textSize="@dimen/text_small_size"
                 app:layout_constraintLeft_toLeftOf="@id/llLocation"
@@ -136,7 +126,7 @@
     </com.loopeer.shadow.ShadowView>
 
     <TextView
-        android:id="@+id/tvAccept"
+        android:id="@+id/tvContact"
         android:layout_width="85dp"
         android:layout_height="30dp"
         android:background="@color/colorAccent"
@@ -148,7 +138,7 @@
         app:layout_constraintTop_toBottomOf="@id/cardView" />
 
     <TextView
-        android:id="@+id/tvSignUpRecord"
+        android:id="@+id/tvDetails"
         android:layout_width="85dp"
         android:layout_height="30dp"
         android:background="@color/employe_item_refuse_bg"
@@ -156,6 +146,6 @@
         android:text="详情"
         android:textColor="@color/protocolDefaultColor"
         android:textSize="@dimen/text_small_size"
-        app:layout_constraintRight_toLeftOf="@id/tvAccept"
-        app:layout_constraintTop_toTopOf="@id/tvAccept" />
+        app:layout_constraintRight_toLeftOf="@id/tvContact"
+        app:layout_constraintTop_toTopOf="@id/tvContact" />
 </androidx.constraintlayout.widget.ConstraintLayout>

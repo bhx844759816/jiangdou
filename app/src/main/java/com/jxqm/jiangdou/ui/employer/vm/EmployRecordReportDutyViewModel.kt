@@ -8,6 +8,16 @@ import com.jxqm.jiangdou.ui.employer.vm.repository.EmployRecordReportDutyReposit
  * Created By bhx On 2019/9/24 0024 15:42
  */
 class EmployRecordReportDutyViewModel : BaseViewModel<EmployRecordReportDutyRepository>() {
+    private var pageNo = 1
+    private val pageSize = 10
 
+    fun getReportDutyList(jobId: String, isRefresh: Boolean) {
+        if (isRefresh) {
+            pageNo = 1
+        }
+        mRepository.getReportDutyList(jobId, pageNo, pageSize) {
+            pageNo++
+        }
+    }
 
 }

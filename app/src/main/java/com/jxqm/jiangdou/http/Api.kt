@@ -74,10 +74,15 @@ object Api {
     //职位分类导航
     const val HOME_JOB_CAT = "/home/job/cat"
     //雇佣记录 - 已报名
-    const val GET_SIGNUP_EMPLOYEE_LIST = "/employer/job/sign"
+    const val GET_SIGN_UP_EMPLOYEE_LIST = "/employer/job/sign"
     //雇佣记录 - 接受雇佣
     const val ACCEPT_EMPLOYEE = "/employer/job/offer"
-    //
-
-
+    //雇佣记录 - 录用 - 已接受
+    const val GET_ACCEPT_EMPLOYEE_LIST = "/employer/job/accept"
+    //雇佣记录 - 录用 - 已拒绝 refuse
+    const val GET_REFUSE_EMPLOYEE_LIST = "/employer/job/refuse"
+    //雇佣记录 - 到岗
+    const val GET_REPORTDUTY_LIST = "/employer/job/arrivaled"
+    //雇佣记录 - 待结算
+    const val GET_WAIT_SETTLEMENT_LIST = "/employer/job/unsettled"
 }

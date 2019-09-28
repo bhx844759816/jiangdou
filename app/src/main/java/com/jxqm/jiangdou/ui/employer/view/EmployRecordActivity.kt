@@ -32,8 +32,8 @@ class EmployRecordActivity : BaseDataActivity<EmployRecordViewModel>() {
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
         mListFragment.add(EmployRecordSignUpFragment.newInstance(jobId))
-        mListFragment.add(EmployRecordEmploymentFragment())
-        mListFragment.add(EmployRecordReportDutyFragment())
+        mListFragment.add(EmployRecordEmploymentFragment.newInstance(jobId))
+        mListFragment.add(EmployRecordReportDutyFragment.newInstance(jobId))
         mListFragment.add(EmployRecordWaitPayFragment())
         mListFragment.add(EmployRecordPayFragment())
         viewPager.offscreenPageLimit = 5

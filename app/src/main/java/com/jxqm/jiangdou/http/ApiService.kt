@@ -192,7 +192,7 @@ interface ApiService {
     /**
      * 获取雇佣记录 - 已报名
      */
-    @GET(Api.GET_SIGNUP_EMPLOYEE_LIST)
+    @GET(Api.GET_SIGN_UP_EMPLOYEE_LIST)
     fun getSignUpEmployeeList(
         @Query("jobId") jobId: Long,
         @Query("pageNo") pageNo: Int,
@@ -205,5 +205,33 @@ interface ApiService {
     @Multipart
     @POST(Api.ACCEPT_EMPLOYEE)
     fun acceptResume(@Part("id") jobId: Long): Observable<HttpResult<Any>>
+
+    /**
+     * 雇佣记录 - 已邀请
+     */
+    @GET(Api.GET_ACCEPT_EMPLOYEE_LIST)
+    fun getAcceptEmployeeList(
+        @Query("jobId") jobId: Long,
+        @Query("pageNo") pageNo: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<HttpResult<EmployeeResumeModelWrap>>
+
+    /**
+     * 雇佣记录 - 已拒绝
+     */
+    @GET(Api.GET_REFUSE_EMPLOYEE_LIST)
+    fun getRefuseEmployeeList(
+        @Query("jobId") jobId: Long,
+        @Query("pageNo") pageNo: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<HttpResult<EmployeeResumeModelWrap>>
+
+    @GET(Api.GET_REPORTDUTY_LIST)
+    fun getReportDutyList(
+        @Query("jobId") jobId: Long,
+        @Query("pageNo") pageNo: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<HttpResult<EmployeeResumeModelWrap>>
+
 
 }

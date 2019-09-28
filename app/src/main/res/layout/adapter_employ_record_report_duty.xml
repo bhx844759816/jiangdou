@@ -45,6 +45,7 @@
                 app:layout_constraintTop_toTopOf="@id/ivHeadPhoto" />
 
             <ImageView
+                android:id="@+id/ivUserSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -54,7 +55,7 @@
                 app:layout_constraintTop_toTopOf="@id/tvUserName" />
 
             <TextView
-                android:id="@+id/tvTime"
+                android:id="@+id/tvSignInTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -65,7 +66,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvUserName" />
 
             <TextView
-                android:id="@+id/tvSingUpTimeTitle"
+                android:id="@+id/tvJobTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -73,8 +74,8 @@
                 android:text="岗位：招聘UI兼职设计师"
                 android:textColor="@color/text_hint"
                 android:textSize="@dimen/text_big_small_size"
-                app:layout_constraintLeft_toLeftOf="@id/tvTime"
-                app:layout_constraintTop_toBottomOf="@id/tvTime" />
+                app:layout_constraintLeft_toLeftOf="@id/tvSignInTime"
+                app:layout_constraintTop_toBottomOf="@id/tvSignInTime" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.loopeer.shadow.ShadowView>
@@ -87,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@id/cardView">
 
         <TextView
-            android:id="@+id/tvAccept"
+            android:id="@+id/tvContact"
             android:layout_width="85dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -98,10 +99,10 @@
             android:textSize="@dimen/text_small_size" />
 
         <TextView
-            android:id="@+id/tvSignUpRecord"
+            android:id="@+id/tvDetails"
             android:layout_width="85dp"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/tvAccept"
+            android:layout_toLeftOf="@id/tvContact"
             android:background="@color/employe_item_refuse_bg"
             android:gravity="center"
             android:text="详情"

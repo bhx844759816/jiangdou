@@ -1,13 +1,19 @@
 package com.jxqm.jiangdou.ui.employer.adapter
 
 import android.content.Context
+import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.EmployRecordEmploymentItem
+import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employee.view.ResumeDetailsActivity
+import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 
@@ -15,16 +21,49 @@ import com.jxqm.jiangdou.utils.startActivity
  * 雇佣记录 - 已录用-适配器
  * Created By bhx On 2019/9/3 0003 13:50
  */
-class EmployRecordEmploymentAdapter(context: Context) : MultiItemTypeAdapter<EmployRecordEmploymentItem>(context) {
+class EmployRecordEmploymentAdapter(context: Context) : MultiItemTypeAdapter<EmployeeResumeModel>(context) {
     init {
-        addItemViewType(object : ItemViewType<EmployRecordEmploymentItem> {
+        addItemViewType(object : ItemViewType<EmployeeResumeModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_employ_record_employment
             override fun isItemClickable(): Boolean = false
-            override fun isViewForType(item: EmployRecordEmploymentItem?, position: Int): Boolean = true
-            override fun convert(holder: ViewHolder?, t: EmployRecordEmploymentItem?, position: Int) {
-                val ivHeadPhoto = holder?.getView<ImageView>(R.id.ivHeadPhoto)
-                ivHeadPhoto?.clickWithTrigger {
-                    mContext.startActivity<ResumeDetailsActivity>()
+            override fun isViewForType(item: EmployeeResumeModel, position: Int): Boolean = true
+            override fun convert(holder: ViewHolder?, model: EmployeeResumeModel, position: Int) {
+                holder?.let {
+                    val ivHeadPhoto = it.getView<ImageView>(R.id.ivHeadPhoto)
+                    val ivUserSex = it.getView<ImageView>(R.id.ivUserSex)
+                    val tvUserName = it.getView<TextView>(R.id.tvUserName)
+                    val tvArea = it.getView<TextView>(R.id.tvArea)
+                    val tvAge = it.getView<TextView>(R.id.tvAge)
+                    val tvContact = it.getView<TextView>(R.id.tvContact)
+                    val tvReplySend = it.getView<TextView>(R.id.tvReplySend)
+                    val tvDetails = it.getView<TextView>(R.id.tvDetails)
+                    val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime)
+                    tvUserName.text = model.name
+                    tvArea.text = model.area
+                    tvAge.text = model.age
+                    tvSingUpTime.text = model.signTime
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.avatar)
+                        .transform(GlideCircleTransform(mContext))
+                        .into(ivHeadPhoto)
+                    if (model.gender == "男") {
+                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
+                    } else {
+                        ivUserSex.setBackgroundResource(R.drawable.icon_girl)
+                    }
+                    ivHeadPhoto.clickWithTrigger {
+                        mContext.startActivity<ResumeDetailsActivity>()
+                    }
+                    tvDetails.clickWithTrigger {
+                        mContext.startActivity<ResumeDetailsActivity>()
+                    }
+                    //录用
+                    tvContact.clickWithTrigger {
+                    }
+                    //撤回或重发
+                    tvReplySend.clickWithTrigger {
+
+                    }
+
                 }
             }
 
