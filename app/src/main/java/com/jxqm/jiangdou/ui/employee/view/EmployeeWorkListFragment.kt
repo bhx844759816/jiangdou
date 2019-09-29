@@ -40,7 +40,7 @@ class EmployeeWorkListFragment : BaseLazyFragment() {
         when (mType) {
             0 -> {//已报名
                 mSignUpAdapter = SignUpWorkListAdapter(mContext)
-                mSignUpAdapter.setDataList(mItemList)
+//                mSignUpAdapter.setDataList(mItemList)
                 recyclerView.adapter = mSignUpAdapter
             }
             1 -> {//已录用

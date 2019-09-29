@@ -257,4 +257,17 @@ interface ApiService {
      */
     @GET(Api.GET_EMPLOYEE_CLOSED_SIGN_LIST)
     fun getEmployeeClosedSignList(): Observable<HttpResult<List<JobSignCloseModel>>>
+
+    /**
+     * 雇员 - 已录用 - 列表
+     */
+    @GET(Api.GET_EMPLOYEE_OFFER_LIST)
+    fun getEmployeeOfferList(): Observable<HttpResult<List<JobEmployeeModel>>>
+
+    /**
+     * 雇员 - 已录用 -失效
+     */
+    @GET(Api.GET_EMPLOYEE_OFFER_INVALID_LIST)
+    fun getEmployeeInvalidList(): Observable<HttpResult<List<JobEmployeeExceptionModel>>>
+
 }

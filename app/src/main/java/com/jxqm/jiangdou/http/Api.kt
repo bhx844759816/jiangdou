@@ -89,11 +89,12 @@ object Api {
     const val GET_EMPLOYEE_SIGN_LIST = "/employee/job/sign"
     //雇员- 已报名 - 截止报名列表
     const val GET_EMPLOYEE_CLOSED_SIGN_LIST = "/employee/job/closed"
-
-    //雇员 - 已经结算列表
-    const val GET_EMPLOYEE_SETTLE_LIST = "/employee/job/settle"
     //雇员 - 已经接受Offer列表
     const val GET_EMPLOYEE_OFFER_LIST = "/employee/job/offer"
+    //雇员 -失效
+    const val GET_EMPLOYEE_OFFER_INVALID_LIST = "/employee/job/invalid"
+    //雇员 - 已经结算列表
+    const val GET_EMPLOYEE_SETTLE_LIST = "/employee/job/settle"
     //雇员 - 已经到岗列表
     const val GET_EMPLOYEE_ARRIVAL_LIST = "/employee/job/arrival"
 }

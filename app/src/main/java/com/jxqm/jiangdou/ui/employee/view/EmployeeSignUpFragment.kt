@@ -39,6 +39,10 @@ class EmployeeSignUpFragment : BaseMVVMFragment<EmployeeSignUpViewModel>() {
                 mUiStatusController.changeUiStatus(UiStatus.CONTENT)
             }
             mAdapter.setDataList(mJobSingModelList)
+            if (swipeRefreshLayout.isRefreshing) {
+                swipeRefreshLayout.finishRefresh()
+            }
+
         })
         //获取已报名列表失败
         registerObserver(Constants.TAG_GET_EMPLOYEE_SIGN_LIST_ERROR, String::class.java).observe(this, Observer {
@@ -57,6 +61,8 @@ class EmployeeSignUpFragment : BaseMVVMFragment<EmployeeSignUpViewModel>() {
         mAdapter = SignUpWorkListAdapter(mContext)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
-
+        swipeRefreshLayout.setOnRefreshListener {
+            mViewModel.getSignList()
+        }
     }
 }

@@ -13,6 +13,7 @@ import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobSignCloseModel
 import com.jxqm.jiangdou.model.JobSignModel
 import com.jxqm.jiangdou.model.JobSignModelBase
+import com.jxqm.jiangdou.model.JobSignTitleModel
 
 /**
  * 雇员-工作列表-已报名—适配器
@@ -25,7 +26,7 @@ class SignUpWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobSignMode
             override fun getItemViewLayoutId(): Int = R.layout.adapter_employee_work_top_item
             override fun isItemClickable(): Boolean = false
             override fun isViewForType(item: JobSignModelBase?, position: Int): Boolean {
-                return item?.jobStatus == 0
+                return item is JobSignTitleModel
             }
 
             override fun convert(holder: ViewHolder?, t: JobSignModelBase?, position: Int) {
@@ -38,7 +39,7 @@ class SignUpWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobSignMode
             override fun isItemClickable(): Boolean = true
 
             override fun isViewForType(item: JobSignModelBase?, position: Int): Boolean {
-                return item?.jobStatus == 0
+                return item is JobSignModel
             }
 
             override fun convert(holder: ViewHolder?, item: JobSignModelBase, position: Int) {
@@ -54,9 +55,10 @@ class SignUpWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobSignMode
                     val jobSignModel = item as JobSignModel
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobSignModel.typeImgUrl).into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobSignModel.title
-                    tyEmployPeopleNum.text = jobSignModel.recruitNum
+                    tyEmployPeopleNum.text = jobSignModel.recruitNum.toString()
                     tvJobMoney.text = "${jobSignModel.salary} 币/时"
-
+                    tvSingUpTime.text = jobSignModel.signTime
+                    tvSignUpPeopleCounts.text = jobSignModel.signNum.toString()
                 }
             }
         })
@@ -67,7 +69,7 @@ class SignUpWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobSignMode
 
             override fun isItemClickable(): Boolean = false
 
-            override fun isViewForType(item: JobSignModelBase?, position: Int): Boolean = item?.jobStatus == 2
+            override fun isViewForType(item: JobSignModelBase?, position: Int): Boolean = item is JobSignCloseModel
 
             override fun convert(holder: ViewHolder?, item: JobSignModelBase, position: Int) {
                 holder?.let {
@@ -76,14 +78,12 @@ class SignUpWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobSignMode
                     val tvCity = it.getView<TextView>(R.id.tvCity)
                     val tvArea = it.getView<TextView>(R.id.tvArea)
                     val tyEmployPeopleNum = it.getView<TextView>(R.id.tyEmployPeopleNum)
-                    val tvJobMoney = it.getView<TextView>(R.id.tvJobMoney)
                     val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime)
-                    val tvSignUpPeopleCounts = it.getView<TextView>(R.id.tvSignUpPeopleCounts)
                     val jobSignModel = item as JobSignCloseModel
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobSignModel.typeImgUrl).into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobSignModel.title
-                    tyEmployPeopleNum.text = jobSignModel.recruitNum
-                    tvJobMoney.text = "${jobSignModel.salary} 币/时"
+                    tyEmployPeopleNum.text = jobSignModel.recruitNum.toString()
+                    tvSingUpTime.text = jobSignModel.signTime
                 }
             }
 

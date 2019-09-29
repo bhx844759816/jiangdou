@@ -1,9 +1,10 @@
 package com.jxqm.jiangdou.model
 
 /**
- * Created By bhx On 2019/9/29 0029 14:35
+ * 异常状态雇员列表(截至报名 失效)
+ * Created by Administrator on 2019/9/29.
  */
-data class JobSignCloseModel(
+data class JobEmployeeExceptionModel(
     val address: String,
     val area: String,
     val areaCode: String,
@@ -47,4 +48,5 @@ data class JobSignCloseModel(
     val typeImg: String,
     val typeImgUrl: Any,
     val userId: Int
-):JobSignModelBase()
+) : JobEmployeeBaseModel()
+

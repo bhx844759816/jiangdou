@@ -11,7 +11,6 @@ import com.jxqm.jiangdou.model.JobSignTitleModel
  * Created By bhx On 2019/9/24 0024 16:02
  */
 class EmployeeSignUpRepository : BaseEventRepository() {
-
     fun getSignList() {
         val jobSignWrapList = mutableListOf<JobSignModelBase>()
         addDisposable(
@@ -87,5 +86,4 @@ class EmployeeSignUpRepository : BaseEventRepository() {
 //        )
 
     }
-
 }
