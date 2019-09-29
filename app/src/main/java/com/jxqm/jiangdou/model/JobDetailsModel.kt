@@ -41,6 +41,9 @@ class JobDetailsModel : CommonConfig() {
 
 
 }
+
+
+
 //{
 //    "address": "string",
 //    "area": "string",

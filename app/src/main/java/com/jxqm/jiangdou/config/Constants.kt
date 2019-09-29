@@ -116,9 +116,10 @@ class Constants {
 
         const val EVENT_KEY_ORDER_DETAILS = "event_key_order_details"//订单详情
 
-
         //雇员  EmployeeSignUp
         const val EVENT_KEY_EMPLOYEE_SIGN_UP = "event_key_employee_sign_up"//雇员-已报名
+        const val TAG_GET_EMPLOYEE_SIGN_LIST_SUCCESS = "tag_get_employee_sign_list_success"//已报名列表
+        const val TAG_GET_EMPLOYEE_SIGN_LIST_ERROR = "tag_get_employee_sign_list_error"//已报名列表失败
 
         const val EVENT_KEY_EMPLOYEE_EMPLOYMENT = "event_key_employee_employment"//雇员 - 已录用
 

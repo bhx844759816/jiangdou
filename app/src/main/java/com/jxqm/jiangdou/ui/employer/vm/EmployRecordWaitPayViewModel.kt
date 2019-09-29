@@ -8,4 +8,14 @@ import com.jxqm.jiangdou.ui.employer.vm.repository.EmployRecordWaitPayRepository
  * Created By bhx On 2019/9/24 0024 15:48
  */
 class EmployRecordWaitPayViewModel : BaseViewModel<EmployRecordWaitPayRepository>() {
+    private var pageNo = 1
+    private val pageSize = 10
+    fun getWaitPayList(jobId: String, isRefresh: Boolean) {
+        if (isRefresh) {
+            pageNo = 1
+        }
+        mRepository.getWaitPayList(jobId, pageNo, pageSize) {
+            pageNo++
+        }
+    }
 }

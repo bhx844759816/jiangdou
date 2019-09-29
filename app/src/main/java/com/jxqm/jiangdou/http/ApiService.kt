@@ -226,6 +226,9 @@ interface ApiService {
         @Query("pageSize") pageSize: Int
     ): Observable<HttpResult<EmployeeResumeModelWrap>>
 
+    /**
+     * 雇佣记录 - 已到岗
+     */
     @GET(Api.GET_REPORTDUTY_LIST)
     fun getReportDutyList(
         @Query("jobId") jobId: Long,
@@ -233,5 +236,25 @@ interface ApiService {
         @Query("pageSize") pageSize: Int
     ): Observable<HttpResult<EmployeeResumeModelWrap>>
 
+    /**
+     * 雇佣记录 - 待结算列表
+     */
+    @GET(Api.GET_WAIT_SETTLEMENT_LIST)
+    fun getWaitSettlementList(
+        @Query("jobId") jobId: Long,
+        @Query("pageNo") pageNo: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<HttpResult<EmployeeResumeModelWrap>>
 
+    /**
+     * 雇员 - 已报名
+     */
+    @GET(Api.GET_EMPLOYEE_SIGN_LIST)
+    fun getEmployeeSignList(): Observable<HttpResult<List<JobSignModel>>>
+
+    /**
+     *雇员 - 截止报名
+     */
+    @GET(Api.GET_EMPLOYEE_CLOSED_SIGN_LIST)
+    fun getEmployeeClosedSignList(): Observable<HttpResult<List<JobSignCloseModel>>>
 }

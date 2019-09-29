@@ -34,7 +34,7 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
         super.initView(bundle)
         jobId = arguments?.getString("jobId")
         //获取数据成功
-        registerObserver(Constants.TAG_GET_REPORT_DUTY_LIST_SUCCESS, List::class.java).observe(this, Observer {
+        registerObserver(Constants.TAG_GET_WAIT_PAY_LIST_SUCCESS, List::class.java).observe(this, Observer {
             val list = it as List<EmployeeResumeModel>
             if (isRefresh) {
                 if (list.isNullOrEmpty()) {
@@ -60,7 +60,7 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
 
         })
         //获取数据失败
-        registerObserver(Constants.TAG_GET_REPORT_DUTY_LIST_ERROR, String::class.java).observe(this, Observer {
+        registerObserver(Constants.TAG_GET_WAIT_PAY_LIST_ERROR, String::class.java).observe(this, Observer {
             mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
         })
     }
@@ -75,15 +75,21 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
             jobId?.let {
-//                mViewModel.getReportDutyList(it, isRefresh)
+                mViewModel.getWaitPayList(it, isRefresh)
             }
         }
         //上拉加载
         swipeRefreshLayout.setOnLoadMoreListener {
             isRefresh = false
             jobId?.let {
-//                mViewModel.getReportDutyList(it, isRefresh)
+                mViewModel.getWaitPayList(it, isRefresh)
             }
+        }
+    }
+
+    override fun onFirstUserVisible() {
+        jobId?.let {
+            mViewModel.getWaitPayList(it, isRefresh)
         }
     }
 

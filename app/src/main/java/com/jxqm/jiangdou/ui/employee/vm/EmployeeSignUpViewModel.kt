@@ -8,4 +8,7 @@ import com.jxqm.jiangdou.ui.employee.vm.repository.EmployeeSignUpRepository
  * Created By bhx On 2019/9/24 0024 16:03
  */
 class EmployeeSignUpViewModel : BaseViewModel<EmployeeSignUpRepository>() {
+    fun getSignList() {
+        mRepository.getSignList()
+    }
 }

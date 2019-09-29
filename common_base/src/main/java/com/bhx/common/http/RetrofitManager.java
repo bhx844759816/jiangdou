@@ -1,5 +1,6 @@
 package com.bhx.common.http;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -7,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import com.bhx.common.utils.HttpsUtils;
 import com.bhx.common.utils.SSLSocketFactoryUtils;
 import com.bhx.common.utils.SSLSocketFactoryUtils2;
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -49,12 +51,21 @@ public class RetrofitManager {
                 okHttpBuilder.addInterceptor(interceptor);
             }
         }
+        if (builder.netWorkInterceptorList != null) {
+            for (Interceptor interceptor : builder.netWorkInterceptorList) {
+                okHttpBuilder.addNetworkInterceptor(interceptor);
+            }
+        }
+        if (builder.isCache) {
+            File file = new File(builder.cachePath);
+            Cache cache = new Cache(file, builder.cacheSize);
+            okHttpBuilder.cache(cache);
+        }
         if (builder.httpsInputStreams != null) {
             okHttpBuilder.sslSocketFactory(SSLSocketFactoryUtils2.getSSLSocketFactory(builder.httpsInputStreams),
                     SSLSocketFactoryUtils.createTrustAllManager());
             okHttpBuilder.hostnameVerifier(new SSLSocketFactoryUtils.TrustAllHostnameVerifier());
         }
-
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactoryUnsafe();
         okHttpBuilder.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager);
 
@@ -81,7 +92,11 @@ public class RetrofitManager {
     public static class Builder {
         String url;
         List<Interceptor> interceptorList;
-        int timeOut = 30;
+        List<Interceptor> netWorkInterceptorList;
+        boolean isCache;//是否开启缓存
+        long cacheSize; //缓存的大小
+        String cachePath;
+        int timeOut = 40;
         InputStream[] httpsInputStreams;
 
         public Builder setBaseUrl(String url) {
@@ -89,8 +104,28 @@ public class RetrofitManager {
             return this;
         }
 
+        public Builder setCachePath(String cachePath) {
+            this.cachePath = cachePath;
+            return this;
+        }
+
         public Builder setInterceptorList(List<Interceptor> interceptorList) {
             this.interceptorList = interceptorList;
+            return this;
+        }
+
+        public Builder setIsCache(boolean isCache) {
+            this.isCache = isCache;
+            return this;
+        }
+
+        public Builder setCacheSize(long cacheSize) {
+            this.cacheSize = cacheSize;
+            return this;
+        }
+
+        public Builder seNetWorkInterceptorList(List<Interceptor> netWorkInterceptorList) {
+            this.netWorkInterceptorList = netWorkInterceptorList;
             return this;
         }
 

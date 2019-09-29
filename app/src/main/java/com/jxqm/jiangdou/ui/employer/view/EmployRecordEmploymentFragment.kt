@@ -45,7 +45,7 @@ class EmployRecordEmploymentFragment : BaseMVVMFragment<EmployRecordEmploymentVi
             isRefresh = false
             getData()
         }
-
+        //RadioGroup选择切换
         rgSelectState.setOnCheckedChangeListener { _, id ->
             mStatus = when (id) {
                 R.id.rbInvite -> {

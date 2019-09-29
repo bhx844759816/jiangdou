@@ -23,7 +23,7 @@ class EmployeeListFragment : BaseLazyFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mListFragment.add(EmployeeWorkListFragment.newInstance(0))
+        mListFragment.add(EmployeeSignUpFragment())
         mListFragment.add(EmployeeWorkListFragment.newInstance(1))
         mListFragment.add(EmployeeWorkListFragment.newInstance(2))
         mListFragment.add(EmployeeWorkListFragment.newInstance(3))

@@ -80,17 +80,6 @@
             android:textSize="@dimen/text_small_size" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvJobMoney"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:text="10币/小时"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_btn_size"
-        app:layout_constraintBottom_toBottomOf="@id/ivEmployeeImg"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ivEmployeeImg" />
 
     <View
         android:id="@+id/divider"
@@ -101,30 +90,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivEmployeeImg" />
 
-    <TextView
-        android:id="@+id/tvSignUpSuccess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="报名成功"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_small_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
 
-    <TextView
-        android:id="@+id/tvSignUpPeopleCounts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="已报名:   10人"
-        android:textColor="@color/text_hint"
-        android:textSize="@dimen/text_small_size"
-        app:layout_constraintLeft_toRightOf="@id/tvSignUpSuccess"
-        app:layout_constraintTop_toTopOf="@id/tvSignUpSuccess" />
 
     <TextView
         android:id="@+id/tvSingUpTime"
@@ -135,15 +101,19 @@
         android:textColor="@color/text_hint"
         android:textSize="@dimen/text_small_size"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvSignUpSuccess" />
+        app:layout_constraintTop_toTopOf="@id/tvSingUpTimeTitle" />
 
     <TextView
+        android:id="@+id/tvSingUpTimeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
         android:text="报名时间"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:textColor="@color/text_hint"
         android:textSize="@dimen/text_small_size"
-        app:layout_constraintRight_toLeftOf="@id/tvSingUpTime"
-        app:layout_constraintTop_toTopOf="@id/tvSingUpTime" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 </androidx.constraintlayout.widget.ConstraintLayout>
