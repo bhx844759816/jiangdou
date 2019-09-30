@@ -270,4 +270,10 @@ interface ApiService {
     @GET(Api.GET_EMPLOYEE_OFFER_INVALID_LIST)
     fun getEmployeeInvalidList(): Observable<HttpResult<List<JobEmployeeExceptionModel>>>
 
+    /**
+     * 雇员 - 已到岗
+     */
+    @GET(Api.GET_EMPLOYEE_ARRIVAL_LIST)
+    fun getEmployeeArrivalList(): Observable<HttpResult<List<JobEmployeeModel>>>
+
 }

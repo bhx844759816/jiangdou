@@ -122,8 +122,14 @@ class Constants {
         const val TAG_GET_EMPLOYEE_SIGN_LIST_ERROR = "tag_get_employee_sign_list_error"//已报名列表失败
 
         const val EVENT_KEY_EMPLOYEE_EMPLOYMENT = "event_key_employee_employment"//雇员 - 已录用
+        const val TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_SUCCESS = "tag_get_employee_employment_list_success"//已录用列表
+        const val TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_ERROR = "tag_get_employee_employment_list_error"//已录用列表失败
+
 
         const val EVENT_KEY_EMPLOYEE_REPORT_DUTY = "event_key_employee_report_duty"//雇员 - 已到岗
+        const val TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_SUCCESS = "tag_get_employee_report_duty_list_success"//已到岗列表
+        const val TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_ERROR = "tag_get_employee_report_duty_list_error"//已到岗列表失败
+
 
         const val EVENT_KEY_EMPLOYEE_PAY_FINISH = "event_key_employee_pay_finish"//雇员 - 已结算
 

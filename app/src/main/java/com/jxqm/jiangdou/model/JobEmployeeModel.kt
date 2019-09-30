@@ -9,6 +9,7 @@ data class JobEmployeeModel(
     val area: String,
     val areaCode: String,
     val arrival: String,
+    val arrivalCode: Int,
     val arrivalTime: Any,
     val contact: String,
     val content: String,
@@ -29,6 +30,7 @@ data class JobEmployeeModel(
     val longitude: Double,
     val mapImg: String,
     val offer: String,
+    val offerCode: Int,
     val offerNum: Int,
     val offerTime: String,
     val pageNo: Any,
@@ -36,6 +38,7 @@ data class JobEmployeeModel(
     val recruitNum: Int,
     val salary: Int,
     val settlement: String,
+    val settlementCode: Int,
     val settlementTime: Any,
     val signNum: Int,
     val signTime: String,
@@ -49,3 +52,4 @@ data class JobEmployeeModel(
     val typeImgUrl: Any,
     val userId: Int
 ) : JobEmployeeBaseModel()
+

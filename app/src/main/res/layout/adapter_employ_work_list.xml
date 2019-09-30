@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:layout_marginBottom="8dp"
     android:orientation="vertical">
 
     <ImageView
@@ -39,6 +40,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvEmployeeTitle">
 
         <TextView
+            android:id="@+id/tvCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="郑州"
@@ -53,6 +55,7 @@
             android:background="@color/divider_vertical_line" />
 
         <TextView
+            android:id="@+id/tvArea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="金水区"
@@ -68,6 +71,7 @@
             android:textSize="@dimen/text_small_size" />
 
         <TextView
+            android:id="@+id/tvRecruitNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -88,14 +92,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/ivEmployeeImg" />
 
-    <ImageView
-        android:id="@+id/ivWorkTip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/icon_refuse"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/divider"
-        app:layout_constraintRight_toRightOf="parent" />
+
 
     <View
         android:id="@+id/divider"

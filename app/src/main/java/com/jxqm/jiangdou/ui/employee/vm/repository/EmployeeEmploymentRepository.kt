@@ -1,9 +1,11 @@
 package com.jxqm.jiangdou.ui.employee.vm.repository
 
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
 import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.model.EmployeeWorkBaseItem
 import com.jxqm.jiangdou.model.JobEmployeeBaseModel
+import com.jxqm.jiangdou.model.JobEmployeeTitleModel
 import io.reactivex.functions.Consumer
 
 /**
@@ -16,23 +18,36 @@ class EmployeeEmploymentRepository : BaseEventRepository() {
      * 获取雇员 - 已录用列表
      */
     fun getEmployeeOfferList() {
-        val jobSignWrapList = mutableListOf<JobEmployeeBaseModel>()
-
+        val jobOfferWrapList = mutableListOf<JobEmployeeBaseModel>()
         addDisposable(
             apiService.getEmployeeOfferList().flatMap {
                 if (it.code == "0") {
                     it.data.forEach { jobEmployeeModel ->
-                        jobSignWrapList.add(jobEmployeeModel)
+                        jobOfferWrapList.add(jobEmployeeModel)
                     }
                 }
                 return@flatMap apiService.getEmployeeInvalidList().compose(applySchedulers())
             }.compose(applySchedulers())
                 .subscribe({
                     if(it.code == "0"){
-
+                        if (it.data.isNotEmpty()) {
+                            jobOfferWrapList.add(JobEmployeeTitleModel())
+                            for (jobSignModel in it.data) {
+                                jobOfferWrapList.add(jobSignModel)
+                            }
+                        }
                     }
+                    sendData(
+                        Constants.EVENT_KEY_EMPLOYEE_EMPLOYMENT,
+                        Constants.TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_SUCCESS,
+                        jobOfferWrapList
+                    )
                 }, {
-
+                    sendData(
+                        Constants.EVENT_KEY_EMPLOYEE_EMPLOYMENT,
+                        Constants.TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_ERROR,
+                        it.localizedMessage
+                    )
                 })
         )
 

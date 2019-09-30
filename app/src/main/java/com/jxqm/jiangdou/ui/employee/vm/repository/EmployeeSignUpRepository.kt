@@ -39,7 +39,7 @@ class EmployeeSignUpRepository : BaseEventRepository() {
                 }, {
                     sendData(
                         Constants.EVENT_KEY_EMPLOYEE_SIGN_UP,
-                        Constants.TAG_GET_EMPLOYEE_SIGN_LIST_ERROR,
+                        Constants.TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_ERROR,
                         it.localizedMessage
                     )
                 }, {

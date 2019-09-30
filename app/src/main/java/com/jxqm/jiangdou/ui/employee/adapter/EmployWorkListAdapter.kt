@@ -7,74 +7,88 @@ import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
-import com.jxqm.jiangdou.model.EmployWorkItem
+import com.jxqm.jiangdou.http.Api
+import com.jxqm.jiangdou.model.*
 
 /**
  * Created by Administrator on 2019/9/1.
  */
-class EmployWorkListAdapter(context: Context) : MultiItemTypeAdapter<EmployWorkItem>(context) {
+class EmployWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobEmployeeBaseModel>(context) {
     init {
-        addItemViewType(object : ItemViewType<EmployWorkItem> {
+        //失效状态的title
+        addItemViewType(object : ItemViewType<JobEmployeeBaseModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_employee_work_top_item
             override fun isItemClickable(): Boolean = false
-            override fun isViewForType(item: EmployWorkItem?, position: Int): Boolean {
-                return item?.type == -1
+            override fun isViewForType(item: JobEmployeeBaseModel?, position: Int): Boolean {
+                return item is JobEmployeeTitleModel
             }
 
-            override fun convert(holder: ViewHolder?, t: EmployWorkItem?, position: Int) {
+            override fun convert(holder: ViewHolder?, t: JobEmployeeBaseModel?, position: Int) {
                 val title = holder?.getView<TextView>(R.id.tvTitle)
                 title?.text = "失效"
             }
 
+
         })
-
-
-        addItemViewType(object : ItemViewType<EmployWorkItem> {
+        //正常状态的
+        addItemViewType(object : ItemViewType<JobEmployeeBaseModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_employ_work_list
-
-            override fun isItemClickable(): Boolean = true
-
-            override fun isViewForType(item: EmployWorkItem?, position: Int): Boolean = item?.type != -1
-
-            override fun convert(holder: ViewHolder?, item: EmployWorkItem, position: Int) {
-                val type = item.type
-                val tvJobMoney = holder?.getView<TextView>(R.id.tvJobMoney)
-                val ivTips = holder?.getView<ImageView>(R.id.ivWorkTip)
-                val tvAccept = holder?.getView<TextView>(R.id.tvAccept)
-                val tvRefuse = holder?.getView<TextView>(R.id.tvRefuse)
-                if (item.isTimeOut) {
-                    ivTips?.setBackgroundResource(R.drawable.icon_timeout)
-                } else {
-                    if (!item.isAccept) {
-                        ivTips?.setBackgroundResource(R.drawable.icon_refuse)
-                    }
-                }
-                if (item.isNormal) {
-                    //正常状态
-                    tvAccept?.visibility = View.VISIBLE
-                    tvRefuse?.visibility = View.VISIBLE
-                    tvJobMoney?.visibility = View.VISIBLE
-                    ivTips?.visibility = View.GONE
-                } else {
-                    if (item.isAccept && !item.isTimeOut) {
-                        //接受
-                        tvAccept?.visibility = View.GONE
-                        tvJobMoney?.visibility = View.VISIBLE
-                        tvRefuse?.visibility = View.GONE
-                        ivTips?.visibility = View.GONE
-                    } else {
-                        //拒绝
-                        ivTips?.visibility = View.VISIBLE
-                        tvJobMoney?.visibility = View.GONE
-                        tvAccept?.visibility = View.GONE
-                        tvRefuse?.visibility = View.GONE
-                    }
-                }
-
+            override fun isItemClickable(): Boolean = false
+            override fun isViewForType(item: JobEmployeeBaseModel?, position: Int): Boolean {
+                return item is JobEmployeeModel
             }
+
+            override fun convert(holder: ViewHolder?, item: JobEmployeeBaseModel, position: Int) {
+                holder?.let {
+                    val ivEmployeeImg = it.getView<ImageView>(R.id.ivEmployeeImg)
+                    val tvEmployeeTitle = it.getView<TextView>(R.id.tvEmployeeTitle)
+                    val tvCity = it.getView<TextView>(R.id.tvCity)
+                    val tvArea = it.getView<TextView>(R.id.tvArea)
+                    val tvRecruitNum = it.getView<TextView>(R.id.tvRecruitNum)
+                    val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime)
+                    val tvJobMoney = it.getView<TextView>(R.id.tvJobMoney)
+                    val model = item as JobEmployeeModel
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImg).into(ivEmployeeImg)
+                    tvEmployeeTitle.text = model.title
+                    tvRecruitNum.text = model.recruitNum.toString()
+                    tvSingUpTime.text = model.signTime
+                    tvJobMoney.text = "${model.salary} 币/小时"
+                }
+            }
+
         })
+        //失效状态
+        addItemViewType(object : ItemViewType<JobEmployeeBaseModel> {
+            override fun getItemViewLayoutId(): Int = R.layout.adapter_employ_work_exception_list
+            override fun isItemClickable(): Boolean = false
+            override fun isViewForType(item: JobEmployeeBaseModel?, position: Int): Boolean {
+                return item is JobEmployeeExceptionModel
+            }
 
+            override fun convert(holder: ViewHolder?, item: JobEmployeeBaseModel?, position: Int) {
+                holder?.let {
+                    val ivEmployeeImg = it.getView<ImageView>(R.id.ivEmployeeImg)
+                    val ivWorkTip = it.getView<ImageView>(R.id.ivWorkTip)
+                    val tvEmployeeTitle = it.getView<TextView>(R.id.tvEmployeeTitle)
+                    val tvCity = it.getView<TextView>(R.id.tvCity)
+                    val tvArea = it.getView<TextView>(R.id.tvArea)
+                    val tvRecruitNum = it.getView<TextView>(R.id.tvRecruitNum)
+                    val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime)
+                    val model = item as JobEmployeeExceptionModel
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImg).into(ivEmployeeImg)
+                    tvEmployeeTitle.text = model.title
+                    tvRecruitNum.text = model.recruitNum.toString()
+                    tvSingUpTime.text = model.signTime
+                    if (model.invalid) {//是否过期
+                        ivWorkTip.setBackgroundResource(R.drawable.icon_timeout)
+                    } else {
+                        ivWorkTip.setBackgroundResource(R.drawable.icon_refuse)
+                    }
+                }
+            }
 
+        })
     }
 }

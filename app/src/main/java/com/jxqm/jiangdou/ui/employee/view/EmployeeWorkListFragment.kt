@@ -45,12 +45,12 @@ class EmployeeWorkListFragment : BaseLazyFragment() {
             }
             1 -> {//已录用
                 mEmployWorkAdapter = EmployWorkListAdapter(mContext)
-                mEmployWorkAdapter.setDataList(mEmployWorkItemList)
+//                mEmployWorkAdapter.setDataList(mEmployWorkItemList)
                 recyclerView.adapter = mEmployWorkAdapter
             }
             2 -> {//已到岗
                 mReportDutyWorkAdapter = ReportDutyWorkListAdapter(mContext)
-                mReportDutyWorkAdapter.setDataList(mReportDutyWorkItemList)
+//                mReportDutyWorkAdapter.setDataList(mReportDutyWorkItemList)
                 recyclerView.adapter = mReportDutyWorkAdapter
             }
             3 -> {//已结算

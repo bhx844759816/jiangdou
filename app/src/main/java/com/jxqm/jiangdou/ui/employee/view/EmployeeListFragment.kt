@@ -24,8 +24,8 @@ class EmployeeListFragment : BaseLazyFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mListFragment.add(EmployeeSignUpFragment())
-        mListFragment.add(EmployeeWorkListFragment.newInstance(1))
-        mListFragment.add(EmployeeWorkListFragment.newInstance(2))
+        mListFragment.add(EmployeeEmploymentFragment())
+        mListFragment.add(EmployeeReportDutyFragment())
         mListFragment.add(EmployeeWorkListFragment.newInstance(3))
         viewPager.offscreenPageLimit = 4
         viewPager.adapter = MyPageAdapter(childFragmentManager)
