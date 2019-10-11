@@ -19,17 +19,17 @@ class EmployRecordEmploymentViewModel : BaseViewModel<EmployRecordEmploymentRepo
             pageNo = 1
         }
         when (status) {
-            0 -> {
+            0 -> {//已邀请
+                mRepository.getInviteEmployeeList(jobId, pageNo, pageSize) { requestCallBack() }
+            }
+            1 -> {//已接受
                 mRepository.getAcceptEmployeeList(jobId, pageNo, pageSize) { requestCallBack() }
             }
-            1 -> {
-                mRepository.getAcceptEmployeeList(jobId, pageNo, pageSize) { requestCallBack() }
-            }
-            2 -> {
+            2 -> {//已拒绝
                 mRepository.getRefuseEmployeeList(jobId, pageNo, pageSize) { requestCallBack() }
             }
-            3 -> {
-                mRepository.getRefuseEmployeeList(jobId, pageNo, pageSize) { requestCallBack() }
+            3 -> {//未回复
+                mRepository.getNoReplyEmployeeList(jobId, pageNo, pageSize) { requestCallBack() }
             }
         }
     }

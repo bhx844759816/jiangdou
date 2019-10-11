@@ -37,6 +37,9 @@ class PublishingFragment : BaseMVVMFragment<PublishingViewModel>() {
                         mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                     } else {
                         mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                        if (it.records.size >= 10) {
+                            swipeRefreshLayout.setEnableLoadMore(true)
+                        }
                     }
                     mJobDetailList.clear()
                     mJobDetailList.addAll(it.records)
@@ -61,10 +64,11 @@ class PublishingFragment : BaseMVVMFragment<PublishingViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         mJobPublishListAdapter = JobPublishListAdapter(mContext, 2)
         recyclerView.adapter = mJobPublishListAdapter
+        swipeRefreshLayout.setEnableLoadMore(false)
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
             mViewModel.getPublishingJob(isRefresh)

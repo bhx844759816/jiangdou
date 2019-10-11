@@ -1,16 +1,12 @@
 package com.jxqm.jiangdou.ui.employer.vm.repository
 
-import android.util.Log
-import com.bhx.common.http.ApiException
 import com.bhx.common.utils.LogUtils
+import com.google.gson.Gson
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.http.BaseEventRepository
 import com.jxqm.jiangdou.http.action
 import com.jxqm.jiangdou.http.applySchedulers
-import io.reactivex.Observable
-import io.reactivex.functions.Consumer
-import java.lang.RuntimeException
+import okhttp3.RequestBody
 
 /**
  * 雇佣记录 - 已报名
@@ -53,15 +49,34 @@ class EmployRecordSignUpRepository : BaseEventRepository() {
     }
 
     /**
-     * 录取
+     * 录用
      */
-    fun acceptResume(id: String) {
+    fun acceptResume(ids: ArrayList<Long>) {
+        val params = mutableMapOf("ids" to ids)
+        val jsonString = Gson().toJson(params)
+        val body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), jsonString)
         addDisposable(
-            apiService.acceptResume(id.toLong())
+            apiService.acceptResume(body)
                 .action {
                     sendData(
                         Constants.EVENT_KEY_EMPLOY_RECORD_SIGN_UP,
-                        Constants.TAG_ACCEPT_RESUME_SUCCESS,
+                        Constants.TAG_ACCEPT_OR_REFUSED_RESUME_SUCCESS,
+                        true
+                    )
+                }
+        )
+    }
+
+    fun regectedResume(ids: ArrayList<Long>){
+        val params = mutableMapOf("ids" to ids)
+        val jsonString = Gson().toJson(params)
+        val body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), jsonString)
+        addDisposable(
+            apiService.regectedResume(body)
+                .action {
+                    sendData(
+                        Constants.EVENT_KEY_EMPLOY_RECORD_SIGN_UP,
+                        Constants.TAG_ACCEPT_OR_REFUSED_RESUME_SUCCESS,
                         true
                     )
                 }

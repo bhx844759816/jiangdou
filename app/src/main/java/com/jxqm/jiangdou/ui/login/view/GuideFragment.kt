@@ -7,7 +7,6 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import com.bhx.common.base.BaseLazyFragment
 import com.jxqm.jiangdou.R
-import com.jxqm.jiangdou.ui.employee.view.EmployeeWorkListFragment
 import kotlinx.android.synthetic.main.fragment_guide.*
 
 /**

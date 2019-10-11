@@ -32,7 +32,7 @@ class BaseRefreshFooter @JvmOverloads constructor(
         val view = LayoutInflater.from(context).inflate(R.layout.view_refresh_footer, this)
         gifImageView = view.findViewById(R.id.ivNoMoreData)
         llLoading = view.findViewById(R.id.llLoading)
-        gifFromAssets = GifDrawable(context.assets, "loading/gif_refresh.gif")
+        gifFromAssets = GifDrawable(context.assets, "loading/gif_loading_bottom.gif")
         gifImageView.setImageDrawable(gifFromAssets)
     }
 

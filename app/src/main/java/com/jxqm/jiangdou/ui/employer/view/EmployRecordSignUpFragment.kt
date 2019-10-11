@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.model.EmployRecordSignUpItem
 import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordSignUpAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordSignUpViewModel
@@ -26,6 +24,7 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
     private val mEmployRecordSignUpItems = arrayListOf<EmployeeResumeModel>()
     private lateinit var mAdapter: EmployRecordSignUpAdapter
     private lateinit var mUiStatusController: UiStatusController
+    private val mIdArrays = arrayListOf<Long>()
     private var isRefresh = true
     private var jobId: String? = null
 
@@ -33,10 +32,11 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         mAdapter = EmployRecordSignUpAdapter(mContext)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
+        swipeRefreshLayout.setEnableLoadMore(false)
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
@@ -51,10 +51,10 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
                 mViewModel.getSignUpEmployee(it, isRefresh)
             }
         }
-        //录用全选
-        cbAllSelect.setOnCheckedChangeListener { buttonView, isChecked ->
+        flAllSelect.clickWithTrigger {
+            cbAllSelect.isChecked = !cbAllSelect.isChecked
             val list = mEmployRecordSignUpItems.map {
-                it.isChecked = isChecked
+                it.isChecked = cbAllSelect.isChecked
                 it
             }
             mEmployRecordSignUpItems.clear()
@@ -63,15 +63,44 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
         }
         //录用
         tvAgreeWork.clickWithTrigger {
+            mIdArrays.clear()
             //统一录用
+            mEmployRecordSignUpItems.forEach {
+                if (it.isChecked) {
+                    mIdArrays.add(it.id)
+                }
+            }
+            mViewModel.acceptResume(mIdArrays)
         }
         //驳回
         tvNotAgreeWork.clickWithTrigger {
-
+            mIdArrays.clear()
+            //统一录用
+            mEmployRecordSignUpItems.forEach {
+                if (it.isChecked) {
+                    mIdArrays.add(it.id)
+                }
+            }
+            mViewModel.regectedResume(mIdArrays)
         }
         //单独录用
         mAdapter.acceptCallBack = {
-            mViewModel.acceptResume(it.id)
+            mIdArrays.clear()
+            mIdArrays.add(it.id)
+            mViewModel.acceptResume(mIdArrays)
+        }
+        //
+        mAdapter.checkCallBack = { position, isChecked ->
+            val employeeResumeModel = mEmployRecordSignUpItems[position]
+            employeeResumeModel.isChecked = isChecked
+            //判断是否全选
+            var isAllChecked = true
+            mEmployRecordSignUpItems.forEach {
+                if (!it.isChecked) {
+                    isAllChecked = false
+                }
+            }
+            cbAllSelect.isChecked = isAllChecked
         }
     }
 
@@ -86,6 +115,9 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
                     mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                 } else {
                     mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                    if (list.size >= 10) {
+                        swipeRefreshLayout.setEnableLoadMore(true)
+                    }
                 }
                 mEmployRecordSignUpItems.clear()
                 mEmployRecordSignUpItems.addAll(list)
@@ -108,7 +140,16 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
             mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
         })
         //录用成功
-
+        registerObserver(Constants.TAG_ACCEPT_OR_REFUSED_RESUME_SUCCESS, Boolean::class.java).observe(this, Observer {
+            val iterator = mEmployRecordSignUpItems.iterator()
+            while (iterator.hasNext()) {
+                if (mIdArrays.contains(iterator.next().id)) {
+                    iterator.remove()
+                }
+            }
+            mAdapter.setDataList(mEmployRecordSignUpItems)
+        })
+        //
     }
 
     override fun onFirstUserVisible() {
@@ -126,6 +167,5 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
             return fragment
         }
     }
-
 
 }

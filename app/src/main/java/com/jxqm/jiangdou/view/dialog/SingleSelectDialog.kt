@@ -1,7 +1,5 @@
 package com.jxqm.jiangdou.view.dialog
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -10,7 +8,6 @@ import com.bhx.common.base.BaseDialogFragment
 import com.bhx.common.utils.DensityUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.adapter.ArrayWheelAdapter
-import com.jxqm.jiangdou.model.SingleSelectModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.dialog_single_select.*
 

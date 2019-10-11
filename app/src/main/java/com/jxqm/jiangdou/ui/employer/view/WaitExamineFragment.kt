@@ -15,6 +15,7 @@ import com.jxqm.jiangdou.ui.employer.adapter.JobPublishListAdapter
 import com.jxqm.jiangdou.ui.employer.vm.WaitExamineViewModel
 import com.jxqm.jiangdou.ui.order.view.OrderDetailsActivity
 import com.jxqm.jiangdou.utils.startActivity
+import com.jxqm.jiangdou.view.dialog.PromptDialog
 import kotlinx.android.synthetic.main.fragment_wait_examine_layout.*
 
 /**
@@ -40,6 +41,9 @@ class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
                         mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                     } else {
                         mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                        if (it.records.size >= 10) {
+                            swipeRefreshLayout.setEnableLoadMore(true)
+                        }
                     }
                     mJobDetailList.clear()
                     mJobDetailList.addAll(it.records)
@@ -60,24 +64,49 @@ class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
         registerObserver(Constants.TAG_GET_WAIT_EXAMINE_JOB_LIST_ERROR, String::class.java).observe(this, Observer {
             mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
         })
-        //
-
+        //刷新列表
+        registerObserver(Constants.TAG_WAIT_EXAMINE_REFRESH_JOB_LIST, Boolean::class.java).observe(this, Observer {
+            if (isDataInitiated) {
+                isRefresh = true
+                mViewModel.getWaitExamineJob(isRefresh)
+            }
+        })
+        //取消订单
+        registerObserver(Constants.TAG_DELETE_WAIT_EXAMINE_JOB_SUCCESS, String::class.java).observe(this, Observer {
+            val iterator = mJobDetailList.iterator()
+            while (iterator.hasNext()) {
+                val jobDetailsModel = iterator.next()
+                if (jobDetailsModel.id == it.toInt()) {
+                    iterator.remove()
+                }
+            }
+            mJobPublishListAdapter.setDataList(mJobDetailList)
+            if (mJobDetailList.isEmpty()) {
+                mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         mJobPublishListAdapter = JobPublishListAdapter(mContext, 1)
         recyclerView.adapter = mJobPublishListAdapter
         mJobPublishListAdapter.orderDetailsCallBack = {
-            mContext.startActivity<OrderDetailsActivity>("JobId" to it.id)
+            mContext.startActivity<OrderDetailsActivity>("JobId" to it.id.toString())
         }
+        swipeRefreshLayout.setEnableLoadMore(false)
+        mJobPublishListAdapter.cancelPublish = {
+            PromptDialog.show(activity!!, "确认删除订单吗？") {
+                mViewModel.deletePublishJob(it)
+            }
+        }
+
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
             mViewModel.getWaitExamineJob(isRefresh)
         }
-
         swipeRefreshLayout.setOnLoadMoreListener {
             isRefresh = false
             mViewModel.getWaitExamineJob(isRefresh)

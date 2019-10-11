@@ -112,11 +112,12 @@
         app:layout_constraintTop_toTopOf="@id/divider_vertical" />
 
     <TextView
+        android:id="@+id/tvSingUpPeopleNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="10"
         android:maxLines="1"
+        android:text="10"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_big_size"
         app:layout_constraintLeft_toLeftOf="@id/tvAdvertisePeopleTitle"

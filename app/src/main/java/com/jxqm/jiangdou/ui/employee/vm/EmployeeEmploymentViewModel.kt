@@ -11,4 +11,18 @@ class EmployeeEmploymentViewModel : BaseViewModel<EmployeeEmploymentRepository>(
     fun getEmployeeOfferList() {
         mRepository.getEmployeeOfferList()
     }
+
+    /**
+     * 接受offer
+     */
+    fun acceptOffer(offerId: Int) {
+        mRepository.acceptOffer(offerId)
+    }
+
+    /**
+     * 拒绝offer
+     */
+    fun refuseOffer(offerId: Int) {
+        mRepository.refuseOffer(offerId)
+    }
 }

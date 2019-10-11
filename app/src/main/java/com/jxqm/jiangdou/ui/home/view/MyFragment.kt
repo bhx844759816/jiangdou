@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.bhx.common.mvvm.BaseMVVMFragment
+import com.bhx.common.utils.ToastUtils
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
@@ -36,14 +37,23 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
             tvUserName.text = it.username
             tvRankPoints.text = it.rankPoints
             tvBalance.text = it.balance
+            tvResumeDescribe.text = "完善度${it.perfectionDegree}%\n简历越完善，录用率越高哦～"
             Glide.with(mContext).load(Api.HTTP_BASE_URL + it.avatar).into(ivHeadPhoto)
         }
         //用户名称
         tvUserName.clickWithTrigger {
-            startActivity<LoginActivity>()
+            if (MyApplication.instance().userModel == null) {
+                startActivity<LoginActivity>()
+                return@clickWithTrigger
+            }
+
         }
         //用户简历
         ivUserResume.clickWithTrigger {
+            if (MyApplication.instance().userModel == null) {
+                ToastUtils.toastShort("请先登陆")
+                return@clickWithTrigger
+            }
             startActivity<MyResumeActivity>()
         }
         //我的收藏
@@ -52,6 +62,10 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
         }
         //企业认证
         rlCompanyAttestation.clickWithTrigger {
+            if (MyApplication.instance().userModel == null) {
+                ToastUtils.toastShort("请先登陆")
+                return@clickWithTrigger
+            }
             startActivity<CompanyAttestationActivity>()
         }
         //客服
@@ -60,6 +74,10 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
         }
         //提现
         llMyMoney.clickWithTrigger {
+            if (MyApplication.instance().userModel == null) {
+                ToastUtils.toastShort("请先登陆")
+                return@clickWithTrigger
+            }
             startActivity<UserWalletActivity>()
         }
         //
@@ -73,8 +91,8 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
 
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
-        registerObserver(Constants.TAG_MAIN_MY_LOGIN_SUCCESS, UserModel::class.java).observe(this, Observer {
-            tvUserName.text = it.username
+        registerObserver(Constants.TAG_MAIN_MY_LOGIN_SUCCESS, Boolean::class.java).observe(this, Observer {
+            tvUserName.text = MyApplication.instance().userModel?.username
         })
     }
 

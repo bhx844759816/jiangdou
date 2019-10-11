@@ -1,11 +1,15 @@
 package com.jxqm.jiangdou.ui.order.view
 
+import android.graphics.BitmapFactory
 import android.graphics.Paint
+import android.util.Base64
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.DensityUtil
+import com.bhx.common.utils.LogUtils
+import com.bhx.common.utils.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jaeger.library.StatusBarUtil
@@ -15,6 +19,9 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
 import com.jxqm.jiangdou.ui.order.vm.OrderDetailsViewModel
 import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
+import com.jxqm.jiangdou.utils.ImageUtil
+import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.view.dialog.QrCodeDialog
 import kotlinx.android.synthetic.main.activity_order_details.*
 
 /**
@@ -25,6 +32,7 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
     private var jobId: String? = null
     private var orderDetailsModel: OrderDetailsModel? = null
     private val gson = Gson()
+    private var mBase64ImageString:String? = null
     override fun getEventKey(): Any = Constants.EVENT_KEY_ORDER_DETAILS
 
     override fun getLayoutId(): Int = R.layout.activity_order_details
@@ -35,6 +43,13 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
         jobId = intent.getStringExtra("JobId")
         jobId?.let {
             mViewModel.getOrderDetails(it)
+        }
+        rlQrCodeParent.clickWithTrigger {
+            if (mBase64ImageString.isNullOrEmpty()) {
+                mViewModel.getSignUpQrCode(jobId!!)
+            } else {
+                QrCodeDialog.show(this, mBase64ImageString!!)
+            }
         }
     }
 
@@ -62,6 +77,12 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
                 addDataRange(listDates)
                 addTimeRange(listTimes)
             })
+
+        //获取签到二维码成功
+        registerObserver(Constants.TAG_GET_SIGN_UP_QR_CODE_SUCCESS, String::class.java).observe(this, Observer {
+            mBase64ImageString =  it
+            QrCodeDialog.show(this,mBase64ImageString!!)
+        })
     }
 
     /**

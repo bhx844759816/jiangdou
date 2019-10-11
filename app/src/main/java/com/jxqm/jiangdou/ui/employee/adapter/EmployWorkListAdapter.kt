@@ -1,7 +1,6 @@
 package com.jxqm.jiangdou.ui.employee.adapter
 
 import android.content.Context
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
@@ -11,11 +10,15 @@ import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.*
+import com.jxqm.jiangdou.utils.clickWithTrigger
 
 /**
  * Created by Administrator on 2019/9/1.
  */
 class EmployWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobEmployeeBaseModel>(context) {
+    var mAcceptOfferCallBack: ((Int) -> Unit)? = null
+    var mRefuseOfferCallBack: ((Int) -> Unit)? = null
+
     init {
         //失效状态的title
         addItemViewType(object : ItemViewType<JobEmployeeBaseModel> {
@@ -49,12 +52,20 @@ class EmployWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobEmployee
                     val tvRecruitNum = it.getView<TextView>(R.id.tvRecruitNum)
                     val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime)
                     val tvJobMoney = it.getView<TextView>(R.id.tvJobMoney)
+                    val tvRefuse = it.getView<TextView>(R.id.tvRefuse)
+                    val tvAccept = it.getView<TextView>(R.id.tvSingleSettle)
                     val model = item as JobEmployeeModel
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImg).into(ivEmployeeImg)
                     tvEmployeeTitle.text = model.title
                     tvRecruitNum.text = model.recruitNum.toString()
                     tvSingUpTime.text = model.signTime
                     tvJobMoney.text = "${model.salary} 币/小时"
+                    tvRefuse.clickWithTrigger {
+                        mRefuseOfferCallBack?.invoke(model.jobResumeId)
+                    }
+                    tvAccept.clickWithTrigger {
+                        mAcceptOfferCallBack?.invoke(model.jobResumeId)
+                    }
                 }
             }
 

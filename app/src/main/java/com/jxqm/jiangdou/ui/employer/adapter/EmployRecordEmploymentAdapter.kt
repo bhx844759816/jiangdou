@@ -1,7 +1,7 @@
 package com.jxqm.jiangdou.ui.employer.adapter
 
 import android.content.Context
-import android.widget.CheckBox
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
@@ -10,9 +10,8 @@ import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
-import com.jxqm.jiangdou.model.EmployRecordEmploymentItem
 import com.jxqm.jiangdou.model.EmployeeResumeModel
-import com.jxqm.jiangdou.ui.employee.view.ResumeDetailsActivity
+import com.jxqm.jiangdou.ui.user.view.ResumeDetailsActivity
 import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
@@ -22,6 +21,9 @@ import com.jxqm.jiangdou.utils.startActivity
  * Created By bhx On 2019/9/3 0003 13:50
  */
 class EmployRecordEmploymentAdapter(context: Context) : MultiItemTypeAdapter<EmployeeResumeModel>(context) {
+
+    var status: Int = 0 //
+
     init {
         addItemViewType(object : ItemViewType<EmployeeResumeModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_employ_record_employment
@@ -42,6 +44,20 @@ class EmployRecordEmploymentAdapter(context: Context) : MultiItemTypeAdapter<Emp
                     tvArea.text = model.area
                     tvAge.text = model.age
                     tvSingUpTime.text = model.signTime
+                    when (status) {
+                        0 -> { //已邀请
+                            tvReplySend.text = "撤回"
+                        }
+                        1 -> {//已接受
+                            tvReplySend.visibility = View.GONE
+                        }
+                        2 -> {//已拒绝
+                            tvReplySend.visibility = View.GONE
+                        }
+                        3 -> {//未恢复
+                            tvReplySend.text = "重发"
+                        }
+                    }
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.avatar)
                         .transform(GlideCircleTransform(mContext))
                         .into(ivHeadPhoto)
@@ -51,13 +67,14 @@ class EmployRecordEmploymentAdapter(context: Context) : MultiItemTypeAdapter<Emp
                         ivUserSex.setBackgroundResource(R.drawable.icon_girl)
                     }
                     ivHeadPhoto.clickWithTrigger {
-                        mContext.startActivity<ResumeDetailsActivity>()
+                        mContext.startActivity<ResumeDetailsActivity>("UserId" to model.userId)
                     }
                     tvDetails.clickWithTrigger {
-                        mContext.startActivity<ResumeDetailsActivity>()
+                        mContext.startActivity<ResumeDetailsActivity>("UserId" to model.userId)
                     }
                     //录用
                     tvContact.clickWithTrigger {
+
                     }
                     //撤回或重发
                     tvReplySend.clickWithTrigger {

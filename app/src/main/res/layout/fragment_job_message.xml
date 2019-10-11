@@ -280,7 +280,7 @@
         android:layout_height="53dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/select_button_bg"
-        android:enabled="true"
+        android:enabled="false"
         android:gravity="center"
         android:text="@string/nextSteps"
         android:textColor="@color/white"

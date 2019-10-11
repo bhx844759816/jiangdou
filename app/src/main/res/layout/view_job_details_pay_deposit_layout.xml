@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvCancelPublish"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/employe_item_refuse_bg"
+        android:gravity="center"
+        android:text="取消发布"
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_default_size" />
+
+    <TextView
+        android:id="@+id/tvPayMoney"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="支付押金"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_default_size" />
+</LinearLayout>

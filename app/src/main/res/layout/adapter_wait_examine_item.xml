@@ -105,7 +105,7 @@
 
 
     <TextView
-        android:id="@+id/tvAccept"
+        android:id="@+id/tvSingleSettle"
         android:layout_width="85dp"
         android:layout_height="30dp"
         android:background="@color/colorAccent"
@@ -127,6 +127,6 @@
         android:text="取消"
         android:textColor="@color/protocolDefaultColor"
         android:textSize="@dimen/text_small_size"
-        app:layout_constraintRight_toLeftOf="@id/tvAccept"
-        app:layout_constraintTop_toTopOf="@id/tvAccept" />
+        app:layout_constraintRight_toLeftOf="@id/tvSingleSettle"
+        app:layout_constraintTop_toTopOf="@id/tvSingleSettle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

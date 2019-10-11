@@ -35,7 +35,7 @@ class EmployRecordActivity : BaseDataActivity<EmployRecordViewModel>() {
         mListFragment.add(EmployRecordEmploymentFragment.newInstance(jobId))
         mListFragment.add(EmployRecordReportDutyFragment.newInstance(jobId))
         mListFragment.add(EmployRecordWaitPayFragment.newInstance(jobId))
-        mListFragment.add(EmployRecordPayFragment())
+        mListFragment.add(EmployRecordPayFragment.newInstance(jobId))
         viewPager.offscreenPageLimit = 5
         viewPager.adapter = MyPageAdapter(supportFragmentManager)
         tabLayout.addTab(mTitles[0])

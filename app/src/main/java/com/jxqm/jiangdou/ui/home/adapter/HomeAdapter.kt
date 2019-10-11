@@ -16,7 +16,9 @@ import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.ui.home.model.*
+import com.jxqm.jiangdou.ui.job.view.AllJobScreenActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.banner.BannerView
 import com.jxqm.jiangdou.view.banner.IBannerView
 
@@ -77,6 +79,12 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
             override fun isViewForType(item: HomeModel, position: Int): Boolean = item.type == 4
 
             override fun convert(holder: ViewHolder?, t: HomeModel?, position: Int) {
+                holder?.let {
+                    val tvMoreJob = it.getView<TextView>(R.id.tvMoreJob)
+                    tvMoreJob.clickWithTrigger {
+                        mContext.startActivity<AllJobScreenActivity>()
+                    }
+                }
             }
         })
         //添加Item的布局
@@ -153,7 +161,7 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
         val tvJobArea = holder.getView<TextView>(R.id.tvJobArea)
         val tvJobNumbers = holder.getView<TextView>(R.id.tvJobNumbers)
         val tvJobSalary = holder.getView<TextView>(R.id.tvJobSalary)
-        Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImg).into(ivJobListImg)
+        Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl).into(ivJobListImg)
         tvJobTitle.text = jobDetailsModel.title
 //        val city = jobDetailsModel.areaCode.split(",")[0]
 //        val area = jobDetailsModel.areaCode.split(",")[1]

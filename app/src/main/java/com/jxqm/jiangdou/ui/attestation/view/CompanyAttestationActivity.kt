@@ -10,7 +10,6 @@ import android.provider.Settings
 import android.view.View
 import androidx.lifecycle.Observer
 import com.baidu.mapapi.model.LatLng
-import com.bhx.common.mvvm.BaseMVVMActivity
 import com.bhx.common.utils.LogUtils
 import com.bumptech.glide.Glide
 import com.jaeger.library.StatusBarUtil
@@ -20,7 +19,7 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
-import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
+import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.attestation.vm.CompanyAttestationViewModel
 import com.jxqm.jiangdou.ui.map.MapActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -28,6 +27,7 @@ import com.jxqm.jiangdou.view.dialog.SingleSelectDialog
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.compress.CompressHelper
 import com.zhihu.matisse.compress.FileUtil
 import com.zhihu.matisse.engine.impl.GlideEngine
 import com.zhihu.matisse.internal.entity.CaptureStrategy
@@ -54,6 +54,11 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
     private var mSelectCompanyJobType: CompanyTypeModel? = null
     private var mSelectFile: File? = null//选择的营业执照的图片
     private var mLocationLatLng: LatLng? = null//定位的经纬度信息
+    private var mLocationProvince: String? = null
+    private var mLocationCity: String? = null
+    private var mLocationArea: String? = null
+    private var mLocationAddress: String? = null
+    private var mMapImgFilePath: String? = null
     private var mAttestationStatus: AttestationStatusModel? = null
 
     override fun getEventKey(): Any = Constants.EVENT_KEY_COMPANY_ATTESTATION
@@ -79,8 +84,12 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 putExtra("businessLicense", mSelectFile?.absolutePath)
                 putExtra("companyName", companyName)
                 putExtra("companyDescription", companyDescription)
-                putExtra("locationDetails", locationDetails)
-                putExtra("locationArea", locationArea)
+                putExtra("address", locationArea)
+                putExtra("addressDetails", locationDetails)
+                putExtra("province", mLocationProvince)
+                putExtra("mapImageFilePath", mMapImgFilePath)
+                putExtra("city", mLocationCity)
+                putExtra("area", mLocationArea)
                 putExtra("selectCompanyType", mSelectCompanyType?.id.toString())
                 putExtra("selectCompanyPeople", mSelectCompanyPeople?.id.toString())
                 putExtra("selectCompanyJobType", mSelectCompanyJobType?.id.toString())
@@ -132,6 +141,7 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 isNextStepEnable()
             }
         }
+        //
         etCompanyDescription.addTextChangedListener {
             afterTextChanged {
                 isNextStepEnable()
@@ -291,7 +301,8 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_CODE_SELECT_IMAGE -> {
-                mSelectFile = FileUtil.getFileByPath(Matisse.obtainPathResult(data)[0])
+                val file = FileUtil.getFileByPath(Matisse.obtainPathResult(data)[0])
+                mSelectFile = CompressHelper.getDefault(this).compressToFile(file)
                 mSelectFile?.let {
                     Glide.with(this)
                         .load(it)
@@ -301,8 +312,13 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
             }
             REQUEST_CODE_SELECT_AREA -> {
                 data?.let {
+                    mMapImgFilePath = Constants.APP_SAVE_DIR + "/" + Constants.MAPVIEW_FILENAME
                     tvLocationArea.text = it.getStringExtra("name")
                     mLocationLatLng = it.getParcelableExtra("latLng")
+                    mLocationCity = it.getStringExtra("city")
+                    mLocationArea = it.getStringExtra("area")
+                    mLocationAddress = it.getStringExtra("address")
+                    mLocationProvince = it.getStringExtra("province")
                 }
 
             }
@@ -335,15 +351,15 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 tvCompanyJobType.text = companyJobTypeModel.codeName
             }
             //人员规模
-//            mSelectCompanyPeople = mCompanyPeopleList.find { companyPeopleModel ->
-//                companyPeopleModel.id == it.rygm.toInt()
-//            }
+            mSelectCompanyPeople = mCompanyPeopleList.find { companyPeopleModel ->
+                companyPeopleModel.id == it.rygm.toInt()
+            }
             mSelectCompanyPeople?.let { companyPeopleModel ->
                 tvCompanyPeople.text = companyPeopleModel.codeName
             }
             //定位数据
-            tvLocationArea.text = it.area
-            etDetailsAddress.setText(it.address)
+            tvLocationArea.text = it.address
+            etDetailsAddress.setText(it.addressDetail)
             when (it.statusCode) {
                 1 -> {//审核中
                     tvSelectAttestationImg.isEnabled = false

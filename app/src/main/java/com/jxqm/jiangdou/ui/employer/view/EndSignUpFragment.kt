@@ -37,10 +37,13 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
                         mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                     } else {
                         mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                        if (it.records.size >= 10) {
+                            swipeRefreshLayout.setEnableLoadMore(true)
+                        }
                     }
                     mJobDetailList.clear()
                     mJobDetailList.addAll(it.records)
-                    mJobPublishListAdapter.notifyDataSetChanged()
+                    mJobPublishListAdapter.setDataList(mJobDetailList)
                     if (swipeRefreshLayout.isRefreshing)
                         swipeRefreshLayout.finishRefresh()
                 } else {
@@ -49,8 +52,7 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
                         swipeRefreshLayout.setNoMoreData(true)
                     } else {
                         mJobDetailList.addAll(it.records)
-                        mJobPublishListAdapter.notifyDataSetChanged()
-
+                        mJobPublishListAdapter.setDataList(mJobDetailList)
                     }
                 }
             })
@@ -66,6 +68,7 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         mJobPublishListAdapter = JobPublishListAdapter(mContext, 3)
         recyclerView.adapter = mJobPublishListAdapter
+        swipeRefreshLayout.setEnableLoadMore(false)
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
             mViewModel.getEndSignUpPublishJob(isRefresh)

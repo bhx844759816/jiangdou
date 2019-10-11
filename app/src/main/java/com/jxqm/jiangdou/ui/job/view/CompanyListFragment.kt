@@ -1,62 +1,85 @@
 package com.jxqm.jiangdou.ui.job.view
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
-import com.bhx.common.adapter.rv.BaseSwipeRvFragment
-import com.bhx.common.adapter.rv.LoadMoreAdapter
-import com.bhx.common.adapter.rv.MultiItemTypeAdapter
-import com.bhx.common.adapter.rv.holder.ViewHolder
-import com.bhx.common.adapter.rv.listener.OnItemClickListener
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bhx.common.mvvm.BaseMVVMFragment
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.job.adapter.CompanyListAdapter
 import com.jxqm.jiangdou.ui.job.vm.CompanyListViewModel
-import com.jxqm.jiangdou.utils.startActivity
+import kotlinx.android.synthetic.main.fragment_company_list.*
 
 /**
  * Created by Administrator on 2019/8/17.
  */
-class CompanyListFragment : BaseSwipeRvFragment<CompanyListViewModel>() {
-    private val mData = arrayListOf("", "", "", "", "", "", "", "", "", "")
-    override fun createRecycleViewAdapter(): MultiItemTypeAdapter<*> = CompanyListAdapter(mContext)
-
-    override fun initView(bundle: Bundle?) {
-        super.initView(bundle)
-        rvViewHelper.adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(view: View?, holder: ViewHolder?, position: Int) {
-                context?.startActivity<CompanyDetailsActivity>()
-            }
-
-            override fun onItemLongClick(view: View?, holder: ViewHolder?, position: Int): Boolean {
-                return false
-            }
-        })
-    }
-
-    override fun refresh() {
-        Handler().postDelayed({
-            rvViewHelper.dismissSwipeRefresh()
-        }, 2000)
-    }
-
-    override fun createItemDecoration(): RecyclerView.ItemDecoration? = null
-
-    override fun loadMore() {
-        Handler().postDelayed({
-            rvViewHelper.setOnLoadMoreState(LoadMoreAdapter.LOADING_END)
-        }, 2000)
-    }
-
+class CompanyListFragment : BaseMVVMFragment<CompanyListViewModel>() {
+    private lateinit var mUiStatusController: UiStatusController
+    private lateinit var mAdapter: CompanyListAdapter
+    private var mCompanyDetailList = mutableListOf<AttestationStatusModel>()
+    private var mSearchKey: String? = null
+    private var isRefresh = true
     override fun getLayoutId(): Int = R.layout.fragment_company_list
 
-    override fun getEventKey(): Any = Constants.EVENT_KEY_COMPANY_LIST
+    override fun getEventKey(): Any = Constants.EVENT_KEY_SEARCH_COMPANY_LIST
+    override fun initView(bundle: Bundle?) {
+        super.initView(bundle)
+        mSearchKey = arguments?.getString("SearchKey", "")
+        //搜索公司列表成功
+        registerObserver(Constants.TAG_GET_SEARCH_COMPANY_LIST_SUCCESS, List::class.java).observe(this, Observer {
+            val list = it as List<AttestationStatusModel>
+            mCompanyDetailList.clear()
+            mCompanyDetailList.addAll(list)
+            if (mCompanyDetailList.isEmpty()) {
+                mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+            } else {
+                mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+            }
+            mAdapter.setDataList(mCompanyDetailList)
+            if (swipeRefreshLayout.isRefreshing) {
+                swipeRefreshLayout.finishRefresh()
+            }
+        })
+        //搜索公司列表失败
+        registerObserver(Constants.TAG_GET_SEARCH_COMPANY_LIST_ERROR, String::class.java).observe(this, Observer {
+            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+        })
 
-    override fun isSupportPaging(): Boolean = true
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mAdapter = CompanyListAdapter(mContext)
+        recyclerView.layoutManager = LinearLayoutManager(mContext)
+        recyclerView.adapter = mAdapter
+        //下拉刷新
+        swipeRefreshLayout.setOnRefreshListener {
+            mSearchKey?.let {
+                mViewModel.getSearchCompanyList(it, isRefresh)
+            }
+        }
+    }
+
 
     override fun onFirstUserVisible() {
-        notifyAdapterDataSetChanged(mData)
+//        mSearchKey?.let {
+//            mViewModel.getSearchCompanyList(it, isRefresh)
+//        }
+    }
+
+    companion object {
+        fun newInstance(searchKey: String): CompanyListFragment {
+            val fragment = CompanyListFragment()
+            val bundle = Bundle()
+            bundle.putString("SearchKey", searchKey)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
 }

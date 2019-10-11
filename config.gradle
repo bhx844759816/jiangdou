@@ -41,6 +41,8 @@ version.viewShadow = "0.0.4-beta3"
 version.smartRefresh = "2.0.0-alpha-1"
 version.gifDrawable = "1.2.17"
 version.uiStatus = "1.0.3"
+version.expandTextView="0.1.4"
+
 deps.versions = version
 //系统库
 def support = [:]
@@ -97,5 +99,7 @@ deps.smartRefresh = "com.scwang.smart:refresh-layout-kernel:$version.smartRefres
 deps.gifDrawable = "pl.droidsonroids.gif:android-gif-drawable:$version.gifDrawable"
 //多状态视图
 deps.uiStatus = "com.github.FengChenSunshine:UiStatus:$version.uiStatus"
+//
+deps.expandTextView = "com.ms-square:expandableTextView:$version.expandTextView"
 //底部导航
 deps.bottomNavigationBar = "com.ashokvarma.android:bottom-navigation-bar:$version.bottomNavigationBar"

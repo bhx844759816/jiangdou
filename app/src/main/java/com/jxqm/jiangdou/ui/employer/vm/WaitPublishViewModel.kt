@@ -8,7 +8,7 @@ import com.jxqm.jiangdou.ui.employer.vm.repository.WaitPublishRepository
  */
 class WaitPublishViewModel : BaseViewModel<WaitPublishRepository>() {
     private var pageNo: Int = 1
-    private var pageSize: Int = 2
+    private var pageSize: Int = 10
     fun getWaitPublishJob(isRefresh: Boolean) {
         if (isRefresh) {
             pageNo = 1
@@ -16,5 +16,9 @@ class WaitPublishViewModel : BaseViewModel<WaitPublishRepository>() {
         mRepository.getWaitPublishJob(pageNo, pageSize) {
             pageNo++
         }
+    }
+
+    fun deletePublishJob(jobId: String) {
+      mRepository.deletePublishJob(jobId)
     }
 }

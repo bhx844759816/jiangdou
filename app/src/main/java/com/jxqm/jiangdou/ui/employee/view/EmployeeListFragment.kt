@@ -26,7 +26,7 @@ class EmployeeListFragment : BaseLazyFragment() {
         mListFragment.add(EmployeeSignUpFragment())
         mListFragment.add(EmployeeEmploymentFragment())
         mListFragment.add(EmployeeReportDutyFragment())
-        mListFragment.add(EmployeeWorkListFragment.newInstance(3))
+        mListFragment.add(EmployeePayFinishFragment())
         viewPager.offscreenPageLimit = 4
         viewPager.adapter = MyPageAdapter(childFragmentManager)
         tabLayout.addTab(mTitles[0])

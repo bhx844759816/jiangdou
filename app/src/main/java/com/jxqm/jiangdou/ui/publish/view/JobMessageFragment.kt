@@ -4,20 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.baidu.location.BDAbstractLocationListener
-import com.baidu.location.BDLocation
-import com.baidu.location.LocationClient
-import com.baidu.location.LocationClientOption
 import com.baidu.mapapi.model.LatLng
 import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.event.LiveBus
-import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
-import com.jxqm.jiangdou.ui.attestation.view.CompanyAttestationActivity
 import com.jxqm.jiangdou.ui.map.MapActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.view.dialog.SelectSexDialog
@@ -31,8 +25,10 @@ class JobMessageFragment : BaseLazyFragment() {
 
     private var mCallback: OnJobPublishCallBack? = null
     private var mLocationLatLng: LatLng? = null//定位的经纬度信息
+    private var mLocationProvince: String? = null
     private var mLocationCity: String? = null
     private var mLocationArea: String? = null
+    private var mLocationAddress: String? = null
     private var mSex: Int = 2
 
     override fun onAttach(context: Context?) {
@@ -44,9 +40,6 @@ class JobMessageFragment : BaseLazyFragment() {
 
     override fun getLayoutId(): Int = R.layout.fragment_job_message
 
-    override fun initView(bundle: Bundle?) {
-        super.initView(bundle)
-    }
 
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
@@ -56,11 +49,21 @@ class JobMessageFragment : BaseLazyFragment() {
             params["content"] = tvJopDescriptionContent.text.toString().trim()//兼职描述
             params["gender"] = mSex.toString()
             params["recruitNum"] = etWorkPeopleNum.text.toString().trim()//招聘人数
-            params["area"] = tvLocationArea.text.toString().trim() //定位地点
-//            params["areaCode"] = "$mLocationCity,$mLocationArea"
-            params["address"] = etDetailAddress.text.toString().trim()//详细地址
-            params["longitude"] = mLocationLatLng?.longitude.toString()//经度
-            params["latitude"] = mLocationLatLng?.latitude.toString()//维度
+            params["address"] = tvLocationArea.text.toString().trim() //定位地点
+            params["addressDetail"] = etDetailAddress.text.toString().trim()//详细地址
+            mLocationArea?.let {
+                params["area"] = it //区
+            }
+            mLocationCity?.let {
+                params["city"] = it
+            }
+            mLocationProvince?.let {
+                params["province"] = it
+            }
+            mLocationLatLng?.let {
+                params["longitude"] = it.longitude.toString()//经度
+                params["latitude"] = it.latitude.toString()//维度
+            }
             LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_MESSAGE, params)
             mCallback?.jobMessageNextStep()
         }
@@ -114,8 +117,9 @@ class JobMessageFragment : BaseLazyFragment() {
                     tvLocationArea.text = it.getStringExtra("name")
                     mLocationCity = it.getStringExtra("city")
                     mLocationArea = it.getStringExtra("area")
+                    mLocationAddress = it.getStringExtra("address")
+                    mLocationProvince = it.getStringExtra("province")
                     mLocationLatLng = it.getParcelableExtra("latLng")
-                    LogUtils.i("选择地区$mLocationLatLng")
                     tvNextStep.isEnabled = isNetStepState()
                 }
             }

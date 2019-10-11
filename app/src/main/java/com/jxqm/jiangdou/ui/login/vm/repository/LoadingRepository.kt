@@ -1,17 +1,13 @@
 package com.jxqm.jiangdou.ui.login.vm.repository
 
 import android.annotation.SuppressLint
-import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.http.BaseEventRepository
 import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.model.UserModel
-import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
+import com.jxqm.jiangdou.model.AttestationStatusModel
 import io.reactivex.Observable
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
 
 /**
  * Created By bhx On 2019/9/26 0026 09:49
@@ -33,10 +29,10 @@ class LoadingRepository : BaseEventRepository() {
                     if (it.code == "0") {
                         when (it.data) {
                             is UserModel -> {
-                                MyApplication.instance().userModel = it.data
+                                MyApplication.instance().userModel = it.data as UserModel
                             }
                             is AttestationStatusModel -> {
-                                MyApplication.instance().attestationViewModel = it.data
+                                MyApplication.instance().attestationViewModel = it.data as AttestationStatusModel
                             }
                         }
                     }

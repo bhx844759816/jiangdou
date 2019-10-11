@@ -47,11 +47,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="性别要求"
-                android:textStyle="bold"
                 android:textColor="@color/text_title"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_default_size"
+                android:textStyle="bold" />
 
             <RadioGroup
+                android:id="@+id/rgSexSelect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -100,9 +101,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="上班时段  (可多选)"
-                android:textStyle="bold"
                 android:textColor="@color/text_title"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_default_size"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,6 +118,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/select_screen_item_bg"
                     android:button="@null"
+                    android:checked="true"
                     android:gravity="center"
                     android:text="不限"
                     android:textColor="@color/select_publish_job_item_textcolor"
@@ -130,7 +132,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/select_screen_item_bg"
                     android:button="@null"
-                    android:checked="true"
                     android:gravity="center"
                     android:text="上午"
                     android:textColor="@color/select_publish_job_item_textcolor"
@@ -144,7 +145,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/select_screen_item_bg"
                     android:button="@null"
-                    android:checked="true"
                     android:gravity="center"
                     android:text="下午"
                     android:textColor="@color/select_publish_job_item_textcolor"
@@ -170,8 +170,8 @@
                 android:layout_marginTop="15dp"
                 android:text="开始工作时间"
                 android:textColor="@color/text_title"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_default_size" />
+                android:textSize="@dimen/text_default_size"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -212,6 +212,7 @@
                 </RadioGroup>
 
                 <TextView
+                    android:id="@+id/tvStartWorkTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/rgJobTimeParent"
@@ -219,15 +220,18 @@
                     android:layout_marginBottom="10dp"
                     android:text="2019年8月22日"
                     android:textColor="@color/job_screen_text_color"
-                    android:textSize="@dimen/text_small_size" />
+                    android:textSize="@dimen/text_small_size"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/llTimeParent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:background="@color/job_screen_date_bg"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -240,9 +244,10 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:background="@drawable/icon_date_select"
-                        android:rotationX="180" />
+                     />
 
                     <TextView
+                        android:id="@+id/tvCurrentTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -284,6 +289,7 @@
         android:layout_margin="15dp">
 
         <TextView
+            android:id="@+id/tvReset"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
@@ -295,6 +301,7 @@
             android:textSize="@dimen/text_default_size" />
 
         <TextView
+            android:id="@+id/tvConfirm"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"

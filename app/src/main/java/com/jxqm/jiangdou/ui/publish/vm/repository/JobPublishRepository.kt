@@ -35,7 +35,7 @@ class JobPublishRepository : BaseEventRepository() {
         )
     }
 
-    fun publishJob(mapFilePath: String, jobDetailsModel: JobDetailsModel) {
+    fun publishJob(mapFilePath: String, paramsMap: MutableMap<String,String>) {
         val file = File(mapFilePath)
         val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
         val part = MultipartBody.Part.createFormData("imageFile", file.name, requestFile)
@@ -43,15 +43,15 @@ class JobPublishRepository : BaseEventRepository() {
             apiService.uploadFile(part)
                 .compose(applySchedulers())
                 .flatMap {
-                    jobDetailsModel.mapImg = it.data
+                    paramsMap["mapImg"] =  it.data
                     LogUtils.i("upload file:${it.data}")
                     val body = RequestBody.create(
                         MediaType.parse("application/json;charset=UTF-8"),
-                        Gson().toJson(jobDetailsModel)
+                        Gson().toJson(paramsMap)
                     )
                     return@flatMap apiService.uploadPublishJob(body).compose(applySchedulers())
                 }.action {
-                    sendData(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_SUCCESS, true)
+                    sendData(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_SUCCESS, it)
                 }
         )
 

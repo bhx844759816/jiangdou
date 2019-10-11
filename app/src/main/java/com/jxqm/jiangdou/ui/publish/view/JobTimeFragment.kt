@@ -55,8 +55,10 @@ class JobTimeFragment : BaseLazyFragment() {
             val dataArray = arrayListOf<String>()
             val timeArray = arrayListOf<TimeRangeModel>()
             mRangeDateList.forEach {
-                val startTime = "${it.first().year}-${it.first().month}-${it.first().day}"
-                val endTime = "${it.last().year}-${it.last().month}-${it.last().day}"
+                val startTime =
+                    "${it.first().year}-${operateDate(it.first().month.toString())}-${operateDate(it.first().day.toString())}"
+                val endTime =
+                    "${it.last().year}-${operateDate(it.last().month.toString())}-${operateDate(it.last().day.toString())}"
                 dataArray.add(startTime)
                 dataArray.add(endTime)
             }
@@ -65,8 +67,8 @@ class JobTimeFragment : BaseLazyFragment() {
                 timeArray.add(rangeTimeMode)
             }
             val gson = Gson()
-            params["dates"] = gson.toJson(dataArray)
-            params["times"] = gson.toJson(timeArray)
+            params["datesJson"] = gson.toJson(dataArray)
+            params["timesJson"] = gson.toJson(timeArray)
             params["salary"] = etPayMoney.text.toString().trim()
             LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_TIME, params)
             mCallback?.jobTimeNextStep()
@@ -120,6 +122,16 @@ class JobTimeFragment : BaseLazyFragment() {
                 isNextStepState()
             }
         }
+    }
+
+    /**
+     * 拼接日期
+     */
+    fun operateDate(date: String): String {
+        if (date.length == 1) {
+            return "0$date"
+        }
+        return date
     }
 
     /**

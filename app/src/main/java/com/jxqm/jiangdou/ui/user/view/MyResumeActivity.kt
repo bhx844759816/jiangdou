@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.mvvm.BaseMVVMActivity
 import com.bhx.common.utils.DensityUtil
@@ -70,7 +71,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         super.initView()
         mPhotoLisAdapter = PhotoListAdapter(this, mPhotoList)
         mPhotoLisAdapter.setAddCallBack {
-            selectHeadPhoto(9, 0x02)
+            selectHeadPhoto(9 - mPhotoList.size, 0x02)
         }
         mPhotoLisAdapter.setDeleteCallBack {
             mPhotoList.removeAt(it)
@@ -134,6 +135,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
     private fun showUserResume() {
         mResumeModel?.let {
             etUserName.setText(it.name)
+            tvUserSex.text = it.gender
             tvUserBirthday.text = it.birthday
             tvUserAge.text = it.star
             etUserPhone.setText(it.tel)
@@ -149,9 +151,9 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
                 val images = it.images.split(",").map { image ->
                     Api.HTTP_BASE_URL + "/" + image
                 }
-                LogUtils.i(images.toString())
                 mPhotoList.addAll(images)
                 mPhotoLisAdapter.notifyDataSetChanged()
+                tvPhotoCounts.text = "${mPhotoList.size}/9"
             }
         }
 
@@ -295,10 +297,10 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         Matisse.from(this)
             .choose(MimeType.ofImage(), false)
             .countable(true)
-            .capture(true)
+            .capture(requestCode == 0x01)
             .captureStrategy(CaptureStrategy(true, "com.jxqm.jiangdou.fileprovider"))
             .maxSelectable(maxSelectable)
-            .isCrop(true)
+            .isCrop(requestCode == 0x01)
             .cropStyle(CropImageView.Style.CIRCLE)
             .isCropSaveRectangle(false)
             .thumbnailScale(0.6f)
@@ -341,8 +343,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         val disposable = Observable.create(ObservableOnSubscribe<Any> {
             paths.forEach { path ->
                 val file = CompressHelper.getDefault(this).compressToFile(FileUtil.getFileByPath(path))
-                val fileCompress = CompressHelper.getDefault(this).compressToFile(file)
-                mPhotoList.add(fileCompress)
+                mPhotoList.add(file)
             }
             it.onNext(Any())
             it.onComplete()
@@ -351,6 +352,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             .observeOn(AndroidSchedulers.mainThread())
             .unsubscribeOn(Schedulers.io())
             .subscribe {
+                tvPhotoCounts.text = "${mPhotoList.size}/9"
                 mPhotoLisAdapter.notifyDataSetChanged()
             }
         addDisposable(disposable)

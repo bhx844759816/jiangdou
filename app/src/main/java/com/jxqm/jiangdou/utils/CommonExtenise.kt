@@ -39,10 +39,15 @@ inline fun <reified T : Activity> Context.startActivity(bundle: Bundle) {
     startActivity(intent)
 }
 
-inline fun <reified T : Activity> Context.startActivity(vararg params: Pair<String, String>) {
+inline fun <reified T : Activity> Context.startActivity(vararg params: Pair<String, Any>) {
     val intent = Intent(this, T::class.java)
     params.forEach {
-        intent.putExtra(it.first, it.second)
+        if(it.second is Int){
+            intent.putExtra(it.first, it.second as Int)
+        }
+        if(it.second is String){
+            intent.putExtra(it.first, it.second as String)
+        }
     }
     startActivity(intent)
 }

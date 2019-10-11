@@ -2,11 +2,10 @@ package com.jxqm.jiangdou.ui.employee.vm.repository
 
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
+import com.jxqm.jiangdou.http.action
 import com.jxqm.jiangdou.http.applySchedulers
-import com.jxqm.jiangdou.model.EmployeeWorkBaseItem
 import com.jxqm.jiangdou.model.JobEmployeeBaseModel
 import com.jxqm.jiangdou.model.JobEmployeeTitleModel
-import io.reactivex.functions.Consumer
 
 /**
  * 雇员 - 已录用
@@ -29,7 +28,7 @@ class EmployeeEmploymentRepository : BaseEventRepository() {
                 return@flatMap apiService.getEmployeeInvalidList().compose(applySchedulers())
             }.compose(applySchedulers())
                 .subscribe({
-                    if(it.code == "0"){
+                    if (it.code == "0") {
                         if (it.data.isNotEmpty()) {
                             jobOfferWrapList.add(JobEmployeeTitleModel())
                             for (jobSignModel in it.data) {
@@ -51,5 +50,32 @@ class EmployeeEmploymentRepository : BaseEventRepository() {
                 })
         )
 
+    }
+
+    /**
+     * 接受offer
+     */
+    fun acceptOffer(offerId: Int) {
+        addDisposable(
+            apiService.acceptOffer(offerId)
+                .action {
+                    sendData(Constants.EVENT_KEY_EMPLOYEE_EMPLOYMENT,
+                        Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS,true)
+//                    TAG_ACCEPT_REFUSE_OFFER_SUCCESS
+                }
+        )
+    }
+
+    /**
+     * 拒绝Offer
+     */
+    fun refuseOffer(offerId: Int) {
+        addDisposable(
+            apiService.refuseOffer(offerId)
+                .action {
+                    sendData(Constants.EVENT_KEY_EMPLOYEE_EMPLOYMENT,
+                        Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS,true)
+                }
+        )
     }
 }

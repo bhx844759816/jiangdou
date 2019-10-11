@@ -36,7 +36,7 @@ class LoadingActivity : BaseDataActivity<LoadingViewModel>() {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             window.attributes = lp
         }
-        mViewModel.getUserInfo()
+
     }
 
 
@@ -79,6 +79,7 @@ class LoadingActivity : BaseDataActivity<LoadingViewModel>() {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ).subscribe {
+                mViewModel.getUserInfo()
             }
         addDisposable(disposable)
 

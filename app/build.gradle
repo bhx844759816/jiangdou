@@ -62,8 +62,10 @@ dependencies {
     implementation deps.smartRefresh
     implementation deps.gifDrawable
     implementation deps.uiStatus
+    implementation deps.expandTextView
     implementation project(':common_base')
     implementation project(':common_photo')
+    implementation project(':zbarlibary')
     implementation files('libs/BaiduLBS_Android.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

@@ -1,8 +1,10 @@
 package com.jxqm.jiangdou.ui.employee.adapter
 
 import android.content.Context
+import android.widget.ImageView
 import com.bhx.common.adapter.rv.CommonAdapter
 import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 
 /**
@@ -12,6 +14,10 @@ import com.jxqm.jiangdou.R
 class ResumeDetailsAdapter(context: Context) : CommonAdapter<String>(context) {
     override fun itemLayoutId(): Int = R.layout.adapter_resume_details
 
-    override fun convert(holder: ViewHolder?, t: String?, position: Int) {
+    override fun convert(holder: ViewHolder?, imageUrl: String, position: Int) {
+        holder?.let {
+            val ivPhoto = it.getView<ImageView>(R.id.ivPhoto)
+            Glide.with(mContext).load(imageUrl).into(ivPhoto)
+        }
     }
 }

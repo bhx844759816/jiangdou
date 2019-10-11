@@ -92,6 +92,7 @@
                             android:id="@+id/flCardPositiveStatusParent"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:visibility="gone"
                             android:background="#7d1c1c1c">
 
                             <TextView
@@ -154,6 +155,7 @@
                             android:id="@+id/flCardBackStatusParent"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:visibility="gone"
                             android:background="#7d1c1c1c">
 
                             <TextView

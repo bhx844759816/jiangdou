@@ -30,6 +30,7 @@ class EmployeeReportDutyFragment : BaseMVVMFragment<EmployeeReportDutyViewModel>
 
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
+        //获取已报名列表成功
         registerObserver(Constants.TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_SUCCESS, List::class.java).observe(this, Observer {
             val list = it as List<JobEmployeeModel>
             mJobModelList.clear()
@@ -54,8 +55,9 @@ class EmployeeReportDutyFragment : BaseMVVMFragment<EmployeeReportDutyViewModel>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         mAdapter = ReportDutyWorkListAdapter(mContext)
+        swipeRefreshLayout.setEnableLoadMore(false)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
         swipeRefreshLayout.setOnRefreshListener {

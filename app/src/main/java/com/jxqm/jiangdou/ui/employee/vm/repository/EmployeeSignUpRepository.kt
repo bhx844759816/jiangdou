@@ -1,10 +1,11 @@
 package com.jxqm.jiangdou.ui.employee.vm.repository
 
+import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
 import com.jxqm.jiangdou.http.applySchedulers
-import com.jxqm.jiangdou.model.JobSignModelBase
-import com.jxqm.jiangdou.model.JobSignTitleModel
+import com.jxqm.jiangdou.model.JobEmployeeBaseModel
+import com.jxqm.jiangdou.model.JobEmployeeTitleModel
 
 /**
  * 雇员 - 已报名
@@ -12,7 +13,8 @@ import com.jxqm.jiangdou.model.JobSignTitleModel
  */
 class EmployeeSignUpRepository : BaseEventRepository() {
     fun getSignList() {
-        val jobSignWrapList = mutableListOf<JobSignModelBase>()
+        LogUtils.i("getSignList request")
+        val jobSignWrapList = mutableListOf<JobEmployeeBaseModel>()
         addDisposable(
             apiService.getEmployeeSignList().flatMap {
                 if (it.code == "0") {
@@ -25,7 +27,7 @@ class EmployeeSignUpRepository : BaseEventRepository() {
                 .subscribe({
                     if (it.code == "0") {
                         if (it.data.isNotEmpty()) {
-                            jobSignWrapList.add(JobSignTitleModel())
+                            jobSignWrapList.add(JobEmployeeTitleModel())
                             for (jobSignModel in it.data) {
                                 jobSignWrapList.add(jobSignModel)
                             }

@@ -12,6 +12,26 @@ import io.reactivex.functions.Consumer
  */
 class EmployRecordEmploymentRepository : BaseEventRepository() {
 
+    fun getInviteEmployeeList(jobId: String, pageNo: Int, pageSize: Int, callBack: () -> Unit) {
+        addDisposable(
+            apiService.getInviteEmployeeList(jobId.toLong(), pageNo, pageSize)
+                .compose(applySchedulers())
+                .subscribe({
+                    if (it.code == "0") {
+                        if (it.data.records.size == it.data.total) {
+                            callBack.invoke()
+                        }
+                        val list = it.data.records
+                        sendSuccessResult(list)
+                    } else {
+                        sendErrorResult(it.message)
+                    }
+                }, {
+                    sendErrorResult(it.localizedMessage)
+                })
+        )
+    }
+
     /**
      * 获取雇佣记录 - 已接受
      */
@@ -36,7 +56,7 @@ class EmployRecordEmploymentRepository : BaseEventRepository() {
     }
 
     /**
-     * 获取雇佣记录 - 已接受
+     * 获取雇佣记录 - 已拒绝
      */
     fun getRefuseEmployeeList(jobId: String, pageNo: Int, pageSize: Int, callBack: () -> Unit) {
         addDisposable(
@@ -58,15 +78,41 @@ class EmployRecordEmploymentRepository : BaseEventRepository() {
     }
 
     /**
+     *  获取雇佣记录 - 未回复
+     */
+    fun getNoReplyEmployeeList(jobId: String, pageNo: Int, pageSize: Int, callBack: () -> Unit) {
+        addDisposable(
+            apiService.getNoReplyEmployeeList(jobId.toLong(), pageNo, pageSize)
+                .compose(applySchedulers())
+                .subscribe({
+                    if (it.code == "0") {
+                        if (it.data.records.size == it.data.total) {
+                            callBack.invoke()
+                        }
+                        sendSuccessResult(it.data.records)
+                    } else {
+                        sendErrorResult(it.message)
+                    }
+                }, {
+                    sendErrorResult(it.localizedMessage)
+                })
+        )
+    }
+
+    /**
      * 发送获取成功的结果
      */
     private fun sendSuccessResult(list: List<EmployeeResumeModel>) {
-        sendData(Constants.EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT,
-            Constants.TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS,list)
+        sendData(
+            Constants.EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT,
+            Constants.TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS, list
+        )
     }
 
     private fun sendErrorResult(error: String) {
-        sendData(Constants.EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT,
-            Constants.TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR,error)
+        sendData(
+            Constants.EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT,
+            Constants.TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR, error
+        )
     }
 }

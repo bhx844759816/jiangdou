@@ -41,6 +41,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/ivUserSex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -51,7 +52,7 @@
 
 
         <TextView
-            android:id="@+id/tvSingUpTime"
+            android:id="@+id/tvWorkTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -63,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvUserName" />
 
         <TextView
-            android:id="@+id/tvSingUpTimeTitle"
+            android:id="@+id/tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginRight="18dp"

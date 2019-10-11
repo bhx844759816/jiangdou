@@ -1,4 +1,4 @@
-package com.jxqm.jiangdou.ui.attestation.model
+package com.jxqm.jiangdou.model
 
 import android.os.Parcelable
 import com.jxqm.jiangdou.base.CommonConfig
@@ -14,7 +14,10 @@ data class AttestationStatusModel(
     val employerName: String,
     val areaCode: String,
     val area: String,
+    val city: String,
+    val province: String,
     val address: String,
+    val addressDetail: String,
     val mapImg: String,
     val statusCode: Int,
     val status: String,
@@ -22,6 +25,9 @@ data class AttestationStatusModel(
     val qylx: String,
     val hyfl: String,
     val rygm: String,
+    val qylxName: String,
+    val hyflName: String,
+    val rygmName: String,
     val introduction: String,
     val latitude: Double,
     val longitude: Double,
@@ -49,6 +55,9 @@ data class AttestationStatusModel(
 //    "qylx": 38,
 //    "hyfl": null,
 //    "rygm": 45,
+//"qylxName": "全民所有制",
+//"hyflName": "智能硬件",
+//"rygmName": "500-999人"
 //    "introduction": "哦哟哟哦哟哦哟9我木木木哦哟哦哟9我头某某",
 //    "latitude": 35.0,
 //    "longitude": 113.69869905613666,

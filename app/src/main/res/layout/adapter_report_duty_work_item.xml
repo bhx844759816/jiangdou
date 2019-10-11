@@ -120,7 +120,7 @@
         android:layout_height="30dp"
         android:layout_marginLeft="20dp"
         android:gravity="center_vertical"
-        android:text="报名时间"
+        android:text="到岗时间"
         android:textColor="@color/text_hint"
         android:textSize="@dimen/text_small_size"
         app:layout_constraintLeft_toLeftOf="parent"

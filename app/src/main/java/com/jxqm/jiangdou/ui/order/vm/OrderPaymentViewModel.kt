@@ -8,18 +8,12 @@ import com.jxqm.jiangdou.ui.order.vm.repository.OrderPaymentRepository
  * Created by Administrator on 2019/9/22.
  */
 class OrderPaymentViewModel : BaseViewModel<OrderPaymentRepository>() {
+
     /**
      * 获取订单详情
      */
-    fun getOrderDetails(jobId: String) {
-        mRepository.getOrderDetails(jobId)
-    }
-
-    /**
-     * 获取账户余额
-     */
-    fun getAccountBalance() {
-        mRepository.getAccountBalance()
+    fun getOrderDetail(jobId: String){
+         mRepository.getOrderDetail(jobId)
     }
 
     /**

@@ -10,9 +10,7 @@ import com.fengchen.uistatus.annotation.UiStatus
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.JobEmployeeBaseModel
-import com.jxqm.jiangdou.model.JobSignModelBase
 import com.jxqm.jiangdou.ui.employee.adapter.EmployWorkListAdapter
-import com.jxqm.jiangdou.ui.employee.adapter.SignUpWorkListAdapter
 import com.jxqm.jiangdou.ui.employee.vm.EmployeeEmploymentViewModel
 import kotlinx.android.synthetic.main.fragment_employee_work_list.*
 
@@ -48,17 +46,30 @@ class EmployeeEmploymentFragment : BaseMVVMFragment<EmployeeEmploymentViewModel>
         registerObserver(Constants.TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_ERROR, String::class.java).observe(this, Observer {
             mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
         })
+        //接受或拒绝offer
+        registerObserver(Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS, Boolean::class.java).observe(this, Observer {
+            mViewModel.getEmployeeOfferList()
+        })
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         mAdapter = EmployWorkListAdapter(mContext)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
+        swipeRefreshLayout.setEnableLoadMore(false)
         swipeRefreshLayout.setOnRefreshListener {
             mViewModel.getEmployeeOfferList()
+        }
+        //接受offer
+        mAdapter.mAcceptOfferCallBack = {
+            mViewModel.acceptOffer(it)
+        }
+        //拒绝offer
+        mAdapter.mRefuseOfferCallBack = {
+            mViewModel.refuseOffer(it)
         }
     }
 

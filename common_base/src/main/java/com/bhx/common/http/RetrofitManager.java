@@ -96,7 +96,7 @@ public class RetrofitManager {
         boolean isCache;//是否开启缓存
         long cacheSize; //缓存的大小
         String cachePath;
-        int timeOut = 40;
+        int timeOut = 20;
         InputStream[] httpsInputStreams;
 
         public Builder setBaseUrl(String url) {

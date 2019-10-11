@@ -3,6 +3,7 @@ package com.jxqm.jiangdou.ui.map
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Rect
+import android.location.Location
 import android.opengl.Visibility
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +42,8 @@ class MapActivity : BaseActivity() {
     private lateinit var mLocationClient: LocationClient
     private lateinit var mGeoCoder: GeoCoder //获取定位地址附近得地址信息
     private var mLocationCity: String? = null//定位得城市
+    private var mLocationProvince: String? = null//定位得省
+    private var mLocationArea: String? = null//定位得区
     private var isFirstLocation = true //是否是第一次定位刷新地图显示
     private var mLocationLatLng: LatLng? = null//定位的经纬度信息
     private var mPoiInfoList = mutableListOf<PoiInfo>() //poi检索的结果集
@@ -96,6 +99,8 @@ class MapActivity : BaseActivity() {
                 mLocationLatLng = LatLng(it.latitude, it.longitude)
                 // 获取城市，待会用于POISearch
                 mLocationCity = bdLocation.city
+                mLocationProvince = bdLocation.province
+                mLocationArea = bdLocation.district
                 if (isFirstLocation) {
                     isFirstLocation = false
                     val msu = MapStatusUpdateFactory.newLatLngZoom(mLocationLatLng, 15f)
@@ -173,7 +178,9 @@ class MapActivity : BaseActivity() {
         override fun onGetReverseGeoCodeResult(reverseGeoCodeResult: ReverseGeoCodeResult?) {
             reverseGeoCodeResult?.let {
                 mLocationClient.stop()
-                //
+                mLocationCity = it.addressDetail.city
+                mLocationProvince = it.addressDetail.province
+                mLocationArea = it.addressDetail.district
                 val poiInfoList = it.poiList
                 if (poiInfoList != null) {
                     LogUtils.i("poiInfoList$poiInfoList")
@@ -345,8 +352,9 @@ class MapActivity : BaseActivity() {
             LogUtils.i("sleectArea$poiInfo")
             intent.putExtra("address", poiInfo.address)
             intent.putExtra("name", poiInfo.name)
-            intent.putExtra("city", poiInfo.city)
-            intent.putExtra("area", poiInfo.area)
+            intent.putExtra("city", mLocationCity)
+            intent.putExtra("area", mLocationArea)
+            intent.putExtra("province", mLocationProvince)
             intent.putExtra("latLng", poiInfo.location)
             setResult(Activity.RESULT_OK, intent)
             finish()

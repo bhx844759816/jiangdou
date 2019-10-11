@@ -13,17 +13,17 @@ import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.http.Api
-import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
+import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.attestation.vm.PeopleAttestationViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.view.dialog.AttestationSuccessDialog
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.compress.CompressHelper
 import com.zhihu.matisse.compress.FileUtil
 import com.zhihu.matisse.engine.impl.GlideEngine
 import com.zhihu.matisse.internal.entity.CaptureStrategy
 import com.zhihu.matisse.internal.ui.widget.CropImageView
-import kotlinx.android.synthetic.main.activity_company_attestation.*
 import kotlinx.android.synthetic.main.activity_people_attestation.*
 import java.io.File
 
@@ -35,19 +35,24 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
 
     private var mIdFrontImgFile: File? = null
     private var mIdBackImgFile: File? = null
+
     override fun getLayoutId(): Int = R.layout.activity_people_attestation
     override fun getEventKey(): Any = Constants.EVENT_KEY_PEOPLE_ATTESTATION
 
     private var businessLicensePath: String? = null//营业执照图片
+    private var mMapImgFilePath: String? = null
     private var companyName: String? = null // 机构名称
-    private var locationArea: String? = null //定位
-    private var locationDetails: String? = null//详细地址
+    private var mLocationProvince: String? = null //省
+    private var mLocationCity: String? = null//市
+    private var mLocationArea: String? = null//区
+    private var mLocationAddress: String? = null//地址
+    private var mLocationAddressDetails: String? = null//详细地址
     private var companyDescription: String? = null//企业简介
     private var mSelectCompanyType: String? = null//企业类型
     private var mSelectCompanyPeople: String? = null//人员规模
     private var mSelectCompanyJobType: String? = null//所属行业
-    private var locationLat: Double = 0.0
-    private var locationLon: Double = 0.0
+    private var locationLat: String? = null
+    private var locationLon: String? = null
     private var mAttestationStatus: AttestationStatusModel? = null
 
     override fun initView() {
@@ -62,26 +67,62 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             val phone = etContactsPhone.text.toString().trim()//联系人电话
             val fileMaps = mutableMapOf<String, File>() // 上传文件数组
             val paramsMaps = mutableMapOf<String, String>() //上传参数数组
-            //提交的参数
-            paramsMaps["address"] = locationDetails!!
-            paramsMaps["alipay"] = alipay
-            paramsMaps["area"] = locationArea!!
-            paramsMaps["contact"] = contacts
-            paramsMaps["employerName"] = companyName!!
-            paramsMaps["hylx"] = mSelectCompanyJobType!!
-            paramsMaps["qylx"] = mSelectCompanyType!!
-            paramsMaps["rygm"] = mSelectCompanyPeople!!
             paramsMaps["duty"] = duty
             paramsMaps["tel"] = phone
-            paramsMaps["introduction"] = companyDescription!!
             paramsMaps["idcard"] = idCardNum
-            paramsMaps["latitude"] = locationLat.toString()
-            paramsMaps["longitude"] = locationLon.toString()
-            //上传的文件
-            fileMaps["businessLicenseFile"] = File(businessLicensePath!!) //
-            fileMaps["idcardBackFile"] = mIdBackImgFile!!//身份证反面
-            fileMaps["idcardFrontFile"] = mIdFrontImgFile!! //身份证正面
-            fileMaps["mapImgFile"] = File(Constants.APP_SAVE_DIR, Constants.MAPVIEW_FILENAME)
+            paramsMaps["alipay"] = alipay
+            paramsMaps["contact"] = contacts
+            mAttestationStatus?.let {
+                paramsMaps["id"] = it.id
+            }
+            mLocationAddress?.let {
+                paramsMaps["address"] = it
+            }
+            mLocationAddressDetails?.let {
+                paramsMaps["addressDetail"] = it
+            }
+            mLocationProvince?.let {
+                paramsMaps["province"] = it
+            }
+            mLocationCity?.let {
+                paramsMaps["city"] = it
+            }
+            mLocationArea?.let {
+                paramsMaps["area"] = it
+            }
+            companyName?.let {
+                paramsMaps["employerName"] = it
+            }
+            mSelectCompanyJobType?.let {
+                paramsMaps["hyfl"] = it
+            }
+            mSelectCompanyType?.let {
+                paramsMaps["qylx"] = it
+            }
+            mSelectCompanyPeople?.let {
+                paramsMaps["rygm"] = it
+            }
+            companyDescription?.let {
+                paramsMaps["introduction"] = it
+            }
+            locationLat?.let {
+                paramsMaps["latitude"] = it
+            }
+            locationLon?.let {
+                paramsMaps["longitude"] = it
+            }
+            businessLicensePath?.let {
+                fileMaps["businessLicenseFile"] = File(it) //企业证书
+            }
+            mIdBackImgFile?.let {
+                fileMaps["idcardBackFile"] = it//身份证反面
+            }
+            mIdFrontImgFile?.let {
+                fileMaps["idcardFrontFile"] = it//身份证正面
+            }
+            mMapImgFilePath?.let {
+                fileMaps["mapImgFile"] = File(it)
+            }
             mViewModel.submit(fileMaps, paramsMaps)
         }
         //back
@@ -106,15 +147,19 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
     override fun initData() {
         intent.apply {
             businessLicensePath = getStringExtra("businessLicense")
+            mMapImgFilePath = getStringExtra("mapImageFilePath")
             companyName = getStringExtra("companyName")
-            locationDetails = getStringExtra("locationDetails")
-            locationArea = getStringExtra("locationArea")
+            mLocationAddress = getStringExtra("address")
+            mLocationAddressDetails = getStringExtra("addressDetails")
+            mLocationCity = getStringExtra("city")
+            mLocationArea = getStringExtra("area")
+            mLocationProvince = getStringExtra("province")
             companyDescription = getStringExtra("companyDescription")
             mSelectCompanyType = getStringExtra("selectCompanyType")
             mSelectCompanyPeople = getStringExtra("selectCompanyPeople")
             mSelectCompanyJobType = getStringExtra("selectCompanyJobType")
-            locationLat = getDoubleExtra("locationLat", 0.0)
-            locationLon = getDoubleExtra("locationLon", 0.0)
+            locationLat = getStringExtra("locationLat")
+            locationLon = getStringExtra("locationLon")
             getStringExtra("AttestationStatus")?.let {
                 mAttestationStatus = CommonConfig.fromJson(it, AttestationStatusModel::class.java)
             }
@@ -144,6 +189,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             etIdNum.setText(it.idcard)
             etPayNumber.setText(it.alipay)
             etContactsPhone.setText(it.tel)
+            tvSubmit.isEnabled = true
         }
     }
 
@@ -167,10 +213,11 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
      * 展示身份证正反面
      */
     private fun showIdCardImg(data: Intent, isFront: Boolean) {
+        val file = FileUtil.getFileByPath(Matisse.obtainPathResult(data)[0])
         if (isFront) {
-            mIdFrontImgFile = FileUtil.getFileByPath(Matisse.obtainPathResult(data)[0])
+            mIdFrontImgFile = CompressHelper.getDefault(this).compressToFile(file)
         } else {
-            mIdBackImgFile = FileUtil.getFileByPath(Matisse.obtainPathResult(data)[0])
+            mIdBackImgFile = CompressHelper.getDefault(this).compressToFile(file)
         }
         Glide.with(this)
             .load(if (isFront) mIdFrontImgFile else mIdBackImgFile)
@@ -202,11 +249,8 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
      * 是否是提交状态
      */
     private fun isSubmitState(): Boolean {
-        if (mAttestationStatus != null) {
-            return false
-        }
-        return mIdFrontImgFile != null &&
-                mIdBackImgFile != null &&
+        return (mIdFrontImgFile != null || mAttestationStatus != null) &&
+                (mIdBackImgFile != null || mAttestationStatus != null) &&
                 etUserName.text.toString().trim().isNotEmpty() &&
                 etIdNum.text.toString().trim().isNotEmpty() &&
                 etPayNumber.text.toString().trim().isNotEmpty() &&
@@ -214,6 +258,9 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
                 etContactsPhone.text.toString().trim().isNotEmpty()
     }
 
+    /**
+     *
+     */
     override fun dataObserver() {
         registerObserver(Constants.TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS, Boolean::class.java).observe(this, Observer {
             AttestationSuccessDialog.show(this@PeopleAttestationActivity) {

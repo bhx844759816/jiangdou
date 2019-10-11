@@ -20,9 +20,15 @@ class EmployRecordSignUpViewModel : BaseViewModel<EmployRecordSignUpRepository>(
     }
 
     /**
-     * 录用 - 单个录取
+     * 录用
      */
-    fun acceptResume(id: String) {
-        mRepository.acceptResume(id)
+    fun acceptResume(ids: ArrayList<Long>) {
+        mRepository.acceptResume(ids)
+    }
+    /**
+     * 驳回
+     */
+    fun regectedResume(ids: ArrayList<Long>) {
+        mRepository.acceptResume(ids)
     }
 }

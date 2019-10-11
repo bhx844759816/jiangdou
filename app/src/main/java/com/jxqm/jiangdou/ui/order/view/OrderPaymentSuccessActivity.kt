@@ -1,16 +1,24 @@
 package com.jxqm.jiangdou.ui.order.view
 
+import android.graphics.Color
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.ViewGroup
 import android.widget.TextView
 import com.bhx.common.base.BaseActivity
+import com.bhx.common.utils.AppManager
 import com.bhx.common.utils.DensityUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.CommonConfig
+import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
 import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
+import com.jxqm.jiangdou.ui.publish.view.JobPublishActivity
+import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_order_payment_success.*
 
 /**
@@ -29,6 +37,26 @@ class OrderPaymentSuccessActivity : BaseActivity() {
         toolbar.setNavigationOnClickListener {
             finish()
         }
+        val spannableString = SpannableString("小豆会在1小时内对发布内容进行审核")
+        spannableString.setSpan(
+            ForegroundColorSpan(Color.rgb(136, 165, 253)),
+            4,
+            7,
+            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        tvTips.text = spannableString
+        //继续发布
+        tvContinuePublish.clickWithTrigger {
+            startActivity<JobPublishActivity>()
+            AppManager.getAppManager().finishActivity(OrderPaymentSuccessActivity::class.java)
+            AppManager.getAppManager().finishActivity(OrderPaymentActivity::class.java)
+            AppManager.getAppManager().finishActivity(JobPublishActivity::class.java)
+        }
+        //返回工作台
+        tvBackWorkStage.clickWithTrigger {
+            AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
+        }
+
     }
 
     override fun initData() {
@@ -48,6 +76,7 @@ class OrderPaymentSuccessActivity : BaseActivity() {
             addTimeRange(listTimes)
         }
     }
+
     /**
      * 添加日期区间
      */

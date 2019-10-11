@@ -46,6 +46,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/ivUserSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -56,7 +57,7 @@
 
 
             <TextView
-                android:id="@+id/tvSingUpTime"
+                android:id="@+id/tvWorkTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -68,7 +69,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvUserName" />
 
             <TextView
-                android:id="@+id/tvMoney"
+                android:id="@+id/tvAmountSettle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -81,24 +82,25 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvMoneyCenterLine"
+                android:id="@+id/tvAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="+3000币"
                 android:textColor="@color/text_hint"
                 android:textSize="@dimen/text_small_size"
-                app:layout_constraintLeft_toLeftOf="@id/tvMoney"
-                app:layout_constraintTop_toBottomOf="@id/tvMoney" />
+                app:layout_constraintLeft_toLeftOf="@id/tvAmountSettle"
+                app:layout_constraintTop_toBottomOf="@id/tvAmountSettle" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.loopeer.shadow.ShadowView>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="30dp">
+        android:layout_height="30dp"
+        android:background="@color/white">
 
         <TextView
+            android:id="@+id/tvContactCustomerService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -110,13 +112,13 @@
             android:textSize="@dimen/text_small_size" />
 
         <TextView
-            android:id="@+id/tvDetails"
+            android:id="@+id/tvAgainSettle"
             android:layout_width="85dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@color/colorAccent"
             android:gravity="center"
-            android:text="详情"
+            android:text="重新结算"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small_size" />
 
@@ -124,7 +126,7 @@
             android:id="@+id/tvContactOneSelf"
             android:layout_width="85dp"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/tvDetails"
+            android:layout_toLeftOf="@id/tvAgainSettle"
             android:background="@color/employe_item_refuse_bg"
             android:gravity="center"
             android:text="联系本人"

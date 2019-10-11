@@ -29,10 +29,10 @@
                 <TextView
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="80dp"
-                    android:text="请支付如下押金"
+                    android:text="支付成功"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_big_title_size"
                     app:layout_constraintLeft_toLeftOf="parent" />
@@ -44,7 +44,7 @@
                     android:layout_below="@id/tvTitle"
                     android:layout_alignLeft="@id/tvTitle"
                     android:layout_marginTop="10dp"
-                    android:text="如停止招聘，押金马上退还"
+                    android:text="小豆会在1小时内对发布内容进行审核"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_small_size" />
 

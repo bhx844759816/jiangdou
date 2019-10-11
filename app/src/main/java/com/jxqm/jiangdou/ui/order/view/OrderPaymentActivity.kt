@@ -1,13 +1,16 @@
 package com.jxqm.jiangdou.ui.order.view
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.graphics.Paint
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Observer
-import com.bhx.common.mvvm.BaseMVVMActivity
+import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.DensityUtil
-import com.bhx.common.utils.LogUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jaeger.library.StatusBarUtil
@@ -30,7 +33,7 @@ import kotlinx.android.synthetic.main.activity_order_payment.*
 @SuppressLint("SetTextI18n")
 class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
 
-    private var mAccountBalance: Float = 0.0f
+    private var mAccountBalance: Float = 0.0f //账户余额
     private val gson = Gson()
     private var jobId: String? = null
     private var orderDetailsModel: OrderDetailsModel? = null
@@ -45,15 +48,26 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
         jobId = intent.getStringExtra("JobId")
         //获取订单详情
         jobId?.let {
-            mViewModel.getAccountBalance()
-            mViewModel.getOrderDetails(it)
+            mViewModel.getOrderDetail(it)
         }
+        val spannableString = SpannableString("请支付如下押金")
+        spannableString.setSpan(
+            ForegroundColorSpan(Color.rgb(136, 165, 253)),
+            1,
+            3,
+            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        tvTitle.text = spannableString
         //支付押金
         tvPay.clickWithTrigger {
-            PromptDialog.show(this) {
-                orderDetailsModel?.let {
-                    mViewModel.payOrder(it.jobId)
+            if (isAccountBalanceAdequate()) {
+                PromptDialog.show(this, "确认支付押金并发布兼职吗？") {
+                    orderDetailsModel?.let {
+                        mViewModel.payOrder(it.jobId)
+                    }
                 }
+            } else {
+
             }
         }
         //返回键监听
@@ -62,7 +76,9 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
         }
     }
 
-
+    /**
+     * 注册接收
+     */
     override fun dataObserver() {
         //获取订单详情成功
         registerObserver(Constants.TAG_GET_ORDER_DETAILS_SUCCESS, OrderDetailsModel::class.java).observe(
@@ -76,7 +92,7 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
                 tvTotalPaymentMoney.text = "${it.amount} 币"
                 tvCommission.text = "${it.commission} 币"
                 tvTotalPayment.text = "支付   ${it.amount} 币"
-                //设置下滑线
+                //设置删除
                 tvCommission.paintFlags = tvCommission.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 val listDates = gson.fromJson<List<String>>(it.datesJson, object : TypeToken<List<String>>() {
                 }.type)
@@ -85,6 +101,10 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
                     }.type)
                 addDataRange(listDates)
                 addTimeRange(listTimes)
+                if (!isAccountBalanceAdequate()) {
+                    tvPay.setBackgroundColor(Color.parseColor("#FF7A45"))
+                    tvPay.text = "余额不足，去充值"
+                }
             })
         //获取账户余额
         registerObserver(Constants.TAG_GET_USER_ACCOUNT_BALANCE_SUCCESS, String::class.java).observe(this, Observer {
@@ -92,6 +112,17 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
         })
         //支付订单成功
         registerObserver(Constants.TAG_PAY_ORDER_SUCCESS, Boolean::class.java).observe(this, Observer {
+            //支付押金成功刷新等待发布列表
+            LiveBus.getDefault().postEvent(
+                Constants.EVENT_KEY_WAIT_PUBLISH_JOB,
+                Constants.TAG_WAIT_PUBLISH_REFRESH_JOB_LIST, true
+            )
+            //支付押金成功刷新等待审核列表
+            LiveBus.getDefault().postEvent(
+                Constants.EVENT_KEY_WAIT_EXAMINE_JOB,
+                Constants.TAG_WAIT_EXAMINE_REFRESH_JOB_LIST, true
+            )
+            //跳转到支付成功界面
             startActivity<OrderPaymentSuccessActivity>("orderDetailsModel" to orderDetailsModel!!.toJson())
         })
     }
@@ -137,5 +168,15 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
             textView.layoutParams = layoutParams
             flTimeRangeParent.addView(textView)
         }
+    }
+
+    /**
+     * 判断余额是否充足
+     */
+    private fun isAccountBalanceAdequate(): Boolean {
+        orderDetailsModel?.let {
+            return it.amount.toFloat() < mAccountBalance
+        }
+        return true
     }
 }

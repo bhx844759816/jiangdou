@@ -9,11 +9,12 @@ import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.model.EmployRecordEmploymentItem
 import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordEmploymentAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordEmploymentViewModel
 import kotlinx.android.synthetic.main.fragment_employ_record_employment.*
+import kotlinx.android.synthetic.main.fragment_employ_record_employment.recyclerView
+import kotlinx.android.synthetic.main.fragment_employ_record_employment.swipeRefreshLayout
 
 /**
  * 雇佣记录 - 已录用
@@ -31,10 +32,11 @@ class EmployRecordEmploymentFragment : BaseMVVMFragment<EmployRecordEmploymentVi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         mAdapter = EmployRecordEmploymentAdapter(mContext)
         recyclerView.adapter = mAdapter
+        swipeRefreshLayout.setEnableLoadMore(false)
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
@@ -62,6 +64,7 @@ class EmployRecordEmploymentFragment : BaseMVVMFragment<EmployRecordEmploymentVi
                 }
                 else -> 0
             }
+            mAdapter.status = mStatus
             mUiStatusController.changeUiStatus(UiStatus.LOADING)
             isRefresh = true
             getData()
@@ -79,6 +82,11 @@ class EmployRecordEmploymentFragment : BaseMVVMFragment<EmployRecordEmploymentVi
                     mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                 } else {
                     mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                    if (list.size >= 10) {
+                        swipeRefreshLayout.setEnableLoadMore(true)
+                    } else {
+                        swipeRefreshLayout.setEnableLoadMore(false)
+                    }
                 }
                 mEmployeeResumeModelList.clear()
                 mEmployeeResumeModelList.addAll(list)

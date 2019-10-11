@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/halfTransparent">
+
+    <RadioGroup
+        android:id="@+id/rgSortParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rbSortAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:checked="true"
+            android:padding="15dp"
+            android:text="综合排序"
+            android:textColor="@color/select_job_list_sort_rule"
+            android:textSize="@dimen/text_small_size" />
+
+        <View style="@style/DividerLineTheme" />
+
+        <RadioButton
+            android:id="@+id/rbSortTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="15dp"
+            android:text="最新发布"
+            android:textColor="@color/select_job_list_sort_rule"
+            android:textSize="@dimen/text_small_size" />
+
+        <View style="@style/DividerLineTheme" />
+
+        <RadioButton
+            android:id="@+id/rbSortDistance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="15dp"
+            android:text="离我最近"
+            android:textColor="@color/select_job_list_sort_rule"
+            android:textSize="@dimen/text_small_size" />
+
+        <View style="@style/DividerLineTheme" />
+
+        <RadioButton
+            android:id="@+id/rbSortSalary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="15dp"
+            android:text="时薪最高"
+            android:textColor="@color/select_job_list_sort_rule"
+            android:textSize="@dimen/text_small_size" />
+
+        <View style="@style/DividerLineTheme" />
+
+        <RadioButton
+            android:id="@+id/rbSortRecruitNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:padding="15dp"
+            android:text="招人最多"
+            android:textColor="@color/select_job_list_sort_rule"
+            android:textSize="@dimen/text_small_size" />
+    </RadioGroup>
+
+
+</FrameLayout>

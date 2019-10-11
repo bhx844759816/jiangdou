@@ -2,18 +2,22 @@ package com.jxqm.jiangdou.ui.home.view
 
 import android.Manifest
 import android.os.Handler
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.LogUtils
+import com.bhx.common.utils.ToastUtils
 import com.jaeger.library.StatusBarUtil
+import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.home.vm.MainViewModel
 import com.jxqm.jiangdou.ui.login.view.GuideActivity
+import com.jxqm.jiangdou.ui.login.view.LoginActivity
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.startActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -28,6 +32,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
     override fun getEventKey(): Any = Constants.EVENT_KEY_MAIN
 
     private var mListFragment = arrayListOf<Fragment>()
+    private var mLastPosition = 0
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -45,10 +50,23 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
             }
 
             override fun onTabUnselected(position: Int) {
+                LogUtils.i("onTabUnselected$position")
             }
 
             override fun onTabSelected(position: Int) {
-                myViewPage.currentItem = position
+                if (position == 1) {
+                    if (MyApplication.instance().userModel == null) {
+                        ToastUtils.toastShort("未登录请先登录")
+                        startActivity<LoginActivity>()
+                        myBottomNavigationBar.selectTab(mLastPosition,false)
+                    } else {
+                        myViewPage.currentItem = position
+                    }
+                } else {
+                    myViewPage.currentItem = position
+                    mLastPosition = position
+                }
+
             }
 
         })

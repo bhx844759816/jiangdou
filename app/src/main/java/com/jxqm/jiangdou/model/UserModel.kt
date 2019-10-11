@@ -9,7 +9,8 @@ data class UserModel(
     val balance: String,
     val phone: String,
     val rankPoints: String,
-    val username: String
+    val username: String,
+    val perfectionDegree: String //简历完善度
 )
 //"data": {
 //    "avatar": "string",//头像

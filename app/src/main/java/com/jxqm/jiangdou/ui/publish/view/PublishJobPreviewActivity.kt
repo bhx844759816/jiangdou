@@ -9,7 +9,10 @@ import com.bhx.common.utils.DensityUtil
 import com.bhx.common.utils.LogUtils
 import com.bhx.common.view.FlowLayout
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.jaeger.library.StatusBarUtil
+import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
@@ -24,6 +27,7 @@ import java.io.File
  */
 class PublishJobPreviewActivity : BaseActivity() {
     private var mJobDetailsModel: JobDetailsModel? = null
+    private val mGson = Gson()
     override fun getLayoutId(): Int = R.layout.activity_publish_job_preview
 
     override fun initView() {
@@ -32,16 +36,30 @@ class PublishJobPreviewActivity : BaseActivity() {
         mJobDetailsModel = CommonConfig.fromJson(jsonString!!, JobDetailsModel::class.java)
         LogUtils.i("工作详情$mJobDetailsModel")
         mJobDetailsModel?.let {
-            tvJobType.text = it.jobTypeValue
+            tvJobType.text = it.jobTypeName
             tvJobMoney.text = "${it.salary} 币/小时"
             tvRecruitPeoples.text = "招${it.recruitNum}人"
             tvJobTitle.text = it.title
             tvJobContent.text = it.content
-            tvJobTips.text = it.areaCode.split(",")[1]
-            tvJobArea.text = it.area
-            showDateRange(it.dates, it.times)
+            tvJobTips.text = it.city + "|" + it.area
+            tvJobArea.text = it.address
+            val listDates = mGson.fromJson<List<String>>(it.datesJson, object : TypeToken<List<String>>() {
+            }.type)
+            val listTimes =
+                mGson.run {
+                    fromJson<List<TimeRangeModel>>(it.timesJson, object : TypeToken<List<TimeRangeModel>>() {
+                    }.type)
+                }
+            if (listDates.isNotEmpty() && listTimes.isNotEmpty()) {
+                showDateRange(listDates, listTimes)
+            }
             val mapFile = File(Constants.APP_SAVE_DIR + Constants.MAPVIEW_FILENAME)
             Glide.with(this).load(mapFile).into(ivMapView)
+        }
+        //企业认证状态信息
+        MyApplication.instance().attestationViewModel?.let {
+            joPublishCompanyName.text = it.employerName
+            joPublishCompanyUserName.text = "联系人: ${it.contact}"
         }
         toolbar.setNavigationOnClickListener {
             finish()

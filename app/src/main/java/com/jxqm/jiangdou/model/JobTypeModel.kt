@@ -8,16 +8,6 @@ data class JobTypeModel(
     val id: Int, val parentId: Int, val code: String,
     val jobTypeName: String, val orderNum: Int,
     val enable: Boolean, val hot: Boolean,
+    var isChecked: Boolean,
     val imgUrl: String, val jobTypes: List<JobTypeModel>
 )
-//{
-//    "id": 44,
-//    "parentId": 6,
-//    "code": "0604",
-//    "jobTypeName": "其他",
-//    "orderNum": 10,
-//    "enable": true,
-//    "hot": false,
-//    "imgUrl": null,
-//    "jobTypes": []
-//}

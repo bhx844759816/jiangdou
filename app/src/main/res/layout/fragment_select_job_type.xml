@@ -4,68 +4,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="33dp"
-        android:text="@string/publishJobTitleOne"
-        android:textColor="@color/text_publish_job"
-        android:textSize="@dimen/text_big_size"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/tvNextStep"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvHotTypeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:text="@string/hotJobType"
-        android:textColor="@color/text_publish_job"
-        android:textSize="@dimen/text_default_size"
-        app:layout_constraintLeft_toLeftOf="@id/tvTitle"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <com.jxqm.jiangdou.view.GridRadioGroup
-        android:id="@+id/rgHotJobType"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        app:layout_constraintLeft_toLeftOf="@id/tvHotTypeTitle"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvHotTypeTitle"
-        app:numColumns="3"
-        app:horizontalSpacing="15dp"
-        app:verticalSpacing="15dp">
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="33dp"
+                android:text="@string/publishJobTitleOne"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_big_size"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </com.jxqm.jiangdou.view.GridRadioGroup>
+            <TextView
+                android:id="@+id/tvHotTypeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                android:text="@string/hotJobType"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_default_size"
+                app:layout_constraintLeft_toLeftOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+            <com.jxqm.jiangdou.view.GridRadioGroup
+                android:id="@+id/rgHotJobType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                app:horizontalSpacing="15dp"
+                app:layout_constraintLeft_toLeftOf="@id/tvHotTypeTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHotTypeTitle"
+                app:numColumns="3"
+                app:verticalSpacing="15dp">
+
+            </com.jxqm.jiangdou.view.GridRadioGroup>
 
 
-    <TextView
-        android:id="@+id/tvMoreTypeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="@string/moreJobType"
-        android:textColor="@color/text_publish_job"
-        android:textSize="@dimen/text_default_size"
-        app:layout_constraintLeft_toLeftOf="@id/rgHotJobType"
-        app:layout_constraintTop_toBottomOf="@id/rgHotJobType" />
+            <TextView
+                android:id="@+id/tvMoreTypeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/moreJobType"
+                android:textColor="@color/text_publish_job"
+                android:textSize="@dimen/text_default_size"
+                app:layout_constraintLeft_toLeftOf="@id/rgHotJobType"
+                app:layout_constraintTop_toBottomOf="@id/rgHotJobType" />
 
-    <com.jxqm.jiangdou.view.GridRadioGroup
-        android:id="@+id/rgMoreJobType"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        app:horizontalSpacing="15dp"
-        app:layout_constraintLeft_toLeftOf="@id/tvMoreTypeTitle"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMoreTypeTitle"
-        app:numColumns="3"
-        app:verticalSpacing="15dp" />
+            <com.jxqm.jiangdou.view.GridRadioGroup
+                android:id="@+id/rgMoreJobType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                app:horizontalSpacing="15dp"
+                app:layout_constraintLeft_toLeftOf="@id/tvMoreTypeTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMoreTypeTitle"
+                app:numColumns="3"
+                app:verticalSpacing="15dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
     <TextView
@@ -73,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="53dp"
         android:background="@drawable/select_button_bg"
-        android:enabled="true"
+        android:enabled="false"
         android:gravity="center"
         android:text="@string/nextSteps"
         android:textColor="@color/white"

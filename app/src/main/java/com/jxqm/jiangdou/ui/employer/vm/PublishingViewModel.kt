@@ -8,7 +8,7 @@ import com.jxqm.jiangdou.ui.employer.vm.repository.PublishingRepository
  */
 class PublishingViewModel : BaseViewModel<PublishingRepository>() {
     private var pageNo: Int = 1
-    private var pageSize: Int = 2
+    private var pageSize: Int = 10
     fun getPublishingJob(isRefresh: Boolean) {
         if (isRefresh) {
             pageNo = 1

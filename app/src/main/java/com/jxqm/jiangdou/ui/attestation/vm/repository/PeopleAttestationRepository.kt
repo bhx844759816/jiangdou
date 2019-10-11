@@ -16,6 +16,7 @@ import java.io.File
 class PeopleAttestationRepository : BaseEventRepository() {
 
     fun submit(fileMaps: Map<String, File>, paramsMaps: Map<String, String>) {
+        LogUtils.i("submit$paramsMaps")
         val mulBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .apply {

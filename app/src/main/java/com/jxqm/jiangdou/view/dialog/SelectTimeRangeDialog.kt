@@ -51,8 +51,8 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
             if (wvStartTime.currentItem > wvEndTime.currentItem) {
                 return@clickWithTrigger
             }
-            val startTime = "${mItems[wvStartTime.currentItem]} : ${mSecondItems[wvStartSecond.currentItem]}"
-            val endTime = "${mItems[wvEndTime.currentItem]} : ${mSecondItems[wvEndSecond.currentItem]}"
+            val startTime = "${mItems[wvStartTime.currentItem]}:${mSecondItems[wvStartSecond.currentItem]}"
+            val endTime = "${mItems[wvEndTime.currentItem]}:${mSecondItems[wvEndSecond.currentItem]}"
             mCallBack?.invoke(startTime, endTime)
             dismissAllowingStateLoss()
         }

@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/ivUserName"
+                android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
@@ -73,25 +73,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/ivUserGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/icon_girl"
-                app:layout_constraintBottom_toBottomOf="@id/ivUserName"
-                app:layout_constraintLeft_toRightOf="@id/ivUserName"
-                app:layout_constraintTop_toTopOf="@id/ivUserName" />
+                app:layout_constraintBottom_toBottomOf="@id/tvUserName"
+                app:layout_constraintLeft_toRightOf="@id/tvUserName"
+                app:layout_constraintTop_toTopOf="@id/tvUserName" />
 
             <TextView
                 android:id="@+id/tvUserAge"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="14dp"
                 android:layout_marginTop="6dp"
                 android:drawableLeft="@drawable/icon_age"
                 android:drawablePadding="8dp"
                 android:text="20岁"
                 android:textSize="@dimen/text_small_size"
-                app:layout_constraintLeft_toLeftOf="@id/ivUserName"
-                app:layout_constraintTop_toBottomOf="@id/ivUserName" />
+                app:layout_constraintLeft_toLeftOf="@id/tvUserName"
+                app:layout_constraintTop_toBottomOf="@id/tvUserName" />
 
             <TextView
                 android:id="@+id/tvUserPhone"

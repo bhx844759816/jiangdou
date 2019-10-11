@@ -19,7 +19,8 @@ class VerifyCodeViewModel : BaseViewModel<VerifyCodeRepository>() {
     fun getToken(deviceId: String, phone: String, code: String) {
         val params = mapOf(
             "username" to phone, "password" to code,
-            "grant_type" to "password", "client_id" to "jxdou_web", "client_secret" to "123456", "auth_type" to "sms",
+            "grant_type" to "password", "client_id" to "jxdou_web",
+            "client_secret" to "123456", "auth_type" to "sms",
             "device_id" to deviceId
         )
         mRepository.getToken(params)

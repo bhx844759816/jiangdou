@@ -9,9 +9,8 @@ import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
-import com.jxqm.jiangdou.model.EmployRecordReportDutyItem
 import com.jxqm.jiangdou.model.EmployeeResumeModel
-import com.jxqm.jiangdou.ui.employee.view.ResumeDetailsActivity
+import com.jxqm.jiangdou.ui.user.view.ResumeDetailsActivity
 import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
@@ -40,20 +39,21 @@ class EmployRecordReportDutyAdapter(context: Context) : MultiItemTypeAdapter<Emp
                     val tvContact = it.getView<TextView>(R.id.tvContact)
                     val tvDetails = it.getView<TextView>(R.id.tvDetails)
                     tvUserName.text = model.name
-                    tvSignInTime.text ="签到时间： ${model.arrivalTime}"
+                    tvSignInTime.text = "签到时间： ${model.arrivalTime}"
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.avatar)
                         .transform(GlideCircleTransform(mContext))
                         .into(ivHeadPhoto)
+                    tvJobTitle.text = "岗位:${model.title}"
                     if (model.gender == "男") {
                         ivUserSex.setBackgroundResource(R.drawable.icon_boy)
                     } else {
                         ivUserSex.setBackgroundResource(R.drawable.icon_girl)
                     }
                     ivHeadPhoto.clickWithTrigger {
-                        mContext.startActivity<ResumeDetailsActivity>()
+                        mContext.startActivity<ResumeDetailsActivity>("UserId" to model.userId)
                     }
                     tvDetails.clickWithTrigger {
-                        mContext.startActivity<ResumeDetailsActivity>()
+                        mContext.startActivity<ResumeDetailsActivity>("UserId" to model.userId)
                     }
                     //录用
                     tvContact.clickWithTrigger {

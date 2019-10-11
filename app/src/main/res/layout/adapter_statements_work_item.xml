@@ -40,6 +40,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvEmployeeTitle">
 
         <TextView
+            android:id="@+id/tvCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="郑州"
@@ -54,6 +55,7 @@
             android:background="@color/divider_vertical_line" />
 
         <TextView
+            android:id="@+id/tvArea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="金水区"
@@ -69,6 +71,7 @@
             android:textSize="@dimen/text_small_size" />
 
         <TextView
+            android:id="@+id/tvRecruitNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -78,7 +81,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvJobMoney"
+        android:id="@+id/tvAmountSettle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
@@ -90,24 +93,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvJobMoneyDelete"
+        android:id="@+id/tvAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+1000币"
         android:textColor="@color/text_default"
         android:textSize="@dimen/text_small_size"
-        app:layout_constraintLeft_toLeftOf="@id/tvJobMoney"
-        app:layout_constraintTop_toBottomOf="@id/tvJobMoney" />
+        app:layout_constraintLeft_toLeftOf="@id/tvAmountSettle"
+        app:layout_constraintTop_toBottomOf="@id/tvAmountSettle" />
 
-    <ImageView
-        android:id="@+id/ivRefuse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/icon_refuse"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/divider"
-        app:layout_constraintRight_toRightOf="parent"
-        />
 
     <View
         android:id="@+id/divider"
@@ -124,7 +118,6 @@
         android:layout_height="30dp"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
-        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider">
@@ -160,15 +153,4 @@
             android:textSize="@dimen/text_small_size" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvRefuseTips"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="20dp"
-        android:text="您已拒绝结算，请等待客服与您联系"
-        android:textColor="@color/text_hint"
-        android:textSize="@dimen/text_big_small_size"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
 </androidx.constraintlayout.widget.ConstraintLayout>

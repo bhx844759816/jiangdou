@@ -9,8 +9,7 @@ import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.model.JobSignModel
-import com.jxqm.jiangdou.model.JobSignModelBase
+import com.jxqm.jiangdou.model.JobEmployeeBaseModel
 import com.jxqm.jiangdou.ui.employee.adapter.SignUpWorkListAdapter
 import com.jxqm.jiangdou.ui.employee.vm.EmployeeSignUpViewModel
 import kotlinx.android.synthetic.main.fragment_end_sign_up_publish_layout.*
@@ -24,13 +23,13 @@ class EmployeeSignUpFragment : BaseMVVMFragment<EmployeeSignUpViewModel>() {
     override fun getEventKey(): Any = Constants.EVENT_KEY_EMPLOYEE_SIGN_UP
     private lateinit var mUiStatusController: UiStatusController
     private lateinit var mAdapter: SignUpWorkListAdapter
-    private val mJobSingModelList = mutableListOf<JobSignModelBase>()
+    private val mJobSingModelList = mutableListOf<JobEmployeeBaseModel>()
 
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         //获取已报名列表成功
         registerObserver(Constants.TAG_GET_EMPLOYEE_SIGN_LIST_SUCCESS, List::class.java).observe(this, Observer {
-            val list = it as List<JobSignModelBase>
+            val list = it as List<JobEmployeeBaseModel>
             mJobSingModelList.clear()
             mJobSingModelList.addAll(list)
             if (mJobSingModelList.isEmpty()) {
@@ -57,8 +56,9 @@ class EmployeeSignUpFragment : BaseMVVMFragment<EmployeeSignUpViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         mAdapter = SignUpWorkListAdapter(mContext)
+        swipeRefreshLayout.setEnableLoadMore(false)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
         swipeRefreshLayout.setOnRefreshListener {

@@ -16,7 +16,7 @@ class JobPublishViewModel : BaseViewModel<JobPublishRepository>() {
         mRepository.getAttestationDetails()
     }
 
-    fun publishJob(mapFilePath: String, jobDetailsModel: JobDetailsModel) {
-        mRepository.publishJob(mapFilePath, jobDetailsModel)
+    fun publishJob(mapFilePath: String, paramsMap: MutableMap<String,String>) {
+        mRepository.publishJob(mapFilePath, paramsMap)
     }
 }

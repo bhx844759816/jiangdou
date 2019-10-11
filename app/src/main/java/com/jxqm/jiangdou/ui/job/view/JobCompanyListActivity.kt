@@ -4,6 +4,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.bhx.common.base.BaseActivity
 import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
@@ -23,27 +24,38 @@ import kotlinx.android.synthetic.main.view_search_top.*
 class JobCompanyListActivity : BaseActivity() {
     private val mTitles = arrayListOf("搜职位", "搜公司")
     private val mListFragment = arrayListOf<Fragment>()
+    private var mCurrentFragment: Fragment? = null
+    private var mSearchKey: String = ""
     override fun getLayoutId(): Int = R.layout.activity_job_company_list
 
     override fun initView() {
         super.initView()
+        mSearchKey = intent.getStringExtra("SearchKey")
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
-        mListFragment.add(JobListFragment())
-        mListFragment.add(CompanyListFragment())
+        mListFragment.add(JobListFragment.newInstance(mSearchKey))
+        mListFragment.add(CompanyListFragment.newInstance(mSearchKey))
         viewPager.offscreenPageLimit = 2
         viewPager.adapter = MyPageAdapter(supportFragmentManager)
         tvCity.clickWithTrigger {
             startActivity<SelectCity>()
         }
-        tvSearchJob.clickWithTrigger {
-            startActivity<JobSearchActivity>()
-        }
         tabLayout.addTab(mTitles[0])
         tabLayout.addTab(mTitles[1])
+        mCurrentFragment = mListFragment[0]
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
         tabLayout.setupWithViewPager(viewPager)
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
 
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                mCurrentFragment = mListFragment[position]
+            }
+        })
         cancel.clickWithTrigger {
             finish()
         }

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="6dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="6dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -49,6 +49,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvCompanyName">
 
             <TextView
+                android:id="@+id/tvCompanyPeopleNum"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_list_item_bg"
@@ -58,6 +59,7 @@
                 android:textSize="@dimen/text_big_small_size" />
 
             <TextView
+                android:id="@+id/tvCompanyType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -71,6 +73,7 @@
 
     <View style="@style/DividerLineTheme" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,28 +85,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="公司简介"
-            android:textStyle="bold"
             android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
+            android:textSize="@dimen/text_default_size"
+            android:textStyle="bold" />
 
-        <TextView
+        <com.ms.square.android.expandabletextview.ExpandableTextView xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/expand_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ellipsize="end"
-            android:maxLines="4"
-            android:text="@string/test_company_details"
-            android:textColor="@color/company_details_text_color"
-            android:textSize="@dimen/text_small_size" />
+            expandableTextView:animDuration="200"
+            expandableTextView:maxCollapsedLines="4">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:text="展开>>"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_default_size" />
+            <TextView
+                android:id="@id/expandable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_hint"
+                android:textSize="@dimen/text_default_size" />
+
+            <ImageButton
+                android:id="@id/expand_collapse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:background="@android:color/transparent"
+                android:padding="16dp" />
+        </com.ms.square.android.expandabletextview.ExpandableTextView>
     </LinearLayout>
 
     <View style="@style/DividerLineTheme" />
@@ -119,22 +126,63 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="公司地址"
-            android:textStyle="bold"
             android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
+            android:textSize="@dimen/text_default_size"
+            android:textStyle="bold" />
 
-        <ImageView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitCenter" />
+            android:layout_height="80dp">
+
+            <ImageView
+                android:id="@+id/ivMapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_white_circle_rectage"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:background="@drawable/icon_location" />
+
+                <TextView
+                    android:id="@+id/tvCompanyArea"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="11"
+                    android:text="河南省郑州市金水区木华广场"
+                    android:textColor="@color/text_publish_sex"
+                    android:textSize="@dimen/text_default_size" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/icon_arrow_right" />
+            </LinearLayout>
+
+        </FrameLayout>
 
         <TextView
+            android:id="@+id/tvCompanyAddressDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
             android:text="详细地址:郑州市 金水区 木华广场3号楼B座920室"
             android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
+            android:textSize="@dimen/text_small_size" />
     </LinearLayout>
 
     <TextView
@@ -142,8 +190,8 @@
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:textStyle="bold"
         android:text="招聘职位"
         android:textColor="@color/text_default"
-        android:textSize="@dimen/text_default_size" />
+        android:textSize="@dimen/text_default_size"
+        android:textStyle="bold" />
 </LinearLayout>

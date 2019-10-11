@@ -3,12 +3,10 @@ package com.jxqm.jiangdou
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
-import com.baidu.mapapi.CoordType
 import com.baidu.mapapi.SDKInitializer
 import com.bhx.common.BaseApplication
 import com.bhx.common.http.RetrofitManager
 import com.bhx.common.utils.AppManager
-import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.NetworkUtils
 import com.bhx.common.utils.SPUtils
 import com.fengchen.uistatus.UiStatusManager
@@ -19,7 +17,9 @@ import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.http.interceptor.TokenInterceptor
 import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.model.UserModel
-import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
+import com.jxqm.jiangdou.model.AttestationStatusModel
+import com.jxqm.jiangdou.model.LocationModel
+import com.jxqm.jiangdou.view.refresh.BaseRefreshFooter
 import com.jxqm.jiangdou.view.refresh.BaseRefreshHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
@@ -33,6 +33,7 @@ class MyApplication : BaseApplication() {
     var refreshToken: String? = null
     var userModel: UserModel? = null //存储用户信息
     var attestationViewModel: AttestationStatusModel? = null
+    var locationModel: LocationModel? = null
 
     private val mActivityCallBack = object : ActivityLifecycleCallbacks {
         override fun onActivityPaused(p0: Activity) {
@@ -87,6 +88,13 @@ class MyApplication : BaseApplication() {
 
             BaseRefreshHeader(context)
         }
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+            layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white)//全局设置主题颜色
+            layout.setDisableContentWhenLoading(false)
+            BaseRefreshFooter(context)
+
+        }
         /**
          * 多状态布局统一设置
          */
@@ -103,7 +111,7 @@ class MyApplication : BaseApplication() {
         UiStatusNetworkStatusProvider.getInstance()
             .registerOnRequestNetworkStatusEvent { context -> NetworkUtils.isConnected(context) }
         registerActivityLifecycleCallbacks(mActivityCallBack)
-
+//        Utils_CrashHandler.getInstance().init(this)
         //百度地图初始化
         SDKInitializer.initialize(this)
     }

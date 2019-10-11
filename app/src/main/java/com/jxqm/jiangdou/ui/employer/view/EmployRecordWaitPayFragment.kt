@@ -1,19 +1,26 @@
 package com.jxqm.jiangdou.ui.employer.view
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.http.RxHelper
 import com.bhx.common.mvvm.BaseMVVMFragment
+import com.bhx.common.utils.LogUtils
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.model.EmployRecordWaitPayItem
 import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordWaitPayAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordWaitPayViewModel
+import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.view.dialog.PromptDialog
+import com.jxqm.jiangdou.view.dialog.SettleDialog
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_employ_record_wait_pay.*
 
 /**
@@ -41,6 +48,9 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
                     mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                 } else {
                     mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                    if (list.size >= 10) {
+                        swipeRefreshLayout.setEnableLoadMore(true)
+                    }
                 }
                 mEmployeeResumeModelList.clear()
                 mEmployeeResumeModelList.addAll(list)
@@ -63,14 +73,22 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
         registerObserver(Constants.TAG_GET_WAIT_PAY_LIST_ERROR, String::class.java).observe(this, Observer {
             mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
         })
+        //结算完成
+        registerObserver(Constants.TAG_WAIT_PAY_SETTLE_SUCCESS, Boolean::class.java).observe(this, Observer {
+            isRefresh = true
+            jobId?.let {
+                mViewModel.getWaitPayList(it, isRefresh)
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         mAdapter = EmployRecordWaitPayAdapter(mContext)
         recyclerView.adapter = mAdapter
+        swipeRefreshLayout.setEnableLoadMore(false)
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
@@ -83,6 +101,58 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
             isRefresh = false
             jobId?.let {
                 mViewModel.getWaitPayList(it, isRefresh)
+            }
+        }
+        //联系
+        mAdapter.mContactCallBack = {
+            callPhone(it)
+        }
+        //单结
+        mAdapter.mSingleSettle = { amount, jobId ->
+            //单结提示
+            SettleDialog.show(activity!!, amount) {
+                LogUtils.i("singleSettleWork=$it")
+                mViewModel.singleSettleWork(jobId, it)
+            }
+        }
+        cbAllSelect.setOnCheckedChangeListener { _, checked ->
+            tvMergerSettle.isEnabled = checked
+        }
+        flAllSelect.clickWithTrigger {
+            cbAllSelect.isChecked = !cbAllSelect.isChecked
+            val list = mEmployeeResumeModelList.map {
+                it.isChecked = cbAllSelect.isChecked
+                it
+            }
+            mEmployeeResumeModelList.clear()
+            mEmployeeResumeModelList.addAll(list)
+            mAdapter.setDataList(mEmployeeResumeModelList)
+        }
+        //
+        mAdapter.checkCallBack = { position, isChecked ->
+            val employeeResumeModel = mEmployeeResumeModelList[position]
+            employeeResumeModel.isChecked = isChecked
+            //判断是否全选
+            var isAllChecked = true
+            mEmployeeResumeModelList.forEach {
+                if (!it.isChecked) {
+                    isAllChecked = false
+                }
+            }
+            cbAllSelect.isChecked = isAllChecked
+        }
+        //合并结算
+        tvMergerSettle.clickWithTrigger {
+            var mAmountCount = 0
+            val mResumeId = mEmployeeResumeModelList.filter {
+                it.isChecked
+            }.map {
+                mAmountCount += it.amount.toInt()
+                it.id
+            }
+            //合并结算提示
+            PromptDialog.show(activity!!, "确认结算薪资$mAmountCount 豆币？") {
+                mViewModel.mergeSettleWork(mResumeId)
             }
         }
     }
@@ -100,6 +170,24 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
             bundle.putString("jobId", jobId)
             fragment.arguments = bundle
             return fragment
+        }
+    }
+
+    /**
+     * 打电话
+     */
+    private fun callPhone(tel: String) {
+        activity?.let {
+            RxPermissions(it).request(Manifest.permission.CALL_PHONE)
+                .compose(RxHelper.io_main())
+                .subscribe { result ->
+                    if (result) {
+                        val intent = Intent()
+                        intent.action = Intent.ACTION_DIAL
+                        intent.data = Uri.parse("tel:$tel")
+                        mContext.startActivity(intent)
+                    }
+                }
         }
     }
 }

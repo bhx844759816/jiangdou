@@ -7,7 +7,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/tvBack"
+        app:layout_constraintBottom_toTopOf="@id/bottomParent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -275,38 +275,38 @@
                             android:layout_height="match_parent"
                             android:scaleType="fitXY" />
 
-                            <LinearLayout
-                                android:layout_width="350dp"
-                                android:layout_height="45dp"
-                                android:layout_gravity="center"
-                                android:paddingRight="15dp"
-                                android:background="@drawable/shape_white_circle_rectage">
+                        <LinearLayout
+                            android:layout_width="350dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/shape_white_circle_rectage"
+                            android:paddingRight="15dp">
 
-                                <ImageView
+                            <ImageView
 
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="12dp"
-                                    android:background="@drawable/icon_location" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="12dp"
+                                android:background="@drawable/icon_location" />
 
-                                <TextView
-                                    android:id="@+id/tvJobArea"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_weight="11"
-                                    android:text="河南省郑州市金水区木华广场"
-                                    android:textColor="@color/text_publish_sex"
-                                    android:textSize="@dimen/text_default_size" />
+                            <TextView
+                                android:id="@+id/tvJobArea"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="11"
+                                android:text="河南省郑州市金水区木华广场"
+                                android:textColor="@color/text_publish_sex"
+                                android:textSize="@dimen/text_default_size" />
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:background="@drawable/icon_arrow_right" />
-                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/icon_arrow_right" />
+                        </LinearLayout>
 
                     </FrameLayout>
                 </LinearLayout>
@@ -347,6 +347,7 @@
                     </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rlCompanyDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="18dp">
@@ -393,62 +394,38 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <LinearLayout
-        android:id="@+id/tvBack"
+        android:id="@+id/bottomParent"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
-        <RelativeLayout
-            android:layout_width="74dp"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawableTop="@drawable/icon_consult"
-                android:drawablePadding="5dp"
-                android:gravity="center"
-                android:text="咨询"
-                android:textColor="@color/job_bottom_text_color"
-                android:textSize="@dimen/text_small_size" />
-        </RelativeLayout>
-
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/divider_line" />
-
-        <RelativeLayout
-            android:layout_width="74dp"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawableTop="@drawable/icon_collection"
-                android:drawablePadding="5dp"
-                android:gravity="center"
-                android:text="收藏"
-                android:textColor="@color/job_bottom_text_color"
-                android:textSize="@dimen/text_small_size" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tvSignUp"
+            android:id="@+id/bottomSpace"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorAccent"
-            android:gravity="center"
-            android:text="我要报名 (1人已报名)"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_default_size" />
+            android:layout_height="5dp"
+            android:background="@color/app_bg" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ViewStub
+                android:id="@+id/vsSignUpJob"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout="@layout/view_job_details_sign_up_job_layout" />
+
+            <ViewStub
+                android:id="@+id/vsPayDepositJob"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout="@layout/view_job_details_pay_deposit_layout"
+                />
+        </FrameLayout>
+
     </LinearLayout>
 
 

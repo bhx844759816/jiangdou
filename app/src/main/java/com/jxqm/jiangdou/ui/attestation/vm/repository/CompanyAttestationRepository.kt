@@ -3,9 +3,7 @@ package com.jxqm.jiangdou.ui.attestation.vm.repository
 import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.*
-import com.jxqm.jiangdou.model.CompanyDetailsModel
-import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
-import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
+import com.jxqm.jiangdou.model.AttestationStatusModel
 import io.reactivex.Observable
 
 /**

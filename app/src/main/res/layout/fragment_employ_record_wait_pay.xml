@@ -10,11 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/rlBottom">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+     <FrameLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/recyclerView"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" />
+     </FrameLayout>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 
@@ -24,16 +27,23 @@
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white">
-
-        <CheckBox
-            android:id="@+id/cbAllSelect"
+        <FrameLayout
+            android:id="@+id/flAllSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:padding="5dp"
-            android:text="全选"
-            android:textColor="@color/text_default" />
+            android:layout_marginLeft="16dp">
+            <CheckBox
+                android:id="@+id/cbAllSelect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:clickable="false"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:text="全选"
+                android:textColor="@color/text_default" />
+        </FrameLayout>
+
 
         <TextView
             android:layout_width="match_parent"
@@ -41,21 +51,21 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="18dp"
-            android:layout_toLeftOf="@id/tvAgreeWork"
-            android:layout_toRightOf="@id/cbAllSelect"
-            android:text="若有异常工作情况，请先选择单结，
-余下的可进行合并结算"
+            android:layout_toLeftOf="@id/tvMergerSettle"
+            android:layout_toRightOf="@id/flAllSelect"
+            android:text="若有异常工作情况，请先选择单结，余下的可进行合并结算"
             android:textSize="@dimen/text_big_small_size" />
 
         <TextView
-            android:id="@+id/tvAgreeWork"
+            android:id="@+id/tvMergerSettle"
             android:layout_width="86dp"
             android:layout_height="28dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/shape_half_circle_bg"
+            android:background="@drawable/select_half_circle_textview_bg"
             android:gravity="center"
+            android:enabled="false"
             android:text="合并结算"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small_size" />

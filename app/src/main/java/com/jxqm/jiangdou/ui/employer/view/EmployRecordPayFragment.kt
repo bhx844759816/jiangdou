@@ -3,14 +3,18 @@ package com.jxqm.jiangdou.ui.employer.view
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.mvvm.BaseMVVMActivity
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.bhx.common.utils.LogUtils
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.EmployRecordPayItem
+import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordPayAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordPayViewModel
 import kotlinx.android.synthetic.main.fragment_employ_record_pay.*
@@ -21,53 +25,111 @@ import kotlinx.android.synthetic.main.fragment_employ_record_pay.*
  */
 class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
     override fun getEventKey(): Any = Constants.EVENT_KEY_EMPLOY_RECORD_PAY
-    private val mEmployRecordPayItems = arrayListOf<EmployRecordPayItem>()
+    private val mEmployeeResumeModelList = arrayListOf<EmployeeResumeModel>()
     private lateinit var mAdapter: EmployRecordPayAdapter
+    private lateinit var mUiStatusController: UiStatusController
+    private var isRefresh = true
+    private var mStatus = 0 //状态
+    private var jobId: String? = null
     override fun getLayoutId(): Int = R.layout.fragment_employ_record_pay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mAdapter = EmployRecordPayAdapter(mContext)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
+        mAdapter = EmployRecordPayAdapter(mContext)
         recyclerView.adapter = mAdapter
         rgSelectState.check(R.id.rbInvite)
-        showPayFinish()
+        swipeRefreshLayout.setEnableLoadMore(false)
+        //下拉刷新
+        swipeRefreshLayout.setOnRefreshListener {
+            isRefresh = true
+            getData()
+        }
+        //上拉加载
+        swipeRefreshLayout.setOnLoadMoreListener {
+            isRefresh = false
+            getData()
+        }
         rgSelectState.setOnCheckedChangeListener { _, radioButtonId ->
-            when (radioButtonId) {
+            mStatus = when (radioButtonId) {
                 R.id.rbInvite -> {
-                    LogUtils.i("rgSelectState select 出账")
-                    showPayFinish()
+                    0
                 }
                 R.id.rbAccept -> {
-                    LogUtils.i("rgSelectState select 接受")
-                    showPayWait()
+                    1
                 }
                 R.id.rbRefuse -> {
-                    LogUtils.i("rgSelectState select 拒绝")
-                    showPayRefuse()
+                    2
+                }
+                else -> {
+                    0
                 }
             }
+            isRefresh = true
+            mUiStatusController.changeUiStatus(UiStatus.LOADING)
+            isRefresh = true
+            getData()
         }
     }
 
-    private fun showPayFinish() {
-        mEmployRecordPayItems.clear()
-        mEmployRecordPayItems.add(EmployRecordPayItem(0))
-        mEmployRecordPayItems.add(EmployRecordPayItem(0))
-        mAdapter.updateDatas(mEmployRecordPayItems)
+    private fun getData() {
+        jobId?.let {
+            mViewModel.getSettleListByStatus(it, isRefresh, mStatus)
+        }
     }
 
-    private fun showPayWait() {
-        mEmployRecordPayItems.clear()
-        mEmployRecordPayItems.add(EmployRecordPayItem(1))
-        mEmployRecordPayItems.add(EmployRecordPayItem(1))
-        mAdapter.updateDatas(mEmployRecordPayItems)
+    override fun onFirstUserVisible() {
+        getData()
     }
 
-    private fun showPayRefuse() {
-        mEmployRecordPayItems.clear()
-        mEmployRecordPayItems.add(EmployRecordPayItem(2))
-        mEmployRecordPayItems.add(EmployRecordPayItem(2))
-        mAdapter.updateDatas(mEmployRecordPayItems)
+    override fun initView(bundle: Bundle?) {
+        super.initView(bundle)
+        jobId = arguments?.getString("jobId")
+        //获取结算列表成功
+        registerObserver(Constants.TAG_GET_SETTLE_FINISH_LIST_SUCCESS, List::class.java).observe(this, Observer {
+            val list = it as List<EmployeeResumeModel>
+            if (isRefresh) {
+                if (list.isNullOrEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                } else {
+                    mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                    if (list.size >= 10) {
+                        swipeRefreshLayout.setEnableLoadMore(true)
+                    } else {
+                        swipeRefreshLayout.setEnableLoadMore(false)
+                    }
+                }
+                mEmployeeResumeModelList.clear()
+                mEmployeeResumeModelList.addAll(list)
+                mAdapter.setDataList(mEmployeeResumeModelList)
+                if (swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.finishRefresh()
+                }
+            } else {
+                swipeRefreshLayout.finishLoadMore()
+                if (list.isEmpty()) {
+                    swipeRefreshLayout.setNoMoreData(true)
+                } else {
+                    mEmployeeResumeModelList.addAll(list)
+                    mAdapter.setDataList(mEmployeeResumeModelList)
+                }
+            }
+        })
+        //获取数据失败
+        registerObserver(Constants.TAG_GET_SETTLE_FINISH_LIST_ERROR, String::class.java).observe(this, Observer {
+            if (mEmployeeResumeModelList.isEmpty())
+                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+        })
+    }
+
+    companion object {
+        fun newInstance(jobId: String): EmployRecordPayFragment {
+            val fragment = EmployRecordPayFragment()
+            val bundle = Bundle()
+            bundle.putString("jobId", jobId)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

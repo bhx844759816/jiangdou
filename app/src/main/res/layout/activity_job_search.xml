@@ -26,6 +26,7 @@
             android:textSize="@dimen/text_default_size" />
 
         <LinearLayout
+            android:id="@+id/llSearch"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dp"
@@ -43,10 +44,14 @@
                 android:background="@drawable/icon_search" />
 
             <EditText
+                android:id="@+id/etSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:background="@null"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
                 android:gravity="center_vertical"
                 android:hint="请输入职位和公司"
                 android:textColor="@color/text_default"
@@ -108,44 +113,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rlSearchHistoryTitle">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/shape_gray_empty_circle_rectage"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="日结"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/shape_gray_empty_circle_rectage"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="送餐员"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/shape_gray_empty_circle_rectage"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="快递员"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
     </com.bhx.common.view.FlowLayout>
 
     <RelativeLayout
@@ -174,89 +141,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rlHotSearchTitle">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_gray_empty_circle_rectage"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="日结"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_gray_empty_circle_rectage"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="送餐员"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_gray_empty_circle_rectage"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="快递员"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_gray_empty_circle_rectage"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="快递员"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_gray_empty_circle_rectage"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="快递员"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_gray_empty_circle_rectage"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="保险员"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_default_size" />
     </com.bhx.common.view.FlowLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,22 +11,32 @@ class HomeViewModel : BaseViewModel<HomeRepository>() {
     var pageNo = 1
     val pageSize = 10
     //获取首页组合数据
-    fun getHomeData() {
+    fun getHomeData(isRefresh: Boolean) {
+        if (isRefresh) {
+            pageNo = 1
+        }
         mRepository.getHomeData(pageNo, pageSize) {
             pageNo++
         }
     }
 
     /**
-     * 获取推荐列表
-     * @param isRefresh 是否是刷新加载
+     * 下拉刷新
      */
-    fun getRecommend(isRefresh: Boolean) {
-        if (isRefresh) {
-            pageNo = 1
-        }
-        mRepository.getHomeRecommend(pageNo, pageSize) {
+    fun getHomeDataRefresh() {
+        pageNo = 1
+        mRepository.getHomeDataRefresh(pageNo, pageSize) {
             pageNo++
         }
     }
+
+    /**
+     * 上拉加载更多
+     */
+    fun getHomeDataLoadMore() {
+        mRepository.getHomeDataLoadMore(pageNo, pageSize) {
+            pageNo++
+        }
+    }
+
 }

@@ -6,13 +6,13 @@ import android.view.View
 import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.PhoneUtils
+import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
-import com.jxqm.jiangdou.ui.attestation.model.AttestationStatusModel
+import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
-import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_job_contacts.*
 
 /**
@@ -35,16 +35,24 @@ class JobContactsFragment : BaseLazyFragment() {
         super.onViewCreated(view, bundle)
         //发布兼职
         tvImmediatelyPublish.clickWithTrigger {
-            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH,
-                Constants.TAG_PUBLISH_JOB_EMPLOYER_PUBLISH, createParams())
+            LiveBus.getDefault().postEvent(
+                Constants.EVENT_KEY_JOB_PUBLISH,
+                Constants.TAG_PUBLISH_JOB_EMPLOYER_PUBLISH, createParams()
+            )
         }
         // 预览兼职
         tvPreviewPublish.clickWithTrigger {
-            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH,
-                Constants.TAG_PUBLISH_JOB_EMPLOYER_PREVIEW, createParams())
+            LiveBus.getDefault().postEvent(
+                Constants.EVENT_KEY_JOB_PUBLISH,
+                Constants.TAG_PUBLISH_JOB_EMPLOYER_PREVIEW, createParams()
+            )
         }
         //获取企业认证信息
-        mAttestationStatusModel = (activity as? JobPublishActivity)?.mAttestationStatusModel
+        mAttestationStatusModel = MyApplication.instance().attestationViewModel
+        mAttestationStatusModel?.let {
+            etContacts.setText(it.contact)
+            etContactsPhone.setText(it.tel)
+        }
         tvImmediatelyPublish.isEnable(etContacts) { isPublishState() }
         tvImmediatelyPublish.isEnable(etContactsPhone) { isPublishState() }
         tvImmediatelyPublish.isEnable(etContactsEmail) { isPublishState() }

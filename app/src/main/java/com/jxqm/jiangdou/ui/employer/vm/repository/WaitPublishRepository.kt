@@ -2,6 +2,7 @@ package com.jxqm.jiangdou.ui.employer.vm.repository
 
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
+import com.jxqm.jiangdou.http.action
 import com.jxqm.jiangdou.http.applySchedulers
 
 /**
@@ -41,6 +42,21 @@ class WaitPublishRepository : BaseEventRepository() {
                         Constants.TAG_GET_WAIT_PUBLISH_JOB_LIST_ERROR, it.localizedMessage
                     )
                 })
+        )
+    }
+
+    /**
+     * 删除发布的职位
+     */
+    fun deletePublishJob(jobId: String) {
+        addDisposable(
+            apiService.deleteJobById(jobId)
+                .action {
+                    sendData(
+                        Constants.EVENT_KEY_WAIT_PUBLISH_JOB,
+                        Constants.TAG_DELETE_WAIT_PUBLISH_JOB_SUCCESS, jobId
+                    )
+                }
         )
     }
 

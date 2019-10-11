@@ -35,6 +35,7 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
     private var mMoreJobModelList = mutableListOf<JobTypeModel>()
     private var mHotJobModelList = mutableListOf<JobTypeModel>()
     private var mSelectJobModel: JobTypeModel? = null
+    private var mJobTypeMaps = mutableMapOf<String, RadioButton>()
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is OnJobPublishCallBack) {
@@ -60,10 +61,16 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
         rgMoreJobType.setOnCheckedChangeListener { p0, id ->
             selectJobTypeMode(id)
         }
+
     }
 
     private fun selectJobTypeMode(id: Int) {
         tvNextStep.isEnabled = true
+        mJobTypeMaps.forEach {
+            if (it.key != id.toString()) {
+                it.value.isChecked = false
+            }
+        }
         mHotJobModelList.forEach {
             if (it.id == id) {
                 mSelectJobModel = it
@@ -72,7 +79,7 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
         }
         mMoreJobModelList.forEach {
             if (it.id == id) {
-                mSelectJobModel= it
+                mSelectJobModel = it
                 return
             }
         }
@@ -112,6 +119,7 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
             radioButton.id = it.id
             radioButton.setPadding(DensityUtil.dip2px(mContext, 10f))
             rgHotJobType.addView(radioButton)
+            mJobTypeMaps[it.id.toString()] = radioButton
         }
     }
 
@@ -126,6 +134,7 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
             radioButton.id = it.id
             radioButton.setPadding(DensityUtil.dip2px(mContext, 10f))
             rgMoreJobType.addView(radioButton)
+            mJobTypeMaps[it.id.toString()] = radioButton
         }
     }
 

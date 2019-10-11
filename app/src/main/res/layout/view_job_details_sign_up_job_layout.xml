@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="74dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvConsult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawableTop="@drawable/icon_consult"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="咨询"
+            android:textColor="@color/job_bottom_text_color"
+            android:textSize="@dimen/text_small_size" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/divider_line" />
+
+    <RelativeLayout
+        android:layout_width="74dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawableTop="@drawable/icon_collection"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="收藏"
+            android:textColor="@color/job_bottom_text_color"
+            android:textSize="@dimen/text_small_size" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/select_textview_enable_bg_color"
+        android:gravity="center"
+        android:text="我要报名 (1人已报名)"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_default_size" />
+</LinearLayout>

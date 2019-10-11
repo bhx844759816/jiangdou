@@ -2,6 +2,7 @@ package com.jxqm.jiangdou.view.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -29,6 +30,10 @@ class PromptDialog : BaseDialogFragment() {
             mConfirmCallback?.invoke()
             dismissAllowingStateLoss()
         }
+        val message = arguments?.getString("message")
+        message?.let {
+            tvMessage.text = it
+        }
     }
 
     override fun initWindow() {
@@ -49,10 +54,13 @@ class PromptDialog : BaseDialogFragment() {
     companion object {
         private val TAG = PromptDialog::class.simpleName
 
-        fun show(activity: FragmentActivity, callBack: (() -> Unit)) {
+        fun show(activity: FragmentActivity, message: String, callBack: (() -> Unit)) {
             var fragment = activity.supportFragmentManager.findFragmentByTag(TAG)
             if (fragment == null) {
                 val dialog = PromptDialog()
+                val bundle = Bundle()
+                bundle.putString("message", message)
+                dialog.arguments = bundle
                 dialog.mConfirmCallback = callBack
                 fragment = dialog
             }

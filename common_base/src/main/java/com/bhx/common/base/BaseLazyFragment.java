@@ -2,10 +2,10 @@ package com.bhx.common.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,11 +16,13 @@ import androidx.fragment.app.Fragment;
  * Date: 1/23/15.
  */
 public abstract class BaseLazyFragment extends Fragment {
-    private static final String TAG = BaseLazyFragment.class.getSimpleName();
-    private boolean isPrepared;
     public View rootView;
     public Context mContext;
     public ViewGroup mViewGroup;
+    protected boolean isViewInitiated;
+    protected boolean isVisibleToUser;
+    protected boolean isDataInitiated;
+
 
     @Override
     public void onAttach(Context context) {
@@ -41,10 +43,33 @@ public abstract class BaseLazyFragment extends Fragment {
         onCreateView(inflater, container);
         mViewGroup = container;
         initView(bundle);
-        initPrepare();
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isViewInitiated = true;
+        prepareFetchData();
+
+    }
+    public boolean prepareFetchData() {
+        return prepareFetchData(false);
+    }
+
+    public boolean prepareFetchData(boolean forceUpdate) {
+        if (isVisibleToUser && isViewInitiated && (!isDataInitiated || forceUpdate)) {
+            onFirstUserVisible();
+            isDataInitiated = true;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 
     /**
      * 实例化View
@@ -69,60 +94,14 @@ public abstract class BaseLazyFragment extends Fragment {
      */
     protected abstract int getLayoutId();
 
-    /**
-     * 第一次onResume中的调用onUserVisible避免操作与onFirstUserVisible操作重复
-     */
-    private boolean isFirstResume = true;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (isFirstResume) {
-            isFirstResume = false;
-            return;
-        }
-        if (getUserVisibleHint()) {
-            onUserVisible();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (getUserVisibleHint()) {
-            onUserInvisible();
-        }
-    }
-
-    private boolean isFirstVisible = true;
-    private boolean isFirstInvisible = true;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (isFirstVisible) {
-                isFirstVisible = false;
-                initPrepare();
-            } else {
-                onUserVisible();
-            }
-        } else {
-            if (isFirstInvisible) {
-                isFirstInvisible = false;
-                onFirstUserInvisible();
-            } else {
-                onUserInvisible();
-            }
-        }
-    }
-
-    public synchronized void initPrepare() {
-        if (isPrepared) {
-            onFirstUserVisible();
-        } else {
-            isPrepared = true;
-        }
+        this.isVisibleToUser = isVisibleToUser;
+        Log.i("TAG2",this.getClass().getSimpleName()+ ",setUserVisibleHint:"+getUserVisibleHint());
+        prepareFetchData();
     }
 
     /**

@@ -24,6 +24,7 @@ import com.jxqm.jiangdou.view.dialog.LoadingDialog
  * Created By bhx On 2019/8/6 0006 09:32
  */
 class LoginActivity : BaseDataActivity<LoginViewModel>() {
+    private var mDeviceId =""
     override fun getLayoutId(): Int = R.layout.activity_login
 
     override fun getEventKey(): Any = Constants.EVENT_KEY_LOGIN
@@ -39,8 +40,8 @@ class LoginActivity : BaseDataActivity<LoginViewModel>() {
         }
         tvLogin.clickWithTrigger {
             val phone = etInputPhone.text.toString().trim()
-            val deviceId = DeviceUtils.getDeviceId(this)
-            mViewModel.sendSmsCode(deviceId, phone)
+            mDeviceId = DeviceUtils.getDeviceId(this)
+            mViewModel.sendSmsCode(mDeviceId, phone)
         }
         tvLogin.isEnable(etInputPhone) {
             val phone = etInputPhone.text.toString().trim()
@@ -56,7 +57,7 @@ class LoginActivity : BaseDataActivity<LoginViewModel>() {
                 val bundle = Bundle()
                 val phone = etInputPhone.text.toString().trim()
                 bundle.putString("phone", phone)
-                bundle.putString("deviceId", "101")
+                bundle.putString("deviceId", mDeviceId)
                 startActivity<VerifyCodeActivity>(bundle)
             }
         })

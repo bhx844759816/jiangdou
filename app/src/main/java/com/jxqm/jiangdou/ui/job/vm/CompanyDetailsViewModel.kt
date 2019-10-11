@@ -8,4 +8,8 @@ import com.jxqm.jiangdou.ui.job.vm.repository.CompanyDetailsRepository
  * Created by Administrator on 2019/8/18.
  */
 class CompanyDetailsViewModel : BaseViewModel<CompanyDetailsRepository>() {
+
+    fun getCompanyJobList(employerId: String) {
+        mRepository.getCompanyJobList(employerId)
+    }
 }

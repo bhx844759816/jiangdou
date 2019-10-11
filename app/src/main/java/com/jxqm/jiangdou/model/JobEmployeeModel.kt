@@ -1,16 +1,18 @@
 package com.jxqm.jiangdou.model
 
 /**
+ * 工作简历ID
  * Created by Administrator on 2019/9/29.
  */
-
 data class JobEmployeeModel(
     val address: String,
+    val addressDetail: String,
     val area: String,
-    val areaCode: String,
+    val areaCode: Any,
     val arrival: String,
     val arrivalCode: Int,
-    val arrivalTime: Any,
+    val arrivalTime: String,
+    val city: String,
     val contact: String,
     val content: String,
     val createTime: String,
@@ -18,12 +20,14 @@ data class JobEmployeeModel(
     val email: String,
     val employerId: Int,
     val employerName: Any,
-    val endTime: Any,
+    val endTime: String,
     val frozenDeposit: Any,
     val gender: String,
     val genderCode: Int,
     val id: Int,
+    val jobWorkId: Int,
     val invalid: Boolean,
+    val jobResumeId: Int,
     val jobTypeId: Int,
     val jobTypeName: String,
     val latitude: Double,
@@ -35,11 +39,15 @@ data class JobEmployeeModel(
     val offerTime: String,
     val pageNo: Any,
     val pageSize: Any,
+    val province: String,
     val recruitNum: Int,
     val salary: Int,
-    val settlement: String,
-    val settlementCode: Int,
-    val settlementTime: Any,
+    val settle: String,
+    val settleCode: Int,
+    val settleTime: Any,
+    val count: String, //工作时长
+    val amount: String, //结算金额
+    val settleAmount: String,//待结算金额
     val signNum: Int,
     val signTime: String,
     val startTime: String,
@@ -53,3 +61,5 @@ data class JobEmployeeModel(
     val userId: Int
 ) : JobEmployeeBaseModel()
 
+
+//"count":null,"amount":null,"settleAmount":null}

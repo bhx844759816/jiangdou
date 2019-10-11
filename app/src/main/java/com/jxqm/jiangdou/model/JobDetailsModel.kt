@@ -7,76 +7,80 @@ import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
  * Created by Administrator on 2019/9/19.
  */
 
-class JobDetailsModel : CommonConfig() {
-    var address: String = ""
-    var area: String = ""
-    var areaCode: String = ""
-    var contact: String = ""
-    var content: String = ""
-    var createTime: String = ""
-    var dates: List<String> = listOf()
-    var datesJson: String = ""
-    var email: String = ""
-    var employerId: String = ""
-    var gender: String = ""
-    var id: String = ""
-    var jobTypeId: String = ""
-    var jobTypeValue: String = ""
-    var latitude: String = ""
-    var longitude: String = ""
-    var mapImg: String = ""
-    var recruitNum: String = ""
-    var salary: String = ""
-    var status: String? = null
-    var statusCode: String = ""
-    var tel: String = ""
-    var title: String = ""
-    var times: List<TimeRangeModel> = arrayListOf()
-    var timesJson: String = ""
-    var typeImg: String = ""
-    var userId: String=""
-    override fun toString(): String {
-        return "JobDetailsModel(address='$address', area='$area', areaCode='$areaCode', contact='$contact', content='$content', createTime='$createTime', dates=$dates, datesJson='$datesJson', email='$email', employerId='$employerId', gender='$gender', id='$id', jobTypeId='$jobTypeId', jobTypeValue='$jobTypeValue', latitude='$latitude', longitude='$longitude', mapImg='$mapImg', recruitNum='$recruitNum', salary='$salary', status='$status', statusCode='$statusCode', tel='$tel', title='$title', times=$times, timesJson='$timesJson', typeImg='$typeImg', userId='$userId')"
-    }
 
-
-}
-
-
+data class JobDetailsModel(
+    val address: String,
+    val addressDetail: String,
+    val area: String,
+    val city: String,
+    val province: String,
+    val areaCode: String,
+    val contact: String,
+    val content: String,
+    val createTime: String,
+    val datesJson: String,
+    val email: String,
+    val employerId: String,//雇主ID
+    val employerName: String,//雇主名称
+    val frozenDeposit: String,
+    val gender: String,
+    val genderCode: Int,
+    val id: Int,
+    val jobTypeId: Int,
+    val jobTypeName: String,
+    val latitude: Double,
+    val longitude: Double,
+    val mapImg: String,
+    val pageNo: Any,
+    val pageSize: Any,
+    val recruitNum: Int,
+    val signNum: Int,
+    val offerNum: Int,
+    val salary: Int,
+    val status: String,
+    val sign:Boolean,
+    val statusCode: Int,
+    val tel: String,
+    val timesJson: String,
+    val title: String,
+    val typeImg: Any,
+    val typeImgUrl: String,
+    val userId: Int
+): CommonConfig()
 
 //{
-//    "address": "string",
-//    "area": "string",
-//    "areaCode": "string",
-//    "contact": "string",
-//    "content": "string",
-//    "createTime": "2019-09-19T14:51:10.432Z",
-//    "dates": [recruitNum
-//    "string"
-//    ],
-//    "datesJson": "string",
-//    "email": "string",
-//    "employerId": 0,
-//    "gender": 0,
-//    "id": 0,
-//    "jobTypeId": 0,
-//    "latitude": 0,
-//    "longitude": 0,
-//    "mapImg": "string",
-//    "recruitNum": 0,
-//    "salary": 0,
-//    "status": "created",
+//    "id": 3,
+//    "pageNo": null,
+//    "pageSize": null,
+//    "jobTypeId": 21,
+//    "title": "哈开机",
+//    "content": "UK噜噜噜8图谋戒律牧某某头目M8他M8头摸头",
+//    "salary": 36,
+//    "genderCode": 1,
+//    "gender": "男",
+//    "contact": "呼呼呼呼女女女女",
+//    "tel": "19137629693",
+//    "email": "alllaal",
+//    "address": "木华广场",
+//    "latitude": 34.800702925920056,
+//    "longitude": 113.81593690824388,
 //    "statusCode": 0,
-//    "tel": "string",
-//    "times": [
-//    {
-//        "end": "string",
-//        "start": "string"
-//    }
-//    ],
-//    "timesJson": "string",
-//    "title": "string",
-//    "typeImg": "string",
-//    "userId": 0
+//    "status": "待提交",
+//    "areaCode": null,
+//    "area": "金水区",
+//    "province": "河南省",
+//    "city": "郑州市",
+//    "addressDetail": "挪钭奴隶科恩哦lol",
+//    "mapImg": "static/assert/upload/537931c4-9a2a-46f2-a7e3-b3efe056e450.png",
+//    "typeImg": "static/assert/upload/25aaa234-6263-46b5-8e98-358118de0e4d.png",
+//    "userId": 1,
+//    "employerId": 5,
+//    "recruitNum": 25,
+//    "frozenDeposit": null,
+//    "datesJson": "[]",
+//    "timesJson": "[]",
+//    "createTime": "2019.10.07 18:37",
+//    "employerName": null,
+//    "jobTypeName": "派单",
+//    "typeImgUrl": null
 //}
-//]

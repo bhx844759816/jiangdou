@@ -18,4 +18,12 @@ class EmployRecordWaitPayViewModel : BaseViewModel<EmployRecordWaitPayRepository
             pageNo++
         }
     }
+
+    fun singleSettleWork(jobId: String, amount: String) {
+        mRepository.singleSettleWork(jobId, amount)
+    }
+
+    fun mergeSettleWork(ids: List<Long>) {
+        mRepository.mergeSettleWork(ids)
+    }
 }

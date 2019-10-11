@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobEmployeeModel
-import com.jxqm.jiangdou.model.ReportDutyWorkItem
 
 /**
  * 雇员 - 到岗 - 适配器
@@ -39,7 +38,7 @@ class ReportDutyWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobEmpl
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImg).into(ivEmployeeImg)
                     tvEmployeeTitle.text = model.title
                     tvRecruitNum.text = model.recruitNum.toString()
-                    tvSingUpTime.text = model.signTime
+                    tvSingUpTime.text = model.arrivalTime
                     tvJobMoney.text = "${model.salary} 币/小时"
                 }
             }

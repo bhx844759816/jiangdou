@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.jxqm.jiangdou">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,6 +14,7 @@
     <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -63,15 +65,16 @@
         <activity android:name=".ui.user.view.MyCollectionJobActivity" />
         <activity android:name=".ui.user.view.CashOutActivity" />
         <activity android:name=".ui.employer.view.EmployRecordActivity" />
-        <activity android:name=".ui.publish.view.JobPublishDetailsActivity" />
         <activity android:name=".ui.order.view.OrderPaymentActivity" />
         <activity android:name=".ui.order.view.OrderDetailsActivity" />
         <activity android:name=".ui.order.view.OrderPaymentSuccessActivity" />
-        <activity android:name=".ui.employee.view.ResumeDetailsActivity" />
+        <activity android:name=".ui.user.view.ResumeDetailsActivity" />
         <activity android:name=".ui.job.view.JobSearchActivity" />
         <activity android:name=".ui.job.view.JobCompanyListActivity" />
         <activity android:name=".ui.job.view.CompanyDetailsActivity" />
         <activity android:name=".ui.job.view.JobScreenActivity" />
+        <activity android:name=".ui.job.view.AllJobScreenActivity" />
+        <activity android:name=".ui.job.view.JobSingUpSuccessActivity" />
         <activity android:name=".ui.user.view.MyResumeActivity" />
         <activity android:name=".ui.user.view.SettingActivity" />
         <activity android:name=".ui.user.view.AboutUsActivity" />

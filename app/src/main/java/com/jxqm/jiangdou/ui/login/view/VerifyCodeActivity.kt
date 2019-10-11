@@ -7,6 +7,7 @@ import android.widget.EditText
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.AppManager
+import com.bhx.common.utils.DeviceUtils
 import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.MyApplication
@@ -100,9 +101,8 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
                 smsCodeCountDown()
             }
         })
-        registerObserver(Constants.TAG_GET_USER_INFO_SUCCESS, UserModel::class.java).observe(this, Observer {
-            MyApplication.instance().userModel = it
-            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_MAIN_MY, Constants.TAG_MAIN_MY_LOGIN_SUCCESS, it)
+        registerObserver(Constants.TAG_GET_USER_INFO_SUCCESS, Boolean::class.java).observe(this, Observer {
+            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_MAIN_MY, Constants.TAG_MAIN_MY_LOGIN_SUCCESS, true)
             AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
             //发送消息到MainFragment
         })

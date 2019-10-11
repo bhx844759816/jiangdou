@@ -53,13 +53,13 @@ class HomeRepository : BaseEventRepository() {
         addDisposable(
             Observable.concat(
                 apiService.getHomeSwiper(),
-                apiService.getHomeJobType(),
+                apiService.getHomeHotJobType(),
                 apiService.getHomeRecommend(pageNo, pageSize)
             ).compose(applySchedulersForLoadingDialog())
                 .subscribe({
                     if (it.code == "0") {
                         if (it.data is JobDetailsWrapModel) {
-                            val jobDetailsWrapModel = it.data
+                            val jobDetailsWrapModel = it.data as JobDetailsWrapModel
                             if (jobDetailsWrapModel.records.size < jobDetailsWrapModel.total) {
                                 callBack.invoke()
                             }
@@ -70,7 +70,7 @@ class HomeRepository : BaseEventRepository() {
                         }
 
                         if (it.data is List<*>) {
-                            val list = it.data
+                            val list = it.data as List<*>
                             val model = list[0]
                             if (model is JobTypeModel) {
                                 //兼职类型
@@ -93,4 +93,72 @@ class HomeRepository : BaseEventRepository() {
         )
     }
 
+    /**
+     * 下拉刷新
+     */
+    fun getHomeDataRefresh(pageNo: Int, pageSize: Int, callBack: () -> Unit) {
+        addDisposable(
+            Observable.concat(
+                apiService.getHomeSwiper(),
+                apiService.getHomeHotJobType(),
+                apiService.getHomeRecommend(pageNo, pageSize)
+            ).compose(applySchedulers())
+                .subscribe({
+                    if (it.code == "0") {
+                        if (it.data is JobDetailsWrapModel) {
+                            val jobDetailsWrapModel = it.data as JobDetailsWrapModel
+                            if (jobDetailsWrapModel.records.size < jobDetailsWrapModel.total) {
+                                callBack.invoke()
+                            }
+                            sendData(
+                                Constants.EVENT_KEY_MAIN_HOME,
+                                Constants.TAG_GET_HOME_RECOMMEND_LIST, jobDetailsWrapModel.records
+                            )
+                        }
+
+                        if (it.data is List<*>) {
+                            val list = it.data as List<*>
+                            val model = list[0]
+                            if (model is JobTypeModel) {
+                                //兼职类型
+                                sendData(
+                                    Constants.EVENT_KEY_MAIN_HOME,
+                                    Constants.TAG_GET_HOME_JOB_TYPE, it.data
+                                )
+                            } else if (model is SwpierModel) {
+                                //轮播图
+                                sendData(
+                                    Constants.EVENT_KEY_MAIN_HOME,
+                                    Constants.TAG_GET_HOME_SWIPER, it.data
+                                )
+                            }
+                        }
+                    }
+                }, {
+
+                })
+        )
+    }
+
+    /**
+     * 上拉加载更多
+     */
+    fun getHomeDataLoadMore(pageNo: Int, pageSize: Int, callBack: () -> Unit) {
+        addDisposable(
+            apiService.getHomeRecommend(pageNo, pageSize)
+                .compose(applySchedulers())
+                .subscribe {
+                    if (it.code == "0") {
+                        val jobDetailsWrapModel = it.data
+                        if (jobDetailsWrapModel.records.size < jobDetailsWrapModel.total) {
+                            callBack.invoke()
+                        }
+                        sendData(
+                            Constants.EVENT_KEY_MAIN_HOME,
+                            Constants.TAG_GET_HOME_RECOMMEND_LIST, jobDetailsWrapModel.records
+                        )
+                    }
+                }
+        )
+    }
 }

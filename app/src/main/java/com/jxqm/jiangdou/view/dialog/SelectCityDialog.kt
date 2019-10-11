@@ -73,7 +73,7 @@ object SelectCityDialog {
             val data = JSONArray(result)
             val gson = Gson()
             for (i in 0 until data.length()) {
-                val entity = gson.fromJson<CityJsonModel>(data.optJSONObject(i).toString(), CityJsonModel::class.java)
+                val entity = gson.fromJson(data.optJSONObject(i).toString(), CityJsonModel::class.java)
                 detail.add(entity)
             }
         } catch (e: Exception) {

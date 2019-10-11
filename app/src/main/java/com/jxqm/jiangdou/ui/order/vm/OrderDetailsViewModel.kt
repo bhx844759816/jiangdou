@@ -14,4 +14,8 @@ class OrderDetailsViewModel : BaseViewModel<OrderDetailsRepository>() {
     fun getOrderDetails(jobId: String) {
         mRepository.getOrderDetails(jobId)
     }
+
+    fun getSignUpQrCode(jobId: String) {
+        mRepository.getSingUpQrCode(jobId)
+    }
 }
