@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion deps.versions.compileSdk
+    buildToolsVersion deps.versions.buildTools
+
+    defaultConfig {
+        minSdkVersion deps.versions.minSdk
+        targetSdkVersion deps.versions.targetSdk
+        versionCode deps.versions.versionCode
+        versionName deps.versions.versionName
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation deps.supports.appCompat
+    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
+}
