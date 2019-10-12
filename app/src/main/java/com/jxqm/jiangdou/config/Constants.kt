@@ -178,6 +178,7 @@ class Constants {
         const val TAG_SIGN_UP_JOB_SUCCESS = "tag_sign_up_job_success"//报名成功
         const val TAG_SIGN_UP_RESUME_NOT_EXIST = "tag_sign_up_resume_not_exist"//简历不存在
         const val TAG_GET_EMPLOYER_DETAILS_SUCCESS = "tag_get_employer_details_success"//获取雇主的信息成功
+        const val TAG_COLLECTION_STATUS_CHANGE = "tag_collection_status_change"//收藏状态改变
 
         const val EVENT_KEY_ALL_JOB_SCREEN = "event_key_all_job_screen"//全部兼职列表
         const val TAG_GET_JOB_TYPE_SUCCESS = "tag_get_job_type_success"//获取兼职类型
@@ -186,5 +187,17 @@ class Constants {
 
         const val EVENT_KEY_RESUME_DETAILS = "event_key_resume_details"//简历详情
         const val TAG_GET_RESUME_DETAILS_SUCCESS = "tag_get_resume_details_success"//获取用户简历成功
+
+        const val EVENT_KEY_MY_COLLECTION_JOB ="event_key_my_collection_job"//我的收藏列表
+        const val TAG_GET_MY_COLLECTION_LIST_SUCCESS = "tag_get_my_collection_list_success" //获取收藏列表成功
+        const val TAG_GET_MY_COLLECTION_LIST_ERROR= "tag_get_my_collection_list_error"//获取收藏列表失败
+        const val TAG_CANCEL_COLLECTION_FINISH = "tag_cancel_collection_finish"//取消收藏完成
+
+        const val EVENT_KEY_ALIPAY_ATTESTATION = "event_key_alipay_attestation"//绑定支付宝
+
+        const val EVENT_MY_MESSAGE = "event_my_message" // 我的消息
+        const val TAG_GET_MESSAGE_LIST_SUCCESS = "tag_get_message_list_success" // 获取消息列表成功
+        const val TAG_GET_MESSAGE_LIST_ERROR = "tag_get_message_list_error" // 获取消息列表失败
+
     }
 }

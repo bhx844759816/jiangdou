@@ -134,4 +134,13 @@ object Api {
     const val EMPLOYEE_ACCEPT_SETTLE = "/employee/job/settle-accept"
     //雇员 - 拒绝结算
     const val EMPLOYEE_REFUSE_SETTLE = "/employee/job/settle-reject"
+    //收藏工作
+    const val EMPLOYEE_COLLECTION_JOB = "/employee/job/collection"
+    //取消收藏 - 集中取消
+    const val EMPLOYEE_CANCEL_COLLECTION_JOB_MERGE = "/employee/job/batch-cancel-collection"
+    //取消收藏 - 单独取消
+    const val EMPLOYEE_CANCEL_COLLECTION_JOB = "/employee/job/cancel-collection"
+    //获取收藏列表
+    const val EMPLOYEE_COLLECTION_LIST = "/employee/job/collection"
+
 }

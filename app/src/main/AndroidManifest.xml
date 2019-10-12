@@ -79,11 +79,11 @@
         <activity android:name=".ui.user.view.SettingActivity" />
         <activity android:name=".ui.user.view.AboutUsActivity" />
         <activity android:name=".ui.user.view.UserWalletActivity" />
+        <activity android:name=".ui.user.view.MyMessageActivity" />
         <activity android:name=".ui.map.MapActivity" />
         <activity android:name=".ui.attestation.view.PeopleAttestationActivity" />
-        <activity android:name=".ui.attestation.view.CompanyAttestationActivity" >
-
-        </activity>
+        <activity android:name=".ui.attestation.view.CompanyAttestationActivity"/>
+        <activity android:name=".ui.attestation.view.AlipayAttestaionActivity" />
         <activity
             android:name=".ui.home.view.MainActivity"
             android:launchMode="singleTask">

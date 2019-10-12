@@ -438,4 +438,33 @@ interface ApiService {
     @Multipart
     @POST(Api.EMPLOYEE_ACCEPT_SETTLE)
     fun acceptSettle(@Part("jobWorkId") jobWorkId: Long): Observable<HttpResult<Any>>
+
+    /**
+     * 收藏职位
+     */
+    @Multipart
+    @POST(Api.EMPLOYEE_COLLECTION_JOB)
+    fun collectionJob(@Part("jobId") jobId: Long): Observable<HttpResult<Any>>
+
+    /**
+     * 取消收藏职位
+     */
+    @Multipart
+    @POST(Api.EMPLOYEE_CANCEL_COLLECTION_JOB)
+    fun cancelCollectionJob(@Part("jobId") jobId: Long): Observable<HttpResult<Any>>
+
+
+    /**
+     * 取消收藏职位
+     */
+    @Headers("Content-type:application/json")
+    @POST(Api.EMPLOYEE_CANCEL_COLLECTION_JOB_MERGE)
+    fun cancelCollectionJobMerge(@Body body: RequestBody): Observable<HttpResult<Any>>
+
+    /**
+     * 获取职位收藏列表
+     */
+    @GET(Api.EMPLOYEE_COLLECTION_LIST)
+    fun getCollectionList(   @Query("pageNo") pageNo: Int,
+                             @Query("pageSize") pageSize: Int): Observable<HttpResult<JobDetailsWrapModel>>
 }

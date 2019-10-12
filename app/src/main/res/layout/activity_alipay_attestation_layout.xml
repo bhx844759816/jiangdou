@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorAccent">
+
+        <RelativeLayout
+            android:id="@+id/peopleAttestationBack"
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/icon_back_white" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="绑定支付宝"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title_size"
+
+            />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="请上传与支付宝账号认证相同的身份信息"
+
+                />
+
+            <com.loopeer.shadow.ShadowView
+                android:layout_width="match_parent"
+                android:layout_height="243dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/white"
+                app:cornerRadius="8dp"
+                app:shadowColor="#7d82A2FE"
+                app:shadowMargin="8dp"
+                app:shadowRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="270dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="25dp">
+
+                        <ImageView
+                            android:id="@+id/ivPeopleCardPositive"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/icon_people_card_front"
+                            android:scaleType="fitXY" />
+
+                        <FrameLayout
+                            android:id="@+id/flCardPositiveStatusParent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"
+                            android:background="#7d1c1c1c">
+
+                            <TextView
+                                android:id="@+id/tvCardPositiveStatusText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_btn_size" />
+                        </FrameLayout>
+                    </FrameLayout>
+
+
+                    <TextView
+                        android:id="@+id/tvPeopleCardPositive"
+                        android:layout_width="136dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/select_button_bg"
+                        android:gravity="center"
+                        android:text="选择"
+                        android:enabled="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_default_size" />
+
+                </LinearLayout>
+            </com.loopeer.shadow.ShadowView>
+
+            <com.loopeer.shadow.ShadowView
+                android:layout_width="match_parent"
+                android:layout_height="243dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/white"
+                app:cornerRadius="8dp"
+                app:shadowColor="#7d82A2FE"
+                app:shadowMargin="8dp"
+                app:shadowRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="270dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="25dp">
+
+                        <ImageView
+                            android:id="@+id/ivPeopleCardBack"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/icon_people_card_front"
+                            android:scaleType="fitXY" />
+
+                        <FrameLayout
+                            android:id="@+id/flCardBackStatusParent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"
+                            android:background="#7d1c1c1c">
+
+                            <TextView
+                                android:id="@+id/tvCardBackStatusText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_btn_size" />
+                        </FrameLayout>
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvPeopleCardBack"
+                        android:layout_width="136dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/select_button_bg"
+                        android:gravity="center"
+                        android:text="选择"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_default_size" />
+
+                </LinearLayout>
+            </com.loopeer.shadow.ShadowView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="拍摄时，请确保身份证"
+                    android:textColor="@color/text_default"
+                    android:textSize="@dimen/text_small_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="边框完整，字体清晰，亮度均匀"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_small_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_people_card_correct" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/icon_people_card_gou"
+                        android:drawablePadding="5dp"
+                        android:gravity="bottom"
+                        android:text="标准拍摄"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_big_small_size"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_people_card_error_1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/icon_people_card_x"
+                        android:drawablePadding="5dp"
+                        android:gravity="bottom"
+                        android:text="边框缺失"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_big_small_size"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_people_card_error_2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/icon_people_card_x"
+                        android:drawablePadding="5dp"
+                        android:gravity="bottom"
+                        android:text="照片模糊"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_big_small_size"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_people_card_error_3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/icon_people_card_x"
+                        android:drawablePadding="5dp"
+                        android:gravity="bottom"
+                        android:text="闪光强烈"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_big_small_size"
+
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="22dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="5"
+                        android:text="支付宝账户"
+                        android:textColor="@color/text_title"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <EditText
+                        android:id="@+id/etAlipayAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入支付宝账户"
+                        android:textColor="@color/text_default"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="@dimen/text_default_size" />
+                </LinearLayout>
+
+                <View style="@style/DividerLineTheme" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="22dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="5"
+                        android:text="姓名"
+                        android:textColor="@color/text_title"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <EditText
+                        android:id="@+id/etUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入账户姓名"
+                        android:textColor="@color/text_default"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="@dimen/text_default_size" />
+                </LinearLayout>
+                <View style="@style/DividerLineTheme" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="22dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="5"
+                        android:text="身份证号码"
+                        android:textColor="@color/text_title"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <EditText
+                        android:id="@+id/etPeopleCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入身份证号码"
+                        android:textColor="@color/text_default"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="@dimen/text_default_size" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/select_button_bg"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_btn_size" />
+</LinearLayout>

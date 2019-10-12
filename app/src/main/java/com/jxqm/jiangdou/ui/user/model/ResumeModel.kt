@@ -12,5 +12,6 @@ data class ResumeModel(
     val area: String, val content: String,
     val images: String, //图片列表
     val perfectionDegree: String,//简历完善度
+    val age:Int,
     val avatar: String//头像
 )

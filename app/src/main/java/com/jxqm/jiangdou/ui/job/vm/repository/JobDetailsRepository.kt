@@ -18,10 +18,18 @@ class JobDetailsRepository : BaseEventRepository() {
             apiService.singUpJob(jobId.toLong())
                 .compose(applySchedulersForLoadingDialog())
                 .subscribe({
-                    if(it.code == "0"){
-                        sendData(Constants.EVENT_JOB_DETAILS, Constants.TAG_SIGN_UP_JOB_SUCCESS, true)
-                    }else if(it.code == "500501"){ //简历未存在
-                        sendData(Constants.EVENT_JOB_DETAILS, Constants.TAG_SIGN_UP_RESUME_NOT_EXIST, false)
+                    if (it.code == "0") {
+                        sendData(
+                            Constants.EVENT_JOB_DETAILS,
+                            Constants.TAG_SIGN_UP_JOB_SUCCESS,
+                            true
+                        )
+                    } else if (it.code == "500501") { //简历未存在
+                        sendData(
+                            Constants.EVENT_JOB_DETAILS,
+                            Constants.TAG_SIGN_UP_RESUME_NOT_EXIST,
+                            false
+                        )
                     }
                 }, {
 
@@ -38,19 +46,27 @@ class JobDetailsRepository : BaseEventRepository() {
                 .compose(applySchedulersForLoadingDialog())
                 .flatMap {
                     if (it.code == "0") {
-                        sendData(Constants.EVENT_JOB_DETAILS,Constants.TAG_GET_JOB_DETAILS_SUCCESS,it.data)
-                        return@flatMap apiService.getEmployerDetails(it.data.employerId).compose(applySchedulers())
+                        sendData(
+                            Constants.EVENT_JOB_DETAILS,
+                            Constants.TAG_GET_JOB_DETAILS_SUCCESS,
+                            it.data
+                        )
+                        return@flatMap apiService.getEmployerDetails(it.data.employerId)
+                            .compose(applySchedulers())
                     }
                     return@flatMap Observable.just(it)
                 }.subscribe {
-                     if(it.code == "0" && it.data is AttestationStatusModel){
-                         sendData(Constants.EVENT_JOB_DETAILS, Constants.TAG_GET_EMPLOYER_DETAILS_SUCCESS, it.data)
-                     }
+                    if (it.code == "0" && it.data is AttestationStatusModel) {
+                        sendData(
+                            Constants.EVENT_JOB_DETAILS,
+                            Constants.TAG_GET_EMPLOYER_DETAILS_SUCCESS,
+                            it.data
+                        )
+                    }
                 }
 
         )
     }
-
 
     /**
      * 删除发布的职位
@@ -65,5 +81,28 @@ class JobDetailsRepository : BaseEventRepository() {
                     )
                 }
         )
+    }
+
+    /**
+     * 收藏职位
+     */
+    fun collectionJob(jobId: String) {
+        addDisposable(apiService.collectionJob(jobId.toLong())
+            .action {
+                sendData(
+                    Constants.EVENT_JOB_DETAILS,
+                    Constants.TAG_COLLECTION_STATUS_CHANGE,
+                    true
+                )
+            })
+    }
+
+    /**
+     * 取消收藏职位
+     */
+    fun cancelCollectionJob(jobId: String) {
+        addDisposable(apiService.cancelCollectionJob(jobId.toLong()).action {
+            sendData(Constants.EVENT_JOB_DETAILS, Constants.TAG_COLLECTION_STATUS_CHANGE, false)
+        })
     }
 }

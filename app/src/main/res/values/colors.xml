@@ -33,6 +33,7 @@
     <color name="color_tips">#ff7a45</color>
     <color name="btn_gray">#BFC4CB</color>
     <color name="my_text_tips">#8b8b8b</color>
+    <color name="text_enable_false_color">#757575</color>
     <color name="bottom_bar_select_text">#2D2D2D</color>
     <color name="bottom_bar_default_text">#AFAFAF</color>
     <color name="order_bottom_bar_color">#35373E</color>

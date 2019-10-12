@@ -62,7 +62,14 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
     }
 
     override fun onFirstUserVisible() {
-        showEmployeeFragment()
+        if(MyApplication.instance().attestationViewModel?.statusCode == 2){
+            tvChange.text = "雇主"
+            ivScanCode.visibility = View.GONE
+            showEmployerFragment()
+        }else{
+            showEmployeeFragment()
+        }
+
     }
 
     private fun startScan() {
@@ -77,7 +84,6 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
             .setCornerColor(Color.parseColor("#E42E30"))//设置扫描框颜色
             .setLineColor(Color.parseColor("#E42E30"))//设置扫描线颜色
             .setScanLineStyle(ScanLineView.style_line)
-
             .setPlaySound(true)
             .create()
         QrManager.getInstance().init(qrConfig).startScan(

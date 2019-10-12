@@ -35,6 +35,7 @@
             android:textSize="@dimen/text_title_size" />
 
         <TextView
+            android:id="@+id/tvSelect"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -49,24 +50,32 @@
     </RelativeLayout>
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="11">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 
     <RelativeLayout
+        android:id="@+id/rlBottomParent"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <CheckBox
+            android:id="@+id/cbAllSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -77,15 +86,17 @@
             android:textSize="@dimen/text_small_size" />
 
         <TextView
+            android:id="@+id/tvCancelCollection"
             android:layout_width="85dp"
             android:layout_height="26dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:background="@drawable/shape_no_agree_work_bg"
+            android:background="@drawable/select_half_circle_textview_bg"
             android:gravity="center"
+            android:enabled="false"
             android:text="取消收藏"
-            android:textColor="@color/text_default"
+            android:textColor="@color/select_textview_enable_textcolor"
             android:textSize="@dimen/text_small_size" />
     </RelativeLayout>
 </LinearLayout>

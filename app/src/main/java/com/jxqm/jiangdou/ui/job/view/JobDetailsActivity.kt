@@ -29,6 +29,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
+import com.bhx.common.utils.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jxqm.jiangdou.base.BaseDataActivity
@@ -53,7 +54,10 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
     private var tvCollection: TextView? = null//收藏
     private val mGson = Gson()
     private var mJobDetailsModel: JobDetailsModel? = null
+    private var isCollection = false
+
     override fun getLayoutId(): Int = R.layout.activity_job_details
+
 
     override fun initView() {
         super.initView()
@@ -80,11 +84,21 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
         when (status) {
             STATUS_SINGUP -> { //报名
                 val parent = vsSignUpJob.inflate() as LinearLayout
-                tvSignUp = parent.findViewById<TextView>(R.id.tvSignUp)
-                tvConsult = parent.findViewById<TextView>(R.id.tvConsult)
-                tvCollection = parent.findViewById<TextView>(R.id.tvCollection)
+                tvSignUp = parent.findViewById(R.id.tvSignUp)
+                tvConsult = parent.findViewById(R.id.tvConsult)
+                tvCollection = parent.findViewById(R.id.tvCollection)
                 tvSignUp?.clickWithTrigger {
                     mViewModel.signUpJob(mJobDetailsModel!!.id.toString())
+                }
+                tvCollection?.clickWithTrigger {
+                    if(mJobDetailsModel == null){
+                        return@clickWithTrigger
+                    }
+                    if (isCollection) {
+                        mViewModel.cancelCollectionJob(mJobDetailsModel!!.id.toString())
+                    }else{
+                        mViewModel.collectionJob(mJobDetailsModel!!.id.toString())
+                    }
                 }
             }
             STATUS_PAY_DEPOSIT -> {//支付押金
@@ -108,34 +122,55 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
 
     override fun dataObserver() {
         //获取工作详情
-        registerObserver(Constants.TAG_GET_JOB_DETAILS_SUCCESS, JobDetailsModel::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_GET_JOB_DETAILS_SUCCESS,
+            JobDetailsModel::class.java
+        ).observe(this, Observer {
             mJobDetailsModel = it
             initJobDetails()
         })
         //获取企业详情
-        registerObserver(Constants.TAG_GET_EMPLOYER_DETAILS_SUCCESS, AttestationStatusModel::class.java).observe(this,
+        registerObserver(
+            Constants.TAG_GET_EMPLOYER_DETAILS_SUCCESS,
+            AttestationStatusModel::class.java
+        ).observe(this,
             Observer {
                 mAttestationStatusModel = it
                 joPublishCompanyName.text = it.employerName //企业名称
                 joPublishCompanyUserName.text = it.contact //联系人姓名
             })
         //删除职位成功
-        registerObserver(Constants.TAG_DELETE_WAIT_PUBLISH_JOB_SUCCESS, String::class.java).observe(this, Observer {
-            //发布职位成功刷新列表
-            LiveBus.getDefault().postEvent(
-                Constants.EVENT_KEY_WAIT_PUBLISH_JOB,
-                Constants.TAG_WAIT_PUBLISH_REFRESH_JOB_LIST, true
-            )
-            this.finish()
-        })
+        registerObserver(Constants.TAG_DELETE_WAIT_PUBLISH_JOB_SUCCESS, String::class.java).observe(
+            this,
+            Observer {
+                //发布职位成功刷新列表
+                LiveBus.getDefault().postEvent(
+                    Constants.EVENT_KEY_WAIT_PUBLISH_JOB,
+                    Constants.TAG_WAIT_PUBLISH_REFRESH_JOB_LIST, true
+                )
+                this.finish()
+            })
         //报名成功
-        registerObserver(Constants.TAG_SIGN_UP_JOB_SUCCESS, Boolean::class.java).observe(this, Observer {
-            startActivity<JobSingUpSuccessActivity>()
-        })
+        registerObserver(Constants.TAG_SIGN_UP_JOB_SUCCESS, Boolean::class.java).observe(
+            this,
+            Observer {
+                startActivity<JobSingUpSuccessActivity>()
+            })
         //简历不存在
-        registerObserver(Constants.TAG_SIGN_UP_RESUME_NOT_EXIST, Boolean::class.java).observe(this, Observer {
-            startActivity<MyResumeActivity>()
-        })
+        registerObserver(Constants.TAG_SIGN_UP_RESUME_NOT_EXIST, Boolean::class.java).observe(
+            this,
+            Observer {
+                startActivity<MyResumeActivity>()
+            })
+        registerObserver(Constants.TAG_COLLECTION_STATUS_CHANGE, Boolean::class.java).observe(this,
+            Observer {
+                  if(it){
+                      ToastUtils.toastShort("取消收藏成功")
+                  }else{
+                      ToastUtils.toastShort("收藏成功")
+
+                  }
+            })
     }
 
     private fun initJobDetails() {
@@ -150,12 +185,18 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             tvJobTips.text = "${it.area} | 日结"
             tvSignUp?.text = "我要报名(${it.signNum}人报名)"
             tvSignUp?.isEnabled = it.sign
-            val listDates = mGson.fromJson<List<String>>(it.datesJson, object : TypeToken<List<String>>() {
-            }.type)
+            isCollection = it.isCollection
+            tvCollection?.text = if(isCollection) "已收藏" else "收藏"
+            val listDates =
+                mGson.fromJson<List<String>>(it.datesJson, object : TypeToken<List<String>>() {
+                }.type)
             val listTimes =
                 mGson.run {
-                    fromJson<List<TimeRangeModel>>(it.timesJson, object : TypeToken<List<TimeRangeModel>>() {
-                    }.type)
+                    fromJson<List<TimeRangeModel>>(
+                        it.timesJson,
+                        object : TypeToken<List<TimeRangeModel>>() {
+                        }.type
+                    )
                 }
             if (listDates.isNotEmpty() && listTimes.isNotEmpty()) {
                 showDateRange(listDates, listTimes)
@@ -165,7 +206,7 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
     }
 
     private fun showDateRange(dates: List<String>, times: List<TimeRangeModel>) {
-        for (i in 0 until dates.size step 2) {
+        for (i in dates.indices step 2) {
             val startData = dates[i]
             val endData = dates[i + 1]
             val view = LayoutInflater.from(this)

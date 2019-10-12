@@ -163,10 +163,8 @@ class HomeAdapter(context: Context) : LoadMoreAdapter<HomeModel>(context) {
         val tvJobSalary = holder.getView<TextView>(R.id.tvJobSalary)
         Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl).into(ivJobListImg)
         tvJobTitle.text = jobDetailsModel.title
-//        val city = jobDetailsModel.areaCode.split(",")[0]
-//        val area = jobDetailsModel.areaCode.split(",")[1]
-//        tvJobCity.text = jobDetailsModel.areaCode
-//        tvJobArea.text = jobDetailsModel.areaCode
+        tvJobCity.text = jobDetailsModel.city
+        tvJobArea.text = jobDetailsModel.area
         tvJobNumbers.text = "招${jobDetailsModel.recruitNum}人"
         tvJobSalary.text = "${jobDetailsModel.salary}币/时"
     }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.mvvm.BaseMVVMActivity
+import com.bhx.common.utils.DateUtils
 import com.bhx.common.utils.DensityUtil
 import com.bhx.common.utils.LogUtils
 import com.bigkoo.pickerview.builder.TimePickerBuilder
@@ -30,6 +31,7 @@ import com.jxqm.jiangdou.ui.user.vm.MyResumeViewModel
 import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.GridItemSpaceDecoration
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.view.dialog.SelectAgeAndStarDialog
 import com.jxqm.jiangdou.view.dialog.SelectCityDialog
 import com.jxqm.jiangdou.view.dialog.SingleSelectDialog
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -47,13 +49,14 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_my_resume.*
 import java.io.File
 import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * 我的简历
  * Created By bhx On 2019/8/19 0019 14:06
  */
 class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
-    private val mSexList = arrayListOf("女","男" )
+    private val mSexList = arrayListOf("女", "男")
     private val mEducationList = mutableListOf<String>()
     private val mHeightList = mutableListOf<String>()
     private val mWeightList = mutableListOf<String>()
@@ -126,7 +129,10 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
                     mEducationList.add(eduModel.codeName)
                 }
             })
-        registerObserver(Constants.TAG_GET_USER_RESUME_RESULT, ResumeModel::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_GET_USER_RESUME_RESULT,
+            ResumeModel::class.java
+        ).observe(this, Observer {
             mResumeModel = it
             showUserResume()
         })
@@ -137,12 +143,13 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             etUserName.setText(it.name)
             tvUserSex.text = it.gender
             tvUserBirthday.text = it.birthday
-            tvUserAge.text = it.star
+            tvUserAgeStar.text ="${it.age}/${it.star}"
             etUserPhone.setText(it.tel)
             tvUserEducation.text = it.academic
             tvUserHeight.text = it.height
             tvUserWeight.text = it.weight
             etUserLocation.text = it.area
+
             etPeopleIntroduce.setText(it.content)
             Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.avatar)
                 .transform(GlideCircleTransform(this))
@@ -165,7 +172,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         paramsMap["name"] = etUserName.text.toString().trim()
         paramsMap["gender"] = tvUserSex.text.toString().trim()
         paramsMap["birthday"] = tvUserBirthday.text.toString().trim()
-        paramsMap["star"] = tvUserAge.text.toString().trim()
+        paramsMap["star"] = tvUserAgeStar.text.toString().trim().split("/")[1]
         paramsMap["tel"] = etUserPhone.text.toString().trim()
         paramsMap["academic"] = tvUserEducation.text.toString().trim()
         paramsMap["height"] = tvUserHeight.text.toString().trim()
@@ -205,9 +212,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             R.id.rlUserBirthdayParent -> {//修改出生年月
                 showTimePickedDialog()
             }
-            R.id.rlUserAgeParent -> {//修改年龄和星座
 
-            }
             R.id.rlUserEducationParent -> {//修改学历
                 SingleSelectDialog.show(this, mEducationList) {
                     tvUserEducation.text = mEducationList[it]
@@ -261,13 +266,18 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
      */
     private fun showTimePickedDialog() {
         if (mTimePickView == null) {
+           val startCalendar =  Calendar.getInstance()
+            startCalendar.set( 1900,1,1)
             mTimePickView = TimePickerBuilder(this, OnTimeSelectListener { date, _ ->
                 run {
                     val format = SimpleDateFormat("yyyy-MM-dd")
                     val time = format.format(date)
                     tvUserBirthday.text = time
+                    tvUserAgeStar.text ="${ DateUtils.getAgeFromBirthday(time)}岁/${ DateUtils.getConstellation(time)}"
                 }
-            }).build()
+            }).setRangDate(startCalendar,Calendar.getInstance())
+                .isCyclic(true)
+                .build()
         }
         if (!mTimePickView!!.isShowing) {
             mTimePickView!!.show()
@@ -279,7 +289,10 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
      */
     private fun requestPermission() {
         val disposable =
-            RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+            RxPermissions(this).request(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            )
                 .subscribe {
                     LogUtils.i("requestPermission$it")
                     if (it) {
@@ -342,7 +355,8 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
     private fun handlePhoto(paths: List<String>) {
         val disposable = Observable.create(ObservableOnSubscribe<Any> {
             paths.forEach { path ->
-                val file = CompressHelper.getDefault(this).compressToFile(FileUtil.getFileByPath(path))
+                val file =
+                    CompressHelper.getDefault(this).compressToFile(FileUtil.getFileByPath(path))
                 mPhotoList.add(file)
             }
             it.onNext(Any())

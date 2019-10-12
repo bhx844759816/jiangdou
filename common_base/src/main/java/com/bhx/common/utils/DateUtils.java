@@ -1,4 +1,6 @@
 package com.bhx.common.utils;
+
+import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,11 +16,15 @@ import java.util.Random;
  */
 public class DateUtils {
 
-    /** 年-月-日 时:分:秒 显示格式 */
+    /**
+     * 年-月-日 时:分:秒 显示格式
+     */
     // 备注:如果使用大写HH标识使用24小时显示格式,如果使用小写hh就表示使用12小时制格式。
     public static String DATE_TO_STRING_DETAIAL_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    /** 年-月-日 显示格式 */
+    /**
+     * 年-月-日 显示格式
+     */
     public static String DATE_TO_STRING_SHORT_PATTERN = "yyyy-MM-dd";
 
     private static SimpleDateFormat simpleDateFormat;
@@ -113,7 +119,9 @@ public class DateUtils {
         return strtodate;
     }
 
-    /**  * 将长时间格式时间转换为字符串 yyyy-MM-dd HH:mm:ss  *   * @param dateDate  * @return  */
+    /**
+     * 将长时间格式时间转换为字符串 yyyy-MM-dd HH:mm:ss  *   * @param dateDate  * @return
+     */
     public static String dateToStrLong(java.util.Date dateDate) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = formatter.format(dateDate);
@@ -210,8 +218,7 @@ public class DateUtils {
     /**
      * 根据用户传入的时间表示格式，返回当前时间的格式 如果是yyyyMMdd，注意字母y不能大写。
      *
-     * @param sformat
-     *            yyyyMMddhhmmss
+     * @param sformat yyyyMMddhhmmss
      * @return
      */
     public static String getUserDate(String sformat) {
@@ -277,7 +284,7 @@ public class DateUtils {
      * 得到一个时间延后或前移几天的时间,nowdate为时间,delay为前移或后延的天数
      */
     public static String getNextDay(String nowdate, String delay) {
-        try{
+        try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             String mdate = "";
             Date d = strToDate(nowdate);
@@ -285,7 +292,7 @@ public class DateUtils {
             d.setTime(myTime * 1000);
             mdate = format.format(d);
             return mdate;
-        }catch(Exception e){
+        } catch (Exception e) {
             return "";
         }
     }
@@ -400,8 +407,7 @@ public class DateUtils {
     /**
      * 取得数据库主键 生成格式为yyyymmddhhmmss+k位随机数
      *
-     * @param k
-     *            表示是取几位随机数，可以自己定
+     * @param k 表示是取几位随机数，可以自己定
      */
 
     public static String getNo(int k) {
@@ -426,4 +432,70 @@ public class DateUtils {
         }
         return jj;
     }
+
+    /**
+     * 通过日期算星座
+     *
+     * @param birthday
+     * @return
+     */
+    public static String getConstellation(String birthday) {
+        String[] constellationArr = {"水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座",
+                "天蝎座", "射手座", "魔羯座"};
+        int[] constellationEdgeDay = {20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22};
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date birthDay = formatDate.parse(birthday);
+            int month = birthDay.getMonth();
+            int day = birthDay.getDay();
+            if (day < constellationEdgeDay[month]) {
+                month = month - 1;
+            }
+            if (month >= 0) {
+                return constellationArr[month];
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return constellationArr[11];
+    }
+
+    public static int getAgeFromBirthday(String birthday) {
+        try {
+            SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatDate.parse(birthday);
+            // 得到当前时间的年、月、日
+            if (date != null) {
+                Calendar cal = Calendar.getInstance();
+                int yearNow = cal.get(Calendar.YEAR);
+                int monthNow = cal.get(Calendar.MONTH) + 1;
+                int dayNow = cal.get(Calendar.DATE);
+                //得到输入时间的年，月，日
+                cal.setTime(date);
+                int selectYear = cal.get(Calendar.YEAR);
+                int selectMonth = cal.get(Calendar.MONTH) + 1;
+                int selectDay = cal.get(Calendar.DATE);
+                // 用当前年月日减去生日年月日
+                int yearMinus = yearNow - selectYear;
+                int monthMinus = monthNow - selectMonth;
+                int dayMinus = dayNow - selectDay;
+                int age = yearMinus;// 先大致赋值
+                if (yearMinus <= 0) {
+                    age = 0;
+                }
+                if (monthMinus < 0) {
+                    age = age - 1;
+                } else if (monthMinus == 0) {
+                    if (dayMinus < 0) {
+                        age = age - 1;
+                    }
+                }
+                return age;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

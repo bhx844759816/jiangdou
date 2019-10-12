@@ -104,7 +104,7 @@
                 android:id="@+id/tvBalance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="292"
+                android:text="0"
                 android:textColor="@color/text_title"
                 android:textSize="@dimen/text_title_size" />
 
@@ -127,7 +127,7 @@
                 android:id="@+id/tvRankPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="292"
+                android:text="0"
                 android:textColor="@color/text_title"
                 android:textSize="@dimen/text_title_size" />
 
@@ -189,6 +189,7 @@
                     android:background="@drawable/shape_red_circle"
                     android:gravity="center"
                     android:text="1"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_big_small_size" />
 

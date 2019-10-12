@@ -38,15 +38,17 @@ data class JobDetailsModel(
     val offerNum: Int,
     val salary: Int,
     val status: String,
-    val sign:Boolean,
+    val sign: Boolean,
     val statusCode: Int,
     val tel: String,
     val timesJson: String,
     val title: String,
     val typeImg: Any,
     val typeImgUrl: String,
-    val userId: Int
-): CommonConfig()
+    val userId: Int,
+    val isCollection: Boolean,
+    var isChecked: Boolean //是否选中
+) : CommonConfig()
 
 //{
 //    "id": 3,

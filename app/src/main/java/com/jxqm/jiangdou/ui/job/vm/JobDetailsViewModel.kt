@@ -26,4 +26,18 @@ class JobDetailsViewModel : BaseViewModel<JobDetailsRepository>() {
     fun deletePublishJob(jobId: String) {
         mRepository.deletePublishJob(jobId)
     }
+
+    /**
+     * 收藏职位
+     */
+    fun collectionJob(jobId: String){
+        mRepository.collectionJob(jobId)
+    }
+
+    /**
+     * 取消收藏职位
+     */
+    fun cancelCollectionJob(jobId: String){
+        mRepository.cancelCollectionJob(jobId)
+    }
 }
