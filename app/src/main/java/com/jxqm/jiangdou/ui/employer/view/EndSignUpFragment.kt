@@ -64,7 +64,7 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         mJobPublishListAdapter = JobPublishListAdapter(mContext, 3)
         recyclerView.adapter = mJobPublishListAdapter

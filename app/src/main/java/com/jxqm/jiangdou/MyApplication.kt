@@ -34,6 +34,7 @@ class MyApplication : BaseApplication() {
     var userModel: UserModel? = null //存储用户信息
     var attestationViewModel: AttestationStatusModel? = null
     var locationModel: LocationModel? = null
+    var isRecyclerFlag = -1
 
     private val mActivityCallBack = object : ActivityLifecycleCallbacks {
         override fun onActivityPaused(p0: Activity) {

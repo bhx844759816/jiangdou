@@ -97,6 +97,10 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
             intent.putExtra("ScreenResult", mScreenResult)
             startActivityForResult(intent, REQUEST_CODE_JOB_SCREEN)
         }
+
+        aboutUsBack.clickWithTrigger {
+            finish()
+        }
     }
 
     override fun initData() {
@@ -119,7 +123,10 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                 try {
                     val data = JSONArray(jsonData)
                     for (i in 0 until data.length()) {
-                        val entity = mGson.fromJson(data.optJSONObject(i).toString(), CityJsonModel::class.java)
+                        val entity = mGson.fromJson(
+                            data.optJSONObject(i).toString(),
+                            CityJsonModel::class.java
+                        )
                         cityItemList.add(entity)
                     }
                     cityItemList.forEach { cityJsonModel ->
@@ -131,7 +138,10 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                                 list?.let {
                                     mAreaItemList.addAll(list)
                                 }
-                                mAreaItemList.add(0, "全${MyApplication.instance().locationModel?.city}")
+                                mAreaItemList.add(
+                                    0,
+                                    "全${MyApplication.instance().locationModel?.city}"
+                                )
                                 return@forEach
                             }
                         }
@@ -152,44 +162,50 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
      */
     override fun dataObserver() {
         //获取兼职类型成功
-        registerObserver(Constants.TAG_GET_JOB_TYPE_SUCCESS, List::class.java).observe(this, Observer {
-            val list = it as List<JobTypeModel>
-            mJobTypeList.clear()
-            mJobTypeList.addAll(list)
-        })
+        registerObserver(Constants.TAG_GET_JOB_TYPE_SUCCESS, List::class.java).observe(
+            this,
+            Observer {
+                val list = it as List<JobTypeModel>
+                mJobTypeList.clear()
+                mJobTypeList.addAll(list)
+            })
         //获取兼职列表成功
-        registerObserver(Constants.TAG_GET_JOB_ITEM_LIST_SUCCESS, List::class.java).observe(this, Observer {
-            val list = it as List<JobDetailsModel>
-            if (isRefresh) {
-                if (list.isEmpty()) {
-                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
-                } else {
-                    mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                    if (list.size >= 10) {
-                        swipeRefreshLayout.setEnableLoadMore(true)
+        registerObserver(Constants.TAG_GET_JOB_ITEM_LIST_SUCCESS, List::class.java).observe(
+            this,
+            Observer {
+                val list = it as List<JobDetailsModel>
+                if (isRefresh) {
+                    if (list.isEmpty()) {
+                        mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                    } else {
+                        mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                        if (list.size >= 10) {
+                            swipeRefreshLayout.setEnableLoadMore(true)
+                        }
                     }
-                }
-                mJobItemList.clear()
-                mJobItemList.addAll(list)
-                mAdapter.setDataList(mJobItemList)
-                if (swipeRefreshLayout.isRefreshing)
-                    swipeRefreshLayout.finishRefresh()
-            } else {
-                swipeRefreshLayout.finishLoadMore()
-                if (list.isEmpty()) {
-                    swipeRefreshLayout.setNoMoreData(true)
-                } else {
+                    mJobItemList.clear()
                     mJobItemList.addAll(list)
                     mAdapter.setDataList(mJobItemList)
+                    if (swipeRefreshLayout.isRefreshing)
+                        swipeRefreshLayout.finishRefresh()
+                } else {
+                    swipeRefreshLayout.finishLoadMore()
+                    if (list.isEmpty()) {
+                        swipeRefreshLayout.setNoMoreData(true)
+                    } else {
+                        mJobItemList.addAll(list)
+                        mAdapter.setDataList(mJobItemList)
+                    }
                 }
-            }
-        })
+            })
         //获取兼职列表失败
-        registerObserver(Constants.TAG_GET_JOB_ITEM_LIST_ERROR, String::class.java).observe(this, Observer {
-            if (mJobItemList.isEmpty()) {
-                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-            }
-        })
+        registerObserver(Constants.TAG_GET_JOB_ITEM_LIST_ERROR, String::class.java).observe(
+            this,
+            Observer {
+                if (mJobItemList.isEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                }
+            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -198,8 +214,11 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
             mScreenResult = data?.getStringExtra("ScreenResult")
             LogUtils.i("mScreenResult=$mScreenResult")
             mScreenResult?.let {
-                val params = mGson.fromJson<Map<String, String>>(it, object : TypeToken<Map<String, String>>() {
-                }.type)
+                val params = mGson.fromJson<Map<String, String>>(
+                    it,
+                    object : TypeToken<Map<String, String>>() {
+                    }.type
+                )
                 mParamsMap.putAll(params)
                 isRefresh = true
                 mViewModel.getAllJobList(mParamsMap, isRefresh)
@@ -245,7 +264,18 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
             mSortPopupWindow!!.mCallBack = {
                 if (it.isEmpty()) {
                     mParamsMap.remove("jobSort")
+                    mParamsMap.remove("latitude")
+                    mParamsMap.remove("longitude")
                 } else {
+                    if (it == "instance") {
+                        mParamsMap["latitude"] =
+                            MyApplication.instance().locationModel?.latitude.toString()
+                        mParamsMap["longitude"] =
+                            MyApplication.instance().locationModel?.longitude.toString()
+                    } else {
+                        mParamsMap.remove("latitude")
+                        mParamsMap.remove("longitude")
+                    }
                     mParamsMap["jobSort"] = it
                 }
                 isRefresh = true

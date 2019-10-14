@@ -18,6 +18,8 @@ data class JobDetailsModel(
     val contact: String,
     val content: String,
     val createTime: String,
+    val startTime: String,
+    val endTime: String,
     val datesJson: String,
     val email: String,
     val employerId: String,//雇主ID
@@ -85,4 +87,5 @@ data class JobDetailsModel(
 //    "employerName": null,
 //    "jobTypeName": "派单",
 //    "typeImgUrl": null
+//"startTime":"2019-10-14 08:30","endTime":"2019-10-16 20:30"
 //}

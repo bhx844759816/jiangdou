@@ -51,6 +51,9 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
                 QrCodeDialog.show(this, mBase64ImageString!!)
             }
         }
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     /**
@@ -68,6 +71,9 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
                 tvJobWorkTime.text = "${it.count} 小时"
                 tvTotalPaymentMoney.text = "${it.amount} 币"
                 tvCommission.text = "${it.commission} 币"
+                tvOrderCreateTime.text = it.createTime
+                tvOrderPayTime.text = it.paymentTime
+                tvOrderPayFinishTime.text = it.endTime
                 //设置下滑线
                 tvCommission.paintFlags = tvCommission.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 val listDates = gson.fromJson<List<String>>(it.datesJson, object : TypeToken<List<String>>() {}.type)
@@ -89,7 +95,7 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
      * 添加日期区间
      */
     private fun addDataRange(dateList: List<String>) {
-        for (i in 0 until dateList.size step 2) {
+        for (i in dateList.indices step 2) {
             val startData = dateList[i]
             val endData = dateList[i + 1]
             var textView = TextView(this)

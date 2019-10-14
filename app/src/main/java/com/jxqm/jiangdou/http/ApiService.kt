@@ -169,15 +169,18 @@ interface ApiService {
      */
     @Multipart
     @POST(Api.ACCEPT_OFFER)
-    fun acceptOffer(@Part("id") jobId: Int): Observable<HttpResult<Any>>
+    fun acceptOffer(@Part("jobResumeId") jobId: Int): Observable<HttpResult<Any>>
 
     /**
      * 拒绝Offer
      */
     @Multipart
     @POST(Api.REFUSE_OFFER)
-    fun refuseOffer(@Part("id") jobId: Int): Observable<HttpResult<Any>>
+    fun refuseOffer(@Part("jobResumeId") jobId: Int): Observable<HttpResult<Any>>
 
+
+    @DELETE(Api.GET_EMPLOYEE_OFFER_INVALID_LIST)
+    fun clearInvalidOffer(): Observable<HttpResult<Any>>
     /**
      * 获取首页轮播图
      */
@@ -272,6 +275,20 @@ interface ApiService {
         @Query("pageNo") pageNo: Int,
         @Query("pageSize") pageSize: Int
     ): Observable<HttpResult<EmployeeResumeModelWrap>>
+
+    /**
+     * 撤回录用
+     */
+    @Multipart
+    @POST(Api.WITHDRAW_OFFER)
+    fun withdrawOffer(@Part("id") id: Long): Observable<HttpResult<Any>>
+
+    /**
+     * 重发
+     */
+    @Multipart
+    @POST(Api.GET_INVITE_EMPLOYEE_LIST)
+    fun repeatOffer(@Part("id") id: Long): Observable<HttpResult<Any>>
 
     /**
      * 雇佣记录 - 已到岗
@@ -465,6 +482,12 @@ interface ApiService {
      * 获取职位收藏列表
      */
     @GET(Api.EMPLOYEE_COLLECTION_LIST)
-    fun getCollectionList(   @Query("pageNo") pageNo: Int,
-                             @Query("pageSize") pageSize: Int): Observable<HttpResult<JobDetailsWrapModel>>
+    fun getCollectionList(
+        @Query("pageNo") pageNo: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<HttpResult<JobDetailsWrapModel>>
+
+
+    @DELETE(Api.GET_EMPLOYEE_CLOSED_SIGN_LIST)
+    fun clearCloseJob(): Observable<HttpResult<Any>>
 }

@@ -3,6 +3,7 @@ package com.jxqm.jiangdou.ui.employee.vm.repository
 import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
+import com.jxqm.jiangdou.http.action
 import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.model.JobEmployeeBaseModel
 import com.jxqm.jiangdou.model.JobEmployeeTitleModel
@@ -41,51 +42,27 @@ class EmployeeSignUpRepository : BaseEventRepository() {
                 }, {
                     sendData(
                         Constants.EVENT_KEY_EMPLOYEE_SIGN_UP,
-                        Constants.TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_ERROR,
+                        Constants.TAG_GET_EMPLOYEE_SIGN_LIST_ERROR,
                         it.localizedMessage
                     )
                 }, {
 
                 })
-
         )
+    }
 
-
-//        addDisposable(
-//            Observable.concat(
-//                apiService.getEmployeeSignList(),
-//                apiService.getEmployeeClosedSignList()
-//            ).compose(applySchedulers())
-//                .subscribe({
-//                    if (it.code == "0") {
-//                        it.data.map { jobSignModel ->
-//                            jobSignModel.jobStatus = jobStatus
-//                            jobSignList.add(jobSignModel)
-//                            val jobSignModelWrap = JobSignModelWrap()
-//                        }
-//                        jobStatus++
-//                    } else {
-//                        sendData(
-//                            Constants.EVENT_KEY_EMPLOYEE_SIGN_UP,
-//                            Constants.TAG_GET_EMPLOYEE_SIGN_LIST_ERROR,
-//                            it.message
-//                        )
-//                    }
-//                }, {
-//                    sendData(
-//                        Constants.EVENT_KEY_EMPLOYEE_SIGN_UP,
-//                        Constants.TAG_GET_EMPLOYEE_SIGN_LIST_ERROR,
-//                        it.localizedMessage
-//                    )
-//                }, {
-//                    sendData(
-//                        Constants.EVENT_KEY_EMPLOYEE_SIGN_UP,
-//                        Constants.TAG_GET_EMPLOYEE_SIGN_LIST_SUCCESS,
-//                        jobSignList
-//                    )
-//                })
-//
-//        )
-
+    /**
+     *
+     */
+    fun clearCloseJob() {
+        addDisposable(
+            apiService.clearCloseJob().action {
+                sendData(
+                    Constants.EVENT_KEY_EMPLOYEE_SIGN_UP,
+                    Constants.TAG_CLEAR_EMPLOYEE_SIGN_CLOSE_LIST,
+                   true
+                )
+            }
+        )
     }
 }

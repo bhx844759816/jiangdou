@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
+import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
 import com.jxqm.jiangdou.model.JobTypeModel
@@ -34,6 +35,7 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
     private var mJobContactsFragment: JobContactsFragment? = null
     private var mCurrentFragment: Fragment? = null
     var mAttestationStatusModel: AttestationStatusModel? = null
+    var mJobDetailsModel: JobDetailsModel? = null
     private val mParamsMap = mutableMapOf<String, String>()
     private val gson = Gson()
 
@@ -43,6 +45,10 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
 
     override fun initView() {
         super.initView()
+        val jsonString = intent.getStringExtra("JobDetails")
+        jsonString?.let {
+            mJobDetailsModel = CommonConfig.fromJson(it, JobDetailsModel::class.java)
+        }
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
         toolBar.setNavigationOnClickListener {
             onBackPressed()
@@ -52,34 +58,42 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
 
     override fun dataObserver() {
         //接收选择的兼职类型
-        registerObserver(Constants.TAG_PUBLISH_JOB_TYPE, JobTypeModel::class.java).observe(this, Observer {
-            mParamsMap["jobTypeId"] = it.id.toString()
-            mParamsMap["jobTypeName"] = it.jobTypeName
-        })
+        registerObserver(Constants.TAG_PUBLISH_JOB_TYPE, JobTypeModel::class.java).observe(
+            this,
+            Observer {
+                mParamsMap["jobTypeId"] = it.id.toString()
+                mParamsMap["jobTypeName"] = it.jobTypeName
+            })
         //接收兼职的基本信息
-        registerObserver(Constants.TAG_PUBLISH_JOB_MESSAGE, Map::class.java).observe(this, Observer {
-            val params = it as Map<String, String>
-            mParamsMap.putAll(params)
-        })
+        registerObserver(Constants.TAG_PUBLISH_JOB_MESSAGE, Map::class.java).observe(
+            this,
+            Observer {
+                val params = it as Map<String, String>
+                mParamsMap.putAll(params)
+            })
         //接收兼职的时间
         registerObserver(Constants.TAG_PUBLISH_JOB_TIME, Map::class.java).observe(this, Observer {
             val params = it as Map<String, String>
             mParamsMap.putAll(params)
         })
         //立即发布
-        registerObserver(Constants.TAG_PUBLISH_JOB_EMPLOYER_PUBLISH, Map::class.java).observe(this, Observer {
-            val params = it as Map<String, String>
-            mParamsMap.putAll(params)
-            val mapFilePath = Constants.APP_SAVE_DIR + Constants.MAPVIEW_FILENAME
-            mViewModel.publishJob(mapFilePath, mParamsMap)
-        })
+        registerObserver(Constants.TAG_PUBLISH_JOB_EMPLOYER_PUBLISH, Map::class.java).observe(
+            this,
+            Observer {
+                val params = it as Map<String, String>
+                mParamsMap.putAll(params)
+                val mapFilePath = Constants.APP_SAVE_DIR + Constants.MAPVIEW_FILENAME
+                mViewModel.publishJob(mapFilePath, mParamsMap)
+            })
         //预览建立
-        registerObserver(Constants.TAG_PUBLISH_JOB_EMPLOYER_PREVIEW, Map::class.java).observe(this, Observer {
-            val params = it as Map<String, String>
-            mParamsMap.putAll(params)
-            startActivity<PublishJobPreviewActivity>("JobDetailsModel" to gson.toJson(mParamsMap))
+        registerObserver(Constants.TAG_PUBLISH_JOB_EMPLOYER_PREVIEW, Map::class.java).observe(
+            this,
+            Observer {
+                val params = it as Map<String, String>
+                mParamsMap.putAll(params)
+                startActivity<PublishJobPreviewActivity>("JobDetailsModel" to gson.toJson(mParamsMap))
 
-        })
+            })
         //获取认证信息
         registerObserver(
             Constants.TAG_PUBLISH_JOB_ATTESTATION_DETAILS,
@@ -89,17 +103,19 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
                 mAttestationStatusModel = it
             })
         //发布成功 TAG_PUBLISH_JOB_SUCCESS
-        registerObserver(Constants.TAG_PUBLISH_JOB_SUCCESS, String::class.java).observe(this, Observer {
-            //发布职位成功刷新列表
-            LiveBus.getDefault().postEvent(
-                Constants.EVENT_KEY_WAIT_PUBLISH_JOB,
-                Constants.TAG_WAIT_PUBLISH_REFRESH_JOB_LIST, true
-            )
-            //需要jobId
-            ToastUtils.toastShort("发布职位成功请支付押金")
-            startActivity<OrderPaymentActivity>("JobId" to it)
-            this@JobPublishActivity.finish()
-        })
+        registerObserver(Constants.TAG_PUBLISH_JOB_SUCCESS, String::class.java).observe(
+            this,
+            Observer {
+                //发布职位成功刷新列表
+                LiveBus.getDefault().postEvent(
+                    Constants.EVENT_KEY_WAIT_PUBLISH_JOB,
+                    Constants.TAG_WAIT_PUBLISH_REFRESH_JOB_LIST, true
+                )
+                //需要jobId
+                ToastUtils.toastShort("发布职位成功请支付押金")
+                startActivity<OrderPaymentActivity>("JobId" to it)
+                this@JobPublishActivity.finish()
+            })
     }
 
     /**

@@ -87,22 +87,40 @@ class JobDetailsRepository : BaseEventRepository() {
      * 收藏职位
      */
     fun collectionJob(jobId: String) {
-        addDisposable(apiService.collectionJob(jobId.toLong())
-            .action {
-                sendData(
-                    Constants.EVENT_JOB_DETAILS,
-                    Constants.TAG_COLLECTION_STATUS_CHANGE,
-                    true
-                )
-            })
+        addDisposable(
+            apiService.collectionJob(jobId.toLong())
+                .compose(applySchedulers())
+                .subscribe({
+                    if (it.code == "0") {
+                        sendData(
+                            Constants.EVENT_JOB_DETAILS,
+                            Constants.TAG_COLLECTION_STATUS_CHANGE,
+                            true
+                        )
+                    }
+                }, {
+
+                })
+        )
     }
 
     /**
      * 取消收藏职位
      */
     fun cancelCollectionJob(jobId: String) {
-        addDisposable(apiService.cancelCollectionJob(jobId.toLong()).action {
-            sendData(Constants.EVENT_JOB_DETAILS, Constants.TAG_COLLECTION_STATUS_CHANGE, false)
-        })
+        addDisposable(
+            apiService.cancelCollectionJob(jobId.toLong()).compose(applySchedulers())
+                .subscribe({
+                    if (it.code == "0") {
+                        sendData(
+                            Constants.EVENT_JOB_DETAILS,
+                            Constants.TAG_COLLECTION_STATUS_CHANGE,
+                            false
+                        )
+                    }
+                }, {
+
+                })
+        )
     }
 }

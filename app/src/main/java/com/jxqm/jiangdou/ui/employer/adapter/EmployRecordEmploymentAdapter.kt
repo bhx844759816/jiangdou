@@ -20,9 +20,12 @@ import com.jxqm.jiangdou.utils.startActivity
  * 雇佣记录 - 已录用-适配器
  * Created By bhx On 2019/9/3 0003 13:50
  */
-class EmployRecordEmploymentAdapter(context: Context) : MultiItemTypeAdapter<EmployeeResumeModel>(context) {
+class EmployRecordEmploymentAdapter(context: Context) :
+    MultiItemTypeAdapter<EmployeeResumeModel>(context) {
 
     var status: Int = 0 //
+    var mWithdrawOfferCallBack: ((Long) -> Unit)? = null //撤回
+    var mRepeatOfferCallBack: ((Long) -> Unit)? = null //重发
 
     init {
         addItemViewType(object : ItemViewType<EmployeeResumeModel> {
@@ -72,12 +75,20 @@ class EmployRecordEmploymentAdapter(context: Context) : MultiItemTypeAdapter<Emp
                     tvDetails.clickWithTrigger {
                         mContext.startActivity<ResumeDetailsActivity>("UserId" to model.userId)
                     }
-                    //录用
+                    //联系
                     tvContact.clickWithTrigger {
 
                     }
                     //撤回或重发
                     tvReplySend.clickWithTrigger {
+                        when (status) {
+                            0 -> {//已邀请 撤回
+                                mWithdrawOfferCallBack?.invoke(model.id)
+                            }
+                            3 -> {//未恢复 重发
+                                mRepeatOfferCallBack?.invoke(model.id)
+                            }
+                        }
 
                     }
 

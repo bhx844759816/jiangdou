@@ -59,8 +59,10 @@ class EmployeeEmploymentRepository : BaseEventRepository() {
         addDisposable(
             apiService.acceptOffer(offerId)
                 .action {
-                    sendData(Constants.EVENT_KEY_EMPLOYEE_EMPLOYMENT,
-                        Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS,true)
+                    sendData(
+                        Constants.EVENT_KEY_EMPLOYEE_EMPLOYMENT,
+                        Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS, true
+                    )
 //                    TAG_ACCEPT_REFUSE_OFFER_SUCCESS
                 }
         )
@@ -73,8 +75,25 @@ class EmployeeEmploymentRepository : BaseEventRepository() {
         addDisposable(
             apiService.refuseOffer(offerId)
                 .action {
-                    sendData(Constants.EVENT_KEY_EMPLOYEE_EMPLOYMENT,
-                        Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS,true)
+                    sendData(
+                        Constants.EVENT_KEY_EMPLOYEE_EMPLOYMENT,
+                        Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS, true
+                    )
+                }
+        )
+    }
+
+    /**
+     * 清空失效
+     */
+    fun clearInvalidOffer() {
+        addDisposable(
+            apiService.clearInvalidOffer()
+                .action {
+                    sendData(
+                        Constants.EVENT_KEY_EMPLOYEE_EMPLOYMENT,
+                        Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS, true
+                    )
                 }
         )
     }

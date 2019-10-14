@@ -67,6 +67,7 @@ class Constants {
         const val EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT = "event_key_employ_record_employment"//雇佣记录 - 已录用
         const val TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS = "tag_get_employee_accept_list_success"//获取录用列表成功
         const val TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR = "tag_get_employee_accept_list_error"//获取已录用列表数据失败
+        const val TAG_EMPLOY_RECORD_REPEAT_WITHDRAW_FINISH = "tag_employ_record_repeat_withdraw_finish" //雇佣记录 重发或撤回录用完成
 
         const val EVENT_KEY_EMPLOY_RECORD_REPORT_DUTY = "event_key_employ_record_report_duty"//雇佣记录 - 已到岗
         const val TAG_GET_REPORT_DUTY_LIST_SUCCESS = "tag_get_report_duty_list_success"//已到岗列表成功
@@ -81,6 +82,7 @@ class Constants {
         const val EVENT_KEY_EMPLOY_RECORD_PAY = "event_key_employ_record_pay"//雇佣记录已结算
         const val TAG_GET_SETTLE_FINISH_LIST_SUCCESS = "tag_get_settle_finish_list_success"//获取雇佣记录已结算列表成功
         const val TAG_GET_SETTLE_FINISH_LIST_ERROR = "tag_get_settle_finish_list_error"//获取雇佣记录已结算列表成功
+        const val TAG_REPEAT_SETTLE_FINISH  = "tag_repeat_settle_finish" //重新结算
 
         //认证
         const val EVENT_KEY_COMPANY_ATTESTATION = "event_key_company_attestation" // 企业认证
@@ -122,6 +124,7 @@ class Constants {
         const val EVENT_KEY_EMPLOYEE_SIGN_UP = "event_key_employee_sign_up"//雇员-已报名
         const val TAG_GET_EMPLOYEE_SIGN_LIST_SUCCESS = "tag_get_employee_sign_list_success"//已报名列表
         const val TAG_GET_EMPLOYEE_SIGN_LIST_ERROR = "tag_get_employee_sign_list_error"//已报名列表失败
+        const val TAG_CLEAR_EMPLOYEE_SIGN_CLOSE_LIST = "tag_clear_employee_sign_close_list"//清空失效完成
 
         const val EVENT_KEY_EMPLOYEE_EMPLOYMENT = "event_key_employee_employment"//雇员 - 已录用
         const val TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_SUCCESS = "tag_get_employee_employment_list_success"//已录用列表

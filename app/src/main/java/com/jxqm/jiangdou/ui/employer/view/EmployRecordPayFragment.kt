@@ -17,6 +17,7 @@ import com.jxqm.jiangdou.model.EmployRecordPayItem
 import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordPayAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordPayViewModel
+import com.jxqm.jiangdou.view.dialog.SettleDialog
 import kotlinx.android.synthetic.main.fragment_employ_record_pay.*
 
 /**
@@ -71,6 +72,12 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
             isRefresh = true
             getData()
         }
+        mAdapter.repeatSettleCallBack = { amount, jobId ->
+            //单结提示
+            SettleDialog.show(activity!!, amount) {
+                mViewModel.singleSettleWork(jobId, it)
+            }
+        }
     }
 
     private fun getData() {
@@ -87,40 +94,49 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
         super.initView(bundle)
         jobId = arguments?.getString("jobId")
         //获取结算列表成功
-        registerObserver(Constants.TAG_GET_SETTLE_FINISH_LIST_SUCCESS, List::class.java).observe(this, Observer {
-            val list = it as List<EmployeeResumeModel>
-            if (isRefresh) {
-                if (list.isNullOrEmpty()) {
-                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
-                } else {
-                    mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                    if (list.size >= 10) {
-                        swipeRefreshLayout.setEnableLoadMore(true)
+        registerObserver(Constants.TAG_GET_SETTLE_FINISH_LIST_SUCCESS, List::class.java).observe(
+            this,
+            Observer {
+                val list = it as List<EmployeeResumeModel>
+                if (isRefresh) {
+                    if (list.isNullOrEmpty()) {
+                        mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                     } else {
-                        swipeRefreshLayout.setEnableLoadMore(false)
+                        mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                        if (list.size >= 10) {
+                            swipeRefreshLayout.setEnableLoadMore(true)
+                        } else {
+                            swipeRefreshLayout.setEnableLoadMore(false)
+                        }
                     }
-                }
-                mEmployeeResumeModelList.clear()
-                mEmployeeResumeModelList.addAll(list)
-                mAdapter.setDataList(mEmployeeResumeModelList)
-                if (swipeRefreshLayout.isRefreshing) {
-                    swipeRefreshLayout.finishRefresh()
-                }
-            } else {
-                swipeRefreshLayout.finishLoadMore()
-                if (list.isEmpty()) {
-                    swipeRefreshLayout.setNoMoreData(true)
-                } else {
+                    mEmployeeResumeModelList.clear()
                     mEmployeeResumeModelList.addAll(list)
                     mAdapter.setDataList(mEmployeeResumeModelList)
+                    if (swipeRefreshLayout.isRefreshing) {
+                        swipeRefreshLayout.finishRefresh()
+                    }
+                } else {
+                    swipeRefreshLayout.finishLoadMore()
+                    if (list.isEmpty()) {
+                        swipeRefreshLayout.setNoMoreData(true)
+                    } else {
+                        mEmployeeResumeModelList.addAll(list)
+                        mAdapter.setDataList(mEmployeeResumeModelList)
+                    }
                 }
-            }
-        })
+            })
         //获取数据失败
-        registerObserver(Constants.TAG_GET_SETTLE_FINISH_LIST_ERROR, String::class.java).observe(this, Observer {
-            if (mEmployeeResumeModelList.isEmpty())
-                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-        })
+        registerObserver(Constants.TAG_GET_SETTLE_FINISH_LIST_ERROR, String::class.java).observe(
+            this,
+            Observer {
+                if (mEmployeeResumeModelList.isEmpty())
+                    mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+            })
+        registerObserver(Constants.TAG_REPEAT_SETTLE_FINISH, Boolean::class.java).observe(this,
+            Observer {
+                isRefresh = true
+                getData()
+            })
     }
 
     companion object {

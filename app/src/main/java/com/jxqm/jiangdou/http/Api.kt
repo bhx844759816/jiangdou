@@ -92,6 +92,8 @@ object Api {
     const val GET_REFUSE_EMPLOYEE_LIST = "/employer/job/refuse"
     //雇佣记录 - 录用 - 未回复
     const val GET_NO_REPLY_EMPLOYEE_LIST = "/employer/job/offer-not-response"
+    //雇佣记录 - 录用 -测绘录用
+    const val WITHDRAW_OFFER = "/employer/job/withdraw"
     //雇佣记录 - 到岗
     const val GET_REPORTDUTY_LIST = "/employer/job/arrivaled"
     //雇佣记录 - 待结算

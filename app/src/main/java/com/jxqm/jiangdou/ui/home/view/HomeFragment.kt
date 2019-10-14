@@ -127,32 +127,34 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             mAdapter.updateDatas(mHomeModelList)
         })
         //获取推荐兼职列表J
-        registerObserver(Constants.TAG_GET_HOME_RECOMMEND_LIST, List::class.java).observe(this, Observer {
-            val list = it as List<JobDetailsModel>
-            val homeJobDetailsModelList = mutableListOf<HomeJobDetailsModel>()
-            list.forEach { jobDetailsModel ->
-                val homeJobDetailsModel = HomeJobDetailsModel(jobDetailsModel)
-                homeJobDetailsModelList.add(homeJobDetailsModel)
-            }
-            if (isRefresh) {
-                swipeRefreshLayout.finishRefresh()
-                val iterator = mHomeModelList.iterator()
-                while (iterator.hasNext()) {
-                    val homeModel = iterator.next()
-                    if (homeModel.type == 5) {
-                        iterator.remove()
+        registerObserver(Constants.TAG_GET_HOME_RECOMMEND_LIST, List::class.java).observe(
+            this,
+            Observer {
+                val list = it as List<JobDetailsModel>
+                val homeJobDetailsModelList = mutableListOf<HomeJobDetailsModel>()
+                list.forEach { jobDetailsModel ->
+                    val homeJobDetailsModel = HomeJobDetailsModel(jobDetailsModel)
+                    homeJobDetailsModelList.add(homeJobDetailsModel)
+                }
+                if (isRefresh) {
+                    swipeRefreshLayout.finishRefresh()
+                    val iterator = mHomeModelList.iterator()
+                    while (iterator.hasNext()) {
+                        val homeModel = iterator.next()
+                        if (homeModel.type == 5) {
+                            iterator.remove()
+                        }
                     }
+                    if (list.size >= 10) {
+                        swipeRefreshLayout.setEnableLoadMore(true)
+                    }
+                    mHomeModelList.addAll(homeJobDetailsModelList)
+                } else {
+                    swipeRefreshLayout.finishLoadMore()
+                    mHomeModelList.addAll(homeJobDetailsModelList)
                 }
-                if (list.size >= 10) {
-                    swipeRefreshLayout.setEnableLoadMore(true)
-                }
-                mHomeModelList.addAll(homeJobDetailsModelList)
-            } else {
-                swipeRefreshLayout.finishLoadMore()
-                mHomeModelList.addAll(homeJobDetailsModelList)
-            }
-            mAdapter.updateDatas(mHomeModelList)
-        })
+                mAdapter.updateDatas(mHomeModelList)
+            })
     }
 
     /**
@@ -162,18 +164,20 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
         mDisposable = RxPermissions(activity!!).request(Manifest.permission.ACCESS_FINE_LOCATION)
             .subscribe { aBoolean ->
                 if (aBoolean!!) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        val locManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                        if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                            startActivityForResult(
-                                intent,
-                                REQUEST_CODE_LOCATION_SETTING
-                            ) // 设置完成后返回到原来的界面
-                        } else {
-                            startLocation()
-                        }
-                    }
+                    startLocation()
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        val locManager =
+//                            mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//                        if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//                            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+//                            startActivityForResult(
+//                                intent,
+//                                REQUEST_CODE_LOCATION_SETTING
+//                            ) // 设置完成后返回到原来的界面
+//                        } else {
+//
+//                        }
+//                    }
                 }
             }
 
@@ -205,6 +209,11 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
         mLocationClient.locOption = option
         //开始定位
         mLocationClient.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mLocationClient.stop()
     }
 
     /**

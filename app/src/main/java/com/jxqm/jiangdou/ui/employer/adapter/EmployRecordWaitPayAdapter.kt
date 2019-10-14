@@ -50,7 +50,7 @@ class EmployRecordWaitPayAdapter(context: Context) : MultiItemTypeAdapter<Employ
                     tvUserName.text = model.name
                     tvAmount.text = "${model.amount}币"
                     val date = model.date.substring(model.date.indexOf("-") + 1).replace("-", "月")
-                    tvWorkTime.text = "工作时段： $date ${model.startTime} - ${model.endTime} "
+                    tvWorkTime.text = "工作时段： ${model.startTime}"
                     cbSelect.isChecked = model.isChecked
                     if (model.gender == "男") {
                         ivUserSex.setBackgroundResource(R.drawable.icon_boy)

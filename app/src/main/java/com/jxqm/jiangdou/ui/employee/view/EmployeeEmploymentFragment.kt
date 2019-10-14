@@ -27,7 +27,10 @@ class EmployeeEmploymentFragment : BaseMVVMFragment<EmployeeEmploymentViewModel>
 
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
-        registerObserver(Constants.TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_SUCCESS, List::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_SUCCESS,
+            List::class.java
+        ).observe(this, Observer {
             val list = it as List<JobEmployeeBaseModel>
             mJobModelList.clear()
             mJobModelList.addAll(list)
@@ -43,13 +46,18 @@ class EmployeeEmploymentFragment : BaseMVVMFragment<EmployeeEmploymentViewModel>
 
         })
         //获取已报名列表失败
-        registerObserver(Constants.TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_ERROR, String::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_ERROR,
+            String::class.java
+        ).observe(this, Observer {
             mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
         })
         //接受或拒绝offer
-        registerObserver(Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS, Boolean::class.java).observe(this, Observer {
-            mViewModel.getEmployeeOfferList()
-        })
+        registerObserver(Constants.TAG_ACCEPT_REFUSE_OFFER_SUCCESS, Boolean::class.java).observe(
+            this,
+            Observer {
+                mViewModel.getEmployeeOfferList()
+            })
 
     }
 
@@ -70,6 +78,9 @@ class EmployeeEmploymentFragment : BaseMVVMFragment<EmployeeEmploymentViewModel>
         //拒绝offer
         mAdapter.mRefuseOfferCallBack = {
             mViewModel.refuseOffer(it)
+        }
+        mAdapter.clearInvalidJobCallBack = {
+            mViewModel.clearInvalidOffer()
         }
     }
 

@@ -11,4 +11,11 @@ class EmployeeSignUpViewModel : BaseViewModel<EmployeeSignUpRepository>() {
     fun getSignList() {
         mRepository.getSignList()
     }
+
+    /**
+     * 清空截至报名的工作
+     */
+    fun clearCloseJob() {
+        mRepository.clearCloseJob()
+    }
 }

@@ -29,6 +29,6 @@ class EmployRecordSignUpViewModel : BaseViewModel<EmployRecordSignUpRepository>(
      * 驳回
      */
     fun regectedResume(ids: ArrayList<Long>) {
-        mRepository.acceptResume(ids)
+        mRepository.regectedResume(ids)
     }
 }

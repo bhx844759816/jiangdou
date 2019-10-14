@@ -35,7 +35,7 @@ class ReportDutyWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobEmpl
                     val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime)
                     val tvJobMoney = it.getView<TextView>(R.id.tvJobMoney)
                     val model = item as JobEmployeeModel
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImg).into(ivEmployeeImg)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImgUrl).into(ivEmployeeImg)
                     tvEmployeeTitle.text = model.title
                     tvRecruitNum.text = model.recruitNum.toString()
                     tvSingUpTime.text = model.arrivalTime

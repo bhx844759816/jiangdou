@@ -33,16 +33,18 @@
         android:layout_width="74dp"
         android:layout_height="match_parent">
 
-        <TextView
+        <CheckBox
             android:id="@+id/tvCollection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:drawableTop="@drawable/icon_collection"
+            android:drawableTop="@drawable/select_collection_checkbox_bg"
             android:drawablePadding="5dp"
+            android:button="@null"
             android:gravity="center"
             android:text="收藏"
-            android:textColor="@color/job_bottom_text_color"
+            android:checked="false"
+            android:textColor="@color/select_collection_checkbox_textcolor"
             android:textSize="@dimen/text_small_size" />
     </RelativeLayout>
 

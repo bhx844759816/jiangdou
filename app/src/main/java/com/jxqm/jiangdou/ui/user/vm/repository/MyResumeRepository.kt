@@ -53,7 +53,7 @@ class MyResumeRepository : BaseEventRepository() {
             }.build()
         addDisposable(
             apiService.uploadUserResume(mulBody).action {
-                LogUtils.i("上传用户简历")
+                sendData(Constants.EVENT_KEY_MY_RESUME, Constants.TAG_UPLOAD_RESUME_RESULT, true)
             }
         )
     }
@@ -79,7 +79,7 @@ class MyResumeRepository : BaseEventRepository() {
             }.build()
         addDisposable(
             apiService.updateUserResume(mulBody).action {
-                LogUtils.i("更新用户简历成功")
+                sendData(Constants.EVENT_KEY_MY_RESUME, Constants.TAG_UPLOAD_RESUME_RESULT, true)
             }
         )
     }

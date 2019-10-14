@@ -78,11 +78,17 @@ class ResumeDetailsActivity : BaseDataActivity<ResumeDetailsViewModel>() {
             tvUserHeight.text = "身高:  ${it.height}cm"
             tvUserLocation.text = "位置:  ${it.area}"
             tvUserDescription.text = it.content
-            if (it.images.isNotEmpty()) {
-                val images = it.images.split(",").map { image ->
-                    Api.HTTP_BASE_URL + "/" + image
+            if (it.images != null && it.images.isNotEmpty()) {
+                if(it.images.contains(",")){
+                    val images = it.images.split(",").map { image ->
+                        Api.HTTP_BASE_URL + "/" + image
+                    }
+                    mPhotoList.addAll(images)
+                }else{
+                    mPhotoList.add("${Api.HTTP_BASE_URL}/${it.images}")
                 }
-                mPhotoList.addAll(images)
+
+
                 mAdapter.setDataList(mPhotoList)
             }
         }

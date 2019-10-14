@@ -23,6 +23,9 @@ import com.jxqm.jiangdou.utils.startActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_job_details.*
 import kotlinx.android.synthetic.main.activity_main.*
+import androidx.core.content.ContextCompat.getSystemService
+import com.jxqm.jiangdou.ui.login.view.LoadingActivity
+
 
 /**
  *主页面
@@ -45,7 +48,8 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
         mListFragment.add(MyFragment())
         myViewPage.offscreenPageLimit = 3
         myViewPage.adapter = MyPageAdapter(supportFragmentManager)
-        myBottomNavigationBar.setTabSelectedListener(object : BottomNavigationBar.OnTabSelectedListener {
+        myBottomNavigationBar.setTabSelectedListener(object :
+            BottomNavigationBar.OnTabSelectedListener {
             override fun onTabReselected(position: Int) {
             }
 
@@ -58,7 +62,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
                     if (MyApplication.instance().userModel == null) {
                         ToastUtils.toastShort("未登录请先登录")
                         startActivity<LoginActivity>()
-                        myBottomNavigationBar.selectTab(mLastPosition,false)
+                        myBottomNavigationBar.selectTab(mLastPosition, false)
                     } else {
                         myViewPage.currentItem = position
                     }
@@ -72,9 +76,15 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
         })
     }
 
-    inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+    inner class MyPageAdapter(fragmentManager: FragmentManager) :
+        FragmentPagerAdapter(fragmentManager) {
         override fun getItem(position: Int): Fragment = mListFragment[position]
         override fun getCount(): Int = mListFragment.size
+    }
+
+    override fun protectApp() {
+        startActivity<LoadingActivity>()
+        finish()
     }
 
     /**

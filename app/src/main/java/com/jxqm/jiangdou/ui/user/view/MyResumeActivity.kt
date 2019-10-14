@@ -14,6 +14,7 @@ import com.bhx.common.mvvm.BaseMVVMActivity
 import com.bhx.common.utils.DateUtils
 import com.bhx.common.utils.DensityUtil
 import com.bhx.common.utils.LogUtils
+import com.bhx.common.utils.ToastUtils
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
@@ -136,6 +137,12 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             mResumeModel = it
             showUserResume()
         })
+
+        registerObserver(Constants.TAG_UPLOAD_RESUME_RESULT, Boolean::class.java).observe(this,
+            Observer {
+                ToastUtils.toastShort("上传完成")
+                finish()
+            })
     }
 
     private fun showUserResume() {
@@ -143,7 +150,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             etUserName.setText(it.name)
             tvUserSex.text = it.gender
             tvUserBirthday.text = it.birthday
-            tvUserAgeStar.text ="${it.age}/${it.star}"
+            tvUserAgeStar.text = "${it.age}/${it.star}"
             etUserPhone.setText(it.tel)
             tvUserEducation.text = it.academic
             tvUserHeight.text = it.height
@@ -266,16 +273,17 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
      */
     private fun showTimePickedDialog() {
         if (mTimePickView == null) {
-           val startCalendar =  Calendar.getInstance()
-            startCalendar.set( 1900,1,1)
+            val startCalendar = Calendar.getInstance()
+            startCalendar.set(1900, 1, 1)
             mTimePickView = TimePickerBuilder(this, OnTimeSelectListener { date, _ ->
                 run {
                     val format = SimpleDateFormat("yyyy-MM-dd")
                     val time = format.format(date)
                     tvUserBirthday.text = time
-                    tvUserAgeStar.text ="${ DateUtils.getAgeFromBirthday(time)}岁/${ DateUtils.getConstellation(time)}"
+                    tvUserAgeStar.text =
+                        "${DateUtils.getAgeFromBirthday(time)}岁/${DateUtils.getConstellation(time)}"
                 }
-            }).setRangDate(startCalendar,Calendar.getInstance())
+            }).setRangDate(startCalendar, Calendar.getInstance())
                 .isCyclic(true)
                 .build()
         }

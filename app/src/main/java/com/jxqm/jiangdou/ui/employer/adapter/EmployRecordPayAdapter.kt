@@ -21,6 +21,8 @@ import com.jxqm.jiangdou.utils.startActivity
  * Created By bhx On 2019/9/3 0003 17:18
  */
 class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeResumeModel>(context) {
+    var repeatSettleCallBack:((String, String) -> Unit)? = null //重新结算
+
     init {
         //已结算
         addItemViewType(object : ItemViewType<EmployeeResumeModel> {
@@ -46,8 +48,7 @@ class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeRe
                         ivUserSex.setBackgroundResource(R.drawable.icon_girl)
                     }
                     tvUserName.text = item.name
-                    val date = item.date.substring(item.date.indexOf("-") + 1).replace("-", "月")
-                    tvWorkTime.text = "工作时段： $date ${item.startTime} - ${item.endTime} "
+                    tvWorkTime.text = "工作时段：  ${item.startTime}  "
                     tvAmount.text = "${item.amount}币"
                 }
             }
@@ -79,8 +80,7 @@ class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeRe
                         ivUserSex.setBackgroundResource(R.drawable.icon_girl)
                     }
                     tvUserName.text = item.name
-                    val date = item.date.substring(item.date.indexOf("-") + 1).replace("-", "月")
-                    tvWorkTime.text = "工作时段： $date ${item.startTime} - ${item.endTime} "
+                    tvWorkTime.text = "工作时段： ${item.startTime}  "
                     tvAmount.text = "${item.amount}币"
                     tvAmountSettle.text = "${item.settleAmount}币"
                     tvAmount.paintFlags = tvAmount.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -103,6 +103,7 @@ class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeRe
                     val tvUserName = it.getView<TextView>(R.id.tvUserName)
                     val tvWorkTime = it.getView<TextView>(R.id.tvWorkTime)
                     val tvAmount = it.getView<TextView>(R.id.tvAmount)
+                    val tvAgainSettle = it.getView<TextView>(R.id.tvAgainSettle)
                     val tvAmountSettle = it.getView<TextView>(R.id.tvAmountSettle)
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.avatar)
                         .transform(GlideCircleTransform(mContext))
@@ -113,11 +114,14 @@ class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeRe
                         ivUserSex.setBackgroundResource(R.drawable.icon_girl)
                     }
                     tvUserName.text = item.name
-                    val date = item.date.substring(item.date.indexOf("-") + 1).replace("-", "月")
-                    tvWorkTime.text = "工作时段： $date ${item.startTime} - ${item.endTime} "
+                    tvWorkTime.text = "工作时段： ${item.startTime}  "
                     tvAmount.text = "${item.amount}币"
                     tvAmountSettle.text = "${item.settleAmount}币"
                     tvAmount.paintFlags = tvAmount.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    tvAgainSettle.clickWithTrigger {
+                        repeatSettleCallBack?.invoke(item.amount, item.id.toString())
+                    }
+
                 }
             }
 

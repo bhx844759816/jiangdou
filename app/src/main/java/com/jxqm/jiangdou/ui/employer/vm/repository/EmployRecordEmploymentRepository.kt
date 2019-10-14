@@ -1,7 +1,9 @@
 package com.jxqm.jiangdou.ui.employer.vm.repository
 
+import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
+import com.jxqm.jiangdou.http.action
 import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.model.EmployeeResumeModel
 import io.reactivex.functions.Consumer
@@ -115,4 +117,31 @@ class EmployRecordEmploymentRepository : BaseEventRepository() {
             Constants.TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR, error
         )
     }
+
+    /**
+     * 撤回录用
+     */
+    fun withDrawOffer(id: Long) {
+        addDisposable(
+            apiService.withdrawOffer(id).action {
+                sendData(
+                    Constants.EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT,
+                    Constants.TAG_EMPLOY_RECORD_REPEAT_WITHDRAW_FINISH, true
+                )
+            }
+        )
+    }
+
+    fun repeatOffer(id: Long) {
+        addDisposable(
+            apiService.repeatOffer(id).action {
+                sendData(
+                    Constants.EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT,
+                    Constants.TAG_EMPLOY_RECORD_REPEAT_WITHDRAW_FINISH, true
+                )
+                ToastUtils.toastShort("重发成功")
+            }
+        )
+    }
+
 }

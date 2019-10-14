@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -13,6 +14,7 @@ import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.ui.home.model.HomeJobDetailsModel
 import com.jxqm.jiangdou.ui.home.model.HomeModel
+import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 
 /**
@@ -30,17 +32,25 @@ class JobItemAdapter(context: Context) : MultiItemTypeAdapter<JobDetailsModel>(c
             override fun convert(holder: ViewHolder?, homeModel: JobDetailsModel, position: Int) {
                 holder?.let {
                     val ivJobListImg = holder.getView<ImageView>(R.id.ivJobListImg)
+                    val llParent = holder.getView<LinearLayout>(R.id.llParent)
                     val tvJobTitle = holder.getView<TextView>(R.id.tvJobTitle)
                     val tvJobCity = holder.getView<TextView>(R.id.tvJobCity)
                     val tvJobArea = holder.getView<TextView>(R.id.tvJobArea)
                     val tvJobNumbers = holder.getView<TextView>(R.id.tvJobNumbers)
                     val tvJobSalary = holder.getView<TextView>(R.id.tvJobSalary)
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + homeModel.typeImgUrl).into(ivJobListImg)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + homeModel.typeImgUrl)
+                        .into(ivJobListImg)
                     tvJobTitle.text = homeModel.title
                     tvJobCity.text = homeModel.city
                     tvJobArea.text = homeModel.area
                     tvJobNumbers.text = "招${homeModel.recruitNum}人"
                     tvJobSalary.text = "${homeModel.salary}币/时"
+                    llParent.clickWithTrigger {
+                        val intent = Intent(mContext, JobDetailsActivity::class.java)
+                        intent.putExtra("JobId", it.id.toString())
+                        intent.putExtra("Status", JobDetailsActivity.STATUS_SINGUP)
+                        mContext.startActivity(intent)
+                    }
                 }
             }
         })

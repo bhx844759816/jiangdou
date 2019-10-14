@@ -31,4 +31,11 @@ class EmployRecordPayViewModel : BaseViewModel<EmployRecordPayRepository>() {
     private fun requestCallBack() {
         pageNo++
     }
+
+    /**
+     * 单节
+     */
+    fun singleSettleWork(jobId: String, amount: String) {
+        mRepository.singleSettleWork(jobId, amount)
+    }
 }

@@ -1,5 +1,6 @@
 package com.jxqm.jiangdou.base
 
+import android.content.Intent
 import androidx.appcompat.widget.DialogTitle
 import androidx.appcompat.widget.Toolbar
 import com.bhx.common.mvvm.BaseMVVMActivity
@@ -20,7 +21,10 @@ import androidx.lifecycle.Observer
 import com.bhx.common.http.ApiException
 import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.ToastUtils
+import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ui.home.view.MainActivity
+import com.jxqm.jiangdou.ui.login.view.LoadingActivity
 import com.jxqm.jiangdou.view.dialog.LoadingDialog
 
 
@@ -33,14 +37,30 @@ abstract class BaseDataActivity<T : BaseViewModel<*>> : BaseMVVMActivity<T>() {
         super.initView()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
+        if (MyApplication.instance().isRecyclerFlag == -1 && this.javaClass != LoadingActivity::class.java) {
+            protectApp()
+        }
     }
 
+    /**
+     * 跳转到MainActivity然后跳转到启动页
+     */
+    open fun protectApp() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)//清空栈里MainActivity之上的所有activty
+        startActivity(intent)
+        finish()
+    }
 
     override fun onResume() {
         super.onResume()
         LogUtils.i("${this.javaClass.simpleName},onResume")
         //注册加载对话框监听
-        registerObserver(Constants.EVENT_KEY_LOADING_DIALOG, Constants.TAG_LOADING_DIALOG, Boolean::class.java).observe(
+        registerObserver(
+            Constants.EVENT_KEY_LOADING_DIALOG,
+            Constants.TAG_LOADING_DIALOG,
+            Boolean::class.java
+        ).observe(
             this, Observer {
                 if (it != null && it) {
                     LoadingDialog.show(this)

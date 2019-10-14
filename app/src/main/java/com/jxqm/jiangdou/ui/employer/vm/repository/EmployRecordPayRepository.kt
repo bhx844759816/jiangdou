@@ -81,4 +81,17 @@ class EmployRecordPayRepository : BaseEventRepository() {
             Constants.TAG_GET_SETTLE_FINISH_LIST_ERROR, message
         )
     }
+
+    /**
+     * 单独结算
+     */
+    fun singleSettleWork(jobId: String, amount: String) {
+        addDisposable(apiService.singleSettleWork(jobId.toLong(), amount.toInt())
+            .action {
+                sendData(
+                    Constants.EVENT_KEY_EMPLOY_RECORD_PAY,
+                    Constants.TAG_REPEAT_SETTLE_FINISH, true
+                )
+            })
+    }
 }

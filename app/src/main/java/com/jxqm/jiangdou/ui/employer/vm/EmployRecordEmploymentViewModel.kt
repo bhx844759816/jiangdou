@@ -40,4 +40,18 @@ class EmployRecordEmploymentViewModel : BaseViewModel<EmployRecordEmploymentRepo
     private fun requestCallBack() {
         pageNo++
     }
+
+    /**
+     * 撤回录用
+     */
+    fun withdrawOffer(id:Long){
+        mRepository.withDrawOffer(id)
+    }
+
+    /**
+     * 重发录用
+     */
+    fun repeatOffer(id:Long){
+        mRepository.repeatOffer(id)
+    }
 }

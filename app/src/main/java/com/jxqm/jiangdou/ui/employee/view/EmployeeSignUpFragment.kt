@@ -28,26 +28,35 @@ class EmployeeSignUpFragment : BaseMVVMFragment<EmployeeSignUpViewModel>() {
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         //获取已报名列表成功
-        registerObserver(Constants.TAG_GET_EMPLOYEE_SIGN_LIST_SUCCESS, List::class.java).observe(this, Observer {
-            val list = it as List<JobEmployeeBaseModel>
-            mJobSingModelList.clear()
-            mJobSingModelList.addAll(list)
-            if (mJobSingModelList.isEmpty()) {
-                mUiStatusController.changeUiStatus(UiStatus.EMPTY)
-            } else {
-                mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-            }
-            mAdapter.setDataList(mJobSingModelList)
-            if (swipeRefreshLayout.isRefreshing) {
-                swipeRefreshLayout.finishRefresh()
-            }
+        registerObserver(Constants.TAG_GET_EMPLOYEE_SIGN_LIST_SUCCESS, List::class.java).observe(
+            this,
+            Observer {
+                val list = it as List<JobEmployeeBaseModel>
+                mJobSingModelList.clear()
+                mJobSingModelList.addAll(list)
+                if (mJobSingModelList.isEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                } else {
+                    mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                }
+                mAdapter.setDataList(mJobSingModelList)
+                if (swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.finishRefresh()
+                }
 
-        })
+            })
         //获取已报名列表失败
-        registerObserver(Constants.TAG_GET_EMPLOYEE_SIGN_LIST_ERROR, String::class.java).observe(this, Observer {
-            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-        })
+        registerObserver(Constants.TAG_GET_EMPLOYEE_SIGN_LIST_ERROR, String::class.java).observe(
+            this,
+            Observer {
+                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+            })
 
+        registerObserver(Constants.TAG_CLEAR_EMPLOYEE_SIGN_CLOSE_LIST, Boolean::class.java).observe(
+            this,
+            Observer {
+                mViewModel.getSignList()
+            })
     }
 
     override fun onFirstUserVisible() {
@@ -63,6 +72,9 @@ class EmployeeSignUpFragment : BaseMVVMFragment<EmployeeSignUpViewModel>() {
         recyclerView.adapter = mAdapter
         swipeRefreshLayout.setOnRefreshListener {
             mViewModel.getSignList()
+        }
+        mAdapter.clearCloseJobCallBack = {
+            mViewModel.clearCloseJob()
         }
     }
 }

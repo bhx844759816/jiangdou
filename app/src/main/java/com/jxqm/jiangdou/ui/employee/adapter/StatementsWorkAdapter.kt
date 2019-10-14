@@ -42,7 +42,7 @@ class StatementsWorkAdapter(context: Context) : MultiItemTypeAdapter<JobEmployee
                     val tvAmountSettle = it.getView<TextView>(R.id.tvAmountSettle)
                     val tvAmount = it.getView<TextView>(R.id.tvAmount)
                     val tvRecruitNum = it.getView<TextView>(R.id.tvRecruitNum)
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.typeImg).into(ivEmployeeImg)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.typeImgUrl).into(ivEmployeeImg)
                     tvEmployeeTitle.text = item.title
                     tvCity.text = item.city
                     tvAmount.text = "${item.amount}币"
@@ -73,7 +73,7 @@ class StatementsWorkAdapter(context: Context) : MultiItemTypeAdapter<JobEmployee
                     val tvCity = it.getView<TextView>(R.id.tvCity)
                     val tvArea = it.getView<TextView>(R.id.tvArea)
                     val tvRecruitNum = it.getView<TextView>(R.id.tvRecruitNum)
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.typeImg).into(ivEmployeeImg)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.typeImgUrl).into(ivEmployeeImg)
                     tvEmployeeTitle.text = item.title
                     tvRecruitNum.text = "${item.recruitNum}人"
                     tvCity.text = item.city
@@ -97,7 +97,7 @@ class StatementsWorkAdapter(context: Context) : MultiItemTypeAdapter<JobEmployee
                     val tvRecruitNum = it.getView<TextView>(R.id.tvRecruitNum)
                     val tvAmount = it.getView<TextView>(R.id.tvAmount)
                     val tvAmountSettle = it.getView<TextView>(R.id.tvAmountSettle)
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.typeImg).into(ivEmployeeImg)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.typeImgUrl).into(ivEmployeeImg)
                     tvEmployeeTitle.text = item.title
                     tvRecruitNum.text = "${item.recruitNum}人"
                     tvCity.text = item.city

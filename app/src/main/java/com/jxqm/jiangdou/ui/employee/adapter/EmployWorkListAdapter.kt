@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bhx.common.utils.LogUtils
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
@@ -15,9 +16,11 @@ import com.jxqm.jiangdou.utils.clickWithTrigger
 /**
  * Created by Administrator on 2019/9/1.
  */
-class EmployWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobEmployeeBaseModel>(context) {
+class EmployWorkListAdapter(context: Context) :
+    MultiItemTypeAdapter<JobEmployeeBaseModel>(context) {
     var mAcceptOfferCallBack: ((Int) -> Unit)? = null
     var mRefuseOfferCallBack: ((Int) -> Unit)? = null
+    var clearInvalidJobCallBack: (() -> Unit)? = null
 
     init {
         //失效状态的title
@@ -29,8 +32,14 @@ class EmployWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobEmployee
             }
 
             override fun convert(holder: ViewHolder?, t: JobEmployeeBaseModel?, position: Int) {
-                val title = holder?.getView<TextView>(R.id.tvTitle)
-                title?.text = "失效"
+                holder?.let {
+                    val title = it.getView<TextView>(R.id.tvTitle)
+                    val tvOperation = it.getView<TextView>(R.id.tvOperation)
+                    title.text = "失效"
+                    tvOperation.clickWithTrigger {
+                        clearInvalidJobCallBack?.invoke()
+                    }
+                }
             }
 
 
@@ -55,8 +64,11 @@ class EmployWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobEmployee
                     val tvRefuse = it.getView<TextView>(R.id.tvRefuse)
                     val tvAccept = it.getView<TextView>(R.id.tvSingleSettle)
                     val model = item as JobEmployeeModel
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImg).into(ivEmployeeImg)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImgUrl)
+                        .into(ivEmployeeImg)
                     tvEmployeeTitle.text = model.title
+                    tvCity.text = model.city
+                    tvArea.text = model.area
                     tvRecruitNum.text = model.recruitNum.toString()
                     tvSingUpTime.text = model.signTime
                     tvJobMoney.text = "${model.salary} 币/小时"
@@ -88,10 +100,13 @@ class EmployWorkListAdapter(context: Context) : MultiItemTypeAdapter<JobEmployee
                     val tvRecruitNum = it.getView<TextView>(R.id.tvRecruitNum)
                     val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime)
                     val model = item as JobEmployeeExceptionModel
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImg).into(ivEmployeeImg)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.typeImgUrl)
+                        .into(ivEmployeeImg)
                     tvEmployeeTitle.text = model.title
                     tvRecruitNum.text = model.recruitNum.toString()
                     tvSingUpTime.text = model.signTime
+                    tvCity.text = model.city
+                    tvArea.text = model.area
                     if (model.invalid) {//是否过期
                         ivWorkTip.setBackgroundResource(R.drawable.icon_timeout)
                     } else {

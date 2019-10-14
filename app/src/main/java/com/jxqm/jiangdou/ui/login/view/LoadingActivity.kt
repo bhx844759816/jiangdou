@@ -14,6 +14,7 @@ import android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
 import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 import androidx.lifecycle.Observer
+import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.home.view.MainActivity
@@ -30,6 +31,7 @@ class LoadingActivity : BaseDataActivity<LoadingViewModel>() {
     override fun initView() {
         super.initView()
 //        hideBottomUIMenu()
+        MyApplication.instance().isRecyclerFlag = 0
         requestPermission()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val lp = window.attributes

@@ -25,4 +25,11 @@ class EmployeeEmploymentViewModel : BaseViewModel<EmployeeEmploymentRepository>(
     fun refuseOffer(offerId: Int) {
         mRepository.refuseOffer(offerId)
     }
+
+    /**
+     * 清空失效的job
+     */
+    fun clearInvalidOffer() {
+         mRepository.clearInvalidOffer()
+    }
 }

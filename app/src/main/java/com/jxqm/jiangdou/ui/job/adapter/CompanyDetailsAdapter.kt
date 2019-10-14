@@ -1,10 +1,10 @@
 package com.jxqm.jiangdou.ui.job.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import com.bhx.common.adapter.rv.CommonAdapter
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
@@ -14,8 +14,9 @@ import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.model.CompanyDetailsModel
 import com.jxqm.jiangdou.model.JobDetailsModel
+import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.ms.square.android.expandabletextview.ExpandableTextView
-import kotlinx.android.synthetic.main.activity_job_details.*
 import java.lang.StringBuilder
 
 /**
@@ -50,8 +51,7 @@ class CompanyDetailsAdapter constructor(context: Context) : MultiItemTypeAdapter
                 val ivMapView = holder.getView<ImageView>(R.id.ivMapView)
                 tvCompanyName.text = mAttestationStatusModel.employerName
                 tvCompanyArea.text = mAttestationStatusModel.address
-                expandTextView.text =
-                    "加载Base64编码的图片就是上述的方法，有时我们还需要对图片进行编码与解码,加载Base64编码的图片就是上述的方法，有时我们还需要对图片进行编码与解码,加载Base64编码的图片就是上述的方法，有时我们还需要对图片进行编码与解码"
+                expandTextView.text =mAttestationStatusModel.introduction
                 Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + mAttestationStatusModel.mapImg).into(ivMapView)
                 val stringBuilder = StringBuilder()
                 stringBuilder.append("详细地址:")
@@ -82,6 +82,7 @@ class CompanyDetailsAdapter constructor(context: Context) : MultiItemTypeAdapter
 
             override fun convert(holder: ViewHolder?, model: CompanyDetailsModel, position: Int) {
                 holder?.let {
+                    val llParent = holder.getView<LinearLayout>(R.id.llParent)
                     val ivJobListImg = holder.getView<ImageView>(R.id.ivJobListImg)
                     val tvJobTitle = holder.getView<TextView>(R.id.tvJobTitle)
                     val tvJobCity = holder.getView<TextView>(R.id.tvJobCity)
@@ -95,6 +96,12 @@ class CompanyDetailsAdapter constructor(context: Context) : MultiItemTypeAdapter
                     tvJobArea.text = jobDetailsModel.area
                     tvJobNumbers.text = "招${jobDetailsModel.recruitNum}人"
                     tvJobSalary.text = "${jobDetailsModel.salary}币/时"
+                    llParent.clickWithTrigger {
+                        val intent = Intent(mContext, JobDetailsActivity::class.java)
+                        intent.putExtra("JobId", jobDetailsModel.id.toString())
+                        intent.putExtra("Status", JobDetailsActivity.STATUS_SINGUP)
+                        mContext.startActivity(intent)
+                    }
                 }
             }
         })

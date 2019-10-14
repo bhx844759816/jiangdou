@@ -64,6 +64,7 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
     override fun onFirstUserVisible() {
         if(MyApplication.instance().attestationViewModel?.statusCode == 2){
             tvChange.text = "雇主"
+            isEmployee = true
             ivScanCode.visibility = View.GONE
             showEmployerFragment()
         }else{

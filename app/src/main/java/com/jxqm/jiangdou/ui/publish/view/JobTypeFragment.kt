@@ -98,11 +98,16 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
             val moreJobModelList = it as List<JobTypeModel>
             mMoreJobModelList.clear()
             mMoreJobModelList.addAll(moreJobModelList)
-            if (mMoreJobModelList.size > 6) {
-                //裁剪5个
-                addMoreJobType(mMoreJobModelList.subList(0, 5))
-                addExpandJobType()
-            } else {
+            val model =  (activity as JobPublishActivity).mJobDetailsModel
+            if(model == null){
+                if (mMoreJobModelList.size > 6) {
+                    //裁剪5个
+                    addMoreJobType(mMoreJobModelList.subList(0, 5))
+                    addExpandJobType()
+                } else {
+                    addMoreJobType(mMoreJobModelList)
+                }
+            }else{
                 addMoreJobType(mMoreJobModelList)
             }
         })
@@ -132,6 +137,10 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
                 .inflate(R.layout.view_publish_job_type_item, null) as RadioButton
             radioButton.text = it.jobTypeName
             radioButton.id = it.id
+            val model =  (activity as JobPublishActivity).mJobDetailsModel
+            if(model != null && model.jobTypeId == it.id){
+                radioButton.isChecked = true
+            }
             radioButton.setPadding(DensityUtil.dip2px(mContext, 10f))
             rgMoreJobType.addView(radioButton)
             mJobTypeMaps[it.id.toString()] = radioButton

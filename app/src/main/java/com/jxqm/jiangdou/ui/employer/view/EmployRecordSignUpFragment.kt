@@ -75,7 +75,6 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
         //驳回
         tvNotAgreeWork.clickWithTrigger {
             mIdArrays.clear()
-            //统一录用
             mEmployRecordSignUpItems.forEach {
                 if (it.isChecked) {
                     mIdArrays.add(it.id)

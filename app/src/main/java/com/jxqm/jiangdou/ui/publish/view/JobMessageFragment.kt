@@ -30,6 +30,7 @@ class JobMessageFragment : BaseLazyFragment() {
     private var mLocationArea: String? = null
     private var mLocationAddress: String? = null
     private var mSex: Int = 2
+    private val mParams = mutableMapOf<String, String>()
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -43,28 +44,32 @@ class JobMessageFragment : BaseLazyFragment() {
 
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
+        initStatus()
         tvNextStep.clickWithTrigger {
-            val params = mutableMapOf<String, String>()
-            params["title"] = tvJopTitleContent.text.toString().trim() //兼职标题
-            params["content"] = tvJopDescriptionContent.text.toString().trim()//兼职描述
-            params["gender"] = mSex.toString()
-            params["recruitNum"] = etWorkPeopleNum.text.toString().trim()//招聘人数
-            params["address"] = tvLocationArea.text.toString().trim() //定位地点
-            params["addressDetail"] = etDetailAddress.text.toString().trim()//详细地址
+            mParams["title"] = tvJopTitleContent.text.toString().trim() //兼职标题
+            mParams["content"] = tvJopDescriptionContent.text.toString().trim()//兼职描述
+            mParams["gender"] = mSex.toString()
+            mParams["recruitNum"] = etWorkPeopleNum.text.toString().trim()//招聘人数
+            mParams["address"] = tvLocationArea.text.toString().trim() //定位地点
+            mParams["addressDetail"] = etDetailAddress.text.toString().trim()//详细地址
             mLocationArea?.let {
-                params["area"] = it //区
+                mParams["area"] = it //区
             }
             mLocationCity?.let {
-                params["city"] = it
+                mParams["city"] = it
             }
             mLocationProvince?.let {
-                params["province"] = it
+                mParams["province"] = it
             }
             mLocationLatLng?.let {
-                params["longitude"] = it.longitude.toString()//经度
-                params["latitude"] = it.latitude.toString()//维度
+                mParams["longitude"] = it.longitude.toString()//经度
+                mParams["latitude"] = it.latitude.toString()//维度
             }
-            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_MESSAGE, params)
+            LiveBus.getDefault().postEvent(
+                Constants.EVENT_KEY_JOB_PUBLISH,
+                Constants.TAG_PUBLISH_JOB_MESSAGE,
+                mParams
+            )
             mCallback?.jobMessageNextStep()
         }
         rlSelectSex.clickWithTrigger {
@@ -99,6 +104,18 @@ class JobMessageFragment : BaseLazyFragment() {
         tvNextStep.isEnable(tvJopDescriptionContent) { isNetStepState() }
         tvNextStep.isEnable(etWorkPeopleNum) { isNetStepState() }
         tvNextStep.isEnable(etDetailAddress) { isNetStepState() }
+    }
+
+    private fun initStatus() {
+        val model = (activity as JobPublishActivity).mJobDetailsModel
+        model?.let {
+            tvJopTitleContent.setText(it.title)
+            tvJopDescriptionContent.setText(it.content)
+            tvSex.text = it.gender
+            etWorkPeopleNum.setText(it.recruitNum.toString())
+            tvLocationArea.text = it.address
+            etDetailAddress.setText(it.addressDetail)
+        }
     }
 
     private fun isNetStepState(): Boolean {

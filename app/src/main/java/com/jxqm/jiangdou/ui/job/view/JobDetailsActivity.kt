@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_job_details.tvJobType
 import kotlinx.android.synthetic.main.activity_job_details.tvRecruitPeoples
 
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
@@ -39,6 +40,7 @@ import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
 import com.jxqm.jiangdou.ui.user.view.MyResumeActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
+import com.jxqm.jiangdou.view.dialog.MapSelectDialog
 import com.jxqm.jiangdou.view.dialog.PromptDialog
 
 
@@ -51,10 +53,9 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
     private var mAttestationStatusModel: AttestationStatusModel? = null
     private var tvSignUp: TextView? = null
     private var tvConsult: TextView? = null //咨询
-    private var tvCollection: TextView? = null//收藏
+    private var tvCollection: CheckBox? = null//收藏
     private val mGson = Gson()
     private var mJobDetailsModel: JobDetailsModel? = null
-    private var isCollection = false
 
     override fun getLayoutId(): Int = R.layout.activity_job_details
 
@@ -78,6 +79,11 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
                 startActivity<CompanyDetailsActivity>("AttestationStatusModel" to it.toJson())
             }
         }
+        llJobAddress.clickWithTrigger {
+            mJobDetailsModel?.let {
+                MapSelectDialog.show(this, it.latitude.toString(), it.longitude.toString(),it.address)
+            }
+        }
     }
 
     private fun initUIByStatus(status: Int) {
@@ -90,14 +96,12 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
                 tvSignUp?.clickWithTrigger {
                     mViewModel.signUpJob(mJobDetailsModel!!.id.toString())
                 }
-                tvCollection?.clickWithTrigger {
-                    if(mJobDetailsModel == null){
-                        return@clickWithTrigger
-                    }
-                    if (isCollection) {
-                        mViewModel.cancelCollectionJob(mJobDetailsModel!!.id.toString())
-                    }else{
+                tvCollection?.setOnCheckedChangeListener { _, isChecked ->
+                    tvCollection?.text = if (isChecked) "已收藏" else "收藏"
+                    if (isChecked) {
                         mViewModel.collectionJob(mJobDetailsModel!!.id.toString())
+                    } else {
+                        mViewModel.cancelCollectionJob(mJobDetailsModel!!.id.toString())
                     }
                 }
             }
@@ -164,12 +168,12 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             })
         registerObserver(Constants.TAG_COLLECTION_STATUS_CHANGE, Boolean::class.java).observe(this,
             Observer {
-                  if(it){
-                      ToastUtils.toastShort("取消收藏成功")
-                  }else{
-                      ToastUtils.toastShort("收藏成功")
+                if (it) {
+                    ToastUtils.toastShort("收藏成功")
+                } else {
+                    ToastUtils.toastShort("取消收藏成功")
 
-                  }
+                }
             })
     }
 
@@ -184,9 +188,9 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             tvJobArea.text = it.address
             tvJobTips.text = "${it.area} | 日结"
             tvSignUp?.text = "我要报名(${it.signNum}人报名)"
-            tvSignUp?.isEnabled = it.sign
-            isCollection = it.isCollection
-            tvCollection?.text = if(isCollection) "已收藏" else "收藏"
+            tvSignUp?.isEnabled = !it.sign
+            tvCollection?.text = if (it.isCollection) "已收藏" else "收藏"
+            tvCollection?.isChecked = it.isCollection
             val listDates =
                 mGson.fromJson<List<String>>(it.datesJson, object : TypeToken<List<String>>() {
                 }.type)

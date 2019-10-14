@@ -15,13 +15,15 @@ import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.ui.employer.view.EmployRecordActivity
 import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.ui.order.view.OrderDetailsActivity
+import com.jxqm.jiangdou.ui.publish.view.JobPublishActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 
 /**
  * Created by Administrator on 2019/9/22.
  */
-class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<JobDetailsModel>(context) {
+class JobPublishListAdapter(context: Context, type: Int) :
+    MultiItemTypeAdapter<JobDetailsModel>(context) {
     var paymentCallBack: ((String) -> Unit)? = null
     var cancelPublish: ((String) -> Unit)? = null
     var contentClickCallBack: ((JobDetailsModel) -> Unit)? = null
@@ -58,7 +60,11 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
 
             override fun isViewForType(item: JobDetailsModel?, position: Int): Boolean = true
 
-            override fun convert(holder: ViewHolder?, jobDetailsModel: JobDetailsModel, position: Int) {
+            override fun convert(
+                holder: ViewHolder?,
+                jobDetailsModel: JobDetailsModel,
+                position: Int
+            ) {
                 holder?.let {
                     val tvAccept = it.getView<TextView>(R.id.tvSingleSettle)
                     val parent = it.getView<ConstraintLayout>(R.id.parent)
@@ -67,7 +73,7 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
                     val tvJobMoney = it.getView<TextView>(R.id.tvJobMoney)
                     val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime)
                     val tvRefuse = it.getView<TextView>(R.id.tvRefuse)
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + jobDetailsModel.typeImgUrl)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl)
                         .into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobDetailsModel.title
                     tvJobMoney.text = "${jobDetailsModel.salary}币/小时"
@@ -102,7 +108,11 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
 
             override fun isViewForType(item: JobDetailsModel?, position: Int): Boolean = true
 
-            override fun convert(holder: ViewHolder?, jobDetailsModel: JobDetailsModel, position: Int) {
+            override fun convert(
+                holder: ViewHolder?,
+                jobDetailsModel: JobDetailsModel,
+                position: Int
+            ) {
                 holder?.let {
                     val ivEmployeeImg = it.getView<ImageView>(R.id.ivEmployeeImg)
                     val tvEmployeeTitle = it.getView<TextView>(R.id.tvEmployeeTitle)
@@ -111,7 +121,7 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
                     val tvRefuse = it.getView<TextView>(R.id.tvRefuse)
                     val tvAccept = it.getView<TextView>(R.id.tvSingleSettle)
                     //
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + jobDetailsModel.typeImgUrl)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl)
                         .into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobDetailsModel.title
                     tvJobMoney.text = "${jobDetailsModel.salary}币/小时"
@@ -137,7 +147,11 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
 
             override fun isViewForType(item: JobDetailsModel?, position: Int): Boolean = true
 
-            override fun convert(holder: ViewHolder?, jobDetailsModel: JobDetailsModel, position: Int) {
+            override fun convert(
+                holder: ViewHolder?,
+                jobDetailsModel: JobDetailsModel,
+                position: Int
+            ) {
                 holder?.let {
                     val ivEmployeeImg = it.getView<ImageView>(R.id.ivEmployeeImg)
                     val tvEmployeeTitle = it.getView<TextView>(R.id.tvEmployeeTitle)
@@ -148,7 +162,7 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
                     val tvEmployeeArea = it.getView<TextView>(R.id.tvEmployeeArea)
                     val tvEmployeePeopleCounts = it.getView<TextView>(R.id.tvEmployeePeopleCounts)
                     val tvEmployeeRecord = it.getView<TextView>(R.id.tvEmployeeRecord)
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + jobDetailsModel.typeImgUrl)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl)
                         .into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobDetailsModel.title
                     //雇佣记录
@@ -160,9 +174,13 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
                         mContext.startActivity<OrderDetailsActivity>("JobId" to jobDetailsModel.id.toString())
                     }
                     val listDates =
-                        mGson.fromJson<List<String>>(jobDetailsModel.datesJson, object : TypeToken<List<String>>() {
-                        }.type)
-                    tvSingUpTime.text = "${operationData(listDates[0])}-${operationData(listDates[1])} "
+                        mGson.fromJson<List<String>>(
+                            jobDetailsModel.datesJson,
+                            object : TypeToken<List<String>>() {
+                            }.type
+                        )
+                    tvSingUpTime.text =
+                        "${operationData(listDates[0])}-${operationData(listDates[1])} "
                     tvEmployeeCity.text = jobDetailsModel.city
                     tvEmployeeArea.text = jobDetailsModel.area
                     tvEmployeePeopleCounts.text = "${jobDetailsModel.recruitNum}人"
@@ -187,18 +205,32 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
         addItemViewType(object : ItemViewType<JobDetailsModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_examine_no_pass_item
             override fun isItemClickable(): Boolean = false
-            override fun isViewForType(item: JobDetailsModel?, position: Int): Boolean = item?.statusCode == -1
+            override fun isViewForType(item: JobDetailsModel?, position: Int): Boolean =
+                item?.statusCode == -1
 
-            override fun convert(holder: ViewHolder?, jobDetailsModel: JobDetailsModel, position: Int) {
+            override fun convert(
+                holder: ViewHolder?,
+                jobDetailsModel: JobDetailsModel,
+                position: Int
+            ) {
                 holder?.let {
                     val ivEmployeeImg = it.getView<ImageView>(R.id.ivEmployeeImg)
                     val tvEmployeeTitle = it.getView<TextView>(R.id.tvEmployeeTitle)
                     val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime) //截至报名
                     val tvDelete = it.getView<TextView>(R.id.tvDelete) //删除
                     val tvAccept = it.getView<TextView>(R.id.tvSingleSettle)//在招一次
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + jobDetailsModel.typeImgUrl)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl)
                         .into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobDetailsModel.title
+                    tvSingUpTime.text = jobDetailsModel.endTime
+                    tvDelete.clickWithTrigger {
+                        //删除
+                    }
+                    //
+                    tvAccept.clickWithTrigger {
+                        //在招一次
+                        mContext.startActivity<JobPublishActivity>("JobDetails" to jobDetailsModel.toJson())
+                    }
                 }
             }
         })
@@ -207,15 +239,24 @@ class JobPublishListAdapter(context: Context, type: Int) : MultiItemTypeAdapter<
             override fun getItemViewLayoutId(): Int = R.layout.adapter_end_sign_up_item
             override fun isItemClickable(): Boolean = false
 
-            override fun isViewForType(item: JobDetailsModel?, position: Int): Boolean = item?.statusCode != -1
+            override fun isViewForType(item: JobDetailsModel?, position: Int): Boolean =
+                item?.statusCode != -1
 
-            override fun convert(holder: ViewHolder?, jobDetailsModel: JobDetailsModel, position: Int) {
+            override fun convert(
+                holder: ViewHolder?,
+                jobDetailsModel: JobDetailsModel,
+                position: Int
+            ) {
                 holder?.let {
                     val ivEmployeeImg = it.getView<ImageView>(R.id.ivEmployeeImg)
                     val tvEmployeeTitle = it.getView<TextView>(R.id.tvEmployeeTitle)
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + jobDetailsModel.typeImgUrl)
+                    val tvSignUpRecord = it.getView<TextView>(R.id.tvSignUpRecord)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl)
                         .into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobDetailsModel.title
+                    tvSignUpRecord.clickWithTrigger {
+                        mContext.startActivity<EmployRecordActivity>("jobId" to jobDetailsModel.id.toString())
+                    }
                 }
 
             }

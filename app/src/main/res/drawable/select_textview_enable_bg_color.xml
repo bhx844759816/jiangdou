@@ -3,5 +3,5 @@
     <!--#BFc4cb-->
     <item android:drawable="@color/colorAccent" android:state_enabled="true"/>
     <item android:drawable="@color/btn_gray" android:state_enabled="false"/>
-    <item android:drawable="@color/colorAccent"/>
+    <item android:drawable="@color/btn_gray"/>
 </selector>

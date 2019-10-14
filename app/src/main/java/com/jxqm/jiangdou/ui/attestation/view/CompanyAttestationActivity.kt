@@ -70,7 +70,8 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
         //下一步
         tvNextStep.clickWithTrigger {
-            val intent = Intent(this@CompanyAttestationActivity, PeopleAttestationActivity::class.java)
+            val intent =
+                Intent(this@CompanyAttestationActivity, PeopleAttestationActivity::class.java)
             //公司名称
             val companyName = etCompanyName.text.toString().trim()
             //机构简介
@@ -93,8 +94,8 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 putExtra("selectCompanyType", mSelectCompanyType?.id.toString())
                 putExtra("selectCompanyPeople", mSelectCompanyPeople?.id.toString())
                 putExtra("selectCompanyJobType", mSelectCompanyJobType?.id.toString())
-                putExtra("locationLat", mLocationLatLng?.latitude)
-                putExtra("locationLon", mLocationLatLng?.longitude)
+                putExtra("locationLat", mLocationLatLng?.latitude.toString())
+                putExtra("locationLon", mLocationLatLng?.longitude.toString())
                 putExtra("AttestationStatus", mAttestationStatus?.toJson())
             }
             startActivity(intent)
@@ -180,7 +181,10 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
      */
     private fun requestSdPermission() {
         val disposable =
-            RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+            RxPermissions(this).request(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            )
                 .subscribe {
                     LogUtils.i("requestGpsPermission$it")
                     if (it) {
@@ -217,13 +221,18 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
             .subscribe { aBoolean ->
                 if (aBoolean!!) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        val locManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                        val locManager =
+                            getSystemService(Context.LOCATION_SERVICE) as LocationManager
                         if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                             val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                            startActivityForResult(intent, REQUEST_CODE_LOCATION_SETTING) // 设置完成后返回到原来的界面
+                            startActivityForResult(
+                                intent,
+                                REQUEST_CODE_LOCATION_SETTING
+                            ) // 设置完成后返回到原来的界面
                         } else {
                             LogUtils.i("获取定位权限成功")
-                            val intent = Intent(this@CompanyAttestationActivity, MapActivity::class.java)
+                            val intent =
+                                Intent(this@CompanyAttestationActivity, MapActivity::class.java)
                             startActivityForResult(intent, REQUEST_CODE_SELECT_AREA)
                         }
                     }
@@ -236,30 +245,32 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
      * 注册Observer监听
      */
     override fun dataObserver() {
-        registerObserver(Constants.TAG_GET_COMPANY_ITEM_RESULT, List::class.java).observe(this, Observer {
-            val list = it as List<CompanyTypeModel>
-            if (mCompanyTypeList.isEmpty()) {
-                mCompanyTypeList.addAll(list)
-                mCompanyTypeList.forEach { item ->
-                    mCompanyTypeItemList.add(item.codeName)
+        registerObserver(Constants.TAG_GET_COMPANY_ITEM_RESULT, List::class.java).observe(
+            this,
+            Observer {
+                val list = it as List<CompanyTypeModel>
+                if (mCompanyTypeList.isEmpty()) {
+                    mCompanyTypeList.addAll(list)
+                    mCompanyTypeList.forEach { item ->
+                        mCompanyTypeItemList.add(item.codeName)
+                    }
+                    return@Observer
                 }
-                return@Observer
-            }
-            if (mCompanyPeopleList.isEmpty()) {
-                mCompanyPeopleList.addAll(list)
-                mCompanyPeopleList.forEach { item ->
-                    mCompanyPeopleItemList.add(item.codeName)
+                if (mCompanyPeopleList.isEmpty()) {
+                    mCompanyPeopleList.addAll(list)
+                    mCompanyPeopleList.forEach { item ->
+                        mCompanyPeopleItemList.add(item.codeName)
+                    }
+                    return@Observer
                 }
-                return@Observer
-            }
-            if (mCompanyJobTypeList.isEmpty()) {
-                mCompanyJobTypeList.addAll(list)
-                mCompanyJobTypeList.forEach { item ->
-                    mCompanyJobTypeItemList.add(item.codeName)
+                if (mCompanyJobTypeList.isEmpty()) {
+                    mCompanyJobTypeList.addAll(list)
+                    mCompanyJobTypeList.forEach { item ->
+                        mCompanyJobTypeItemList.add(item.codeName)
+                    }
                 }
-            }
-            showState()
-        })
+                showState()
+            })
 
         registerObserver(
             Constants.TAG_GET_COMPANY_ATTESTATION_STATUS,
