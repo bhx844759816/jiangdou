@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_select_job_type.*
 class JobScreenTypeAdapter(context: Context) : MultiItemTypeAdapter<JobTypeModel>(context) {
     var mTypeSelectCallBack: ((Int) -> Unit)? = null //
     private var mJobTypeMaps = mutableMapOf<String, CheckBox>()
-    private var mJopTypeArrayList = mutableListOf<Int>()
+    var mJopTypeArrayList = mutableListOf<Int>()
 
     init {
         addItemViewType(object : ItemViewType<JobTypeModel> {

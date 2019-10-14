@@ -35,7 +35,7 @@ class JobSearchActivity : BaseDataActivity<JobSearchViewModel>() {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val searchKey = etSearch.text.toString()
                 if (searchKey.isNotEmpty()) {
-//                    writeSearchHistory(searchKey)
+                    writeSearchHistory(searchKey)
                     startActivity<JobCompanyListActivity>("SearchKey" to searchKey)
                     return@setOnEditorActionListener true
                 } else {

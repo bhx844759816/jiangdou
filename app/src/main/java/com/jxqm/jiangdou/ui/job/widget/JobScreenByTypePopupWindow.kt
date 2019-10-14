@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.model.JobTypeModel
 import com.jxqm.jiangdou.ui.job.adapter.JobScreenTypeAdapter
@@ -26,9 +27,9 @@ class JobScreenByTypePopupWindow(activity: Activity) : PopupWindow(activity) {
     private var mActivity = activity
     private var mAdapter: JobScreenTypeAdapter //
     private var recyclerView: RecyclerView
-    private var rbJobTypeAll: RadioButton
+    private var rbJobTypeAll: CheckBox
     private var mJobTypeList = mutableListOf<JobTypeModel>()
-    var mConfirmCallBack: ((ArrayList<Int>) -> Unit)? = null
+    var mConfirmCallBack: ((MutableList<Int>) -> Unit)? = null
 
     init {
         this.width = FrameLayout.LayoutParams.MATCH_PARENT
@@ -42,7 +43,8 @@ class JobScreenByTypePopupWindow(activity: Activity) : PopupWindow(activity) {
         recyclerView.adapter = mAdapter
         //点击确定
         rootView.findViewById<TextView>(R.id.tvConfirm).clickWithTrigger {
-
+            mConfirmCallBack?.invoke(mAdapter.mJopTypeArrayList)
+            dismiss()
         }
         mAdapter.mTypeSelectCallBack = {
             rbJobTypeAll.isChecked = false
@@ -80,12 +82,16 @@ class JobScreenByTypePopupWindow(activity: Activity) : PopupWindow(activity) {
             mJobTypeList.clear()
             mJobTypeList.addAll(list)
             jobTypId?.let {
-                 mJobTypeList.forEach {jobTypeModel->
-//                     if(jobTypeModel.id){
-//
-//                     }
-                 }
+                mJobTypeList.forEach { jobTypeModel ->
+                    jobTypeModel.jobTypes.forEach { jobTypeModel2 ->
+                        if (jobTypeModel2.id.toString() == it) {
+                            jobTypeModel2.isChecked = true
+                        }
+                    }
+                }
+                rbJobTypeAll.isChecked = false
             }
+            LogUtils.i("jobTypId=$jobTypId mJobTypeList=$mJobTypeList")
             mAdapter.setDataList(mJobTypeList)
         } else {
             dismiss()

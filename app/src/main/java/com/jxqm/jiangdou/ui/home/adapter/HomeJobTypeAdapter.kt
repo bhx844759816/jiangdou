@@ -34,7 +34,8 @@ class HomeJobTypeAdapter(context: Context) : MultiItemTypeAdapter<JobTypeModel>(
                         .into(it.getView(R.id.ivJobTypeImage))
                     it.getView<TextView>(R.id.tvJobTypeTitle).text = jobTypeModel.jobTypeName
                     it.getView<LinearLayout>(R.id.llParent).clickWithTrigger {
-                        mContext.startActivity<AllJobScreenActivity>()
+                        mContext.startActivity<AllJobScreenActivity>("JobTypeId" to jobTypeModel.id.toString())
+
                     }
                 }
 

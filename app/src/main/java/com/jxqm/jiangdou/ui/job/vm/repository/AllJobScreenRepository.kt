@@ -4,6 +4,7 @@ import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
 import com.jxqm.jiangdou.http.applySchedulers
+import com.jxqm.jiangdou.http.applySchedulersForLoadingDialog
 import io.reactivex.functions.Consumer
 
 /**
@@ -33,7 +34,7 @@ class AllJobScreenRepository : BaseEventRepository() {
         LogUtils.i("paramsMap=$paramsMap")
         addDisposable(
             apiService.getAllSearchJobList(paramsMap)
-                .compose(applySchedulers())
+                .compose(applySchedulersForLoadingDialog())
                 .subscribe({
                     if (it.code == "0") {//获取全部工作成功
                         if (it.data.records.size == it.data.total) {

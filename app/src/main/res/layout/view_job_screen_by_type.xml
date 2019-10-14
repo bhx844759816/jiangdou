@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RadioButton
+            <CheckBox
                 android:id="@+id/rbJobTypeAll"
                 android:layout_width="94dp"
                 android:layout_height="40dp"

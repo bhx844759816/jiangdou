@@ -1,11 +1,13 @@
 package com.jxqm.jiangdou.ui.job.view
 
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bhx.common.base.BaseActivity
+import com.bhx.common.utils.ToastUtils
 import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
@@ -31,6 +33,7 @@ class JobCompanyListActivity : BaseActivity() {
     override fun initView() {
         super.initView()
         mSearchKey = intent.getStringExtra("SearchKey")
+        tvSearchJob.setText(mSearchKey)
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
         mListFragment.add(JobListFragment.newInstance(mSearchKey))
@@ -58,6 +61,26 @@ class JobCompanyListActivity : BaseActivity() {
         })
         cancel.clickWithTrigger {
             finish()
+        }
+
+        tvSearchJob.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                mSearchKey = tvSearchJob.text.toString()
+                if (mSearchKey.isNotEmpty()) {
+                    when (mCurrentFragment) {
+                        is JobListFragment -> {
+                          (mCurrentFragment as JobListFragment).startSearch(mSearchKey)
+                        }
+                        is CompanyListFragment -> {
+                            (mCurrentFragment as CompanyListFragment).startSearch(mSearchKey)
+                        }
+                    }
+                    return@setOnEditorActionListener true
+                } else {
+                    ToastUtils.toastShort("请输入搜索关键词")
+                }
+            }
+            return@setOnEditorActionListener false
         }
     }
 

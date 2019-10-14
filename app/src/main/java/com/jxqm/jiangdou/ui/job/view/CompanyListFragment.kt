@@ -53,10 +53,11 @@ class CompanyListFragment : BaseMVVMFragment<CompanyListViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         mAdapter = CompanyListAdapter(mContext)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
+        swipeRefreshLayout.setEnableLoadMore(false)
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener {
             mSearchKey?.let {
@@ -67,10 +68,18 @@ class CompanyListFragment : BaseMVVMFragment<CompanyListViewModel>() {
 
 
     override fun onFirstUserVisible() {
-//        mSearchKey?.let {
-//            mViewModel.getSearchCompanyList(it, isRefresh)
-//        }
+        mSearchKey?.let {
+            mViewModel.getSearchCompanyList(it, isRefresh)
+        }
     }
+    fun startSearch(searchKey: String) {
+        mSearchKey = searchKey
+        mSearchKey?.let {
+            mViewModel.getSearchCompanyList(it, isRefresh)
+        }
+    }
+
+
 
     companion object {
         fun newInstance(searchKey: String): CompanyListFragment {

@@ -3,6 +3,7 @@ package com.jxqm.jiangdou.ui.job.vm.repository
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
 import com.jxqm.jiangdou.http.applySchedulers
+import com.jxqm.jiangdou.http.applySchedulersForLoadingDialog
 import com.jxqm.jiangdou.model.JobDetailsWrapModel
 
 /**
@@ -16,7 +17,7 @@ class JobListRepository : BaseEventRepository() {
     fun getSearchJobList(searchKey: String, pageNo: Int, pageSize: Int, callBack: () -> Unit) {
         addDisposable(
             apiService.getSearchJobList(pageNo, pageSize, searchKey)
-                .compose(applySchedulers())
+                .compose(applySchedulersForLoadingDialog())
                 .subscribe({
                     if (it.code == "0") {
                         val jobDetailsWrapModel = it.data

@@ -13,6 +13,7 @@ import com.jxqm.jiangdou.R
  */
 class JobScreenAreaAdapter(context: Context) : MultiItemTypeAdapter<String>(context) {
     var mSelectPosition = 0
+
     init {
         addItemViewType(object : ItemViewType<String> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_job_screen_area
@@ -26,6 +27,12 @@ class JobScreenAreaAdapter(context: Context) : MultiItemTypeAdapter<String>(cont
                     val cbSelectArea = it.getView<CheckBox>(R.id.cbSelectArea)
                     cbSelectArea.text = t
                     cbSelectArea.isChecked = mSelectPosition == position
+                    cbSelectArea.setOnClickListener {
+                        if(cbSelectArea.isChecked){
+                            mSelectPosition = position
+                            notifyDataSetChanged()
+                        }
+                    }
                 }
             }
 

@@ -43,8 +43,12 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:background="@null"
+                android:textColorHint="@color/text_hint"
                 android:gravity="center_vertical"
-                android:text="请输入职位和公司"
+                android:hint="请输入职位和公司"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
                 android:textColor="@color/text_light_color"
                 android:textSize="@dimen/text_small_size" />
         </LinearLayout>

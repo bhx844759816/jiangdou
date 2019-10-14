@@ -146,6 +146,10 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
         )
     }
 
+    /**
+     *
+     * 接收LiveData数据
+     */
     override fun dataObserver() {
         //获取兼职类型成功
         registerObserver(Constants.TAG_GET_JOB_TYPE_SUCCESS, List::class.java).observe(this, Observer {
@@ -197,8 +201,8 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                 val params = mGson.fromJson<Map<String, String>>(it, object : TypeToken<Map<String, String>>() {
                 }.type)
                 mParamsMap.putAll(params)
-//                isRefresh = true
-//                mViewModel.getAllJobList(mParamsMap, isRefresh)
+                isRefresh = true
+                mViewModel.getAllJobList(mParamsMap, isRefresh)
             }
         }
     }
@@ -211,6 +215,9 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
             mTypePopupWindow = JobScreenByTypePopupWindow(this)
             mTypePopupWindow!!.mConfirmCallBack = {
                 LogUtils.i("showTypePopupWindow mConfirmCallBack$it")
+                mParamsMap["jobTypeId"] = it.joinToString(",")
+                isRefresh = true
+                mViewModel.getAllJobList(mParamsMap, isRefresh)
             }
         }
         mTypePopupWindow!!.showPopup(line, mJobTypeList, mJobTypeId)
@@ -219,6 +226,11 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
     private fun showAreaPopupWindow() {
         if (mAreaPopupWindow == null) {
             mAreaPopupWindow = JobScreenByAreaPopupWindow(this)
+            mAreaPopupWindow!!.mConfirmCallBack = {
+                mParamsMap["area"] = it
+                isRefresh = true
+                mViewModel.getAllJobList(mParamsMap, isRefresh)
+            }
         }
 
         mAreaPopupWindow!!.showPopup(line, mAreaItemList)
@@ -236,6 +248,8 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                 } else {
                     mParamsMap["jobSort"] = it
                 }
+                isRefresh = true
+                mViewModel.getAllJobList(mParamsMap, isRefresh)
             }
         }
         mSortPopupWindow!!.showPopup(line)

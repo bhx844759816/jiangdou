@@ -37,17 +37,24 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
         mSearchKey = arguments?.getString("SearchKey", "")
         registerObserver(Constants.TAG_GET_SEARCH_JOB_LIST_SUCCESS, List::class.java).observe(this, Observer {
             val list = it as List<JobDetailsModel>
-            mJobDetailList.clear()
-            mJobDetailList.addAll(list)
-            if (mJobDetailList.isEmpty()) {
-                mUiStatusController.changeUiStatus(UiStatus.EMPTY)
-            } else {
-                mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-            }
-            mAdapter.setDataList(mJobDetailList)
-            if (swipeRefreshLayout.isRefreshing) {
-                swipeRefreshLayout.finishRefresh()
-            }
+           if(isRefresh){
+               if (list.isEmpty()) {
+                   mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+               } else {
+                   mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                   if(list.size >= 10){
+                       swipeRefreshLayout.setEnableLoadMore(true)
+                   }
+               }
+               mJobDetailList.clear()
+               mJobDetailList.addAll(list)
+               mAdapter.setDataList(mJobDetailList)
+               if (swipeRefreshLayout.isRefreshing) {
+                   swipeRefreshLayout.finishRefresh()
+               }
+           }else{
+
+           }
         })
 
         registerObserver(Constants.TAG_GET_SEARCH_JOB_LIST_ERROR, String::class.java).observe(this, Observer {
@@ -57,10 +64,11 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
 
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
-        mUiStatusController = UiStatusController.get().bind(swipeRefreshLayout)
+        mUiStatusController = UiStatusController.get().bind(recyclerView)
         mAdapter = JobListAdapter(mContext)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
+        swipeRefreshLayout.setEnableLoadMore(false)
         rgJobSortParent.check(R.id.rbSortDistance)
         rlScreenJob.clickWithTrigger {
             startActivity<JobScreenActivity>()
@@ -82,7 +90,7 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
             mSearchKey?.let {
-                mViewModel.getSearchJobList(it,isRefresh)
+                mViewModel.getSearchJobList(it, isRefresh)
             }
         }
 
@@ -101,7 +109,14 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
 
     override fun onFirstUserVisible() {
         mSearchKey?.let {
-            mViewModel.getSearchJobList(it,isRefresh)
+            mViewModel.getSearchJobList(it, isRefresh)
+        }
+    }
+
+    fun startSearch(searchKey: String) {
+        mSearchKey = searchKey
+        mSearchKey?.let {
+            mViewModel.getSearchJobList(it, isRefresh)
         }
     }
 

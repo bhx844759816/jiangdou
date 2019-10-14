@@ -28,6 +28,7 @@ class JobScreenByAreaPopupWindow(activity: Activity) : PopupWindow(activity) {
     private var mActivity = activity
     private var mAdapter: JobScreenAreaAdapter
     private var mAreaList = arrayListOf<String>()
+    var mConfirmCallBack: ((String) -> Unit)? = null
 
     init {
         this.width = FrameLayout.LayoutParams.MATCH_PARENT
@@ -41,6 +42,7 @@ class JobScreenByAreaPopupWindow(activity: Activity) : PopupWindow(activity) {
         recyclerView.adapter = mAdapter
         //点击确定
         rootView.findViewById<TextView>(R.id.tvConfirm).clickWithTrigger {
+            mConfirmCallBack?.invoke(mAreaList[mAdapter.mSelectPosition])
             dismiss()
         }
         this.contentView = rootView
