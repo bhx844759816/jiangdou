@@ -42,6 +42,10 @@ interface ApiService {
     fun uploadPublishJob(@Body body: RequestBody): Observable<HttpResult<String>>
 
     @Headers("Content-type:application/json")
+    @PUT(Api.PUBLISH_JOB)
+    fun updatePublishJob(@Body body: RequestBody): Observable<HttpResult<String>>
+
+    @Headers("Content-type:application/json")
     @POST(Api.REGISTER)
     fun register(@Body body: RequestBody): Observable<HttpResult<Any>>
 
@@ -181,6 +185,7 @@ interface ApiService {
 
     @DELETE(Api.GET_EMPLOYEE_OFFER_INVALID_LIST)
     fun clearInvalidOffer(): Observable<HttpResult<Any>>
+
     /**
      * 获取首页轮播图
      */
@@ -383,7 +388,7 @@ interface ApiService {
     fun getSearchCompanyList(
         @Query("pageNo") pageNo: Int,
         @Query("pageSize") pageSize: Int, @Query("searchKey") searchKey: String
-    ): Observable<HttpResult<List<JobDetailsModel>>>
+    ): Observable<HttpResult<AttestationStatusModelWrap>>
 
     /**
      * 获取兼职列表
@@ -487,7 +492,22 @@ interface ApiService {
         @Query("pageSize") pageSize: Int
     ): Observable<HttpResult<JobDetailsWrapModel>>
 
-
+    /**
+     * 清空关闭的职位
+     */
     @DELETE(Api.GET_EMPLOYEE_CLOSED_SIGN_LIST)
     fun clearCloseJob(): Observable<HttpResult<Any>>
+
+    /**
+     * 获取热门搜索列表
+     */
+    @GET(Api.GET_HOT_SEARCH_LIST)
+    fun getHotSearchList(): Observable<HttpResult<List<HotSearchModel>>>
+
+    /**
+     * 获取消息列表
+     */
+    @GET(Api.GET_MESSAGE_LIST)
+    fun getMessageList(  @Query("pageNo") pageNo: Int,
+                             @Query("pageSize") pageSize: Int): Observable<HttpResult<PageModeWrap<MessageModel>>>
 }

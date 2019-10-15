@@ -7,7 +7,7 @@ object Api {
 
 
     const val HTTP_BASE_URL = "http://jxdou.natapp1.cc"
-//    const val HTTP_BASE_URL = "http://192.168.0.100:8080"
+    //    const val HTTP_BASE_URL = "http://192.168.0.100:8080"
     const val SEND_SMS_CODE = "/send-validate-code"
     //登录并获取token
     const val GET_TOKEN = "/oauth/token"
@@ -35,7 +35,6 @@ object Api {
     const val REFUSE_OFFER = "/resume/offer/refuse"
     //获取学历列表
     const val GET_EDU_LIST = "/code/academic"
-
     //企业类型
     const val COMPANY_TYPE = "/code/qylx"
     //人员规模
@@ -144,5 +143,11 @@ object Api {
     const val EMPLOYEE_CANCEL_COLLECTION_JOB = "/employee/job/cancel-collection"
     //获取收藏列表
     const val EMPLOYEE_COLLECTION_LIST = "/employee/job/collection"
+    //获取热门搜索列表
+    const val GET_HOT_SEARCH_LIST = "/search/hot-keyword"
+    //获取消息列表
+    const val GET_MESSAGE_LIST = "/account/notify"
+
+
 
 }

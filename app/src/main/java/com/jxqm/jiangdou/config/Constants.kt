@@ -110,6 +110,7 @@ class Constants {
         const val EVENT_KEY_END_SIGN_UP = "event_key_end_sign_up"//截止报名
         const val TAG_GET_END_SIGN_UP_JOB_LIST_SUCCESS = "tag_get_end_sign_up_job_list_success"
         const val TAG_GET_END_SIGN_UP_JOB_LIST_ERROR = "tag_get_end_sign_up_job_list_error"
+        const val TAG_END_SIGN_UP_DELETE_JOB_SUCCESS = "tag_end_sign_up_delete_job_success"//删除发布成功
 
         //订单
         const val EVENT_KEY_PAYMENT_ORDER = "event_key_end_sign_up"//支付订单
@@ -144,6 +145,7 @@ class Constants {
         const val EVENT_KEY_JOB_MANAGER = "event_key_job_manager" // 兼职管理界面
 
         const val EVENT_KEY_JOB_SEARCH = "event_key_job_search" // 工作搜索界面
+        const val GET_HOT_SEARCH_LIST_SUCCESS = "get_hot_search_list_success"
 
 
         const val EVENT_KEY_SEARCH_JOB_LIST = "event_key_search_job_list" // 搜职位的Fragment
@@ -201,6 +203,8 @@ class Constants {
         const val EVENT_MY_MESSAGE = "event_my_message" // 我的消息
         const val TAG_GET_MESSAGE_LIST_SUCCESS = "tag_get_message_list_success" // 获取消息列表成功
         const val TAG_GET_MESSAGE_LIST_ERROR = "tag_get_message_list_error" // 获取消息列表失败
+
+        const val EVENT_MY_BUDGET_LIST ="event_my_budget_list"//收支明细
 
     }
 }

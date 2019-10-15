@@ -14,10 +14,11 @@ class CompanyListRepository : BaseEventRepository() {
             apiService.getSearchCompanyList(pageNo, pageSize, searchKey).compose(applySchedulers())
                 .subscribe({
                     if (it.code == "0") {
+
                         sendData(
                             Constants.EVENT_KEY_SEARCH_COMPANY_LIST,
                             Constants.TAG_GET_SEARCH_COMPANY_LIST_SUCCESS,
-                            it.data
+                            it.data.records
                         )
                     } else {
                         sendData(

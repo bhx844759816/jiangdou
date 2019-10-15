@@ -18,4 +18,8 @@ class EndSignUpViewModel : BaseViewModel<EndSignUpRepository>(){
             pageNo++
         }
     }
+
+    fun deletePublishJob(jobId: String) {
+        mRepository.deletePublishJob(jobId)
+    }
 }

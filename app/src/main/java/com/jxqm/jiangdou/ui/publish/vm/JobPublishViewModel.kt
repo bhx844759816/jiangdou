@@ -19,4 +19,11 @@ class JobPublishViewModel : BaseViewModel<JobPublishRepository>() {
     fun publishJob(mapFilePath: String, paramsMap: MutableMap<String,String>) {
         mRepository.publishJob(mapFilePath, paramsMap)
     }
+
+    /**
+     * 更新发布的
+     */
+    fun updatePublishJob(mapFilePath: String, paramsMap: MutableMap<String,String>){
+        mRepository.updatePublishJob(mapFilePath, paramsMap)
+    }
 }

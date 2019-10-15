@@ -30,24 +30,39 @@ class CompanyListFragment : BaseMVVMFragment<CompanyListViewModel>() {
         super.initView(bundle)
         mSearchKey = arguments?.getString("SearchKey", "")
         //搜索公司列表成功
-        registerObserver(Constants.TAG_GET_SEARCH_COMPANY_LIST_SUCCESS, List::class.java).observe(this, Observer {
-            val list = it as List<AttestationStatusModel>
-            mCompanyDetailList.clear()
-            mCompanyDetailList.addAll(list)
-            if (mCompanyDetailList.isEmpty()) {
-                mUiStatusController.changeUiStatus(UiStatus.EMPTY)
-            } else {
-                mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-            }
-            mAdapter.setDataList(mCompanyDetailList)
-            if (swipeRefreshLayout.isRefreshing) {
-                swipeRefreshLayout.finishRefresh()
-            }
-        })
+        registerObserver(Constants.TAG_GET_SEARCH_COMPANY_LIST_SUCCESS, List::class.java).observe(
+            this,
+            Observer {
+                val list = it as List<AttestationStatusModel>
+                if (isRefresh) {
+                    mCompanyDetailList.clear()
+                    mCompanyDetailList.addAll(list)
+                    if (mCompanyDetailList.isEmpty()) {
+                        mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                    } else {
+                        mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                    }
+                    mAdapter.setDataList(mCompanyDetailList)
+                    if (swipeRefreshLayout.isRefreshing) {
+                        swipeRefreshLayout.finishRefresh()
+                    }
+                } else {
+                    swipeRefreshLayout.finishLoadMore()
+                    if (list.isEmpty()) {
+                        swipeRefreshLayout.setNoMoreData(true)
+                    } else {
+                        mCompanyDetailList.addAll(list)
+                        mAdapter.setDataList(mCompanyDetailList)
+                    }
+                }
+
+            })
         //搜索公司列表失败
-        registerObserver(Constants.TAG_GET_SEARCH_COMPANY_LIST_ERROR, String::class.java).observe(this, Observer {
-            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-        })
+        registerObserver(Constants.TAG_GET_SEARCH_COMPANY_LIST_ERROR, String::class.java).observe(
+            this,
+            Observer {
+                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+            })
 
     }
 
@@ -61,6 +76,7 @@ class CompanyListFragment : BaseMVVMFragment<CompanyListViewModel>() {
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener {
             mSearchKey?.let {
+                isRefresh = true
                 mViewModel.getSearchCompanyList(it, isRefresh)
             }
         }
@@ -72,13 +88,14 @@ class CompanyListFragment : BaseMVVMFragment<CompanyListViewModel>() {
             mViewModel.getSearchCompanyList(it, isRefresh)
         }
     }
+
     fun startSearch(searchKey: String) {
         mSearchKey = searchKey
         mSearchKey?.let {
+            isRefresh = true
             mViewModel.getSearchCompanyList(it, isRefresh)
         }
     }
-
 
 
     companion object {

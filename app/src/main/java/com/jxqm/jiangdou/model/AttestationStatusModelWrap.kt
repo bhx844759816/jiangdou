@@ -8,39 +8,10 @@ import java.io.Serializable
 /**
  * Created by Administrator on 2019/9/18.
  */
-data class AttestationStatusModel(
-    val id: String,
-    val userId: String,
-    val employerName: String,
-    val areaCode: String,
-    val area: String,
-    val city: String,
-    val province: String,
-    val address: String,
-    val addressDetail: String,
-    val mapImg: String,
-    val statusCode: Int,
-    val status: String,
-    val empType: String,
-    val qylx: String,
-    val hyfl: String,
-    val rygm: String,
-    val qylxName: String,
-    val hyflName: String,
-    val rygmName: String,
-    val introduction: String,
-    val latitude: Double,
-    val longitude: Double,
-    val idcardFront: String,
-    val idcardBack: String,
-    val businessLicense: String,
-    val contact: String,
-    val duty: String,
-    val idcard: String,
-    val alipay: String,
-    val tel: String,
-    val jobNum: String
-) : CommonConfig()
+data class AttestationStatusModelWrap(
+    val records: List<AttestationStatusModel>, val pageNo: Int,
+    val pageSize: Int, val total: Int
+)
 
 //"data": {
 //    "id": 1146712789046591501,

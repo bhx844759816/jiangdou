@@ -14,9 +14,9 @@ class JobListRepository : BaseEventRepository() {
     /**
      * 搜素兼职工作
      */
-    fun getSearchJobList(searchKey: String, pageNo: Int, pageSize: Int, callBack: () -> Unit) {
+    fun getSearchJobList(paramsMap: Map<String, String>, callBack: () -> Unit) {
         addDisposable(
-            apiService.getSearchJobList(pageNo, pageSize, searchKey)
+            apiService.getAllSearchJobList(paramsMap)
                 .compose(applySchedulersForLoadingDialog())
                 .subscribe({
                     if (it.code == "0") {

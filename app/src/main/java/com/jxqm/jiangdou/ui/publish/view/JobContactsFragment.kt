@@ -33,6 +33,7 @@ class JobContactsFragment : BaseLazyFragment() {
 
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
+        initStatus()
         //发布兼职
         tvImmediatelyPublish.clickWithTrigger {
             LiveBus.getDefault().postEvent(
@@ -47,16 +48,30 @@ class JobContactsFragment : BaseLazyFragment() {
                 Constants.TAG_PUBLISH_JOB_EMPLOYER_PREVIEW, createParams()
             )
         }
-        //获取企业认证信息
-        mAttestationStatusModel = MyApplication.instance().attestationViewModel
-        mAttestationStatusModel?.let {
-            etContacts.setText(it.contact)
-            etContactsPhone.setText(it.tel)
-        }
         tvImmediatelyPublish.isEnable(etContacts) { isPublishState() }
         tvImmediatelyPublish.isEnable(etContactsPhone) { isPublishState() }
         tvImmediatelyPublish.isEnable(etContactsEmail) { isPublishState() }
 
+    }
+
+    /**
+     * 初始化状态
+     */
+    private fun initStatus() {
+        val model = (activity as JobPublishActivity).mJobDetailsModel
+        if (model == null) {
+            //获取企业认证信息
+            mAttestationStatusModel = MyApplication.instance().attestationViewModel
+            mAttestationStatusModel?.let {
+                etContacts.setText(it.contact)
+                etContactsPhone.setText(it.tel)
+            }
+        } else {
+            etContacts.setText(model.contact)
+            etContactsPhone.setText(model.tel)
+            etContactsEmail.setText(model.email)
+            tvImmediatelyPublish.isEnabled = isPublishState()
+        }
     }
 
     private fun createParams(): MutableMap<String, String> {

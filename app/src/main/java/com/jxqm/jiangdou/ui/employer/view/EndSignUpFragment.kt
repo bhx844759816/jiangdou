@@ -13,6 +13,7 @@ import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.model.JobDetailsWrapModel
 import com.jxqm.jiangdou.ui.employer.adapter.JobPublishListAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EndSignUpViewModel
+import com.jxqm.jiangdou.view.dialog.PromptDialog
 import kotlinx.android.synthetic.main.fragment_end_sign_up_publish_layout.*
 
 /**
@@ -30,7 +31,10 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         //获取数据成功
-        registerObserver(Constants.TAG_GET_END_SIGN_UP_JOB_LIST_SUCCESS, JobDetailsWrapModel::class.java).observe(this,
+        registerObserver(
+            Constants.TAG_GET_END_SIGN_UP_JOB_LIST_SUCCESS,
+            JobDetailsWrapModel::class.java
+        ).observe(this,
             Observer {
                 if (isRefresh) {
                     if (it.records.isEmpty()) {
@@ -57,9 +61,18 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
                 }
             })
 
-        registerObserver(Constants.TAG_GET_END_SIGN_UP_JOB_LIST_ERROR, String::class.java).observe(this, Observer {
-            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-        })
+        registerObserver(Constants.TAG_GET_END_SIGN_UP_JOB_LIST_ERROR, String::class.java).observe(
+            this,
+            Observer {
+                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+            })
+        //删除职位请求成功
+        registerObserver(Constants.TAG_END_SIGN_UP_DELETE_JOB_SUCCESS, Boolean::class.java).observe(
+            this,
+            Observer {
+                isRefresh = true
+                mViewModel.getEndSignUpPublishJob(isRefresh)
+            })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,6 +89,11 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
         swipeRefreshLayout.setOnLoadMoreListener {
             isRefresh = false
             mViewModel.getEndSignUpPublishJob(isRefresh)
+        }
+        mJobPublishListAdapter.cancelPublish = {
+            PromptDialog.show(activity!!, "确认删除发布的工作吗？") {
+                mViewModel.deletePublishJob(it)
+            }
         }
     }
 

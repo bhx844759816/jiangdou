@@ -2,6 +2,7 @@ package com.jxqm.jiangdou.ui.employer.vm.repository
 
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
+import com.jxqm.jiangdou.http.action
 import com.jxqm.jiangdou.http.applySchedulers
 
 /**
@@ -40,6 +41,23 @@ class EndSignUpRepository : BaseEventRepository() {
                     )
                 })
 
+        )
+    }
+
+
+
+    /**
+     * 删除发布的职位
+     */
+    fun deletePublishJob(jobId: String) {
+        addDisposable(
+            apiService.deleteJobById(jobId)
+                .action {
+                    sendData(
+                        Constants.EVENT_KEY_END_SIGN_UP,
+                        Constants.TAG_END_SIGN_UP_DELETE_JOB_SUCCESS, jobId
+                    )
+                }
         )
     }
 }

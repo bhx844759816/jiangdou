@@ -73,6 +73,7 @@ class ResumeDetailsActivity : BaseDataActivity<ResumeDetailsViewModel>() {
             tvUserBirthday.text = it.birthday
             tvUserPhone.text = it.tel
             tvUserStar.text = it.star
+            tvUserAge.text = "${it.age} 岁"
             tvUserEdu.text = "学历:  ${it.academic}"
             tvUserWeight.text = "体重:  ${it.weight}kg"
             tvUserHeight.text = "身高:  ${it.height}cm"

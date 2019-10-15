@@ -81,17 +81,17 @@ class JobScreenByTypePopupWindow(activity: Activity) : PopupWindow(activity) {
             }
             mJobTypeList.clear()
             mJobTypeList.addAll(list)
-            jobTypId?.let {
+            mAdapter.mJopTypeArrayList.clear()
+            val jobTypeList = jobTypId?.split(",")
+            jobTypeList?.let {
                 mJobTypeList.forEach { jobTypeModel ->
                     jobTypeModel.jobTypes.forEach { jobTypeModel2 ->
-                        if (jobTypeModel2.id.toString() == it) {
-                            jobTypeModel2.isChecked = true
-                        }
+                        jobTypeModel2.isChecked = it.contains(jobTypeModel2.id.toString())
                     }
                 }
                 rbJobTypeAll.isChecked = false
             }
-            LogUtils.i("jobTypId=$jobTypId mJobTypeList=$mJobTypeList")
+            LogUtils.i("jobTypId=$jobTypId mJobTypeList=$jobTypeList")
             mAdapter.setDataList(mJobTypeList)
         } else {
             dismiss()

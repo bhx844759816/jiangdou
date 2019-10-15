@@ -1,5 +1,6 @@
 package com.jxqm.jiangdou.ui.job.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.view.View
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_job_screen.*
 class JobScreenActivity : BaseActivity() {
     private val mParamsMap = mutableMapOf<String, String>()
     private val mLimitArray = mutableListOf<String>()
+    private var mSelectDate: String? = null
     private val mGson: Gson by lazy {
         Gson()
     }
@@ -35,8 +37,9 @@ class JobScreenActivity : BaseActivity() {
         StatusBarTextUtils.setLightStatusBar(this, true)
         val jsonString = intent.getStringExtra("ScreenResult")
         jsonString?.let {
-            val params = mGson.fromJson<Map<String, String>>(it, object : TypeToken<Map<String, String>>() {
-            }.type)
+            val params =
+                mGson.fromJson<Map<String, String>>(it, object : TypeToken<Map<String, String>>() {
+                }.type)
             mParamsMap.putAll(params)
         }
         initListener()
@@ -61,6 +64,7 @@ class JobScreenActivity : BaseActivity() {
                         mParamsMap["year"] = it.year.toString()
                         mParamsMap["month"] = it.month.toString()
                         mParamsMap["day"] = it.day.toString()
+                        mSelectDate = "${it.year}-${operateDate(it.month.toString())}-${operateDate(it.day.toString())}"
                         tvStartWorkTime.text = "${it.year} 年 ${it.month} 月 ${it.day}"
                     }
                 }
@@ -133,30 +137,30 @@ class JobScreenActivity : BaseActivity() {
             rbNoLimitTime.isChecked = true
             rbNoSex.isChecked = true
             rbNoLimitJobTime.isChecked = true
+            mParamsMap.clear()
         }
         //确定
         tvConfirm.clickWithTrigger {
-             //
-            if(rbNoLimitTime.isChecked){
+            //
+            if (rbNoLimitTime.isChecked) {
                 mParamsMap.remove("times")
-            }else{
-                if(rbLimitMorning.isChecked){
+            } else {
+                if (rbLimitMorning.isChecked) {
                     mLimitArray.add("am")
                 }
-                if(rbLimitAfternoon.isChecked){
+                if (rbLimitAfternoon.isChecked) {
                     mLimitArray.add("pm")
                 }
-                if(rbLimitNight.isChecked){
+                if (rbLimitNight.isChecked) {
                     mLimitArray.add("nm")
                 }
             }
             if (mLimitArray.isNotEmpty()) {
                 mParamsMap["times"] = mLimitArray.joinToString(",")
             }
-            //
             if (tvStartWorkTime.visibility == View.VISIBLE) {
-                mParamsMap["date"] = tvStartWorkTime.text.toString()
-            }else{
+                mParamsMap["date"] = mSelectDate ?: ""
+            } else {
                 mParamsMap.remove("date")
                 mParamsMap.remove("year")
                 mParamsMap.remove("month")
@@ -169,6 +173,7 @@ class JobScreenActivity : BaseActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initUiStatus() {
         val gender = mParamsMap["gender"]
         gender?.let {
@@ -201,14 +206,21 @@ class JobScreenActivity : BaseActivity() {
                 }
             }
         }
-        val date = mParamsMap["date"]
-        if (date.isNullOrEmpty()) {
-            calendarView.scrollToCalendar(calendarView.curYear, calendarView.curMonth, calendarView.curDay)
+        mSelectDate = mParamsMap["date"]
+        if (mSelectDate.isNullOrEmpty()) {
+            calendarView.scrollToCalendar(
+                calendarView.curYear,
+                calendarView.curMonth,
+                calendarView.curDay
+            )
             tvCurrentTime.text = "${calendarView.curYear} 年 ${calendarView.curMonth} 月"
-            tvStartWorkTime.text = "${calendarView.curYear} 年 ${calendarView.curMonth} 月 ${calendarView.curDay}"
+            tvStartWorkTime.text =
+                "${calendarView.curYear} 年 ${calendarView.curMonth} 月 ${calendarView.curDay}"
         } else {
             rbLimitJobTime.isChecked = true
-            tvStartWorkTime.text = "${ mParamsMap["year"]} 年 ${mParamsMap["month"]} 月 ${mParamsMap["day"]}"
+            tvCurrentTime.text = "${mParamsMap["year"]} 年 ${mParamsMap["month"]} 月"
+            tvStartWorkTime.text =
+                "${mParamsMap["year"]} 年 ${mParamsMap["month"]} 月 ${mParamsMap["day"]}"
             calendarView.scrollToCalendar(
                 mParamsMap["year"]!!.toInt(),
                 mParamsMap["month"]!!.toInt(),
@@ -218,7 +230,18 @@ class JobScreenActivity : BaseActivity() {
 
     }
 
+    /**
+     * 拼接日期
+     */
+    private fun operateDate(date: String): String {
+        if (date.length == 1) {
+            return "0$date"
+        }
+        return date
+    }
+
     private fun checkTimeLimitStatus() {
-        rbNoLimitTime.isChecked = rbLimitAfternoon.isChecked && rbLimitMorning.isChecked && rbLimitNight.isChecked
+        rbNoLimitTime.isChecked =
+            rbLimitAfternoon.isChecked && rbLimitMorning.isChecked && rbLimitNight.isChecked
     }
 }

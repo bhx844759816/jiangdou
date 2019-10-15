@@ -219,6 +219,12 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                     object : TypeToken<Map<String, String>>() {
                     }.type
                 )
+                mParamsMap.remove("year")
+                mParamsMap.remove("month")
+                mParamsMap.remove("day")
+                mParamsMap.remove("gender")
+                mParamsMap.remove("times")
+                mParamsMap.remove("date")
                 mParamsMap.putAll(params)
                 isRefresh = true
                 mViewModel.getAllJobList(mParamsMap, isRefresh)
@@ -239,14 +245,18 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                 mViewModel.getAllJobList(mParamsMap, isRefresh)
             }
         }
-        mTypePopupWindow!!.showPopup(line, mJobTypeList, mJobTypeId)
+        mTypePopupWindow!!.showPopup(line, mJobTypeList, mParamsMap["jobTypeId"])
     }
 
     private fun showAreaPopupWindow() {
         if (mAreaPopupWindow == null) {
             mAreaPopupWindow = JobScreenByAreaPopupWindow(this)
             mAreaPopupWindow!!.mConfirmCallBack = {
-                mParamsMap["area"] = it
+                if (it == "全郑州市") {
+                    mParamsMap["area"] = it.substring(1)
+                } else {
+                    mParamsMap["area"] = it
+                }
                 isRefresh = true
                 mViewModel.getAllJobList(mParamsMap, isRefresh)
             }

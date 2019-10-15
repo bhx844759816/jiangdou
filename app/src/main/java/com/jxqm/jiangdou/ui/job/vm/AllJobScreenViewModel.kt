@@ -20,6 +20,7 @@ class AllJobScreenViewModel : BaseViewModel<AllJobScreenRepository>() {
         if (isRefresh) {
             pageNo = 1
         }
+
         paramsMap["pageNo"] = pageNo.toString()
         paramsMap["pageSize"] = pageSize.toString()
         mRepository.getAllJobList(paramsMap) {

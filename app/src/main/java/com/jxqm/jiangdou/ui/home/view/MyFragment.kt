@@ -33,13 +33,7 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mUserModel = MyApplication.instance().userModel
-        mUserModel?.let {
-            tvUserName.text = it.username
-            tvRankPoints.text = it.rankPoints
-            tvBalance.text = it.balance
-            tvResumeDescribe.text = "完善度${it.perfectionDegree}%\n简历越完善，录用率越高哦～"
-            Glide.with(mContext).load(Api.HTTP_BASE_URL + it.avatar).into(ivHeadPhoto)
-        }
+        initUserStatus()
         //用户名称
         tvUserName.clickWithTrigger {
             if (MyApplication.instance().userModel == null) {
@@ -68,6 +62,10 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
             }
             startActivity<CompanyAttestationActivity>()
         }
+        //我的消息
+        rlMyMessage.clickWithTrigger {
+            startActivity<MyMessageActivity>()
+        }
         //客服
         rlMyService.clickWithTrigger {
             activity?.let { activity -> MyServiceDialog.show(activity) }
@@ -91,9 +89,25 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
 
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
-        registerObserver(Constants.TAG_MAIN_MY_LOGIN_SUCCESS, Boolean::class.java).observe(this, Observer {
-            tvUserName.text = MyApplication.instance().userModel?.username
-        })
+        registerObserver(Constants.TAG_MAIN_MY_LOGIN_SUCCESS, Boolean::class.java).observe(
+            this,
+            Observer {
+                mUserModel = MyApplication.instance().userModel
+                initUserStatus()
+            })
+    }
+
+    /**
+     * 设置用户信息展示
+     */
+    private fun initUserStatus() {
+        mUserModel?.let {
+            tvUserName.text = it.username
+            tvRankPoints.text = it.rankPoints
+            tvBalance.text = it.balance
+            tvResumeDescribe.text = "完善度${it.perfectionDegree}%\n简历越完善，录用率越高哦～"
+            Glide.with(mContext).load(Api.HTTP_BASE_URL + it.avatar).into(ivHeadPhoto)
+        }
     }
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="94dp"
+    android:layout_width="100dp"
     android:layout_height="40dp"
     android:background="@drawable/shape_publish_job_item_default"
     android:gravity="center_vertical"
@@ -15,7 +15,7 @@
         android:maxLines="1"
         android:drawableRight="@drawable/icon_down_arrow"
         android:drawablePadding="15dp"
-        android:textSize="@dimen/text_default_size"
+        android:textSize="@dimen/text_small_size"
         android:textColor="@color/text_publish_job"
         android:text="展开" />
 </RelativeLayout>

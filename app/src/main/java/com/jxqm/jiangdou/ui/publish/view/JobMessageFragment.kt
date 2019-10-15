@@ -44,7 +44,7 @@ class JobMessageFragment : BaseLazyFragment() {
 
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
-        initStatus()
+
         tvNextStep.clickWithTrigger {
             mParams["title"] = tvJopTitleContent.text.toString().trim() //兼职标题
             mParams["content"] = tvJopDescriptionContent.text.toString().trim()//兼职描述
@@ -104,6 +104,8 @@ class JobMessageFragment : BaseLazyFragment() {
         tvNextStep.isEnable(tvJopDescriptionContent) { isNetStepState() }
         tvNextStep.isEnable(etWorkPeopleNum) { isNetStepState() }
         tvNextStep.isEnable(etDetailAddress) { isNetStepState() }
+
+        initStatus()
     }
 
     private fun initStatus() {
@@ -115,6 +117,7 @@ class JobMessageFragment : BaseLazyFragment() {
             etWorkPeopleNum.setText(it.recruitNum.toString())
             tvLocationArea.text = it.address
             etDetailAddress.setText(it.addressDetail)
+            tvNextStep.isEnabled = true
         }
     }
 

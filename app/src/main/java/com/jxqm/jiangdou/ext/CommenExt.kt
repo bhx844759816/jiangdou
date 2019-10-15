@@ -92,3 +92,13 @@ internal fun Paint.utilReset(colorString: String? = null, @ColorInt color: Int? 
  * 扩展gson解析
  */
 inline fun <reified T> Gson.fromJson(json: String) = fromJson(json, T::class.java)
+
+/**
+ * 隐藏软键盘
+ */
+fun View.hideKeyboard() {
+    val inputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+
+}

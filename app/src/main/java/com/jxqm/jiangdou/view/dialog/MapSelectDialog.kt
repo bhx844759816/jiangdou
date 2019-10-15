@@ -17,22 +17,27 @@ import kotlinx.android.synthetic.main.dialog_map_select_layout.*
 class MapSelectDialog : BaseDialogFragment() {
     var lat: String = ""
     var lon: String = ""
-    var address:String = ""
+    var address: String = ""
     override fun getLayoutId(): Int = R.layout.dialog_map_select_layout
 
     override fun initView(view: View?) {
         super.initView(view)
         tvBaiduMap.clickWithTrigger {
-            val result = MapUtils.goToBaidu(mContext, lat, lon,address)
+            val result = MapUtils.goToBaidu(mContext, lat, lon, address)
             if (!result) {
                 ToastUtils.toastShort("未检测到百度客户端")
             }
+            dismissAllowingStateLoss()
         }
         tvGaodeMap.clickWithTrigger {
-            val result = MapUtils.goToGaode(mContext, lat, lon,address)
+            val result = MapUtils.goToGaode(mContext, lat, lon, address)
             if (!result) {
                 ToastUtils.toastShort("未检测到高德度客户端")
             }
+            dismissAllowingStateLoss()
+        }
+        tvCancel.clickWithTrigger {
+            dismissAllowingStateLoss()
         }
     }
 
@@ -54,7 +59,7 @@ class MapSelectDialog : BaseDialogFragment() {
     companion object {
         private val TAG = MapSelectDialog::class.simpleName
 
-        fun show(activity: FragmentActivity, lat: String, lon: String,address:String) {
+        fun show(activity: FragmentActivity, lat: String, lon: String, address: String) {
             var fragment = activity.supportFragmentManager.findFragmentByTag(TAG)
             if (fragment == null) {
                 val dialog = MapSelectDialog()

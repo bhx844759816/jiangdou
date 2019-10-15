@@ -171,6 +171,7 @@ class JobPublishListAdapter(context: Context, type: Int) :
                     }
                     //订单详情
                     tvOrderDetails.clickWithTrigger {
+                        //                        mContext.startActivity<JobPublishActivity>("JobDetails" to jobDetailsModel.toJson())
                         mContext.startActivity<OrderDetailsActivity>("JobId" to jobDetailsModel.id.toString())
                     }
                     val listDates =
@@ -225,6 +226,7 @@ class JobPublishListAdapter(context: Context, type: Int) :
                     tvSingUpTime.text = jobDetailsModel.endTime
                     tvDelete.clickWithTrigger {
                         //删除
+                        cancelPublish?.invoke(jobDetailsModel.id.toString())
                     }
                     //
                     tvAccept.clickWithTrigger {
@@ -251,14 +253,19 @@ class JobPublishListAdapter(context: Context, type: Int) :
                     val ivEmployeeImg = it.getView<ImageView>(R.id.ivEmployeeImg)
                     val tvEmployeeTitle = it.getView<TextView>(R.id.tvEmployeeTitle)
                     val tvSignUpRecord = it.getView<TextView>(R.id.tvSignUpRecord)
+                    val tvSingleSettle = it.getView<TextView>(R.id.tvSingleSettle)
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl)
                         .into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobDetailsModel.title
+                    //招聘记录
                     tvSignUpRecord.clickWithTrigger {
                         mContext.startActivity<EmployRecordActivity>("jobId" to jobDetailsModel.id.toString())
                     }
+                    //在招一次
+                    tvSingleSettle.clickWithTrigger {
+                        mContext.startActivity<JobPublishActivity>("JobDetails" to jobDetailsModel.toJson())
+                    }
                 }
-
             }
         })
     }

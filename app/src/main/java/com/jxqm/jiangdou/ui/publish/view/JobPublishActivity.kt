@@ -22,6 +22,7 @@ import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.publish.vm.JobPublishViewModel
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_publish.*
+import java.io.File
 import com.jxqm.jiangdou.ui.publish.view.PublishJobPreviewActivity as PublishJobPreviewActivity
 
 /**
@@ -83,7 +84,12 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
                 val params = it as Map<String, String>
                 mParamsMap.putAll(params)
                 val mapFilePath = Constants.APP_SAVE_DIR + Constants.MAPVIEW_FILENAME
-                mViewModel.publishJob(mapFilePath, mParamsMap)
+                if(mJobDetailsModel == null){
+                    mViewModel.publishJob(mapFilePath, mParamsMap)
+                }else{
+                    mParamsMap["id"]=mJobDetailsModel!!.id.toString()
+                    mViewModel.updatePublishJob(mapFilePath, mParamsMap)
+                }
             })
         //预览建立
         registerObserver(Constants.TAG_PUBLISH_JOB_EMPLOYER_PREVIEW, Map::class.java).observe(
@@ -106,6 +112,9 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
         registerObserver(Constants.TAG_PUBLISH_JOB_SUCCESS, String::class.java).observe(
             this,
             Observer {
+                val mapFilePath = Constants.APP_SAVE_DIR + Constants.MAPVIEW_FILENAME
+                val mapFile = File(mapFilePath)
+                mapFile.deleteOnExit()
                 //发布职位成功刷新列表
                 LiveBus.getDefault().postEvent(
                     Constants.EVENT_KEY_WAIT_PUBLISH_JOB,

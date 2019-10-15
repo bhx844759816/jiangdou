@@ -9,11 +9,13 @@ import com.jxqm.jiangdou.ui.job.vm.repository.JobListRepository
 class JobListViewModel : BaseViewModel<JobListRepository>() {
     private var pageNo: Int = 1
     private var pageSize: Int = 10
-    fun getSearchJobList(searchKey: String, isRefresh: Boolean) {
+    fun getSearchJobList(paramsMap: MutableMap<String, String>, isRefresh: Boolean) {
         if (isRefresh) {
             pageNo = 1
         }
-        mRepository.getSearchJobList(searchKey, pageNo, pageSize) {
+        paramsMap["pageNo"] = pageNo.toString()
+        paramsMap["pageSize"] = pageSize.toString()
+        mRepository.getSearchJobList(paramsMap) {
             pageNo++
         }
     }

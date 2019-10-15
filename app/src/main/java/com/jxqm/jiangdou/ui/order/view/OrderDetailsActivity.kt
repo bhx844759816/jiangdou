@@ -3,6 +3,7 @@ package com.jxqm.jiangdou.ui.order.view
 import android.graphics.BitmapFactory
 import android.graphics.Paint
 import android.util.Base64
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.haibin.calendarview.Calendar
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
@@ -95,9 +97,54 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
      * 添加日期区间
      */
     private fun addDataRange(dateList: List<String>) {
-        for (i in dateList.indices step 2) {
-            val startData = dateList[i]
-            val endData = dateList[i + 1]
+        val calendarList = mutableListOf<Calendar>()
+        val rangeCalendarList = mutableListOf<MutableList<Calendar>>()
+        dateList.forEach { date ->
+            val calendar = Calendar()
+            val endDates = date.split("-")
+            calendar.year = endDates[0].toInt()
+            calendar.month = endDates[1].toInt()
+            calendar.day = endDates[2].toInt()
+            calendarList.add(calendar)
+        }
+        calendarList.forEachIndexed { index, calendar ->
+            if (index == 0) {
+                val list = mutableListOf(calendar)
+                rangeCalendarList.add(list)
+                return@forEachIndexed
+            }
+            if (index == calendarList.size - 1) {
+                val list = rangeCalendarList.last()
+                list.add(calendar)
+                return@forEachIndexed
+            }
+            val lastCalendar = calendarList[index - 1]
+            val lastTimeMillis = lastCalendar.timeInMillis + 24 * 60 * 60 * 1000
+            val curTimeMillis = calendar.timeInMillis
+            Log.i("TAG2", "$curTimeMillis")
+            Log.i("TAG2", "$lastTimeMillis")
+            Log.i("TAG2", "${curTimeMillis == lastTimeMillis}")
+            if ((curTimeMillis - lastTimeMillis) <= 1000L) {
+                val list = rangeCalendarList.last()
+                list.add(calendar)
+            } else {
+                val list = mutableListOf(calendar)
+                rangeCalendarList.add(list)
+            }
+        }
+        rangeCalendarList.forEach {
+            val strBuffer = StringBuffer()
+            strBuffer.append(it.first().year)
+                .append(" - ")
+                .append(it.first().month)
+                .append(" - ")
+                .append(it.first().day)
+            strBuffer.append("  至  ")
+                .append(it.last().year)
+                .append(" - ")
+                .append(it.last().month)
+                .append(" - ")
+                .append(it.last().day)
             var textView = TextView(this)
             val layoutParams = ViewGroup.MarginLayoutParams(
                 ViewGroup.MarginLayoutParams.WRAP_CONTENT,
@@ -107,7 +154,7 @@ class OrderDetailsActivity : BaseDataActivity<OrderDetailsViewModel>() {
             layoutParams.bottomMargin = DensityUtil.dip2px(this, 5f)
             textView.setTextColor(resources.getColor(R.color.text_hint))
             textView.textSize = DensityUtil.dip2px(this, 5f).toFloat()
-            textView.text = "$startData 至 $endData"
+            textView.text = strBuffer.toString()
             textView.layoutParams = layoutParams
             flDateRangeParent.addView(textView)
         }

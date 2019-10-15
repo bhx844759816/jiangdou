@@ -11,6 +11,7 @@ import com.bhx.common.utils.ToastUtils
 import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.ext.hideKeyboard
 import com.jxqm.jiangdou.ui.city.SelectCity
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -75,6 +76,7 @@ class JobCompanyListActivity : BaseActivity() {
                             (mCurrentFragment as CompanyListFragment).startSearch(mSearchKey)
                         }
                     }
+                    tvSearchJob.hideKeyboard()
                     return@setOnEditorActionListener true
                 } else {
                     ToastUtils.toastShort("请输入搜索关键词")

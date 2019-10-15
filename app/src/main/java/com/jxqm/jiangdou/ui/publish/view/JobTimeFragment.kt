@@ -15,6 +15,7 @@ import com.bhx.common.utils.DateUtils
 import com.bhx.common.utils.DensityUtil
 import com.bhx.common.utils.LogUtils
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.haibin.calendarview.Calendar
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
@@ -38,6 +39,7 @@ class JobTimeFragment : BaseLazyFragment() {
 
     private var mRangeCalendarList = mutableListOf<Calendar>()
     private var mRangeTimeList = mutableListOf<String>()
+    private val mGson = Gson()
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is OnJobPublishCallBack) {
@@ -49,66 +51,33 @@ class JobTimeFragment : BaseLazyFragment() {
 
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
+        initStatus()
         tvNextStep.clickWithTrigger {
             //发送选择的日期区间和时间区间以及工资 [2019-9-13,]
             val params = mutableMapOf<String, String>()
             val dataArray = arrayListOf<String>()
             val timeArray = arrayListOf<TimeRangeModel>()
-            mRangeDateList.forEach {
-                val startTime =
-                    "${it.first().year}-${operateDate(it.first().month.toString())}-${operateDate(it.first().day.toString())}"
-                val endTime =
-                    "${it.last().year}-${operateDate(it.last().month.toString())}-${operateDate(it.last().day.toString())}"
-                dataArray.add(startTime)
-                dataArray.add(endTime)
+            mRangeCalendarList.forEach{calendar->
+                val time = "${calendar.year}-${operateDate(calendar.month.toString())}-${operateDate(calendar.day.toString())}"
+                dataArray.add(time)
             }
             for (i in 0 until mRangeTimeList.size step 2) {
                 val rangeTimeMode = TimeRangeModel(mRangeTimeList[i], mRangeTimeList[i + 1])
                 timeArray.add(rangeTimeMode)
             }
-            val gson = Gson()
-            params["datesJson"] = gson.toJson(dataArray)
-            params["timesJson"] = gson.toJson(timeArray)
+            params["datesJson"] = mGson.toJson(dataArray)
+            params["timesJson"] = mGson.toJson(timeArray)
             params["salary"] = etPayMoney.text.toString().trim()
-            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_TIME, params)
+            LiveBus.getDefault()
+                .postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_TIME, params)
             mCallback?.jobTimeNextStep()
         }
         tvSelectDate.clickWithTrigger {
-            CalendarRangeSelectDialog.show(activity!!) {
-                it.forEach { calendar ->
-                    if (!mRangeCalendarList.contains(calendar)) {
-                        mRangeCalendarList.add(calendar)
-                    }
-                }
-                mRangeCalendarList.sort()
-                mRangeDateList.clear()
-                //生成数组对象
-                mRangeCalendarList.forEachIndexed { index, calendar ->
-                    Log.i("TAG2", "$calendar")
-                    if (index == 0) {
-                        val list = mutableListOf(calendar)
-                        mRangeDateList.add(list)
-                        return@forEachIndexed
-                    }
-                    if (index == mRangeCalendarList.size - 1) {
-                        val list = mRangeDateList.last()
-                        list.add(calendar)
-                        return@forEachIndexed
-                    }
-                    val lastCalendar = mRangeCalendarList[index - 1]
-                    val lastTimeMillis = lastCalendar.timeInMillis + 24 * 60 * 60 * 1000
-                    val curTimeMillis = calendar.timeInMillis
-                    Log.i("TAG2", "$curTimeMillis")
-                    Log.i("TAG2", "$lastTimeMillis")
-                    Log.i("TAG2", "${curTimeMillis == lastTimeMillis}")
-                    if ((curTimeMillis - lastTimeMillis) <= 2) {
-                        val list = mRangeDateList.last()
-                        list.add(calendar)
-                    } else {
-                        val list = mutableListOf(calendar)
-                        mRangeDateList.add(list)
-                    }
-                }
+            CalendarRangeSelectDialog.show(activity!!, mRangeCalendarList) {
+                mRangeCalendarList.clear()
+                mRangeCalendarList.addAll(it)
+                LogUtils.i("CalendarRangeSelectDialog=$mRangeCalendarList")
+                operateRangeDateList()
                 addDateRange()
                 isNextStepState()
             }
@@ -124,10 +93,84 @@ class JobTimeFragment : BaseLazyFragment() {
         }
     }
 
+    private fun operateRangeDateList(){
+        mRangeDateList.clear()
+        mRangeCalendarList.forEachIndexed { index, calendar ->
+            if (index == 0) {
+                val list = mutableListOf(calendar)
+                mRangeDateList.add(list)
+                return@forEachIndexed
+            }
+            if (index == mRangeCalendarList.size - 1) {
+                val list = mRangeDateList.last()
+                list.add(calendar)
+                return@forEachIndexed
+            }
+            val lastCalendar = mRangeCalendarList[index - 1]
+            val lastTimeMillis = lastCalendar.timeInMillis + 24 * 60 * 60 * 1000
+            val curTimeMillis = calendar.timeInMillis
+            Log.i("TAG2", "$curTimeMillis")
+            Log.i("TAG2", "$lastTimeMillis")
+            Log.i("TAG2", "${curTimeMillis == lastTimeMillis}")
+            if ((curTimeMillis - lastTimeMillis) <= 1000L) {
+                val list = mRangeDateList.last()
+                list.add(calendar)
+            } else {
+                val list = mutableListOf(calendar)
+                mRangeDateList.add(list)
+            }
+        }
+    }
+
+    /**
+     * 初始化
+     */
+    private fun initStatus() {
+        val model = (activity as JobPublishActivity).mJobDetailsModel
+        model?.let {
+            etPayMoney.setText(it.salary.toString())
+            val listDates =
+                mGson.fromJson<List<String>>(it.datesJson, object : TypeToken<List<String>>() {
+                }.type)
+            val listTimes =
+                mGson.run {
+                    fromJson<List<TimeRangeModel>>(
+                        it.timesJson,
+                        object : TypeToken<List<TimeRangeModel>>() {
+                        }.type
+                    )
+                }
+            //时间段
+            mRangeTimeList.clear()
+            listTimes.forEach { timeRangeModel ->
+                mRangeTimeList.add(timeRangeModel.start)
+                mRangeTimeList.add(timeRangeModel.end)
+            }
+            mRangeDateList.clear()
+            mRangeCalendarList.clear()
+            listDates.forEach {date->
+                val calendar = Calendar()
+                val endDates = date.split("-")
+                calendar.year = endDates[0].toInt()
+                calendar.month = endDates[1].toInt()
+                calendar.day = endDates[2].toInt()
+                mRangeCalendarList.add(calendar)
+            }
+            operateRangeDateList()
+            //添加日期
+            addDateRange()
+            //添加时间
+            for (i in 0 until mRangeTimeList.size step 2) {
+                addTimeRange(mRangeTimeList[i], mRangeTimeList[i + 1])
+            }
+            isNextStepState()
+        }
+    }
+
     /**
      * 拼接日期
      */
-    fun operateDate(date: String): String {
+    private fun operateDate(date: String): String {
         if (date.length == 1) {
             return "0$date"
         }
@@ -141,18 +184,28 @@ class JobTimeFragment : BaseLazyFragment() {
         llDataParent.removeAllViews()
         mRangeDateList.forEach {
             val calendarList = it
-            val content =
-                StringBuffer().append(it.first().year)
+            val strBuffer = StringBuffer()
+            if (it.size == 1) {
+                strBuffer.append(it.first().year)
                     .append(" - ")
                     .append(it.first().month)
                     .append(" - ")
                     .append(it.first().day)
-                    .append("  至  ")
+            }
+            if (it.size > 1) {
+                strBuffer.append(it.first().year)
+                    .append(" - ")
+                    .append(it.first().month)
+                    .append(" - ")
+                    .append(it.first().day)
+                strBuffer.append("  至  ")
                     .append(it.last().year)
                     .append(" - ")
                     .append(it.last().month)
                     .append(" - ")
-                    .append(it.last().day).toString()
+                    .append(it.last().day)
+            }
+            val content = strBuffer.toString()
             val view = LayoutInflater.from(mContext).inflate(R.layout.view_data_range_item, null)
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -177,7 +230,7 @@ class JobTimeFragment : BaseLazyFragment() {
      * 下一步是否可以被点击
      */
     private fun isNextStepState(): Boolean {
-        val isEnable = mRangeCalendarList.isNotEmpty() && mRangeTimeList.isNotEmpty()
+        val isEnable = mRangeDateList.isNotEmpty() && mRangeTimeList.isNotEmpty()
                 && etPayMoney.text.toString().isNotEmpty()
         tvNextStep.isEnabled = isEnable
         return isEnable

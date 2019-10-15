@@ -122,6 +122,10 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
                 .inflate(R.layout.view_publish_job_type_item, null) as RadioButton
             radioButton.text = it.jobTypeName
             radioButton.id = it.id
+            val model =  (activity as JobPublishActivity).mJobDetailsModel
+            if(model != null && model.jobTypeId == it.id){
+                radioButton.isChecked = true
+            }
             radioButton.setPadding(DensityUtil.dip2px(mContext, 10f))
             rgHotJobType.addView(radioButton)
             mJobTypeMaps[it.id.toString()] = radioButton

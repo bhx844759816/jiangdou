@@ -14,6 +14,8 @@ class CompanyListViewModel : BaseViewModel<CompanyListRepository>() {
     fun getSearchCompanyList(searchKey: String, isRefresh: Boolean) {
         if (isRefresh) {
             pageNo = 1
+        } else {
+            pageNo++
         }
         mRepository.getSearchCompanyList(searchKey, pageNo, pageSize)
     }

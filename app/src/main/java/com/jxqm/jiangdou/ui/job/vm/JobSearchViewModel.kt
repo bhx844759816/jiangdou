@@ -6,6 +6,9 @@ import com.jxqm.jiangdou.ui.job.vm.repository.JobSearchRepository
 /**
  * Created by Administrator on 2019/8/17.
  */
-class JobSearchViewModel : BaseViewModel<JobSearchRepository>(){
+class JobSearchViewModel : BaseViewModel<JobSearchRepository>() {
+    fun getHotSearchList() {
+        mRepository.getHotSearchList()
+    }
 
 }
