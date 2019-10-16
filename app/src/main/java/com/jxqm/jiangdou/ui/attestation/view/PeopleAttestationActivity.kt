@@ -63,6 +63,12 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
         super.initView()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
         tvSubmit.clickWithTrigger {
+            mAttestationStatus?.let {
+                if (it.statusCode == 2) {
+                    ToastUtils.toastShort("已认证通过不能在提交了")
+                    return@clickWithTrigger
+                }
+            }
             //提交认证信息
             val duty = etUserName.text.toString().trim()//负责人
             val idCardNum = etIdNum.text.toString().trim()//身份证号
@@ -222,9 +228,18 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             Glide.with(this).load(Api.HTTP_BASE_URL + it.idcardBack)
                 .into(ivPeopleCardBack)
             when (it.statusCode) {
-                1, 2 -> {//审核中 //已认证
+                1 -> {//审核中 //已认证
                     tvPeopleCardPositive.isEnabled = false
                     tvPeopleCardBack.isEnabled = false
+                }
+                2 -> {
+                    tvPeopleCardPositive.isEnabled = false
+                    tvPeopleCardBack.isEnabled = false
+                    etUserName.isEnabled = false
+                    etIdNum.isEnabled = false
+                    etPayNumber.isEnabled = false
+                    etContacts.isEnabled = false
+                    etContactsPhone.isEnabled = false
                 }
             }
             //

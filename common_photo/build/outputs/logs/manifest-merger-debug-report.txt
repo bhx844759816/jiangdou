@@ -1,63 +1,63 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
+ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
 	package
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:4:5-32
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:4:5-32
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
 	android:versionCode
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:2:1-15:12
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:3:5-63
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:3:5-63
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:6:5-80
+ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:6:5-80
 	android:name
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:6:22-78
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:6:22-78
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:7:5-79
+ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:7:5-79
 	android:name
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:7:22-77
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:7:22-77
 application
-ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:9:5-14:19
+ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:9:5-14:19
 activity#com.zhihu.matisse.ui.MatisseActivity
-ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:10:9-72
+ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:10:9-72
 	android:name
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:10:19-70
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:10:19-70
 activity#com.zhihu.matisse.internal.ui.AlbumPreviewActivity
-ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:11:9-86
+ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:11:9-86
 	android:name
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:11:19-84
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:11:19-84
 activity#com.zhihu.matisse.internal.ui.SelectedPreviewActivity
-ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:12:9-89
+ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:12:9-89
 	android:name
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:12:19-87
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:12:19-87
 activity#com.zhihu.matisse.ui.ImageCropActivity
-ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:13:9-58
+ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:13:9-58
 	android:name
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml:13:19-55
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml:13:19-55
 uses-sdk
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-		ADDED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
-		INJECTED from D:\workpath\android\jiangdou\common_photo\src\main\AndroidManifest.xml
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+		ADDED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml
+		INJECTED from E:\job\jiangdou\jiangdou\common_photo\src\main\AndroidManifest.xml

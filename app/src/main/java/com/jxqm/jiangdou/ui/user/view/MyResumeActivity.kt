@@ -21,6 +21,7 @@ import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ext.isRightInput
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.UserModel
 import com.jxqm.jiangdou.ui.user.adapter.PhotoListAdapter
@@ -72,6 +73,8 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
 
     override fun initView() {
         super.initView()
+        etUserName.isRightInput()
+        etUserPhone.isRightInput()
         mPhotoLisAdapter = PhotoListAdapter(this, mPhotoList)
         mPhotoLisAdapter.setAddCallBack {
             selectHeadPhoto(9 - mPhotoList.size, 0x02)
@@ -154,7 +157,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             tvUserEducation.text = it.academic
             tvUserHeight.text = it.height
             tvUserWeight.text = it.weight
-            etUserLocation.text = it.area
+            tvUserLocation.text = it.area
 
             etPeopleIntroduce.setText(it.content)
             Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.avatar)
@@ -183,7 +186,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         paramsMap["academic"] = tvUserEducation.text.toString().trim()
         paramsMap["height"] = tvUserHeight.text.toString().trim()
         paramsMap["weight"] = tvUserWeight.text.toString().trim()
-        paramsMap["area"] = etUserLocation.text.toString().trim()
+        paramsMap["area"] = tvUserLocation.text.toString().trim()
         paramsMap["content"] = etPeopleIntroduce.text.toString().trim()
         if (TextUtils.isEmpty(paramsMap["name"])) {
             ToastUtils.toastShort("请输入姓名")
@@ -256,7 +259,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             }
             R.id.rlUserLocationParent -> {//修改出生地
                 SelectCityDialog.showDialog(this) {
-                    etUserLocation.text = it
+                    tvUserLocation.text = it
                 }
             }
         }

@@ -126,7 +126,11 @@ class MapActivity : BaseActivity() {
             }
         }
 
-        override fun onLocDiagnosticMessage(locType: Int, diagnosticType: Int, diagnosticMessage: String?) {
+        override fun onLocDiagnosticMessage(
+            locType: Int,
+            diagnosticType: Int,
+            diagnosticMessage: String?
+        ) {
             super.onLocDiagnosticMessage(locType, diagnosticType, diagnosticMessage)
             val sb = StringBuffer(256)
             sb.append("诊断结果: ")
@@ -224,6 +228,9 @@ class MapActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_map
 
     override fun initView() {
+        toolBar.setNavigationOnClickListener {
+            finish()
+        }
         initRecyclerView()
         initMap()
         initSearch()

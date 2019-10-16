@@ -17,7 +17,7 @@ import retrofit2.Call
  */
 class TokenInterceptor : Interceptor {
     private val TOKEN_KEY = "Authorization"
-    private val needTokenPathArray = arrayOf("employer","resume","employee","account")
+    private val needTokenPathArray = arrayOf("employer","resume","employee","account","search")
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = MyApplication.instance().accessToken
         LogUtils.i("请求 token:$token")
@@ -26,7 +26,8 @@ class TokenInterceptor : Interceptor {
         val pathFirst = path.split("/")[1]
         if (needTokenPathArray.contains(pathFirst)) {
             token?.let {
-                request.addHeader(TOKEN_KEY, "Bearer $token")
+                if(!TextUtils.isEmpty(it))
+                request.addHeader(TOKEN_KEY, "Bearer $it")
             }
         }
         val proceed = chain.proceed(request.build())

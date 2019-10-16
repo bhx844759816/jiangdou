@@ -207,5 +207,7 @@ class Constants {
 
         const val EVENT_MY_BUDGET_LIST ="event_my_budget_list"//收支明细
 
+        const val EVENT_SELECT_CITY = "event_select_city"
+
     }
 }

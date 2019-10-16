@@ -148,7 +148,7 @@
                             android:id="@+id/ivPeopleCardBack"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/icon_people_card_front"
+                            android:background="@drawable/icon_people_card_back"
                             android:scaleType="fitXY" />
 
                         <FrameLayout

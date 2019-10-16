@@ -1,5 +1,6 @@
 package com.jxqm.jiangdou.ui.job.view
 
+import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -36,13 +37,19 @@ class JobSearchActivity : BaseDataActivity<JobSearchViewModel>() {
         jobSearchBack.clickWithTrigger {
             finish()
         }
+        //删除历史
+        ivDeleteSearchHistory.clickWithTrigger {
+            SPUtils.put(this, Constants.SEARCH_KEY, "")
+            flHistorySearchParent.removeAllViews()
+        }
         etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val searchKey = etSearch.text.toString()
                 if (searchKey.isNotEmpty()) {
-                    writeSearchHistory(searchKey)
+
                     startActivity<JobCompanyListActivity>("SearchKey" to searchKey)
                     etSearch.hideKeyboard()
+                    writeSearchHistory(searchKey)
                     return@setOnEditorActionListener true
                 } else {
                     ToastUtils.toastShort("请输入搜索关键词")
@@ -53,6 +60,7 @@ class JobSearchActivity : BaseDataActivity<JobSearchViewModel>() {
     }
 
     override fun initData() {
+        initHistorySearch()
         mViewModel.getHotSearchList()
     }
 
@@ -102,7 +110,36 @@ class JobSearchActivity : BaseDataActivity<JobSearchViewModel>() {
      * 初始化搜索历史
      */
     private fun initHistorySearch() {
+        flHistorySearchParent.removeAllViews()
         val searchKeyContent = SPUtils.get(this, Constants.SEARCH_KEY, "") as String
+        val searchKeys = searchKeyContent.split("|")
+        searchKeys.forEach {
+            if (!TextUtils.isEmpty(it)) {
+                val textView = TextView(this)
+                val layoutParams = ViewGroup.MarginLayoutParams(
+                    ViewGroup.MarginLayoutParams.WRAP_CONTENT,
+                    ViewGroup.MarginLayoutParams.WRAP_CONTENT
+                )
+                layoutParams.rightMargin = DensityUtil.dip2px(this, 10f)
+                layoutParams.bottomMargin = DensityUtil.dip2px(this, 5f)
+                textView.setTextColor(resources.getColor(R.color.text_default))
+                textView.setBackgroundResource(R.drawable.shape_half_empty_circle_bg)
+                textView.textSize = DensityUtil.dip2px(this, 5f).toFloat()
+                textView.text = it
+                textView.setPadding(
+                    DensityUtil.dip2px(this, 20f),
+                    DensityUtil.dip2px(this, 10f),
+                    DensityUtil.dip2px(this, 20f),
+                    DensityUtil.dip2px(this, 10f)
+                )
+                textView.layoutParams = layoutParams
+                textView.clickWithTrigger {
+                    startActivity<JobCompanyListActivity>("SearchKey" to textView.text.toString().trim())
+                }
+                flHistorySearchParent.addView(textView)
+            }
+        }
+
     }
 
     /**
@@ -110,16 +147,22 @@ class JobSearchActivity : BaseDataActivity<JobSearchViewModel>() {
      */
     private fun writeSearchHistory(searchKey: String) {
         val searchKeyContent = SPUtils.get(this, Constants.SEARCH_KEY, "") as String
-        val stringBuilder = StringBuilder()
         if (searchKeyContent.isNotEmpty()) {
+            val searchKeys = searchKeyContent.split("|")
+            if (searchKeys.contains(searchKey)) {
+                return
+            }
+        }
+        val stringBuilder = StringBuilder()
+        if (searchKeyContent.isEmpty()) {
             stringBuilder.append(searchKey)
         } else {
             stringBuilder.append(searchKeyContent)
             stringBuilder.append("|")
             stringBuilder.append(searchKey)
         }
-
-
+        SPUtils.put(this, Constants.SEARCH_KEY, stringBuilder.toString())
+        initHistorySearch()
     }
 
 }
