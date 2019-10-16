@@ -41,7 +41,7 @@ public class Utils_CrashHandler implements Thread.UncaughtExceptionHandler {
         printWriter.close();
         //这里把刚才异常堆栈信息写入SD卡的Log日志里面
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            String sdcardPath = Environment.getExternalStorageDirectory().getPath() + "/benbaba/log/";
+            String sdcardPath = Environment.getExternalStorageDirectory().getPath() + "/jiangdou/log/";
             writeLog(stacktrace, sdcardPath);
         }
         mDefaultHandler.uncaughtException(t, ex);    //该代码不执行的话程序无法终止

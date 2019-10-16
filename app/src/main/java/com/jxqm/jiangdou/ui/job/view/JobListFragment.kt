@@ -10,6 +10,7 @@ import com.bhx.common.mvvm.BaseMVVMFragment
 import com.bhx.common.utils.LogUtils
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
+import com.fengchen.uistatus.listener.OnCompatRetryListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jxqm.jiangdou.MyApplication
@@ -93,6 +94,15 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
         swipeRefreshLayout.setEnableLoadMore(false)
+        mUiStatusController.onCompatRetryListener =
+            OnCompatRetryListener { p0, p1, p2, p3 ->
+                mUiStatusController.changeUiStatus(UiStatus.LOADING)
+                isRefresh = true
+                isRefresh = true
+                mSearchKey?.let {
+                    mViewModel.getSearchJobList(mParamsMap, isRefresh)
+                }
+            }
         rlScreenJob.clickWithTrigger {
             startActivity<JobScreenActivity>()
         }

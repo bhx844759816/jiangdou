@@ -4,8 +4,8 @@ def version = [:]
 version.android_gradle_plugin = "3.5.0"
 version.kotlin_version = "1.3.31"
 version.applicationId = "com.jxqm.jiangdou"
-version.versionCode = 1
-version.versionName = "1.0"
+version.versionCode = 2
+version.versionName = "1.0.1"
 version.minSdk = 17
 version.targetSdk = 29
 version.compileSdk = 29
@@ -42,6 +42,9 @@ version.smartRefresh = "2.0.0-alpha-1"
 version.gifDrawable = "1.2.17"
 version.uiStatus = "1.0.3"
 version.expandTextView="0.1.4"
+version.appUpdate = "3.5.2"
+//
+version.appUpdate_ktx = "1.2.3"
 
 deps.versions = version
 //系统库
@@ -101,5 +104,8 @@ deps.gifDrawable = "pl.droidsonroids.gif:android-gif-drawable:$version.gifDrawab
 deps.uiStatus = "com.github.FengChenSunshine:UiStatus:$version.uiStatus"
 //
 deps.expandTextView = "com.ms-square:expandableTextView:$version.expandTextView"
+//版本更新 -kotlin
+deps.appUpdate_ktx = "com.qianwen:update-app-kotlin:$version.appUpdate_ktx"
+deps.appUpdate = "com.qianwen:update-app:$version.appUpdate"
 //底部导航
 deps.bottomNavigationBar = "com.ashokvarma.android:bottom-navigation-bar:$version.bottomNavigationBar"

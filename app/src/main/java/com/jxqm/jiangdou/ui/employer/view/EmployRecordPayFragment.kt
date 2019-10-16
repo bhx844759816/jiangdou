@@ -11,6 +11,7 @@ import com.bhx.common.mvvm.BaseMVVMFragment
 import com.bhx.common.utils.LogUtils
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
+import com.fengchen.uistatus.listener.OnCompatRetryListener
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.EmployRecordPayItem
@@ -42,6 +43,13 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
         recyclerView.adapter = mAdapter
         rgSelectState.check(R.id.rbInvite)
         swipeRefreshLayout.setEnableLoadMore(false)
+
+        mUiStatusController.onCompatRetryListener =
+            OnCompatRetryListener { p0, p1, p2, p3 ->
+                mUiStatusController.changeUiStatus(UiStatus.LOADING)
+                isRefresh = true
+                getData()
+            }
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true

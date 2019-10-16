@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
+import android.text.TextUtils
+import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -13,6 +15,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import com.google.gson.Gson
 import com.jxqm.jiangdou.R
+import kotlinx.android.synthetic.main.fragment_job_work_time.*
 
 /**
  * Created By bhx On 2019/8/19 0019 09:15
@@ -38,6 +41,26 @@ fun TextView.isEnable(et: EditText, method: () -> Boolean) {
         afterTextChanged {
             textView.isEnabled = method()
         }
+    }
+}
+
+/**
+ * 判断EditText在右边输入
+ */
+fun EditText.isRightInput() {
+    gravity = Gravity.START or Gravity.CENTER_VERTICAL
+    textDirection = View.TEXT_DIRECTION_RTL
+    addTextChangedListener {
+        afterTextChanged {
+            if (TextUtils.isEmpty(it.toString())) {
+                gravity = Gravity.START or Gravity.CENTER_VERTICAL
+                textDirection = View.TEXT_DIRECTION_RTL
+            } else {
+                gravity = Gravity.END or Gravity.CENTER_VERTICAL
+                textDirection = View.TEXT_DIRECTION_LTR
+            }
+        }
+
     }
 }
 
@@ -85,7 +108,6 @@ internal fun Paint.utilReset(colorString: String? = null, @ColorInt color: Int? 
     this.style = Paint.Style.FILL
     this.strokeWidth = 0f
 }
-
 
 
 /**

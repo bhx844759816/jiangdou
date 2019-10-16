@@ -92,8 +92,8 @@
                             android:id="@+id/flCardPositiveStatusParent"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:visibility="gone"
-                            android:background="#7d1c1c1c">
+                            android:background="#7d1c1c1c"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/tvCardPositiveStatusText"
@@ -112,9 +112,9 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/select_button_bg"
+                        android:enabled="true"
                         android:gravity="center"
                         android:text="选择"
-                        android:enabled="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_default_size" />
 
@@ -148,15 +148,15 @@
                             android:id="@+id/ivPeopleCardBack"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/icon_people_card_front"
+                            android:background="@drawable/icon_people_card_back"
                             android:scaleType="fitXY" />
 
                         <FrameLayout
                             android:id="@+id/flCardBackStatusParent"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:visibility="gone"
-                            android:background="#7d1c1c1c">
+                            android:background="#7d1c1c1c"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/tvCardBackStatusText"
@@ -342,6 +342,7 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="请输入真实姓名"
+                        android:maxLength="8"
                         android:textColor="@color/text_default"
                         android:textColorHint="@color/text_hint"
                         android:textSize="@dimen/text_default_size" />
@@ -372,6 +373,9 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="请输入您的身份证号"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:maxLength="18"
                         android:textColor="@color/text_default"
                         android:textColorHint="@color/text_hint"
                         android:textSize="@dimen/text_default_size" />
@@ -402,6 +406,7 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="用于提现，账号名字请与身份证名字相同"
+                        android:maxLines="1"
                         android:textColor="@color/text_default"
                         android:textColorHint="@color/text_hint"
                         android:textSize="@dimen/text_default_size" />
@@ -432,6 +437,8 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="请输入称呼或姓名"
+                        android:maxLines="1"
+                        android:maxLength="8"
                         android:textColor="@color/text_default"
                         android:textColorHint="@color/text_hint"
                         android:textSize="@dimen/text_default_size" />
@@ -462,6 +469,8 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="请输入有效咨询联系电话"
+                        android:inputType="phone"
+                        android:maxLines="1"
                         android:textColor="@color/text_default"
                         android:textColorHint="@color/text_hint"
                         android:textSize="@dimen/text_default_size" />
@@ -474,8 +483,7 @@
         android:id="@+id/tvSubmit"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/select_button_bg"
-        android:enabled="false"
+        android:background="@drawable/shape_button_default"
         android:gravity="center"
         android:text="提交"
         android:textColor="@color/white"

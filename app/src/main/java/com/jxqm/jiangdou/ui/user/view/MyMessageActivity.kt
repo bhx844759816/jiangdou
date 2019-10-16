@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
+import com.fengchen.uistatus.listener.OnCompatRetryListener
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
@@ -90,6 +91,12 @@ class MyMessageActivity : BaseDataActivity<MyMessageViewModel>() {
             isRefresh = false
             mViewModel.getMessageList(isRefresh)
         }
+        mUiStatusController.onCompatRetryListener =
+            OnCompatRetryListener { p0, p1, p2, p3 ->
+                mUiStatusController.changeUiStatus(UiStatus.LOADING)
+                isRefresh = true
+                mViewModel.getMessageList(isRefresh)
+            }
         back.clickWithTrigger {
             finish()
         }

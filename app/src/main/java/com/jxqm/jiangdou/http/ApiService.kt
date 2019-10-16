@@ -10,6 +10,8 @@ import com.jxqm.jiangdou.ui.user.model.ResumeModel
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.Response
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.PartMap
@@ -21,6 +23,18 @@ import retrofit2.http.Multipart
  * Created by Administrator on 2019/9/8.
  */
 interface ApiService {
+
+    @GET
+    fun asyncGet(@Url url: String, @QueryMap map: Map<String, String>): Observable<ResponseBody>
+
+    @POST
+    fun asyncPost(@Url url: String, @PartMap map: MutableMap<String, RequestBody>): Observable<ResponseBody>
+
+    @GET
+    @Streaming
+    fun download(@Url url: String):Observable<ResponseBody>
+
+
     @Multipart
     @POST(Api.UPLOAD_IMG)
     fun uploadFile(@Part img: MultipartBody.Part): Observable<HttpResult<String>>
@@ -508,6 +522,8 @@ interface ApiService {
      * 获取消息列表
      */
     @GET(Api.GET_MESSAGE_LIST)
-    fun getMessageList(  @Query("pageNo") pageNo: Int,
-                             @Query("pageSize") pageSize: Int): Observable<HttpResult<PageModeWrap<MessageModel>>>
+    fun getMessageList(
+        @Query("pageNo") pageNo: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<HttpResult<PageModeWrap<MessageModel>>>
 }

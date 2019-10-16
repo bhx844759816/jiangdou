@@ -103,7 +103,8 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
         })
         registerObserver(Constants.TAG_GET_USER_INFO_SUCCESS, Boolean::class.java).observe(this, Observer {
             LiveBus.getDefault().postEvent(Constants.EVENT_KEY_MAIN_MY, Constants.TAG_MAIN_MY_LOGIN_SUCCESS, true)
-            AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
+            AppManager.getAppManager().finishActivity(LoginActivity::class.java)
+            finish()
             //发送消息到MainFragment
         })
     }

@@ -96,6 +96,37 @@
             style="@style/DividerLineTheme"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlCheckUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:text="检查更新"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_default_size" />
+
+        <TextView
+            android:id="@+id/tvCurrentVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:drawableRight="@drawable/icon_arrow_right"
+            android:drawablePadding="8dp"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_small_size" />
+
+        <View
+            style="@style/DividerLineTheme"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

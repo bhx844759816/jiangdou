@@ -5,6 +5,7 @@ import java.io.File
 import java.util.HashMap
 
 class Constants {
+
     companion object {
         val APP_SAVE_DIR =
             (Environment.getExternalStorageDirectory().absolutePath + File.separator + "jiangdou" + File.separator)
@@ -164,7 +165,7 @@ class Constants {
         const val EVENT_KEY_MY_RESUME = "event_key_my_resume"//简历详情
         const val TAG_GET_EDU_LIST_RESULT = "tag_get_edu_list_result"//获取学历列表
         const val TAG_GET_USER_RESUME_RESULT = "tag_get_user_resume_result"//获取用户简历详情
-        const val TAG_UPLOAD_RESUME_RESULT = "tag_get_user_resume_result"//上传简历结果
+        const val TAG_UPLOAD_RESUME_RESULT = "tag_upload_resume_result"//上传简历结果
 
         const val EVENT_KEY_MAIN = "event_key_main"//主界面
 

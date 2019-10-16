@@ -7,10 +7,12 @@ import android.content.pm.ActivityInfo
 import android.location.LocationManager
 import android.os.Build
 import android.provider.Settings
+import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import com.baidu.mapapi.model.LatLng
 import com.bhx.common.utils.LogUtils
+import com.bhx.common.utils.ToastUtils
 import com.bumptech.glide.Glide
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
@@ -80,7 +82,38 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
             val locationDetails = etDetailsAddress.text.toString().trim()
             //选择地区
             val locationArea = tvLocationArea.text.toString().trim()
-
+            if (mAttestationStatus == null && mSelectFile == null) {
+                ToastUtils.toastShort("请选择营业执照")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(companyName)) {
+                ToastUtils.toastShort("请输入公司名称")
+                return@clickWithTrigger
+            }
+            if (mSelectCompanyJobType == null) {
+                ToastUtils.toastShort("请选择所属行业")
+                return@clickWithTrigger
+            }
+            if (mSelectCompanyType == null) {
+                ToastUtils.toastShort("请选择企业类型")
+                return@clickWithTrigger
+            }
+            if (mSelectCompanyPeople == null) {
+                ToastUtils.toastShort("请选择人员规模")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(companyDescription) || companyDescription.length < 20) {
+                ToastUtils.toastShort("机构简介请至少输入20个字符")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(locationArea)) {
+                ToastUtils.toastShort("请选择工作地址")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(locationDetails)) {
+                ToastUtils.toastShort("请输入详细工作地址")
+                return@clickWithTrigger
+            }
             intent.apply {
                 putExtra("businessLicense", mSelectFile?.absolutePath)
                 putExtra("companyName", companyName)
@@ -94,8 +127,12 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 putExtra("selectCompanyType", mSelectCompanyType?.id.toString())
                 putExtra("selectCompanyPeople", mSelectCompanyPeople?.id.toString())
                 putExtra("selectCompanyJobType", mSelectCompanyJobType?.id.toString())
-                putExtra("locationLat", mLocationLatLng?.latitude.toString())
-                putExtra("locationLon", mLocationLatLng?.longitude.toString())
+                mLocationLatLng?.let {
+                    putExtra("locationLat", it.latitude.toString())
+                }
+                mLocationLatLng?.let {
+                    putExtra("locationLon", it.longitude.toString())
+                }
                 putExtra("AttestationStatus", mAttestationStatus?.toJson())
             }
             startActivity(intent)
@@ -142,8 +179,14 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 isNextStepEnable()
             }
         }
-        //
+        //机构简介
         etCompanyDescription.addTextChangedListener {
+            afterTextChanged {
+                isNextStepEnable()
+            }
+        }
+        //详细工作地址
+        etDetailsAddress.addTextChangedListener {
             afterTextChanged {
                 isNextStepEnable()
             }
@@ -162,19 +205,35 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
      * 是否可以点击
      */
     private fun isNextStepEnable() {
-        if (mAttestationStatus != null) {
-            tvNextStep.isEnabled = true
-            return
-        }
         val companyName = etCompanyName.text.toString().trim()
         val companyDescription = etCompanyDescription.text.toString().trim()
-        tvNextStep.isEnabled = mSelectFile != null && companyName.isNotEmpty() &&
-                companyDescription.isNotEmpty() &&
-                companyDescription.length >= 20 &&
-                mSelectCompanyType != null &&
-                mSelectCompanyPeople != null &&
-                mSelectCompanyJobType != null
+        val companyJobType = tvCompanyJobType.text.toString().trim()
+        val companyType = tvCompanyType.text.toString().trim()
+        val companyPeople = tvCompanyPeople.text.toString().trim()
+        val detailsAddress = etDetailsAddress.text.toString().trim()
+        val isCanClick =
+            ((mSelectFile != null || mAttestationStatus != null) &&
+                    companyName.isNotEmpty() &&
+                    detailsAddress.isNotEmpty() &&
+                    companyDescription.isNotEmpty() &&
+                    companyDescription.length >= 20 &&
+                    companyJobType.isNotEmpty() &&
+                    companyType.isNotEmpty() &&
+                    companyPeople.isNotEmpty())
+        if (isCanClick) {
+            tvNextStep.setBackgroundResource(R.drawable.shape_button_select)
+        } else {
+            tvNextStep.setBackgroundResource(R.drawable.shape_button_default)
+        }
     }
+
+    /**
+     * 是否可以点击下一步
+     */
+    private fun isCanClickNextStep() {
+
+    }
+
 
     /**
      * 请求sd存储权限
@@ -280,33 +339,6 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
             Observer {
                 mAttestationStatus = it
             })
-//        registerObserver(Constants.TAG_GET_COMPANY_TYPE_RESULT, List::class.java).observe(this, Observer {
-//            val list = it as List<CompanyTypeModel>
-//            mCompanyTypeList.clear()
-//            mCompanyTypeList.addAll(list)
-//            mCompanyTypeItemList.clear()
-//            mCompanyTypeList.forEach { item ->
-//                mCompanyTypeItemList.add(item.codeName)
-//            }
-//        })
-//        registerObserver(Constants.TAG_GET_COMPANY_PEOPLE_RESULT, List::class.java).observe(this, Observer {
-//            val list = it as List<CompanyTypeModel>
-//            mCompanyPeopleList.clear()
-//            mCompanyPeopleList.addAll(list)
-//            mCompanyPeopleItemList.clear()
-//            mCompanyPeopleList.forEach { item ->
-//                mCompanyPeopleItemList.add(item.codeName)
-//            }
-//        })
-//        registerObserver(Constants.TAG_GET_COMPANY_JOB_TYPE_RESULT, List::class.java).observe(this, Observer {
-//            val list = it as List<CompanyTypeModel>
-//            mCompanyJobTypeList.clear()
-//            mCompanyJobTypeList.addAll(list)
-//            mCompanyJobTypeItemList.clear()
-//            mCompanyJobTypeList.forEach { item ->
-//                mCompanyJobTypeItemList.add(item.codeName)
-//            }
-//        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -377,9 +409,16 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 }
                 2 -> {//已认证
                     tvSelectAttestationImg.isEnabled = false
+                    etCompanyName.isEnabled = false
+                    rlCompanyJobType.isEnabled = false
+                    rlCompanyType.isEnabled = false
+                    rlCompanyPeople.isEnabled = false
+                    etCompanyDescription.isEnabled = false
+                    llSelectCompanyArea.isEnabled = false
+                    etDetailsAddress.isEnabled = false
                 }
             }
-            tvNextStep.isEnabled = true
+            isNextStepEnable()
         }
     }
 

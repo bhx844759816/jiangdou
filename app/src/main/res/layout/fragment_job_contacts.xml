@@ -41,6 +41,7 @@
                 android:layout_toRightOf="@id/tvContactsTitle"
                 android:background="@null"
                 android:hint="请输您的姓名"
+                android:inputType="text"
                 android:textColor="@color/text_publish_job"
                 android:textColorHint="@color/text_light_color"
                 android:textSize="@dimen/text_default_size" />
@@ -105,6 +106,7 @@
                 android:layout_toRightOf="@id/tvContactsEmailTitle"
                 android:background="@null"
                 android:hint="请输您的邮箱"
+                android:inputType="textEmailAddress"
                 android:textColor="@color/text_publish_job"
                 android:textColorHint="@color/text_light_color"
                 android:textSize="@dimen/text_default_size" />
@@ -186,8 +188,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/select_textview_enable_bg"
-            android:enabled="false"
+            android:background="@drawable/shape_textview_enable_false_bg"
             android:gravity="center"
             android:text="@string/immediatelyPublish"
             android:textColor="@color/white" />

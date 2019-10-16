@@ -2,15 +2,19 @@ package com.jxqm.jiangdou.ui.attestation.view
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import com.bhx.common.utils.AppManager
+import com.bhx.common.utils.PhoneUtils
+import com.bhx.common.utils.ToastUtils
 import com.bumptech.glide.Glide
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.AttestationStatusModel
@@ -66,6 +70,26 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             val contacts = etContacts.text.toString().trim()//招聘联系人
             val phone = etContactsPhone.text.toString().trim()//联系人电话
             val fileMaps = mutableMapOf<String, File>() // 上传文件数组
+            if (TextUtils.isEmpty(duty)) {
+                ToastUtils.toastShort("请输入负责人")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(idCardNum) || idCardNum.length != 18) {
+                ToastUtils.toastShort("请输入正确的身份证号")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(alipay)) {
+                ToastUtils.toastShort("请输入支付宝账号")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(contacts)) {
+                ToastUtils.toastShort("请输入招聘联系人")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(phone)) {
+                ToastUtils.toastShort("请输入招聘咨询电话")
+                return@clickWithTrigger
+            }
             val paramsMaps = mutableMapOf<String, String>() //上传参数数组
             paramsMaps["duty"] = duty
             paramsMaps["tel"] = phone
@@ -137,11 +161,31 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
         tvPeopleCardBack.clickWithTrigger {
             selectImage(1, REQUEST_CODE_SELECT_IMAGE_BACK)
         }
-        tvSubmit.isEnable(etUserName) { isSubmitState() }
-        tvSubmit.isEnable(etIdNum) { isSubmitState() }
-        tvSubmit.isEnable(etPayNumber) { isSubmitState() }
-        tvSubmit.isEnable(etContacts) { isSubmitState() }
-        tvSubmit.isEnable(etContactsPhone) { isSubmitState() }
+        etUserName.addTextChangedListener {
+            afterTextChanged {
+                isSubmitState()
+            }
+        }
+        etIdNum.addTextChangedListener {
+            afterTextChanged {
+                isSubmitState()
+            }
+        }
+        etPayNumber.addTextChangedListener {
+            afterTextChanged {
+                isSubmitState()
+            }
+        }
+        etContacts.addTextChangedListener {
+            afterTextChanged {
+                isSubmitState()
+            }
+        }
+        etContactsPhone.addTextChangedListener {
+            afterTextChanged {
+                isSubmitState()
+            }
+        }
     }
 
     override fun initData() {
@@ -189,7 +233,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             etIdNum.setText(it.idcard)
             etPayNumber.setText(it.alipay)
             etContactsPhone.setText(it.tel)
-            tvSubmit.isEnabled = true
+            isSubmitState()
         }
     }
 
@@ -222,8 +266,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
         Glide.with(this)
             .load(if (isFront) mIdFrontImgFile else mIdBackImgFile)
             .into(if (isFront) ivPeopleCardPositive else ivPeopleCardBack)
-        tvSubmit.isEnabled = isSubmitState()
-
+        isSubmitState()
     }
 
     /**
@@ -248,21 +291,35 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
     /**
      * 是否是提交状态
      */
-    private fun isSubmitState(): Boolean {
-        return (mIdFrontImgFile != null || mAttestationStatus != null) &&
+    private fun isSubmitState() {
+        val userName = etUserName.text.toString().trim()
+        val peopleCard = etIdNum.text.toString().trim()
+        val payNum = etPayNumber.text.toString().trim()
+        val contacts = etContacts.text.toString().trim()
+        val phone = etContactsPhone.text.toString().trim()
+        val isCanClick = (mIdFrontImgFile != null || mAttestationStatus != null) &&
                 (mIdBackImgFile != null || mAttestationStatus != null) &&
-                etUserName.text.toString().trim().isNotEmpty() &&
-                etIdNum.text.toString().trim().isNotEmpty() &&
-                etPayNumber.text.toString().trim().isNotEmpty() &&
-                etContacts.text.toString().trim().isNotEmpty() &&
-                etContactsPhone.text.toString().trim().isNotEmpty()
+                userName.isNotEmpty() &&
+                peopleCard.isNotEmpty() &&
+                peopleCard.length == 18 &&
+                payNum.isNotEmpty() &&
+                contacts.isNotEmpty() &&
+                phone.isNotEmpty()
+        if (isCanClick) {
+            tvSubmit.setBackgroundResource(R.drawable.shape_button_select)
+        } else {
+            tvSubmit.setBackgroundResource(R.drawable.shape_button_default)
+        }
     }
 
     /**
      *
      */
     override fun dataObserver() {
-        registerObserver(Constants.TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS, Boolean::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS,
+            Boolean::class.java
+        ).observe(this, Observer {
             AttestationSuccessDialog.show(this@PeopleAttestationActivity) {
                 AppManager.getAppManager().finishActivity(CompanyAttestationActivity::class.java)
                 finish()

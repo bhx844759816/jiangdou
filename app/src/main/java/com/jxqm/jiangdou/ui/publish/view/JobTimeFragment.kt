@@ -2,7 +2,9 @@ package com.jxqm.jiangdou.ui.publish.view
 
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -14,12 +16,15 @@ import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.DateUtils
 import com.bhx.common.utils.DensityUtil
 import com.bhx.common.utils.LogUtils
+import com.bhx.common.utils.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.haibin.calendarview.Calendar
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ext.isEnable
+import com.jxqm.jiangdou.ext.isRightInput
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
 import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -52,13 +57,30 @@ class JobTimeFragment : BaseLazyFragment() {
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
         initStatus()
+        etPayMoney.isRightInput()
         tvNextStep.clickWithTrigger {
+            val salary = etPayMoney.text.toString().trim()
+            if (mRangeCalendarList.isEmpty()) {
+                ToastUtils.toastShort("请选择工作日期")
+                return@clickWithTrigger
+            }
+            if (mRangeTimeList.isEmpty()) {
+                ToastUtils.toastShort("请选择工作时段")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(salary) || salary.toInt() <= 0) {
+                ToastUtils.toastShort("请至少输入一个豆币的工资")
+                return@clickWithTrigger
+            }
             //发送选择的日期区间和时间区间以及工资 [2019-9-13,]
             val params = mutableMapOf<String, String>()
             val dataArray = arrayListOf<String>()
             val timeArray = arrayListOf<TimeRangeModel>()
-            mRangeCalendarList.forEach{calendar->
-                val time = "${calendar.year}-${operateDate(calendar.month.toString())}-${operateDate(calendar.day.toString())}"
+            mRangeCalendarList.forEach { calendar ->
+                val time =
+                    "${calendar.year}-${operateDate(calendar.month.toString())}-${operateDate(
+                        calendar.day.toString()
+                    )}"
                 dataArray.add(time)
             }
             for (i in 0 until mRangeTimeList.size step 2) {
@@ -67,7 +89,7 @@ class JobTimeFragment : BaseLazyFragment() {
             }
             params["datesJson"] = mGson.toJson(dataArray)
             params["timesJson"] = mGson.toJson(timeArray)
-            params["salary"] = etPayMoney.text.toString().trim()
+            params["salary"] = salary
             LiveBus.getDefault()
                 .postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_TIME, params)
             mCallback?.jobTimeNextStep()
@@ -82,7 +104,7 @@ class JobTimeFragment : BaseLazyFragment() {
                 isNextStepState()
             }
         }
-        tvNextStep.isEnable(etPayMoney) { isNextStepState() }
+        //选择时间段
         tvSelectTimeRange.clickWithTrigger {
             SelectTimeRangeDialog.show(activity!!) { start, end ->
                 mRangeTimeList.add(start)
@@ -91,9 +113,15 @@ class JobTimeFragment : BaseLazyFragment() {
                 isNextStepState()
             }
         }
+        //付的钱
+        etPayMoney.addTextChangedListener {
+            afterTextChanged {
+                isNextStepState()
+            }
+        }
     }
 
-    private fun operateRangeDateList(){
+    private fun operateRangeDateList() {
         mRangeDateList.clear()
         mRangeCalendarList.forEachIndexed { index, calendar ->
             if (index == 0) {
@@ -148,7 +176,7 @@ class JobTimeFragment : BaseLazyFragment() {
             }
             mRangeDateList.clear()
             mRangeCalendarList.clear()
-            listDates.forEach {date->
+            listDates.forEach { date ->
                 val calendar = Calendar()
                 val endDates = date.split("-")
                 calendar.year = endDates[0].toInt()
@@ -229,11 +257,15 @@ class JobTimeFragment : BaseLazyFragment() {
     /**
      * 下一步是否可以被点击
      */
-    private fun isNextStepState(): Boolean {
+    private fun isNextStepState() {
+        val salary = etPayMoney.text.toString()
         val isEnable = mRangeDateList.isNotEmpty() && mRangeTimeList.isNotEmpty()
-                && etPayMoney.text.toString().isNotEmpty()
-        tvNextStep.isEnabled = isEnable
-        return isEnable
+                && salary.isNotEmpty()
+        if (isEnable) {
+            tvNextStep.setBackgroundResource(R.drawable.shape_button_select)
+        } else {
+            tvNextStep.setBackgroundResource(R.drawable.shape_button_default)
+        }
     }
 
     private fun addTimeRange(startTime: String, endTime: String) {

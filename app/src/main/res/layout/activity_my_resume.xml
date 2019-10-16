@@ -57,16 +57,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
+                android:background="#C1D1FD"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:background="#C1D1FD"
-                android:textColor="@color/job_top_title_color"
-                android:textSize="@dimen/text_small_size"
                 android:text="*为必填项，简历越完善，录用率越高哦"
-                />
+                android:textColor="@color/job_top_title_color"
+                android:textSize="@dimen/text_small_size" />
+
             <RelativeLayout
                 android:id="@+id/rlHeadPhotoParent"
                 android:layout_width="match_parent"
@@ -93,9 +94,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@color/white"
+                android:clipToPadding="false"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:clipToPadding="false"
                 android:padding="15dp">
 
                 <TextView
@@ -105,14 +106,14 @@
                     android:text="@string/userName"
                     android:textColor="@color/text_default"
                     android:textSize="@dimen/text_default_size" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="-5dp"
                     android:layout_toRightOf="@id/tvUserNameTitle"
-                    />
+                    android:text="*" />
 
                 <EditText
                     android:id="@+id/etUserName"
@@ -155,14 +156,15 @@
                     android:text="@string/userSex"
                     android:textColor="@color/text_default"
                     android:textSize="@dimen/text_default_size" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="-5dp"
                     android:layout_toRightOf="@id/tvSexParent"
-                    />
+                    android:text="*" />
+
                 <TextView
                     android:id="@+id/tvUserSex"
                     android:layout_width="wrap_content"
@@ -201,14 +203,15 @@
                     android:text="生年月日"
                     android:textColor="@color/text_default"
                     android:textSize="@dimen/text_default_size" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="-5dp"
                     android:layout_toRightOf="@id/tvUserBirthdayTitle"
-                    />
+                    android:text="*" />
+
                 <TextView
                     android:id="@+id/tvUserBirthday"
                     android:layout_width="wrap_content"
@@ -287,14 +290,15 @@
                     android:text="联系电话"
                     android:textColor="@color/text_default"
                     android:textSize="@dimen/text_default_size" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="-5dp"
                     android:layout_toRightOf="@id/tvUserPhoneTitle"
-                    />
+                    android:text="*" />
+
                 <EditText
                     android:id="@+id/etUserPhone"
                     android:layout_width="wrap_content"

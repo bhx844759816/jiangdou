@@ -97,7 +97,6 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
             intent.putExtra("ScreenResult", mScreenResult)
             startActivityForResult(intent, REQUEST_CODE_JOB_SCREEN)
         }
-
         aboutUsBack.clickWithTrigger {
             finish()
         }

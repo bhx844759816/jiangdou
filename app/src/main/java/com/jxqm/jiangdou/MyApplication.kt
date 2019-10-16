@@ -19,6 +19,7 @@ import com.jxqm.jiangdou.model.TokenModel
 import com.jxqm.jiangdou.model.UserModel
 import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.model.LocationModel
+import com.jxqm.jiangdou.utils.Utils_CrashHandler
 import com.jxqm.jiangdou.view.refresh.BaseRefreshFooter
 import com.jxqm.jiangdou.view.refresh.BaseRefreshHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -115,6 +116,8 @@ class MyApplication : BaseApplication() {
 //        Utils_CrashHandler.getInstance().init(this)
         //百度地图初始化
         SDKInitializer.initialize(this)
+        //保存报错日志
+        Utils_CrashHandler.getInstance().init(instance)
     }
 
     fun saveToken(it: TokenModel) {

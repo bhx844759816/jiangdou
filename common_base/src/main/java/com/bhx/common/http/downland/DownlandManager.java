@@ -31,6 +31,18 @@ public class DownlandManager {
         return apiService.downland(url).flatMap(responseBody -> Observable.create(new DownlandFileObservable(responseBody, fileInfo)));
     }
 
+    public static void init(String baseUrl){
+        if (apiService == null) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .build();
+            Retrofit manager = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .client(client)
+                    .build();
+            apiService = manager.create(ApiService.class);
+        }
+    }
     private static void createApiService() {
         if (apiService == null) {
             OkHttpClient client = new OkHttpClient.Builder()

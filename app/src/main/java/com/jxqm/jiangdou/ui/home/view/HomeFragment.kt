@@ -19,14 +19,18 @@ import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.geocode.GeoCoder
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption
 import com.bhx.common.mvvm.BaseMVVMFragment
+import com.bhx.common.utils.FileUtils
 import com.bhx.common.utils.LogUtils
+import com.bhx.common.utils.Utils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.model.JobDetailsModel
-import com.jxqm.jiangdou.model.JobTypeModel
-import com.jxqm.jiangdou.model.LocationModel
-import com.jxqm.jiangdou.model.SwpierModel
+import com.jxqm.jiangdou.http.Api
+import com.jxqm.jiangdou.http.AppUpdateManager
+import com.jxqm.jiangdou.http.HttpResult
+import com.jxqm.jiangdou.model.*
 import com.jxqm.jiangdou.ui.attestation.view.CompanyAttestationActivity
 import com.jxqm.jiangdou.ui.city.SelectCity
 import com.jxqm.jiangdou.ui.home.adapter.HomeAdapter
@@ -38,6 +42,9 @@ import com.jxqm.jiangdou.ui.map.MapActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.vector.update_app.UpdateAppBean
+import com.vector.update_app_kotlin.check
+import com.vector.update_app_kotlin.updateApp
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -125,6 +132,7 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             mHomeModelList.add(HomeJobHelpModel())
             mHomeModelList.add(HomeJobDetailsTitleModel())
             mAdapter.updateDatas(mHomeModelList)
+            checkAppUpdate()
         })
         //获取推荐兼职列表J
         registerObserver(Constants.TAG_GET_HOME_RECOMMEND_LIST, List::class.java).observe(
@@ -165,24 +173,51 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             .subscribe { aBoolean ->
                 if (aBoolean!!) {
                     startLocation()
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                        val locManager =
-//                            mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-//                        if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//                            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-//                            startActivityForResult(
-//                                intent,
-//                                REQUEST_CODE_LOCATION_SETTING
-//                            ) // 设置完成后返回到原来的界面
-//                        } else {
-//
-//                        }
-//                    }
                 }
             }
-
     }
-
+    private fun checkAppUpdate() {
+        /**
+         * 更新app版本
+         */
+        activity?.updateApp(Api.HTTP_BASE_URL + Api.GET_APP_UPDATE, AppUpdateManager())
+        {
+            isPost = false
+            themeColor = 0xff82A2FE.toInt()
+            hideDialogOnDownloading()
+        }?.check {
+            parseJson {
+                val response = it
+                val appUpdateModel = Gson().fromJson<HttpResult<AppUpdateModel>>(
+                    response!!,
+                    object : TypeToken<HttpResult<AppUpdateModel>>() {
+                    }.type
+                )
+                if (appUpdateModel.code == "0") {
+                    val localVersionCode = Utils.getLocalVersion(mContext)
+                    val isNeedUpdate = if (appUpdateModel.data.versionCode > localVersionCode)
+                        "Yes" else "no"
+                    UpdateAppBean()
+                        .setUpdate(isNeedUpdate)
+                        //（必须）新版本号，
+                        .setNewVersion(appUpdateModel.data.versionName)
+                        //（必须）下载地址
+                        .setApkFileUrl(appUpdateModel.data.downloadUrl)
+                        //（必须）更新内容
+                        .setUpdateLog(appUpdateModel.data.modifyContent)
+                        //大小，不设置不显示大小，可以不设置
+                        .setTargetSize(appUpdateModel.data.apkSize)
+                        //是否强制更新，可以不设置
+                        .setConstraint(false)
+                        //设置md5，可以不设置
+                        .setNewMd5(appUpdateModel.data.apkMd5)
+                } else {
+                    UpdateAppBean()
+                        .setUpdate("no")
+                }
+            }
+        }
+    }
     /**
      * 开始定位
      */

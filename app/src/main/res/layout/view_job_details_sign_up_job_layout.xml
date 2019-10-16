@@ -30,6 +30,7 @@
         android:background="@color/divider_line" />
 
     <RelativeLayout
+        android:id="@+id/rlCollection"
         android:layout_width="74dp"
         android:layout_height="match_parent">
 
@@ -43,6 +44,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="收藏"
+            android:clickable="false"
             android:checked="false"
             android:textColor="@color/select_collection_checkbox_textcolor"
             android:textSize="@dimen/text_small_size" />

@@ -24,7 +24,20 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_job_details.*
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.core.content.ContextCompat.getSystemService
+import com.bhx.common.utils.FileUtils
+import com.bhx.common.utils.Utils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.jxqm.jiangdou.http.Api
+import com.jxqm.jiangdou.http.AppUpdateManager
+import com.jxqm.jiangdou.http.HttpResult
+import com.jxqm.jiangdou.model.AppUpdateModel
 import com.jxqm.jiangdou.ui.login.view.LoadingActivity
+import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
+import com.jxqm.jiangdou.view.dialog.LoadingDialog
+import com.vector.update_app.UpdateAppBean
+import com.vector.update_app_kotlin.check
+import com.vector.update_app_kotlin.updateApp
 
 
 /**
@@ -47,6 +60,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
         mListFragment.add(WorkFragment())
         mListFragment.add(MyFragment())
         myViewPage.offscreenPageLimit = 3
+
         myViewPage.adapter = MyPageAdapter(supportFragmentManager)
         myBottomNavigationBar.setTabSelectedListener(object :
             BottomNavigationBar.OnTabSelectedListener {
@@ -76,10 +90,54 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
         })
     }
 
+    private fun checkAppUpdate() {
+        /**
+         * 更新app版本
+         */
+        updateApp(Api.HTTP_BASE_URL + Api.GET_APP_UPDATE, AppUpdateManager())
+        {
+            isPost = false
+            themeColor = 0xff82A2FE.toInt()
+            hideDialogOnDownloading()
+        }.check {
+            parseJson {
+                val response = it
+                val appUpdateModel = Gson().fromJson<HttpResult<AppUpdateModel>>(
+                    response!!,
+                    object : TypeToken<HttpResult<AppUpdateModel>>() {
+                    }.type
+                )
+                if (appUpdateModel.code == "0") {
+                    val localVersionCode = Utils.getLocalVersion(this@MainActivity)
+                    val isNeedUpdate = if (appUpdateModel.data.versionCode > localVersionCode)
+                        "Yes" else "no"
+                    UpdateAppBean()
+                        .setUpdate(isNeedUpdate)
+                        //（必须）新版本号，
+                        .setNewVersion(appUpdateModel.data.versionName)
+                        //（必须）下载地址
+                        .setApkFileUrl(appUpdateModel.data.downloadUrl)
+                        //（必须）更新内容
+                        .setUpdateLog(appUpdateModel.data.modifyContent)
+                        //大小，不设置不显示大小，可以不设置
+                        .setTargetSize(FileUtils.formatFileSize(appUpdateModel.data.apkSize.toLong()))
+                        //是否强制更新，可以不设置
+                        .setConstraint(false)
+                        //设置md5，可以不设置
+                        .setNewMd5(appUpdateModel.data.apkMd5)
+                } else {
+                    UpdateAppBean()
+                        .setUpdate("no")
+                }
+            }
+        }
+    }
+
     inner class MyPageAdapter(fragmentManager: FragmentManager) :
         FragmentPagerAdapter(fragmentManager) {
         override fun getItem(position: Int): Fragment = mListFragment[position]
         override fun getCount(): Int = mListFragment.size
+
     }
 
     override fun protectApp() {

@@ -2,13 +2,16 @@ package com.jxqm.jiangdou.ui.publish.view
 
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.PhoneUtils
+import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
 import com.jxqm.jiangdou.model.AttestationStatusModel
@@ -36,6 +39,21 @@ class JobContactsFragment : BaseLazyFragment() {
         initStatus()
         //发布兼职
         tvImmediatelyPublish.clickWithTrigger {
+            val contact = etContacts.text.toString().trim()
+            val tel = etContactsPhone.text.toString().trim()
+            val email = etContactsEmail.text.toString().trim()
+            if (TextUtils.isEmpty(contact)) {
+                ToastUtils.toastShort("请输入联系人姓名")
+                return@clickWithTrigger
+            }
+            if (!PhoneUtils.isMobile(tel)) {
+                ToastUtils.toastShort("请输入正确的手机号")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(email)) {
+                ToastUtils.toastShort("请输入邮箱地址")
+                return@clickWithTrigger
+            }
             LiveBus.getDefault().postEvent(
                 Constants.EVENT_KEY_JOB_PUBLISH,
                 Constants.TAG_PUBLISH_JOB_EMPLOYER_PUBLISH, createParams()
@@ -48,10 +66,21 @@ class JobContactsFragment : BaseLazyFragment() {
                 Constants.TAG_PUBLISH_JOB_EMPLOYER_PREVIEW, createParams()
             )
         }
-        tvImmediatelyPublish.isEnable(etContacts) { isPublishState() }
-        tvImmediatelyPublish.isEnable(etContactsPhone) { isPublishState() }
-        tvImmediatelyPublish.isEnable(etContactsEmail) { isPublishState() }
-
+        etContacts.addTextChangedListener {
+            afterTextChanged {
+                isPublishState()
+            }
+        }
+        etContactsPhone.addTextChangedListener {
+            afterTextChanged {
+                isPublishState()
+            }
+        }
+        etContactsEmail.addTextChangedListener {
+            afterTextChanged {
+                isPublishState()
+            }
+        }
     }
 
     /**
@@ -70,7 +99,7 @@ class JobContactsFragment : BaseLazyFragment() {
             etContacts.setText(model.contact)
             etContactsPhone.setText(model.tel)
             etContactsEmail.setText(model.email)
-            tvImmediatelyPublish.isEnabled = isPublishState()
+            isPublishState()
         }
     }
 
@@ -82,9 +111,14 @@ class JobContactsFragment : BaseLazyFragment() {
         return params
     }
 
-    private fun isPublishState(): Boolean {
-        return etContacts.text.isNotEmpty() &&
+    private fun isPublishState() {
+        val isCanClick = etContacts.text.isNotEmpty() &&
                 PhoneUtils.isMobile(etContactsPhone.text.toString().trim()) &&
                 etContactsEmail.text.isNotEmpty()
+        if (isCanClick) {
+            tvImmediatelyPublish.setBackgroundResource(R.drawable.shape_textview_enable_true_bg)
+        } else {
+            tvImmediatelyPublish.setBackgroundResource(R.drawable.shape_textview_enable_false_bg)
+        }
     }
 }

@@ -135,6 +135,7 @@
                     android:background="@null"
                     android:hint="请输入营业执照上全称"
                     android:textColor="@color/text_default"
+                    android:maxLines="1"
                     android:textColorHint="@color/text_hint"
                     android:textSize="@dimen/text_small_size" />
             </LinearLayout>
@@ -170,6 +171,7 @@
                         android:drawablePadding="8dp"
                         android:gravity="end"
                         android:hint="请选择所属行业"
+                        android:maxLines="1"
                         android:textColor="@color/text_publish_sex"
                         android:textColorHint="@color/text_hint"
                         android:textSize="@dimen/text_small_size" />
@@ -266,6 +268,7 @@
                         android:layout_toRightOf="@id/companyIntroduce"
                         android:background="@null"
                         android:gravity="top"
+                        android:minEms="20"
                         android:hint="请输入20-200字之间的企业简介"
                         android:paddingLeft="8dp"
                         android:textColor="@color/text_default"
@@ -345,8 +348,7 @@
         android:id="@+id/tvNextStep"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/select_button_bg"
-        android:enabled="false"
+        android:background="@drawable/shape_button_default"
         android:gravity="center"
         android:text="下一步(1/2)"
         android:textColor="@color/white"

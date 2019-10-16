@@ -29,15 +29,18 @@ import kotlinx.android.synthetic.main.activity_job_details.tvRecruitPeoples
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.haibin.calendarview.Calendar
+import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.job.vm.JobDetailsViewModel
+import com.jxqm.jiangdou.ui.login.view.LoginActivity
 import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
 import com.jxqm.jiangdou.ui.user.view.MyResumeActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -56,11 +59,11 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
     private var tvSignUp: TextView? = null
     private var tvConsult: TextView? = null //咨询
     private var tvCollection: CheckBox? = null//收藏
+    private var rlCollection: RelativeLayout? = null//收藏
     private val mGson = Gson()
     private var mJobDetailsModel: JobDetailsModel? = null
 
     override fun getLayoutId(): Int = R.layout.activity_job_details
-
 
     override fun initView() {
         super.initView()
@@ -100,17 +103,29 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
                 tvSignUp = parent.findViewById(R.id.tvSignUp)
                 tvConsult = parent.findViewById(R.id.tvConsult)
                 tvCollection = parent.findViewById(R.id.tvCollection)
+                rlCollection = parent.findViewById(R.id.rlCollection)
                 tvSignUp?.clickWithTrigger {
+                    if (MyApplication.instance().userModel == null) {
+                        startActivity<LoginActivity>()
+                        return@clickWithTrigger
+                    }
                     mViewModel.signUpJob(mJobDetailsModel!!.id.toString())
                 }
-                tvCollection?.setOnCheckedChangeListener { _, isChecked ->
-                    tvCollection?.text = if (isChecked) "已收藏" else "收藏"
-                    if (isChecked) {
-                        mViewModel.collectionJob(mJobDetailsModel!!.id.toString())
-                    } else {
+                //点击收藏
+                rlCollection?.clickWithTrigger {
+                    if (MyApplication.instance().userModel == null) {
+                        startActivity<LoginActivity>()
+                        tvCollection?.isChecked = tvCollection?.isChecked ?: true
+                        return@clickWithTrigger
+                    }
+                    val isCollection = tvCollection?.isChecked ?: true
+                    if (isCollection) {
                         mViewModel.cancelCollectionJob(mJobDetailsModel!!.id.toString())
+                    } else {
+                        mViewModel.collectionJob(mJobDetailsModel!!.id.toString())
                     }
                 }
+
             }
             STATUS_PAY_DEPOSIT -> {//支付押金
                 val parent = vsPayDepositJob.inflate() as LinearLayout
@@ -173,14 +188,11 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             Observer {
                 startActivity<MyResumeActivity>()
             })
+        //收藏返回
         registerObserver(Constants.TAG_COLLECTION_STATUS_CHANGE, Boolean::class.java).observe(this,
             Observer {
-                if (it) {
-                    ToastUtils.toastShort("收藏成功")
-                } else {
-                    ToastUtils.toastShort("取消收藏成功")
-
-                }
+                tvCollection?.text = if (it) "已收藏" else "收藏"
+                tvCollection?.isChecked = it
             })
     }
 
@@ -282,7 +294,7 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             val flTimeRangeParent = view.findViewById<FlowLayout>(R.id.flTimeRangeParent)
             tvStartDate.text = startData
             tvEndDate.text = endData
-            times.forEach {timeRangeModel->
+            times.forEach { timeRangeModel ->
                 addTimeRange(flTimeRangeParent, timeRangeModel)
             }
             llDateParent.addView(view)

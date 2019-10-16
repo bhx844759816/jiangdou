@@ -5,16 +5,14 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.mvvm.BaseMVVMActivity
-import com.bhx.common.utils.DateUtils
-import com.bhx.common.utils.DensityUtil
-import com.bhx.common.utils.LogUtils
-import com.bhx.common.utils.ToastUtils
+import com.bhx.common.utils.*
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
@@ -66,6 +64,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
     private var mPhotoFile: File? = null
     private var mResumeModel: ResumeModel? = null
     private val mPhotoList = mutableListOf<Any>()
+    private var mSex: Int = 2
 
     override fun getLayoutId(): Int = R.layout.activity_my_resume
     override fun getEventKey(): Any = Constants.EVENT_KEY_MY_RESUME
@@ -177,7 +176,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         val paramsMap = mutableMapOf<String, String>()
         paramsMap["id"] = mResumeModel!!.id
         paramsMap["name"] = etUserName.text.toString().trim()
-        paramsMap["gender"] = tvUserSex.text.toString().trim()
+        paramsMap["genderCode"] = mSex.toString()
         paramsMap["birthday"] = tvUserBirthday.text.toString().trim()
         paramsMap["star"] = tvUserAgeStar.text.toString().trim().split("/")[1]
         paramsMap["tel"] = etUserPhone.text.toString().trim()
@@ -186,6 +185,23 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
         paramsMap["weight"] = tvUserWeight.text.toString().trim()
         paramsMap["area"] = etUserLocation.text.toString().trim()
         paramsMap["content"] = etPeopleIntroduce.text.toString().trim()
+        if (TextUtils.isEmpty(paramsMap["name"])) {
+            ToastUtils.toastShort("请输入姓名")
+            return
+        }
+        if (paramsMap["gender"] == "2") {
+            ToastUtils.toastShort("请选择性别")
+            return
+        }
+        if (TextUtils.isEmpty(paramsMap["birthday"])) {
+            ToastUtils.toastShort("请选择出生年月")
+            return
+        }
+        if (!PhoneUtils.isMobile(paramsMap["tel"])) {
+            ToastUtils.toastShort("请输入正确的手机号")
+            return
+        }
+
         //头像
         val fileMap = mutableMapOf<String, File>()
         if (mPhotoFile != null) {
@@ -213,6 +229,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             }
             R.id.rlUserSexParent -> { //修改性别
                 SingleSelectDialog.show(this, mSexList) {
+                    mSex = it
                     tvUserSex.text = mSexList[it]
                 }
             }
@@ -361,15 +378,16 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
      * 处理选择图片的回调
      */
     private fun handlePhoto(paths: List<String>) {
-        val disposable = Observable.create(ObservableOnSubscribe<Any> {
-            paths.forEach { path ->
-                val file =
-                    CompressHelper.getDefault(this).compressToFile(FileUtil.getFileByPath(path))
-                mPhotoList.add(file)
-            }
-            it.onNext(Any())
-            it.onComplete()
-        })
+        val disposable = Observable.create(
+            ObservableOnSubscribe<Any> {
+                paths.forEach { path ->
+                    val file =
+                        CompressHelper.getDefault(this).compressToFile(FileUtil.getFileByPath(path))
+                    mPhotoList.add(file)
+                }
+                it.onNext(Any())
+                it.onComplete()
+            })
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .unsubscribeOn(Schedulers.io())

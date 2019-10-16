@@ -180,8 +180,7 @@ class JobPublishListAdapter(context: Context, type: Int) :
                             object : TypeToken<List<String>>() {
                             }.type
                         )
-                    tvSingUpTime.text =
-                        "${operationData(listDates[0])}-${operationData(listDates[1])} "
+                    tvSingUpTime.text = "${operationData(listDates.first())}-${operationData(listDates.last())} "
                     tvEmployeeCity.text = jobDetailsModel.city
                     tvEmployeeArea.text = jobDetailsModel.area
                     tvEmployeePeopleCounts.text = "${jobDetailsModel.recruitNum}人"

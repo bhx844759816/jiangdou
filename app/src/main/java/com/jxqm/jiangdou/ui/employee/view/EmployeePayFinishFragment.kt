@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
+import com.fengchen.uistatus.listener.OnCompatRetryListener
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.JobEmployeeModel
@@ -70,7 +71,11 @@ class EmployeePayFinishFragment : BaseMVVMFragment<EmployeePayFinishViewModel>()
         mAdapter.mRefuseCallBack = {
             mViewModel.refuseSettle(it)
         }
-
+        mUiStatusController.onCompatRetryListener =
+            OnCompatRetryListener { p0, p1, p2, p3 ->
+                mUiStatusController.changeUiStatus(UiStatus.LOADING)
+                mViewModel.getEmployeeSettleList()
+            }
     }
 
     override fun onFirstUserVisible() {

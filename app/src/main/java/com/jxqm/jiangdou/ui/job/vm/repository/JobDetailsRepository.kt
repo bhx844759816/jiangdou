@@ -1,5 +1,7 @@
 package com.jxqm.jiangdou.ui.job.vm.repository
 
+import com.bhx.common.event.LiveBus
+import com.bhx.common.http.ApiException
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.*
 import com.jxqm.jiangdou.model.AttestationStatusModel
@@ -30,9 +32,11 @@ class JobDetailsRepository : BaseEventRepository() {
                             Constants.TAG_SIGN_UP_RESUME_NOT_EXIST,
                             false
                         )
+                    }else{
+                        LiveBus.getDefault().postEvent(Constants.EVENT_KEY_HTTP_REQUEST_ERROR, Constants.TAG_HTTP_REQUEST_ERROR,  ApiException(it.code.toInt(), it.message))
                     }
                 }, {
-
+                    LiveBus.getDefault().postEvent(Constants.EVENT_KEY_HTTP_REQUEST_ERROR, Constants.TAG_HTTP_REQUEST_ERROR, it)
                 })
         )
     }

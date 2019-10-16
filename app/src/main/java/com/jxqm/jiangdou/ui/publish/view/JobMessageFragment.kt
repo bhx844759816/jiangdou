@@ -3,10 +3,12 @@ package com.jxqm.jiangdou.ui.publish.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import com.baidu.mapapi.model.LatLng
 import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.event.LiveBus
+import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.addTextChangedListener
@@ -41,17 +43,41 @@ class JobMessageFragment : BaseLazyFragment() {
 
     override fun getLayoutId(): Int = R.layout.fragment_job_message
 
-
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
 
         tvNextStep.clickWithTrigger {
-            mParams["title"] = tvJopTitleContent.text.toString().trim() //兼职标题
-            mParams["content"] = tvJopDescriptionContent.text.toString().trim()//兼职描述
+            val title = tvJopTitleContent.text.toString().trim()
+            val content = tvJopDescriptionContent.text.toString().trim()
+            val recruitNum = etWorkPeopleNum.text.toString().trim()
+            val address = tvLocationArea.text.toString().trim()
+            val addressDetail = etDetailAddress.text.toString().trim()
+            if (TextUtils.isEmpty(title)) {
+                ToastUtils.toastShort("请输入兼职标题")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(content) || content.length < 20) {
+                ToastUtils.toastShort("兼职描述请至少输入20个字符")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(recruitNum) || recruitNum.toInt() == 0) {
+                ToastUtils.toastShort("招聘人数至少一人")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(address)) {
+                ToastUtils.toastShort("请选择工作地点")
+                return@clickWithTrigger
+            }
+            if (TextUtils.isEmpty(addressDetail)) {
+                ToastUtils.toastShort("请输入详细工作地点")
+                return@clickWithTrigger
+            }
+            mParams["title"] = title//兼职标题
+            mParams["content"] = content//兼职描述
             mParams["gender"] = mSex.toString()
-            mParams["recruitNum"] = etWorkPeopleNum.text.toString().trim()//招聘人数
-            mParams["address"] = tvLocationArea.text.toString().trim() //定位地点
-            mParams["addressDetail"] = etDetailAddress.text.toString().trim()//详细地址
+            mParams["recruitNum"] = recruitNum//招聘人数
+            mParams["address"] = address //定位地点
+            mParams["addressDetail"] = addressDetail//详细地址
             mLocationArea?.let {
                 mParams["area"] = it //区
             }
@@ -95,16 +121,31 @@ class JobMessageFragment : BaseLazyFragment() {
             }
         }
         //点击定位
-        tvLocationArea.clickWithTrigger {
+        llLocationArea.clickWithTrigger {
             val intent = Intent(mContext, MapActivity::class.java)
             startActivityForResult(intent, REQUEST_CODE_SELECT_AREA)
         }
         //判断下一步是否可以被点击
-        tvNextStep.isEnable(tvJopTitleContent) { isNetStepState() }
-        tvNextStep.isEnable(tvJopDescriptionContent) { isNetStepState() }
-        tvNextStep.isEnable(etWorkPeopleNum) { isNetStepState() }
-        tvNextStep.isEnable(etDetailAddress) { isNetStepState() }
-
+        tvJopTitleContent.addTextChangedListener {
+            afterTextChanged {
+                isNextStepStates()
+            }
+        }
+        tvJopDescriptionContent.addTextChangedListener {
+            afterTextChanged {
+                isNextStepStates()
+            }
+        }
+        etWorkPeopleNum.addTextChangedListener {
+            afterTextChanged {
+                isNextStepStates()
+            }
+        }
+        etDetailAddress.addTextChangedListener {
+            afterTextChanged {
+                isNextStepStates()
+            }
+        }
         initStatus()
     }
 
@@ -121,14 +162,18 @@ class JobMessageFragment : BaseLazyFragment() {
         }
     }
 
-    private fun isNetStepState(): Boolean {
-        return tvLocationArea.text.isNotEmpty() &&
+    private fun isNextStepStates() {
+        val isCanClick = tvLocationArea.text.isNotEmpty() &&
                 etDetailAddress.text.isNotEmpty() &&
                 tvNextStep.text.isNotEmpty() &&
                 tvJopTitleContent.text.isNotEmpty() &&
                 (tvJopDescriptionContent.text.toString().length >= 20)
+        if (isCanClick) {
+            tvNextStep.setBackgroundResource(R.drawable.shape_button_select)
+        } else {
+            tvNextStep.setBackgroundResource(R.drawable.shape_button_default)
+        }
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
@@ -140,7 +185,7 @@ class JobMessageFragment : BaseLazyFragment() {
                     mLocationAddress = it.getStringExtra("address")
                     mLocationProvince = it.getStringExtra("province")
                     mLocationLatLng = it.getParcelableExtra("latLng")
-                    tvNextStep.isEnabled = isNetStepState()
+                    isNextStepStates()
                 }
             }
         }

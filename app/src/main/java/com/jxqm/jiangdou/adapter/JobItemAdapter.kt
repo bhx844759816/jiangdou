@@ -18,6 +18,7 @@ import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 
 /**
+ *
  * Created by Administrator on 2019/10/10.
  */
 class JobItemAdapter(context: Context) : MultiItemTypeAdapter<JobDetailsModel>(context) {
@@ -47,7 +48,7 @@ class JobItemAdapter(context: Context) : MultiItemTypeAdapter<JobDetailsModel>(c
                     tvJobSalary.text = "${homeModel.salary}币/时"
                     llParent.clickWithTrigger {
                         val intent = Intent(mContext, JobDetailsActivity::class.java)
-                        intent.putExtra("JobId", it.id.toString())
+                        intent.putExtra("JobId", homeModel.id.toString())
                         intent.putExtra("Status", JobDetailsActivity.STATUS_SINGUP)
                         mContext.startActivity(intent)
                     }

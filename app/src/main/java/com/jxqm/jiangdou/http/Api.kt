@@ -6,8 +6,8 @@ package com.jxqm.jiangdou.http
 object Api {
 
 
-    const val HTTP_BASE_URL = "http://jxdou.natapp1.cc"
-    //    const val HTTP_BASE_URL = "http://192.168.0.100:8080"
+//    const val HTTP_BASE_URL = "http://jxdou.natapp1.cc"
+        const val HTTP_BASE_URL = "http://192.168.0.100:8080"
     const val SEND_SMS_CODE = "/send-validate-code"
     //登录并获取token
     const val GET_TOKEN = "/oauth/token"
@@ -147,7 +147,9 @@ object Api {
     const val GET_HOT_SEARCH_LIST = "/search/hot-keyword"
     //获取消息列表
     const val GET_MESSAGE_LIST = "/account/notify"
+    //获取版本信息
 
+    const val GET_APP_UPDATE = "/version/upgrade"
 
 
 }

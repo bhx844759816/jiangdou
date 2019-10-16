@@ -63,6 +63,8 @@ dependencies {
     implementation deps.gifDrawable
     implementation deps.uiStatus
     implementation deps.expandTextView
+    implementation deps.appUpdate
+    implementation deps.appUpdate_ktx
     implementation project(':common_base')
     implementation project(':common_photo')
     implementation project(':zbarlibary')
