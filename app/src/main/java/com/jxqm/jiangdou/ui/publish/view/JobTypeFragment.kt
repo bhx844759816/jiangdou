@@ -6,10 +6,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.RelativeLayout
+import android.widget.*
 import androidx.core.view.setPadding
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
@@ -51,66 +48,62 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
         super.onViewCreated(view, bundle)
         //点击下一步
         tvNextStep.clickWithTrigger {
-            LiveBus.getDefault()
-                .postEvent(Constants.EVENT_KEY_JOB_PUBLISH, Constants.TAG_PUBLISH_JOB_TYPE, mSelectJobModel)
-            mCallback?.jobTypNextStep()
-        }
-        rgHotJobType.setOnCheckedChangeListener { p0, id ->
-            selectJobTypeMode(id)
-        }
-        rgMoreJobType.setOnCheckedChangeListener { p0, id ->
-            selectJobTypeMode(id)
+            mJobTypeMaps.forEach {
+                if (it.value.isChecked) {
+                    var selectJobModel = mHotJobModelList.find { jobTypeModel ->
+                        jobTypeModel.id.toString() == it.key
+                    }
+                    if (selectJobModel == null) {
+                        selectJobModel = mMoreJobModelList.find { jobTypeModel ->
+                            jobTypeModel.id.toString() == it.key
+                        }
+                    }
+                    LiveBus.getDefault()
+                        .postEvent(
+                            Constants.EVENT_KEY_JOB_PUBLISH,
+                            Constants.TAG_PUBLISH_JOB_TYPE,
+                            selectJobModel
+                        )
+                    mCallback?.jobTypNextStep()
+                    return@clickWithTrigger
+                }
+            }
+
         }
 
     }
 
-    private fun selectJobTypeMode(id: Int) {
-        tvNextStep.isEnabled = true
-        mJobTypeMaps.forEach {
-            if (it.key != id.toString()) {
-                it.value.isChecked = false
-            }
-        }
-        mHotJobModelList.forEach {
-            if (it.id == id) {
-                mSelectJobModel = it
-                return
-            }
-        }
-        mMoreJobModelList.forEach {
-            if (it.id == id) {
-                mSelectJobModel = it
-                return
-            }
-        }
-    }
 
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         mViewModel.getJobType()
-        registerObserver(Constants.TAG_SELECT_JOB_TYPE_HOT, List::class.java).observe(this, Observer {
-            val hotJobModelList = it as List<JobTypeModel>
-            mHotJobModelList.clear()
-            mHotJobModelList.addAll(hotJobModelList)
-            addHotJobType()
-        })
-        registerObserver(Constants.TAG_SELECT_JOB_TYPE_MORE, List::class.java).observe(this, Observer {
-            val moreJobModelList = it as List<JobTypeModel>
-            mMoreJobModelList.clear()
-            mMoreJobModelList.addAll(moreJobModelList)
-            val model =  (activity as JobPublishActivity).mJobDetailsModel
-            if(model == null){
-                if (mMoreJobModelList.size > 6) {
-                    //裁剪5个
-                    addMoreJobType(mMoreJobModelList.subList(0, 5))
-                    addExpandJobType()
+        registerObserver(Constants.TAG_SELECT_JOB_TYPE_HOT, List::class.java).observe(
+            this,
+            Observer {
+                val hotJobModelList = it as List<JobTypeModel>
+                mHotJobModelList.clear()
+                mHotJobModelList.addAll(hotJobModelList)
+                addHotJobType()
+            })
+        registerObserver(Constants.TAG_SELECT_JOB_TYPE_MORE, List::class.java).observe(
+            this,
+            Observer {
+                val moreJobModelList = it as List<JobTypeModel>
+                mMoreJobModelList.clear()
+                mMoreJobModelList.addAll(moreJobModelList)
+                val model = (activity as JobPublishActivity).mJobDetailsModel
+                if (model == null) {
+                    if (mMoreJobModelList.size > 6) {
+                        //裁剪5个
+                        addMoreJobType(mMoreJobModelList.subList(0, 5))
+                        addExpandJobType()
+                    } else {
+                        addMoreJobType(mMoreJobModelList)
+                    }
                 } else {
                     addMoreJobType(mMoreJobModelList)
                 }
-            }else{
-                addMoreJobType(mMoreJobModelList)
-            }
-        })
+            })
     }
 
     /**
@@ -118,16 +111,28 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
      */
     private fun addHotJobType() {
         mHotJobModelList.forEach {
-            val radioButton = LayoutInflater.from(mContext)
-                .inflate(R.layout.view_publish_job_type_item, null) as RadioButton
+            val frameLayout = LayoutInflater.from(mContext)
+                .inflate(R.layout.view_publish_job_type_item, null) as FrameLayout
+            val radioButton = frameLayout.findViewById<RadioButton>(R.id.rbJobType)
             radioButton.text = it.jobTypeName
             radioButton.id = it.id
-            val model =  (activity as JobPublishActivity).mJobDetailsModel
-            if(model != null && model.jobTypeId == it.id){
+            val model = (activity as JobPublishActivity).mJobDetailsModel
+            if (model != null && model.jobTypeId == it.id) {
                 radioButton.isChecked = true
             }
+            frameLayout.clickWithTrigger {
+                tvNextStep.isEnabled = true
+                radioButton.isChecked = !radioButton.isChecked
+                if (radioButton.isChecked) {
+                    mJobTypeMaps.forEach {
+                        if (it.key != radioButton.id.toString()) {
+                            it.value.isChecked = false
+                        }
+                    }
+                }
+            }
             radioButton.setPadding(DensityUtil.dip2px(mContext, 10f))
-            rgHotJobType.addView(radioButton)
+            rgHotJobType.addView(frameLayout)
             mJobTypeMaps[it.id.toString()] = radioButton
         }
     }
@@ -137,16 +142,28 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
      */
     private fun addMoreJobType(list: List<JobTypeModel>) {
         list.forEach {
-            val radioButton = LayoutInflater.from(mContext)
-                .inflate(R.layout.view_publish_job_type_item, null) as RadioButton
+            val frameLayout = LayoutInflater.from(mContext)
+                .inflate(R.layout.view_publish_job_type_item, null) as FrameLayout
+            val radioButton = frameLayout.findViewById<RadioButton>(R.id.rbJobType)
             radioButton.text = it.jobTypeName
             radioButton.id = it.id
-            val model =  (activity as JobPublishActivity).mJobDetailsModel
-            if(model != null && model.jobTypeId == it.id){
+            val model = (activity as JobPublishActivity).mJobDetailsModel
+            if (model != null && model.jobTypeId == it.id) {
                 radioButton.isChecked = true
             }
+            frameLayout.clickWithTrigger {
+                tvNextStep.isEnabled = true
+                radioButton.isChecked = !radioButton.isChecked
+                if (radioButton.isChecked) {
+                    mJobTypeMaps.forEach {
+                        if (it.key != radioButton.id.toString()) {
+                            it.value.isChecked = false
+                        }
+                    }
+                }
+            }
             radioButton.setPadding(DensityUtil.dip2px(mContext, 10f))
-            rgMoreJobType.addView(radioButton)
+            rgMoreJobType.addView(frameLayout)
             mJobTypeMaps[it.id.toString()] = radioButton
         }
     }
@@ -157,6 +174,7 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
     private fun addExpandJobType() {
         val expandView = LayoutInflater.from(mContext)
             .inflate(R.layout.view_publish_job_expand_type_item, null) as RelativeLayout
+        expandView.setPadding(DensityUtil.dip2px(mContext, 10f))
         expandView.clickWithTrigger {
             rgMoreJobType.removeView(expandView)
             addMoreJobType(mMoreJobModelList.subList(6, mMoreJobModelList.size - 1))

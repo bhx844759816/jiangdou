@@ -37,7 +37,9 @@ abstract class BaseDataActivity<T : BaseViewModel<*>> : BaseMVVMActivity<T>() {
         super.initView()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
+        LogUtils.i("MyApplication isRecycler${MyApplication.instance().isRecyclerFlag} $this.javaClass=${this.javaClass}")
         if (MyApplication.instance().isRecyclerFlag == -1 && this.javaClass != LoadingActivity::class.java) {
+            LogUtils.i("MyApplication isRecycler")
             protectApp()
         }
     }

@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="40dp"
-    android:background="@drawable/select_publish_job_item_bg"
-    android:button="@null"
-    android:gravity="center"
-    android:maxLines="1"
-    android:orientation="vertical"
-    android:textColor="@color/select_publish_job_item_textcolor"
-    android:textSize="@dimen/text_small_size">
 
-</RadioButton>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/flJobType"
+    android:layout_width="100dp"
+    android:layout_height="40dp">
+
+    <RadioButton
+        android:id="@+id/rbJobType"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/select_publish_job_item_bg"
+        android:button="@null"
+        android:clickable="false"
+        android:gravity="center"
+        android:maxLines="1"
+        android:orientation="vertical"
+        android:textColor="@color/select_publish_job_item_textcolor"
+        android:textSize="@dimen/text_small_size" />
+
+</FrameLayout>

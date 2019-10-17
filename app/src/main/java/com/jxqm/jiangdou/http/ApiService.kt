@@ -32,7 +32,7 @@ interface ApiService {
 
     @GET
     @Streaming
-    fun download(@Url url: String):Observable<ResponseBody>
+    fun download(@Url url: String): Observable<ResponseBody>
 
 
     @Multipart
@@ -526,4 +526,16 @@ interface ApiService {
         @Query("pageNo") pageNo: Int,
         @Query("pageSize") pageSize: Int
     ): Observable<HttpResult<PageModeWrap<MessageModel>>>
+
+    /**
+     * 获取账户信息
+     */
+    @GET(Api.GET_ACCOUNT)
+    fun getAccount(): Observable<HttpResult<AccountModel>>
+
+    @GET(Api.GET_TRADE_DETAILS_LIST)
+    fun getTradeDetailsList(
+        @Query("year") pageNo: String,
+        @Query("month") pageSize: String
+    ): Observable<HttpResult<List<TradeDetailsModel>>>
 }

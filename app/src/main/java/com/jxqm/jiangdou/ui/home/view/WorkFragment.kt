@@ -3,6 +3,8 @@ package com.jxqm.jiangdou.ui.home.view
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import cn.bertsir.zbar.Qr.Config
 import cn.bertsir.zbar.Qr.ScanResult
 import cn.bertsir.zbar.QrConfig
@@ -18,6 +20,7 @@ import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.fragment_work.*
 import cn.bertsir.zbar.QrManager
 import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.MyApplication
 
@@ -27,12 +30,22 @@ import com.jxqm.jiangdou.MyApplication
  * Created by Administrator on 2019/8/20.
  */
 class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
+    private var mEmployeeListFragment: EmployeeListFragment? = null
+    private var mEmployerListFragment: EmployerListFragment? = null
     override fun getLayoutId(): Int = R.layout.fragment_work
     override fun getEventKey(): Any = Constants.EVENT_KEY_WORK
     private var isEmployee = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (MyApplication.instance().attestationViewModel?.statusCode == 2) {
+            tvChange.text = "雇主"
+            isEmployee = true
+            ivScanCode.visibility = View.GONE
+            showEmployerFragment()
+        } else {
+            showEmployeeFragment(0)
+        }
         tvChange.clickWithTrigger {
             isEmployee = !isEmployee
             if (isEmployee) {
@@ -52,24 +65,28 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
             } else {
                 tvChange.text = "雇员"
                 ivScanCode.visibility = View.VISIBLE
-                showEmployeeFragment()
+                showEmployeeFragment(0)
             }
         }
         //点击扫码
         ivScanCode.clickWithTrigger {
             startScan()
         }
+        //跳转到工作台 雇员
+        registerObserver(
+            Constants.TAG_STATUS_EMPLOYEE_SETTLEMENT,
+            Boolean::class.java
+        ).observe(this,
+            Observer {
+                isEmployee = false
+                tvChange.text = "雇员"
+                ivScanCode.visibility = View.VISIBLE
+                showEmployeeFragment(3)
+            })
     }
 
     override fun onFirstUserVisible() {
-        if(MyApplication.instance().attestationViewModel?.statusCode == 2){
-            tvChange.text = "雇主"
-            isEmployee = true
-            ivScanCode.visibility = View.GONE
-            showEmployerFragment()
-        }else{
-            showEmployeeFragment()
-        }
+
 
     }
 
@@ -97,15 +114,22 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
 
     }
 
-    private fun showEmployeeFragment() {
+    private fun showEmployeeFragment(position: Int) {
         val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.flFragment, EmployeeListFragment())
+        mEmployeeListFragment = EmployeeListFragment()
+        val bundle = Bundle()
+        bundle.putInt("position",position)
+        mEmployeeListFragment!!.arguments = bundle
+        transaction.replace(R.id.flFragment, mEmployeeListFragment!!)
         transaction.commit()
     }
 
     private fun showEmployerFragment() {
         val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.flFragment, EmployerListFragment())
+        if (mEmployerListFragment == null) {
+            mEmployerListFragment = EmployerListFragment()
+        }
+        transaction.replace(R.id.flFragment, mEmployerListFragment!!)
         transaction.commit()
     }
 }

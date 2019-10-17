@@ -91,7 +91,7 @@ class SelectCity : BaseDataActivity<SelectCityViewModel>(), SideIndexBar.OnIndex
             mAllCities.add(1, HotCity("热门城市", "未知", "0"))
             it.onNext(true)
             it.onComplete()
-        }.compose(applySchedulersForLoadingDialog()).delay(1000,TimeUnit.MILLISECONDS)
+        }.compose(applySchedulersForLoadingDialog())
             .subscribe({
                 mAdapter.notifyDataSetChanged()
             }, {

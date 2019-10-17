@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.utils.LogUtils
 import com.google.android.material.tabs.TabLayout
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.ui.job.view.JobListFragment
 import kotlinx.android.synthetic.main.fragment_employee_list_layout.*
+import kotlinx.android.synthetic.main.fragment_employee_list_layout.tabLayout
+import kotlinx.android.synthetic.main.fragment_employee_list_layout.viewPager
+import kotlinx.android.synthetic.main.fragment_employer_job_list.*
 
 /**
  * Created by Administrator on 2019/8/31.
@@ -23,6 +27,8 @@ class EmployeeListFragment : BaseLazyFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val position = arguments?.getInt("position")
+        LogUtils.i("position=$position")
         mListFragment.add(EmployeeSignUpFragment())
         mListFragment.add(EmployeeEmploymentFragment())
         mListFragment.add(EmployeeReportDutyFragment())
@@ -35,11 +41,15 @@ class EmployeeListFragment : BaseLazyFragment() {
         tabLayout.addTab(mTitles[3])
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
         tabLayout.setupWithViewPager(viewPager)
-
+        viewPager.setCurrentItem(position ?: 0, false)
     }
 
+    fun changeToSettlement() {
+        viewPager.setCurrentItem(4, false)
+    }
 
-    inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+    inner class MyPageAdapter(fragmentManager: FragmentManager) :
+        FragmentPagerAdapter(fragmentManager) {
         override fun getItem(position: Int): Fragment = mListFragment[position]
         override fun getCount(): Int = mListFragment.size
         override fun getPageTitle(position: Int): CharSequence? {

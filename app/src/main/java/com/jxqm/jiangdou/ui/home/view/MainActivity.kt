@@ -24,6 +24,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_job_details.*
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.Observer
+import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.FileUtils
 import com.bhx.common.utils.Utils
 import com.google.gson.Gson
@@ -53,6 +55,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView() {
+        super.initView()
         requestPermission()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
@@ -62,6 +65,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
         myViewPage.offscreenPageLimit = 3
 
         myViewPage.adapter = MyPageAdapter(supportFragmentManager)
+
         myBottomNavigationBar.setTabSelectedListener(object :
             BottomNavigationBar.OnTabSelectedListener {
             override fun onTabReselected(position: Int) {
@@ -88,6 +92,24 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
             }
 
         })
+
+//        //跳转到工作台 雇员
+        registerObserver(
+            Constants.TAG_STATUS_WORK_FRAGMENT,
+            Boolean::class.java
+        ).observe(this,
+            Observer {
+                myBottomNavigationBar.selectTab(1)
+                LiveBus.getDefault().postEvent(
+                    Constants.EVENT_KEY_WORK,
+                    Constants.TAG_STATUS_EMPLOYEE_SETTLEMENT,
+                    true
+                )
+            })
+    }
+
+    override fun dataObserver() {
+
     }
 
     private fun checkAppUpdate() {
@@ -141,6 +163,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
     }
 
     override fun protectApp() {
+
         startActivity<LoadingActivity>()
         finish()
     }

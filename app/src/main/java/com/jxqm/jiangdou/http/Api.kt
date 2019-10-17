@@ -7,7 +7,7 @@ object Api {
 
 
     const val HTTP_BASE_URL = "http://jxdou.natapp1.cc"
-//        const val HTTP_BASE_URL = "http://192.168.0.100:8080"
+    //        const val HTTP_BASE_URL = "http://192.168.0.100:8080"
     const val SEND_SMS_CODE = "/send-validate-code"
     //登录并获取token
     const val GET_TOKEN = "/oauth/token"
@@ -148,8 +148,10 @@ object Api {
     //获取消息列表
     const val GET_MESSAGE_LIST = "/account/notify"
     //获取版本信息
-
     const val GET_APP_UPDATE = "/version/upgrade"
-
+    //获取账户信息
+    const val GET_ACCOUNT = "/account"
+    //获取收益列表
+    const val GET_TRADE_DETAILS_LIST = "/account/trade-details"
 
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:id="@+id/llParent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvTradeTime"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="09-10 12:00:10"
+        android:textColor="@color/text_hint"
+        android:textSize="12sp" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/ivTradeState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/llAmountParent"
+            android:background="@drawable/icon_settlement_add" />
+
+        <LinearLayout
+            android:id="@+id/llAmountParent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTradeAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+5000"
+                android:textColor="@color/text_default"
+                android:textSize="@dimen/text_default_size" />
+
+            <TextView
+                android:id="@+id/tvTradeType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="结算收入"
+                android:textColor="@color/text_hint"
+                android:textSize="9sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvTradeBalance"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="15,000"
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_default_size" />
+</LinearLayout>

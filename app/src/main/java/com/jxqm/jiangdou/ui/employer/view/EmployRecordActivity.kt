@@ -29,6 +29,8 @@ class EmployRecordActivity : BaseDataActivity<EmployRecordViewModel>() {
     override fun initView() {
         super.initView()
         jobId = intent.getStringExtra("jobId")
+        //雇佣记录跳转到对应的页面
+        val type = intent.getIntExtra("type", 0)
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
         mListFragment.add(EmployRecordSignUpFragment.newInstance(jobId))
@@ -43,6 +45,7 @@ class EmployRecordActivity : BaseDataActivity<EmployRecordViewModel>() {
         tabLayout.addTab(mTitles[2])
         tabLayout.addTab(mTitles[3])
         tabLayout.addTab(mTitles[4])
+        viewPager.setCurrentItem(type, false)
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
         tabLayout.setupWithViewPager(viewPager)
         myEmployRecordBack.clickWithTrigger {
@@ -50,7 +53,8 @@ class EmployRecordActivity : BaseDataActivity<EmployRecordViewModel>() {
         }
     }
 
-    inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+    inner class MyPageAdapter(fragmentManager: FragmentManager) :
+        FragmentPagerAdapter(fragmentManager) {
         override fun getItem(position: Int): Fragment = mListFragment[position]
         override fun getCount(): Int = mListFragment.size
         override fun getPageTitle(position: Int): CharSequence? {

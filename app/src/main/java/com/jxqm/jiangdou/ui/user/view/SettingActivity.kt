@@ -67,7 +67,7 @@ class SettingActivity : BaseActivity() {
                         //（必须）更新内容
                         .setUpdateLog(appUpdateModel.data.modifyContent)
                         //大小，不设置不显示大小，可以不设置
-                        .setTargetSize(FileUtils.formatFileSize(appUpdateModel.data.apkSize.toLong()))
+                        .setTargetSize(appUpdateModel.data.apkSize)
                         //是否强制更新，可以不设置
                         .setConstraint(false)
                         //设置md5，可以不设置

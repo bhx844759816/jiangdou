@@ -47,7 +47,8 @@ class Constants {
         const val TAG_REGISTER_SUCCESS = "tag_register_success"//注册成功
         //发布兼职模块
         const val EVENT_KEY_JOB_PUBLISH = "event_key_job_publish"//发布兼职
-        const val TAG_PUBLISH_JOB_ATTESTATION_DETAILS = "tag_publish_job_attestation_details" //发布兼职中得兼职类型
+        const val TAG_PUBLISH_JOB_ATTESTATION_DETAILS =
+            "tag_publish_job_attestation_details" //发布兼职中得兼职类型
         const val TAG_PUBLISH_JOB_TYPE = "tag_publish_job_type" //发布兼职中得兼职类型
         const val TAG_PUBLISH_JOB_MESSAGE = "tag_publish_job_message" //发布兼职中得兼职类型
         const val TAG_PUBLISH_JOB_TIME = "tag_publish_job_time"//发布兼职的工作时间选择
@@ -65,12 +66,17 @@ class Constants {
         const val TAG_GET_EMPLOYEE_LIST_ERROR = "tag_get_employee_list_error"//获取报名列表失败
         const val TAG_ACCEPT_OR_REFUSED_RESUME_SUCCESS = "tag_accept_resume_success"//录取成功
 
-        const val EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT = "event_key_employ_record_employment"//雇佣记录 - 已录用
-        const val TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS = "tag_get_employee_accept_list_success"//获取录用列表成功
-        const val TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR = "tag_get_employee_accept_list_error"//获取已录用列表数据失败
-        const val TAG_EMPLOY_RECORD_REPEAT_WITHDRAW_FINISH = "tag_employ_record_repeat_withdraw_finish" //雇佣记录 重发或撤回录用完成
+        const val EVENT_KEY_EMPLOY_RECORD_EMPLOYMENT =
+            "event_key_employ_record_employment"//雇佣记录 - 已录用
+        const val TAG_GET_EMPLOYEE_ACCEPT_LIST_SUCCESS =
+            "tag_get_employee_accept_list_success"//获取录用列表成功
+        const val TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR =
+            "tag_get_employee_accept_list_error"//获取已录用列表数据失败
+        const val TAG_EMPLOY_RECORD_REPEAT_WITHDRAW_FINISH =
+            "tag_employ_record_repeat_withdraw_finish" //雇佣记录 重发或撤回录用完成
 
-        const val EVENT_KEY_EMPLOY_RECORD_REPORT_DUTY = "event_key_employ_record_report_duty"//雇佣记录 - 已到岗
+        const val EVENT_KEY_EMPLOY_RECORD_REPORT_DUTY =
+            "event_key_employ_record_report_duty"//雇佣记录 - 已到岗
         const val TAG_GET_REPORT_DUTY_LIST_SUCCESS = "tag_get_report_duty_list_success"//已到岗列表成功
         const val TAG_GET_REPORT_DUTY_LIST_ERROR = "tag_get_report_duty_list_error"//已到岗列表数据失败
 
@@ -81,28 +87,33 @@ class Constants {
 
 
         const val EVENT_KEY_EMPLOY_RECORD_PAY = "event_key_employ_record_pay"//雇佣记录已结算
-        const val TAG_GET_SETTLE_FINISH_LIST_SUCCESS = "tag_get_settle_finish_list_success"//获取雇佣记录已结算列表成功
-        const val TAG_GET_SETTLE_FINISH_LIST_ERROR = "tag_get_settle_finish_list_error"//获取雇佣记录已结算列表成功
-        const val TAG_REPEAT_SETTLE_FINISH  = "tag_repeat_settle_finish" //重新结算
+        const val TAG_GET_SETTLE_FINISH_LIST_SUCCESS =
+            "tag_get_settle_finish_list_success"//获取雇佣记录已结算列表成功
+        const val TAG_GET_SETTLE_FINISH_LIST_ERROR =
+            "tag_get_settle_finish_list_error"//获取雇佣记录已结算列表成功
+        const val TAG_REPEAT_SETTLE_FINISH = "tag_repeat_settle_finish" //重新结算
 
         //认证
         const val EVENT_KEY_COMPANY_ATTESTATION = "event_key_company_attestation" // 企业认证
         const val TAG_GET_COMPANY_ITEM_RESULT = "tag_get_company_item_result"
         const val TAG_GET_COMPANY_ATTESTATION_STATUS = "tag_get_company_attestation_status"
         const val EVENT_KEY_PEOPLE_ATTESTATION = "event_key_people_attestation" // 身份认证
-        const val TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS = "tag_people_attestation_submit_success" //上传成功
+        const val TAG_PEOPLE_ATTESTATION_SUBMIT_SUCCESS =
+            "tag_people_attestation_submit_success" //上传成功
 
         const val EVENT_KEY_WAIT_PUBLISH_JOB = "event_key_wait_publish_job"//等待发布
         const val TAG_GET_WAIT_PUBLISH_JOB_LIST_SUCCESS = "tag_get_wait_publish_job_list_success"//
         const val TAG_GET_WAIT_PUBLISH_JOB_LIST_ERROR = "tag_get_wait_publish_job_list_error"//
         const val TAG_WAIT_PUBLISH_REFRESH_JOB_LIST = "tag_wait_publish_refresh_job_list"//刷新工作列表
-        const val TAG_DELETE_WAIT_PUBLISH_JOB_SUCCESS = "tag_delete_wait_publish_job_success"//取消发布成功
+        const val TAG_DELETE_WAIT_PUBLISH_JOB_SUCCESS =
+            "tag_delete_wait_publish_job_success"//取消发布成功
 
         const val EVENT_KEY_WAIT_EXAMINE_JOB = "event_key_wait_examine_job"//等待审核
         const val TGA_GET_WAIT_EXAMINE_JOB_LIST_SUCCESS = "tga_get_wait_examine_job_list_success"
         const val TAG_GET_WAIT_EXAMINE_JOB_LIST_ERROR = "tag_get_wait_examine_job_list_error"
         const val TAG_WAIT_EXAMINE_REFRESH_JOB_LIST = "tag_wait_examine_refresh_job_list"//刷新工作列表
-        const val TAG_DELETE_WAIT_EXAMINE_JOB_SUCCESS = "tag_delete_wait_examine_job_success"//取消订单成功
+        const val TAG_DELETE_WAIT_EXAMINE_JOB_SUCCESS =
+            "tag_delete_wait_examine_job_success"//取消订单成功
 
         const val EVENT_KEY_PUBLISHING_JOB = "event_key_publishing_job"//正在招聘
         const val TAG_GET_PUBLISHING_JOB_LIST_SUCCESS = "tag_get_publishing_job_list_success"
@@ -116,7 +127,8 @@ class Constants {
         //订单
         const val EVENT_KEY_PAYMENT_ORDER = "event_key_end_sign_up"//支付订单
         const val TAG_GET_ORDER_DETAILS_SUCCESS = "tag_get_order_details_success"//获取订单详情成功
-        const val TAG_GET_USER_ACCOUNT_BALANCE_SUCCESS = "tag_get_user_account_balance_success"//获取账户余额
+        const val TAG_GET_USER_ACCOUNT_BALANCE_SUCCESS =
+            "tag_get_user_account_balance_success"//获取账户余额
         const val TAG_PAY_ORDER_SUCCESS = "tag_pay_order_success"//支付订单成功
 
         const val EVENT_KEY_ORDER_DETAILS = "event_key_order_details"//订单详情
@@ -129,17 +141,23 @@ class Constants {
         const val TAG_CLEAR_EMPLOYEE_SIGN_CLOSE_LIST = "tag_clear_employee_sign_close_list"//清空失效完成
 
         const val EVENT_KEY_EMPLOYEE_EMPLOYMENT = "event_key_employee_employment"//雇员 - 已录用
-        const val TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_SUCCESS = "tag_get_employee_employment_list_success"//已录用列表
-        const val TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_ERROR = "tag_get_employee_employment_list_error"//已录用列表失败
+        const val TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_SUCCESS =
+            "tag_get_employee_employment_list_success"//已录用列表
+        const val TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_ERROR =
+            "tag_get_employee_employment_list_error"//已录用列表失败
         const val TAG_ACCEPT_REFUSE_OFFER_SUCCESS = "tag_accept_refuse_offer_success" //接受拒绝请求成功
 
         const val EVENT_KEY_EMPLOYEE_REPORT_DUTY = "event_key_employee_report_duty"//雇员 - 已到岗
-        const val TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_SUCCESS = "tag_get_employee_report_duty_list_success"//已到岗列表
-        const val TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_ERROR = "tag_get_employee_report_duty_list_error"//已到岗列表失败
+        const val TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_SUCCESS =
+            "tag_get_employee_report_duty_list_success"//已到岗列表
+        const val TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_ERROR =
+            "tag_get_employee_report_duty_list_error"//已到岗列表失败
 
         const val EVENT_KEY_EMPLOYEE_PAY_FINISH = "event_key_employee_pay_finish"//雇员 - 已结算
-        const val TAG_GET_EMPLOYEE_PAY_FINISH_LIST_SUCCESS = "tag_get_employee_pay_finish_list_success"//已结算列表
-        const val TAG_GET_EMPLOYEE_PAY_FINISH_LIST_ERROR = "tag_get_employee_pay_finish_list_error"//已结算列表失败
+        const val TAG_GET_EMPLOYEE_PAY_FINISH_LIST_SUCCESS =
+            "tag_get_employee_pay_finish_list_success"//已结算列表
+        const val TAG_GET_EMPLOYEE_PAY_FINISH_LIST_ERROR =
+            "tag_get_employee_pay_finish_list_error"//已结算列表失败
         const val TAG_REFUSE_ACCEPT_SETTLE_FINISH = "tag_refuse_accept_settle_finish"//拒绝或接受结算成功
 
 
@@ -155,7 +173,8 @@ class Constants {
 
 
         const val EVENT_KEY_SEARCH_COMPANY_LIST = "event_key_search_company_list"//搜公司得Fragment
-        const val TAG_GET_SEARCH_COMPANY_LIST_SUCCESS = "tag_get_search_company_list_success"//搜素职位成功
+        const val TAG_GET_SEARCH_COMPANY_LIST_SUCCESS =
+            "tag_get_search_company_list_success"//搜素职位成功
         const val TAG_GET_SEARCH_COMPANY_LIST_ERROR = "tag_get_search_company_list_error"//搜素职位失败
 
         const val EVENT_KEY_COMPANY_DETAILS = "event_key_company_details"//公司详情界面
@@ -168,6 +187,7 @@ class Constants {
         const val TAG_UPLOAD_RESUME_RESULT = "tag_upload_resume_result"//上传简历结果
 
         const val EVENT_KEY_MAIN = "event_key_main"//主界面
+        const val TAG_STATUS_WORK_FRAGMENT = "tag_status_work_fragment" //跳转到工作台
 
         const val EVENT_KEY_MAIN_HOME = "event_key_main_home"//首页界面
         const val TAG_GET_HOME_SWIPER = "tag_get_home_swiper"//首页轮播图
@@ -178,6 +198,8 @@ class Constants {
 
         const val EVENT_KEY_WORK = "event_key_work"//工作界面
         const val TAG_EMPLOYEE_ARRIVAL_SUCCESS = "tag_employee_arrival_success"//签到成功
+        const val TAG_STATUS_EMPLOYEE_SETTLEMENT = "tag_status_employee_settlement" //跳转到已结算
+
 
         const val EVENT_JOB_DETAILS = "event_job_details" //工作详情
         const val TAG_GET_JOB_DETAILS_SUCCESS = "tag_get_job_details_success"//获取工作详情成功
@@ -194,9 +216,10 @@ class Constants {
         const val EVENT_KEY_RESUME_DETAILS = "event_key_resume_details"//简历详情
         const val TAG_GET_RESUME_DETAILS_SUCCESS = "tag_get_resume_details_success"//获取用户简历成功
 
-        const val EVENT_KEY_MY_COLLECTION_JOB ="event_key_my_collection_job"//我的收藏列表
-        const val TAG_GET_MY_COLLECTION_LIST_SUCCESS = "tag_get_my_collection_list_success" //获取收藏列表成功
-        const val TAG_GET_MY_COLLECTION_LIST_ERROR= "tag_get_my_collection_list_error"//获取收藏列表失败
+        const val EVENT_KEY_MY_COLLECTION_JOB = "event_key_my_collection_job"//我的收藏列表
+        const val TAG_GET_MY_COLLECTION_LIST_SUCCESS =
+            "tag_get_my_collection_list_success" //获取收藏列表成功
+        const val TAG_GET_MY_COLLECTION_LIST_ERROR = "tag_get_my_collection_list_error"//获取收藏列表失败
         const val TAG_CANCEL_COLLECTION_FINISH = "tag_cancel_collection_finish"//取消收藏完成
 
         const val EVENT_KEY_ALIPAY_ATTESTATION = "event_key_alipay_attestation"//绑定支付宝
@@ -205,9 +228,19 @@ class Constants {
         const val TAG_GET_MESSAGE_LIST_SUCCESS = "tag_get_message_list_success" // 获取消息列表成功
         const val TAG_GET_MESSAGE_LIST_ERROR = "tag_get_message_list_error" // 获取消息列表失败
 
-        const val EVENT_MY_BUDGET_LIST ="event_my_budget_list"//收支明细
+        const val EVENT_MY_BUDGET_LIST = "event_my_budget_list"//收支明细
 
-        const val EVENT_SELECT_CITY = "event_select_city"
+        const val EVENT_SELECT_CITY = "event_select_city" //选择城市
+
+        const val EVENT_USER_WALLET = "event_user_wallet"//我的钱包
+        const val TAG_GET_USER_ACCOUNT = "tag_get_user_account"//获取用户的信息成功
+
+        const val EVENT_TRADE_DETAILS_LIST = "event_trade_details_list" //交易明细
+        const val TAG_GET_TRADE_DETAILS_LIST_SUCCESS =
+            "tag_get_trade_details_list_success"//获取交易明细成功
+
+        const val EVENT_TRADE_DETAILS = "event_trade_details"//交易详情
+
 
     }
 }

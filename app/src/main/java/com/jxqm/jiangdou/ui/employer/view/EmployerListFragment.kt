@@ -23,6 +23,7 @@ class EmployerListFragment : BaseLazyFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_employer_job_list
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         mListFragment.add(WaitPublishFragment())
         mListFragment.add(WaitExamineFragment())
         mListFragment.add(PublishingFragment())
@@ -38,9 +39,11 @@ class EmployerListFragment : BaseLazyFragment() {
         ivPublishJob.clickWithTrigger {
             startActivity<JobPublishActivity>()
         }
+
     }
 
-    inner class MyPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+    inner class MyPageAdapter(fragmentManager: FragmentManager) :
+        FragmentPagerAdapter(fragmentManager) {
         override fun getItem(position: Int): Fragment = mListFragment[position]
         override fun getCount(): Int = mListFragment.size
         override fun getPageTitle(position: Int): CharSequence? {

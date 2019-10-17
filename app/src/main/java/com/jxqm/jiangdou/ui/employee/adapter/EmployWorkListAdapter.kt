@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.employee.adapter
 
 import android.content.Context
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
@@ -72,11 +73,25 @@ class EmployWorkListAdapter(context: Context) :
                     tvRecruitNum.text = model.recruitNum.toString()
                     tvSingUpTime.text = model.signTime
                     tvJobMoney.text = "${model.salary} 币/小时"
+                    if (model.offerCode == 2) {
+                        //已接受
+                        tvRefuse.visibility = View.GONE
+                        tvJobMoney.visibility = View.GONE
+                        tvAccept.text = "录用详情"
+                    } else {
+                        tvRefuse.visibility = View.VISIBLE
+                        tvJobMoney.visibility = View.VISIBLE
+                        tvAccept.text = "接受"
+                    }
                     tvRefuse.clickWithTrigger {
                         mRefuseOfferCallBack?.invoke(model.jobResumeId)
                     }
                     tvAccept.clickWithTrigger {
-                        mAcceptOfferCallBack?.invoke(model.jobResumeId)
+                        if(model.offerCode == 2){
+
+                        }else{
+                            mAcceptOfferCallBack?.invoke(model.jobResumeId)
+                        }
                     }
                 }
             }

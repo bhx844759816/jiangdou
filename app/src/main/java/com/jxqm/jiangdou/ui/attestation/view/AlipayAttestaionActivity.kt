@@ -15,6 +15,7 @@ class AlipayAttestaionActivity : BaseDataActivity<AlipayAttestationViewModel>() 
 
     override fun initView() {
         super.initView()
+
     }
 
     override fun dataObserver() {

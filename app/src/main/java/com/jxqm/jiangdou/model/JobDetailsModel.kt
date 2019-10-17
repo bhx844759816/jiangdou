@@ -49,7 +49,8 @@ data class JobDetailsModel(
     val typeImgUrl: String,
     val userId: Int,
     val isCollection: Boolean,
-    var isChecked: Boolean //是否选中
+    var isChecked: Boolean,//是否选中
+    var expire: Boolean //是否过期
 ) : CommonConfig()
 
 //{

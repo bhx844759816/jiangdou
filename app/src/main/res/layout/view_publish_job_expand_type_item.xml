@@ -2,20 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="100dp"
     android:layout_height="40dp"
+    android:id="@+id/rlExpand"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/shape_publish_job_item_default"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp" >
+    android:gravity="center"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:maxLines="1"
         android:drawableRight="@drawable/icon_down_arrow"
         android:drawablePadding="15dp"
-        android:textSize="@dimen/text_small_size"
+        android:maxLines="1"
+        android:text="展开"
         android:textColor="@color/text_publish_job"
-        android:text="展开" />
+        android:textSize="@dimen/text_small_size" />
 </RelativeLayout>
+
