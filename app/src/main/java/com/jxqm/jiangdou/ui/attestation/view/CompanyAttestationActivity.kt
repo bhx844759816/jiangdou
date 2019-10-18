@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo
 import android.location.LocationManager
 import android.os.Build
 import android.provider.Settings
+import android.text.BoringLayout
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
@@ -55,6 +56,7 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
     private var mSelectCompanyPeople: CompanyTypeModel? = null
     private var mSelectCompanyJobType: CompanyTypeModel? = null
     private var mSelectFile: File? = null//选择的营业执照的图片
+    private var mSelectLogoFile: File? = null//选择公司logo的图片
     private var mLocationLatLng: LatLng? = null//定位的经纬度信息
     private var mLocationProvince: String? = null
     private var mLocationCity: String? = null
@@ -116,6 +118,7 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
             }
             intent.apply {
                 putExtra("businessLicense", mSelectFile?.absolutePath)
+                putExtra("logo", mSelectLogoFile?.absolutePath)
                 putExtra("companyName", companyName)
                 putExtra("companyDescription", companyDescription)
                 putExtra("address", locationArea)
@@ -171,7 +174,10 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
         }
         //选择营业执照
         tvSelectAttestationImg.clickWithTrigger {
-            requestSdPermission()
+            requestSdPermission(false, REQUEST_CODE_SELECT_IMAGE)
+        }
+        tvCompanyLogoImg.clickWithTrigger {
+            requestSdPermission(false, REQUEST_CODE_SELECT_IMAGE_LOGO)
         }
         //公司名称
         etCompanyName.addTextChangedListener {
@@ -213,6 +219,7 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
         val detailsAddress = etDetailsAddress.text.toString().trim()
         val isCanClick =
             ((mSelectFile != null || mAttestationStatus != null) &&
+                    (mSelectLogoFile != null || mAttestationStatus != null) &&
                     companyName.isNotEmpty() &&
                     detailsAddress.isNotEmpty() &&
                     companyDescription.isNotEmpty() &&
@@ -238,7 +245,7 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
     /**
      * 请求sd存储权限
      */
-    private fun requestSdPermission() {
+    private fun requestSdPermission(isCrop: Boolean, requestCode: Int) {
         val disposable =
             RxPermissions(this).request(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -247,7 +254,7 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 .subscribe {
                     LogUtils.i("requestGpsPermission$it")
                     if (it) {
-                        selectImage(1, REQUEST_CODE_SELECT_IMAGE)
+                        selectImage(isCrop,requestCode)
                     }
                 }
         addDisposable(disposable)
@@ -256,14 +263,14 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
     /**
      * 选择头像
      */
-    private fun selectImage(maxSelectable: Int, requestCode: Int) {
+    private fun selectImage(isCrop: Boolean, requestCode: Int) {
         Matisse.from(this)
             .choose(MimeType.ofImage(), false)
             .countable(true)
             .capture(true)
             .captureStrategy(CaptureStrategy(true, "com.jxqm.jiangdou.fileprovider"))
-            .maxSelectable(maxSelectable)
-            .isCrop(false)
+            .maxSelectable(1)
+            .isCrop(isCrop)
             .cropStyle(CropImageView.Style.CIRCLE)
             .isCropSaveRectangle(false)
             .thumbnailScale(0.6f)
@@ -343,13 +350,23 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            REQUEST_CODE_SELECT_IMAGE -> {
+            REQUEST_CODE_SELECT_IMAGE -> { //选择营业执照
                 val file = FileUtil.getFileByPath(Matisse.obtainPathResult(data)[0])
                 mSelectFile = CompressHelper.getDefault(this).compressToFile(file)
                 mSelectFile?.let {
                     Glide.with(this)
                         .load(it)
                         .into(ivAttestationImg)
+                    isNextStepEnable()
+                }
+            }
+            REQUEST_CODE_SELECT_IMAGE_LOGO -> {//选择公司Logo
+                val file = FileUtil.getFileByPath(Matisse.obtainPathResult(data)[0])
+                mSelectLogoFile = CompressHelper.getDefault(this).compressToFile(file)
+                mSelectLogoFile?.let {
+                    Glide.with(this)
+                        .load(it)
+                        .into(ivCompanyLogoImg)
                     isNextStepEnable()
                 }
             }
@@ -372,11 +389,16 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
     private fun showState() {
         LogUtils.i("showState$mAttestationStatus")
         mAttestationStatus?.let {
+            //营业执照
             flAttestationStatusParent.visibility = View.VISIBLE
             tvAttestationStatusText.text = it.status
+            //公司LOGO
+            flCompanyLogoStatusParent.visibility = View.VISIBLE
+            tvCompanyLogoStatusText.text = it.status
             LogUtils.i(Api.HTTP_BASE_URL + it.businessLicense)
             Glide.with(this).load(Api.HTTP_BASE_URL + it.businessLicense)
                 .into(ivAttestationImg)
+            Glide.with(this).load(Api.HTTP_BASE_URL + it.logo).into(ivCompanyLogoImg)
             etCompanyName.setText(it.employerName)
             etCompanyDescription.setText(it.introduction)
             //企业类型
@@ -406,9 +428,12 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
             when (it.statusCode) {
                 1 -> {//审核中
                     tvSelectAttestationImg.isEnabled = false
+                    tvCompanyLogoImg.isEnabled = false
+
                 }
                 2 -> {//已认证
                     tvSelectAttestationImg.isEnabled = false
+                    tvCompanyLogoImg.isEnabled = false
                     etCompanyName.isEnabled = false
                     rlCompanyJobType.isEnabled = false
                     rlCompanyType.isEnabled = false
@@ -424,6 +449,7 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
 
     companion object {
         const val REQUEST_CODE_SELECT_IMAGE = 0x01
+        const val REQUEST_CODE_SELECT_IMAGE_LOGO = 0x04
         const val REQUEST_CODE_LOCATION_SETTING = 0x03
         const val REQUEST_CODE_SELECT_AREA = 0x02 // 选择工作地址
     }

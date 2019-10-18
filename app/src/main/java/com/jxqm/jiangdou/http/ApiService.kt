@@ -533,9 +533,18 @@ interface ApiService {
     @GET(Api.GET_ACCOUNT)
     fun getAccount(): Observable<HttpResult<AccountModel>>
 
+    /**
+     * 获取收益列表
+     */
     @GET(Api.GET_TRADE_DETAILS_LIST)
     fun getTradeDetailsList(
         @Query("year") pageNo: String,
         @Query("month") pageSize: String
     ): Observable<HttpResult<List<TradeDetailsModel>>>
+
+    /**
+     * 更新用户信息
+     */
+    @POST(Api.UPDATE_USER_MODEL)
+    fun updateUserInfo(@Body body: MultipartBody): Observable<HttpResult<UserModel>>
 }

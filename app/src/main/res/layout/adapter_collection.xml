@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlParent"
     android:layout_width="match_parent"
     android:layout_height="90dp"
     android:layout_marginTop="10dp"
@@ -100,7 +101,15 @@
         android:layout_marginRight="10dp"
         android:text="10币/时"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_big_size"
-        android:textStyle="bold" />
+        android:textSize="@dimen/text_btn_size" />
+
+    <ImageView
+        android:id="@+id/ivExpire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/icon_timeout"
+        android:visibility="gone" />
 
 </RelativeLayout>

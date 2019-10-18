@@ -1,8 +1,10 @@
 package com.jxqm.jiangdou.ui.job.view
 
 import com.bhx.common.base.BaseActivity
+import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.AppManager
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_sing_up_success.*
@@ -23,6 +25,7 @@ class JobSingUpSuccessActivity : BaseActivity() {
             AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
         }
         tvSeeDetails.clickWithTrigger {
+            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_MAIN,Constants.TAG_SIGN_UP_SUCCESS_STATUS,true)
             AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
         }
     }

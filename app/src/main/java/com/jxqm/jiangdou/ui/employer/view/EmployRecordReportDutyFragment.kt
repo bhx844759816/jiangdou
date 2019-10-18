@@ -52,11 +52,12 @@ class EmployRecordReportDutyFragment : BaseMVVMFragment<EmployRecordReportDutyVi
                 if (swipeRefreshLayout.isRefreshing) {
                     swipeRefreshLayout.finishRefresh()
                 }
+                swipeRefreshLayout.resetNoMoreData()
             } else {
-                swipeRefreshLayout.finishLoadMore()
                 if (list.isEmpty()) {
-                    swipeRefreshLayout.setNoMoreData(true)
+                    swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                 } else {
+                    swipeRefreshLayout.finishLoadMore()
                     mEmployeeResumeModelList.addAll(list)
                     mAdapter.setDataList(mEmployeeResumeModelList)
                 }
@@ -65,7 +66,13 @@ class EmployRecordReportDutyFragment : BaseMVVMFragment<EmployRecordReportDutyVi
         })
         //获取数据失败
         registerObserver(Constants.TAG_GET_REPORT_DUTY_LIST_ERROR, String::class.java).observe(this, Observer {
-            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+            if(mEmployeeResumeModelList.isEmpty()){
+                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                if (swipeRefreshLayout.isRefreshing){
+                    swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.finishLoadMore()
+                }
+            }
         })
     }
 

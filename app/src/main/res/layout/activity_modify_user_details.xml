@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/myResumeBack"
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/icon_back" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="个人信息"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_title_size" />
+
+        <TextView
+            android:id="@+id/tvUploadResume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="@string/save"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_title_size" />
+    </RelativeLayout>
+
+    <View style="@style/DividerLineTheme" />
+
+    <RelativeLayout
+        android:id="@+id/rlHeadPhotoParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/ivHeadPhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/icon_head_photo" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/icon_arrow_right" />
+    </RelativeLayout>
+
+    <View style="@style/DividerLineTheme" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clipToPadding="false"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tvUserNameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/userName"
+            android:textColor="@color/text_default"
+            android:textSize="@dimen/text_default_size" />
+
+
+        <EditText
+            android:id="@+id/etUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/ivUserNameArrow"
+            android:background="@null"
+            android:gravity="end"
+            android:hint="请输入您的姓名"
+            android:maxLength="15"
+            android:maxLines="1"
+            android:textColor="@color/text_default"
+            android:textColorHint="@color/text_hint"
+            android:textSize="@dimen/text_default_size" />
+
+        <ImageView
+            android:id="@+id/ivUserNameArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/icon_arrow_right" />
+    </RelativeLayout>
+
+    <View style="@style/DividerLineTheme" />
+
+    <RelativeLayout
+        android:id="@+id/rlUserSexParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tvSexParent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/userSex"
+            android:textColor="@color/text_default"
+            android:textSize="@dimen/text_default_size" />
+
+
+        <TextView
+            android:id="@+id/tvUserSex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/ivUserSexArrow"
+            android:gravity="right"
+            android:hint="请选择您的性别"
+            android:textColor="@color/text_default"
+            android:textColorHint="@color/text_hint"
+            android:textSize="@dimen/text_default_size" />
+
+        <ImageView
+            android:id="@+id/ivUserSexArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/icon_arrow_right" />
+    </RelativeLayout>
+
+</LinearLayout>

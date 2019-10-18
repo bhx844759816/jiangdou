@@ -27,6 +27,7 @@ class BaseRefreshFooter @JvmOverloads constructor(
     private var gifImageView: GifImageView
     private var llLoading: LinearLayout
     private var gifFromAssets: GifDrawable? = null
+    private var mNoMoreData = false
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.view_refresh_footer, this)
@@ -39,7 +40,7 @@ class BaseRefreshFooter @JvmOverloads constructor(
     override fun getSpinnerStyle(): SpinnerStyle = SpinnerStyle.Translate
 
     override fun onFinish(refreshLayout: RefreshLayout, success: Boolean): Int {
-        return 500
+        return 0
     }
 
     override fun onInitialized(kernel: RefreshKernel, height: Int, maxDragHeight: Int) {
@@ -48,7 +49,14 @@ class BaseRefreshFooter @JvmOverloads constructor(
     override fun onHorizontalDrag(percentX: Float, offsetX: Int, offsetMax: Int) {
     }
 
-    override fun setNoMoreData(noMoreData: Boolean): Boolean = true
+    override fun setNoMoreData(noMoreData: Boolean): Boolean {
+        if (mNoMoreData != noMoreData) {
+            mNoMoreData = noMoreData
+            gifImageView.visibility = if (noMoreData) View.VISIBLE else View.GONE
+            llLoading.visibility = if (noMoreData) View.GONE else View.VISIBLE
+        }
+        return true
+    }
 
     override fun onReleased(refreshLayout: RefreshLayout, height: Int, maxDragHeight: Int) {
 
@@ -60,12 +68,23 @@ class BaseRefreshFooter @JvmOverloads constructor(
     }
 
     override fun onStartAnimator(refreshLayout: RefreshLayout, height: Int, maxDragHeight: Int) {
+
     }
 
-    override fun onStateChanged(refreshLayout: RefreshLayout, oldState: RefreshState, newState: RefreshState) {
+    override fun onStateChanged(
+        refreshLayout: RefreshLayout,
+        oldState: RefreshState,
+        newState: RefreshState
+    ) {
     }
 
-    override fun onMoving(isDragging: Boolean, percent: Float, offset: Int, height: Int, maxDragHeight: Int) {
+    override fun onMoving(
+        isDragging: Boolean,
+        percent: Float,
+        offset: Int,
+        height: Int,
+        maxDragHeight: Int
+    ) {
     }
 
     override fun isSupportHorizontalDrag(): Boolean = false

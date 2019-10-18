@@ -88,14 +88,16 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             intent.putExtra("Status", JobDetailsActivity.STATUS_SINGUP)
             startActivity(intent)
         }
+        swipeRefreshLayout.setEnableLoadMore(false)
+        swipeRefreshLayout.setEnableAutoLoadMore(true)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
         swipeRefreshLayout.setOnRefreshListener {
             mHomeModelList.clear()
+
             isRefresh = true
             mViewModel.getHomeDataRefresh()
         }
-        swipeRefreshLayout.setEnableLoadMore(false)
         swipeRefreshLayout.setOnLoadMoreListener {
             isRefresh = false
             mViewModel.getHomeDataLoadMore()
@@ -116,7 +118,7 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
 
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
-
+        checkAppUpdate()
         //注册获取轮播图
         registerObserver(Constants.TAG_GET_HOME_SWIPER, List::class.java).observe(this, Observer {
             val list = it as List<SwpierModel>
@@ -132,7 +134,7 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             mHomeModelList.add(HomeJobHelpModel())
             mHomeModelList.add(HomeJobDetailsTitleModel())
             mAdapter.updateDatas(mHomeModelList)
-            checkAppUpdate()
+
         })
         //获取推荐兼职列表J
         registerObserver(Constants.TAG_GET_HOME_RECOMMEND_LIST, List::class.java).observe(
@@ -145,6 +147,7 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
                     homeJobDetailsModelList.add(homeJobDetailsModel)
                 }
                 if (isRefresh) {
+                    swipeRefreshLayout.resetNoMoreData()
                     swipeRefreshLayout.finishRefresh()
                     val iterator = mHomeModelList.iterator()
                     while (iterator.hasNext()) {
@@ -158,8 +161,12 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
                     }
                     mHomeModelList.addAll(homeJobDetailsModelList)
                 } else {
-                    swipeRefreshLayout.finishLoadMore()
-                    mHomeModelList.addAll(homeJobDetailsModelList)
+                    if (homeJobDetailsModelList.isEmpty()) {
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
+                    } else {
+                        swipeRefreshLayout.finishLoadMore()
+                        mHomeModelList.addAll(homeJobDetailsModelList)
+                    }
                 }
                 mAdapter.updateDatas(mHomeModelList)
             })
@@ -176,6 +183,7 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
                 }
             }
     }
+
     private fun checkAppUpdate() {
         /**
          * 更新app版本
@@ -218,6 +226,7 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             }
         }
     }
+
     /**
      * 开始定位
      */

@@ -46,10 +46,11 @@
         app:layout_constraintTop_toTopOf="@id/ivHeadPhoto" />
 
     <ImageView
-
+       android:id="@+id/ivUserSex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:visibility="gone"
         android:background="@drawable/icon_girl"
         app:layout_constraintBottom_toBottomOf="@id/tvUserName"
         app:layout_constraintLeft_toRightOf="@id/tvUserName"

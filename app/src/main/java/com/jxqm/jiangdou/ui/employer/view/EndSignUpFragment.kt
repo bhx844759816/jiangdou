@@ -51,11 +51,12 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
                     mJobPublishListAdapter.setDataList(mJobDetailList)
                     if (swipeRefreshLayout.isRefreshing)
                         swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.resetNoMoreData()
                 } else {
-                    swipeRefreshLayout.finishLoadMore()
                     if (it.records.isEmpty()) {
-                        swipeRefreshLayout.setNoMoreData(true)
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
+                        swipeRefreshLayout.finishLoadMore()
                         mJobDetailList.addAll(it.records)
                         mJobPublishListAdapter.setDataList(mJobDetailList)
                     }
@@ -65,7 +66,12 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
         registerObserver(Constants.TAG_GET_END_SIGN_UP_JOB_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
-                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                if (mJobDetailList.isEmpty()) {
+                    if (swipeRefreshLayout.isRefreshing)
+                        swipeRefreshLayout.finishRefresh()
+                    mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                }
+
             })
         //删除职位请求成功
         registerObserver(Constants.TAG_END_SIGN_UP_DELETE_JOB_SUCCESS, Boolean::class.java).observe(

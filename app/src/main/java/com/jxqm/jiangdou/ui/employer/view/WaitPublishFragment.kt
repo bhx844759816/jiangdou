@@ -38,7 +38,10 @@ class WaitPublishFragment : BaseMVVMFragment<WaitPublishViewModel>() {
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         //获取数据成功
-        registerObserver(Constants.TAG_GET_WAIT_PUBLISH_JOB_LIST_SUCCESS, JobDetailsWrapModel::class.java).observe(this,
+        registerObserver(
+            Constants.TAG_GET_WAIT_PUBLISH_JOB_LIST_SUCCESS,
+            JobDetailsWrapModel::class.java
+        ).observe(this,
             Observer {
                 if (isRefresh) {
                     if (it.records.isEmpty()) {
@@ -54,39 +57,52 @@ class WaitPublishFragment : BaseMVVMFragment<WaitPublishViewModel>() {
                     mJobPublishListAdapter.setDataList(mJobDetailList)
                     if (swipeRefreshLayout.isRefreshing)
                         swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.resetNoMoreData()
                 } else {
-                    swipeRefreshLayout.finishLoadMore()
                     if (it.records.isEmpty()) {
-                        swipeRefreshLayout.setNoMoreData(true)
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
+                        swipeRefreshLayout.finishLoadMore()
                         mJobDetailList.addAll(it.records)
                         mJobPublishListAdapter.setDataList(mJobDetailList)
                     }
                 }
             })
         //获取数据失败
-        registerObserver(Constants.TAG_GET_WAIT_PUBLISH_JOB_LIST_ERROR, String::class.java).observe(this, Observer {
-            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-        })
-        //刷新列表
-        registerObserver(Constants.TAG_WAIT_PUBLISH_REFRESH_JOB_LIST, Boolean::class.java).observe(this, Observer {
-            isRefresh = true
-            mViewModel.getWaitPublishJob(isRefresh)
-        })
-        //取消发布
-        registerObserver(Constants.TAG_DELETE_WAIT_PUBLISH_JOB_SUCCESS, String::class.java).observe(this, Observer {
-            val iterator = mJobDetailList.iterator()
-            while (iterator.hasNext()) {
-                val jobDetailsModel = iterator.next()
-                if (jobDetailsModel.id == it.toInt()) {
-                    iterator.remove()
+        registerObserver(Constants.TAG_GET_WAIT_PUBLISH_JOB_LIST_ERROR, String::class.java).observe(
+            this,
+            Observer {
+                if (mJobDetailList.isEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                    if (swipeRefreshLayout.isRefreshing) {
+                        swipeRefreshLayout.finishRefresh()
+                        swipeRefreshLayout.finishLoadMore()
+                    }
                 }
-            }
-            mJobPublishListAdapter.setDataList(mJobDetailList)
-            if (mJobDetailList.isEmpty()) {
-                mUiStatusController.changeUiStatus(UiStatus.EMPTY)
-            }
-        })
+            })
+        //刷新列表
+        registerObserver(Constants.TAG_WAIT_PUBLISH_REFRESH_JOB_LIST, Boolean::class.java).observe(
+            this,
+            Observer {
+                isRefresh = true
+                mViewModel.getWaitPublishJob(isRefresh)
+            })
+        //取消发布
+        registerObserver(Constants.TAG_DELETE_WAIT_PUBLISH_JOB_SUCCESS, String::class.java).observe(
+            this,
+            Observer {
+                val iterator = mJobDetailList.iterator()
+                while (iterator.hasNext()) {
+                    val jobDetailsModel = iterator.next()
+                    if (jobDetailsModel.id == it.toInt()) {
+                        iterator.remove()
+                    }
+                }
+                mJobPublishListAdapter.setDataList(mJobDetailList)
+                if (mJobDetailList.isEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                }
+            })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

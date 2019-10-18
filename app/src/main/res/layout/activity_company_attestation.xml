@@ -108,6 +108,52 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_big_size" />
                 </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="206dp"
+                    android:layout_height="206dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/icon_dot_line"
+                    android:layout_marginTop="16dp">
+
+                    <ImageView
+                        android:id="@+id/ivCompanyLogoImg"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/icon_company_logo"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="46dp"
+                        android:scaleType="fitXY" />
+
+                    <FrameLayout
+                        android:id="@+id/flCompanyLogoStatusParent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:background="#7d1c1c1c">
+
+                        <TextView
+                            android:id="@+id/tvCompanyLogoStatusText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="已上传"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_btn_size" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvCompanyLogoImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/select_textview_enable_bg"
+                        android:gravity="center"
+                        android:enabled="true"
+                        android:text="选择"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_big_size" />
+                </FrameLayout>
             </LinearLayout>
 
             <LinearLayout

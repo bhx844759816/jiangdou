@@ -2,11 +2,14 @@ package com.jxqm.jiangdou
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import androidx.annotation.NonNull
 import com.baidu.mapapi.SDKInitializer
 import com.bhx.common.BaseApplication
 import com.bhx.common.http.RetrofitManager
 import com.bhx.common.utils.AppManager
+import com.bhx.common.utils.DensityUtil
 import com.bhx.common.utils.NetworkUtils
 import com.bhx.common.utils.SPUtils
 import com.fengchen.uistatus.UiStatusManager
@@ -23,6 +26,8 @@ import com.jxqm.jiangdou.utils.Utils_CrashHandler
 import com.jxqm.jiangdou.view.refresh.BaseRefreshFooter
 import com.jxqm.jiangdou.view.refresh.BaseRefreshHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer
 
 
 /**
@@ -83,6 +88,17 @@ class MyApplication : BaseApplication() {
             .setInterceptorList(listOf(TokenInterceptor()))
             .setBaseUrl(Api.HTTP_BASE_URL)
         RetrofitManager.getInstance().init(builder)
+        SmartRefreshLayout.setDefaultRefreshInitializer { context, layout ->
+            //全局设置（优先级最低）
+            layout.setEnableAutoLoadMore(true)
+            layout.setEnableOverScrollDrag(false)
+            layout.setFooterHeight(DensityUtil.dip2px(instance,20f).toFloat())
+            layout.setEnableOverScrollBounce(true)
+            layout.setEnableLoadMoreWhenContentNotFull(false)
+            layout.setEnableScrollContentWhenRefreshed(true)
+            layout.setEnableFooterFollowWhenNoMoreData(true) //
+            layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white)
+        }
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
             layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white)//全局设置主题颜色
@@ -125,5 +141,14 @@ class MyApplication : BaseApplication() {
         refreshToken = it.refresh_token
         SPUtils.put(this.applicationContext, Constants.ACCESS_TOKEN, accessToken)
         SPUtils.put(this.applicationContext, Constants.REFRESH_TOKEN, it.refresh_token)
+    }
+
+    fun doLogOut() {
+        userModel = null
+        attestationViewModel = null
+        accessToken = null
+        refreshToken = null
+        SPUtils.put(this.applicationContext, Constants.ACCESS_TOKEN, "")
+        SPUtils.put(this.applicationContext, Constants.REFRESH_TOKEN, "")
     }
 }

@@ -49,8 +49,10 @@ class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
                     mJobDetailList.clear()
                     mJobDetailList.addAll(it.records)
                     mJobPublishListAdapter.setDataList(mJobDetailList)
-                    if (swipeRefreshLayout.isRefreshing)
+                    if (swipeRefreshLayout.isRefreshing){
                         swipeRefreshLayout.finishRefresh()
+                    }
+                    swipeRefreshLayout.resetNoMoreData()
                 } else {
                     swipeRefreshLayout.finishLoadMore()
                     if (it.records.isEmpty()) {
@@ -63,7 +65,14 @@ class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
             })
         //获取数据失败
         registerObserver(Constants.TAG_GET_WAIT_EXAMINE_JOB_LIST_ERROR, String::class.java).observe(this, Observer {
-            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+            if(mJobDetailList.isEmpty()){
+                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                if (swipeRefreshLayout.isRefreshing){
+                    swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.finishLoadMore()
+                }
+            }
+
         })
         //刷新列表
         registerObserver(Constants.TAG_WAIT_EXAMINE_REFRESH_JOB_LIST, Boolean::class.java).observe(this, Observer {

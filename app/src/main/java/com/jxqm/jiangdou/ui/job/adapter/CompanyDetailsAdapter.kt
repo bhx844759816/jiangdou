@@ -15,6 +15,7 @@ import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.model.CompanyDetailsModel
 import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
+import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.ms.square.android.expandabletextview.ExpandableTextView
 import java.lang.StringBuilder
@@ -23,7 +24,8 @@ import java.lang.StringBuilder
  * 企业详情适配器
  * Created by Administrator on 2019/8/18.
  */
-class CompanyDetailsAdapter constructor(context: Context) : MultiItemTypeAdapter<CompanyDetailsModel>(context) {
+class CompanyDetailsAdapter constructor(context: Context) :
+    MultiItemTypeAdapter<CompanyDetailsModel>(context) {
 
     init {
         addCompanyDetailsViewType()
@@ -43,6 +45,7 @@ class CompanyDetailsAdapter constructor(context: Context) : MultiItemTypeAdapter
             override fun convert(holder: ViewHolder, t: CompanyDetailsModel, position: Int) {
                 val expandTextView = holder.getView<ExpandableTextView>(R.id.expand_text_view)
                 val mAttestationStatusModel = t.data as AttestationStatusModel
+                val ivCompanyLogo = holder.getView<ImageView>(R.id.ivCompanyLogo)
                 val tvCompanyName = holder.getView<TextView>(R.id.tvCompanyName)
                 val tvCompanyArea = holder.getView<TextView>(R.id.tvCompanyArea)
                 val tvCompanyPeopleNum = holder.getView<TextView>(R.id.tvCompanyPeopleNum)
@@ -51,8 +54,13 @@ class CompanyDetailsAdapter constructor(context: Context) : MultiItemTypeAdapter
                 val ivMapView = holder.getView<ImageView>(R.id.ivMapView)
                 tvCompanyName.text = mAttestationStatusModel.employerName
                 tvCompanyArea.text = mAttestationStatusModel.address
-                expandTextView.text =mAttestationStatusModel.introduction
-                Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + mAttestationStatusModel.mapImg).into(ivMapView)
+                expandTextView.text = mAttestationStatusModel.introduction
+                Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + mAttestationStatusModel.mapImg)
+                    .into(ivMapView)
+                Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + mAttestationStatusModel.logo)
+                    .transform(
+                        GlideCircleTransform(mContext)
+                    ).into(ivCompanyLogo)
                 val stringBuilder = StringBuilder()
                 stringBuilder.append("详细地址:")
                 stringBuilder.append(mAttestationStatusModel.province)
@@ -89,8 +97,9 @@ class CompanyDetailsAdapter constructor(context: Context) : MultiItemTypeAdapter
                     val tvJobArea = holder.getView<TextView>(R.id.tvJobArea)
                     val tvJobNumbers = holder.getView<TextView>(R.id.tvJobNumbers)
                     val tvJobSalary = holder.getView<TextView>(R.id.tvJobSalary)
-                    val jobDetailsModel=model.data as  JobDetailsModel
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl).into(ivJobListImg)
+                    val jobDetailsModel = model.data as JobDetailsModel
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl)
+                        .into(ivJobListImg)
                     tvJobTitle.text = jobDetailsModel.title
                     tvJobCity.text = jobDetailsModel.city
                     tvJobArea.text = jobDetailsModel.area

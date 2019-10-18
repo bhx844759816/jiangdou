@@ -31,7 +31,10 @@ class PublishingFragment : BaseMVVMFragment<PublishingViewModel>() {
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         //获取数据成功
-        registerObserver(Constants.TAG_GET_PUBLISHING_JOB_LIST_SUCCESS, JobDetailsWrapModel::class.java).observe(this,
+        registerObserver(
+            Constants.TAG_GET_PUBLISHING_JOB_LIST_SUCCESS,
+            JobDetailsWrapModel::class.java
+        ).observe(this,
             Observer {
                 if (isRefresh) {
                     if (it.records.isEmpty()) {
@@ -47,20 +50,29 @@ class PublishingFragment : BaseMVVMFragment<PublishingViewModel>() {
                     mJobPublishListAdapter.setDataList(mJobDetailList)
                     if (swipeRefreshLayout.isRefreshing)
                         swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.resetNoMoreData()
                 } else {
-                    swipeRefreshLayout.finishLoadMore()
                     if (it.records.isEmpty()) {
-                        swipeRefreshLayout.setNoMoreData(true)
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
+                        swipeRefreshLayout.finishLoadMore()
                         mJobDetailList.addAll(it.records)
                         mJobPublishListAdapter.addDatas(it.records)
                     }
                 }
             })
 
-        registerObserver(Constants.TAG_GET_PUBLISHING_JOB_LIST_ERROR, String::class.java).observe(this, Observer {
-            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-        })
+        registerObserver(Constants.TAG_GET_PUBLISHING_JOB_LIST_ERROR, String::class.java).observe(
+            this,
+            Observer {
+                if (mJobDetailList.isEmpty()) {
+                    if (swipeRefreshLayout.isRefreshing){
+                        swipeRefreshLayout.finishRefresh()
+                        swipeRefreshLayout.finishLoadMore()
+                    }
+                    mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                }
+            })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

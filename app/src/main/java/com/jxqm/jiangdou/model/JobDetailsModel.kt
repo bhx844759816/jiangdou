@@ -52,7 +52,6 @@ data class JobDetailsModel(
     var isChecked: Boolean,//是否选中
     var expire: Boolean //是否过期
 ) : CommonConfig()
-
 //{
 //    "id": 3,
 //    "pageNo": null,

@@ -15,6 +15,7 @@ import com.jxqm.jiangdou.ui.attestation.view.CompanyAttestationActivity
 import com.jxqm.jiangdou.ui.home.vm.MyViewModel
 import com.jxqm.jiangdou.ui.login.view.LoginActivity
 import com.jxqm.jiangdou.ui.user.view.*
+import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.MyServiceDialog
@@ -39,8 +40,9 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
             if (MyApplication.instance().userModel == null) {
                 startActivity<LoginActivity>()
                 return@clickWithTrigger
+            } else {
+                startActivity<ModifyUserDetailsActivity>()
             }
-
         }
         //用户简历
         ivUserResume.clickWithTrigger {
@@ -65,6 +67,13 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
         //我的消息
         rlMyMessage.clickWithTrigger {
             startActivity<MyMessageActivity>()
+        }
+        ivHeadPhoto.clickWithTrigger {
+            if (MyApplication.instance().userModel == null) {
+                ToastUtils.toastShort("请先登陆")
+                return@clickWithTrigger
+            }
+            startActivity<ModifyUserDetailsActivity>()
         }
         //客服
         rlMyService.clickWithTrigger {
@@ -101,13 +110,35 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
      * 设置用户信息展示
      */
     private fun initUserStatus() {
-        mUserModel?.let {
-            tvUserName.text = it.username
-            tvRankPoints.text = it.rankPoints
-            tvBalance.text = it.balance
-            tvResumeDescribe.text = "完善度${it.perfectionDegree}%\n简历越完善，录用率越高哦～"
-            Glide.with(mContext).load(Api.HTTP_BASE_URL + it.avatar).into(ivHeadPhoto)
+        if(mUserModel != null){
+            mUserModel?.let {
+                tvUserName.text = it.nick
+                tvRankPoints.text = it.rankPoints
+                tvBalance.text = it.balance
+                if (it.genderCode == 2) {
+                    ivUserSex.visibility = View.GONE
+                } else {
+                    ivUserSex.visibility = View.VISIBLE
+                    if (it.genderCode == 0) {
+                        ivUserSex.setBackgroundResource(R.drawable.icon_girl)
+                    } else {
+                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
+                    }
+                }
+                tvResumeDescribe.text = "完善度${it.perfectionDegree}%\n简历越完善，录用率越高哦～"
+                Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + it.avatar).transform(
+                    GlideCircleTransform(mContext)
+                ).into(ivHeadPhoto)
+            }
+        }else{
+            tvUserName.text = "立即登录"
+            ivUserSex.visibility = View.GONE
+            tvResumeDescribe.text = "登陆后才可以填写简历哦"
+            ivHeadPhoto.setImageResource(R.drawable.icon_head_photo)
+            tvRankPoints.text = "0"
+            tvBalance.text = "0"
         }
+
     }
 
 

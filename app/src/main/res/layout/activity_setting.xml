@@ -67,6 +67,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rlNotifyType"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white">
@@ -81,6 +82,7 @@
             android:textSize="@dimen/text_default_size" />
 
         <TextView
+            android:id="@+id/tvNotifyType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -96,6 +98,7 @@
             style="@style/DividerLineTheme"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rlCheckUpdate"
         android:layout_width="match_parent"
@@ -129,6 +132,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rlClearCache"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white">
@@ -143,6 +147,7 @@
             android:textSize="@dimen/text_default_size" />
 
         <TextView
+            android:id="@+id/tvCache"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -157,13 +162,13 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tvLogOut"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:background="@color/white"
         android:gravity="center"
-        android:textColor="@color/text_default"
-        android:textSize="@dimen/text_default_size"
         android:text="退出当前账号"
-        />
+        android:textColor="@color/text_default"
+        android:textSize="@dimen/text_default_size" />
 </LinearLayout>

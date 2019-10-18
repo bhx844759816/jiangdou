@@ -41,7 +41,6 @@ class MyCollectionJobActivity : BaseDataActivity<MyCollectionJobViewModel>() {
         mAdapter = CollectionAdapter(this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = mAdapter
-        swipeRefreshLayout.setDisableContentWhenRefresh(true)
         swipeRefreshLayout.setEnableLoadMore(false)
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
@@ -129,10 +128,10 @@ class MyCollectionJobActivity : BaseDataActivity<MyCollectionJobViewModel>() {
                     if (swipeRefreshLayout.isRefreshing)
                         swipeRefreshLayout.finishRefresh()
                 } else {
-                    swipeRefreshLayout.finishLoadMore()
                     if (list.isEmpty()) {
-                        swipeRefreshLayout.setNoMoreData(true)
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
+                        swipeRefreshLayout.finishLoadMore()
                         mJobDetailModelList.addAll(list)
                         mAdapter.setDataList(mJobDetailModelList)
                     }

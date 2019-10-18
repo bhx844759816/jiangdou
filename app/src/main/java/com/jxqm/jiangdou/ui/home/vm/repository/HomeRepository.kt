@@ -59,8 +59,8 @@ class HomeRepository : BaseEventRepository() {
                 .subscribe({
                     if (it.code == "0") {
                         if (it.data is JobDetailsWrapModel) {
-                            val jobDetailsWrapModel = it.data as JobDetailsWrapModel
-                            if (jobDetailsWrapModel.records.size < jobDetailsWrapModel.total) {
+                            val jobDetailsWrapModel = it.data
+                            if (jobDetailsWrapModel.records.isNotEmpty()) {
                                 callBack.invoke()
                             }
                             sendData(
@@ -106,8 +106,8 @@ class HomeRepository : BaseEventRepository() {
                 .subscribe({
                     if (it.code == "0") {
                         if (it.data is JobDetailsWrapModel) {
-                            val jobDetailsWrapModel = it.data as JobDetailsWrapModel
-                            if (jobDetailsWrapModel.records.size < jobDetailsWrapModel.total) {
+                            val jobDetailsWrapModel = it.data
+                            if (jobDetailsWrapModel.records.isNotEmpty()) {
                                 callBack.invoke()
                             }
                             sendData(
@@ -117,7 +117,7 @@ class HomeRepository : BaseEventRepository() {
                         }
 
                         if (it.data is List<*>) {
-                            val list = it.data as List<*>
+                            val list = it.data
                             val model = list[0]
                             if (model is JobTypeModel) {
                                 //兼职类型
@@ -150,7 +150,7 @@ class HomeRepository : BaseEventRepository() {
                 .subscribe {
                     if (it.code == "0") {
                         val jobDetailsWrapModel = it.data
-                        if (jobDetailsWrapModel.records.size < jobDetailsWrapModel.total) {
+                        if (jobDetailsWrapModel.records.isNotEmpty()) {
                             callBack.invoke()
                         }
                         sendData(

@@ -34,6 +34,7 @@ data class AttestationStatusModel(
     val idcardFront: String,
     val idcardBack: String,
     val businessLicense: String,
+    val logo: String,
     val contact: String,
     val duty: String,
     val idcard: String,

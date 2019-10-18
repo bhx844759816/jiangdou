@@ -132,11 +132,12 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
                 mAdapter.setDataList(mEmployRecordSignUpItems)
                 if (swipeRefreshLayout.isRefreshing)
                     swipeRefreshLayout.finishRefresh()
+                swipeRefreshLayout.resetNoMoreData()
             } else {
-                swipeRefreshLayout.finishLoadMore()
                 if (list.isEmpty()) {
-                    swipeRefreshLayout.setNoMoreData(true)
+                    swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                 } else {
+                    swipeRefreshLayout.finishLoadMore()
                     mEmployRecordSignUpItems.addAll(list)
                     mAdapter.addDatas(list)
                 }
@@ -145,7 +146,13 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
         })
         //获取报名列表数据失败
         registerObserver(Constants.TAG_GET_EMPLOYEE_LIST_ERROR, String::class.java).observe(this, Observer {
-            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+            if(mEmployRecordSignUpItems.isEmpty()){
+                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                if (swipeRefreshLayout.isRefreshing){
+                    swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.finishLoadMore()
+                }
+            }
         })
         //录用成功
         registerObserver(Constants.TAG_ACCEPT_OR_REFUSED_RESUME_SUCCESS, Boolean::class.java).observe(this, Observer {

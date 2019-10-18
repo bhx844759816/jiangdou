@@ -19,7 +19,7 @@ data class JobEmployeeModel(
     val datesJson: String,
     val email: String,
     val employerId: Int,
-    val employerName: Any,
+    val employerName: String,
     val endTime: String,
     val frozenDeposit: Any,
     val gender: String,

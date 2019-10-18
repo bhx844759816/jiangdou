@@ -19,11 +19,17 @@ class AllJobScreenRepository : BaseEventRepository() {
     fun getAllJobType() {
         addDisposable(
             apiService.getHomeJobType().compose(applySchedulers())
-                .subscribe {
+                .subscribe({
                     if (it.code == "0") {
-                        sendData(Constants.EVENT_KEY_ALL_JOB_SCREEN, Constants.TAG_GET_JOB_TYPE_SUCCESS, it.data)
+                        sendData(
+                            Constants.EVENT_KEY_ALL_JOB_SCREEN,
+                            Constants.TAG_GET_JOB_TYPE_SUCCESS,
+                            it.data
+                        )
                     }
-                }
+                }, {
+
+                })
         )
     }
 
@@ -37,7 +43,7 @@ class AllJobScreenRepository : BaseEventRepository() {
                 .compose(applySchedulersForLoadingDialog())
                 .subscribe({
                     if (it.code == "0") {//获取全部工作成功
-                        if (it.data.records.size == it.data.total) {
+                        if (it.data.records.size == it.data.pageSize) {
                             callBack.invoke()
                         }
                         sendData(
@@ -46,7 +52,42 @@ class AllJobScreenRepository : BaseEventRepository() {
                             it.data.records
                         )
                     } else {
-                        sendData(Constants.EVENT_KEY_ALL_JOB_SCREEN, Constants.TAG_GET_JOB_ITEM_LIST_ERROR, it.message)
+                        sendData(
+                            Constants.EVENT_KEY_ALL_JOB_SCREEN,
+                            Constants.TAG_GET_JOB_ITEM_LIST_ERROR,
+                            it.message
+                        )
+                    }
+                }, {
+                    sendData(
+                        Constants.EVENT_KEY_ALL_JOB_SCREEN,
+                        Constants.TAG_GET_JOB_ITEM_LIST_ERROR,
+                        it.localizedMessage
+                    )
+                })
+        )
+    }
+
+    fun refreshAllJobList(paramsMap: Map<String, String>, callBack: () -> Unit) {
+        addDisposable(
+            apiService.getAllSearchJobList(paramsMap)
+                .compose(applySchedulers())
+                .subscribe({
+                    if (it.code == "0") {//获取全部工作成功
+                        if (it.data.records.size == it.data.pageSize) {
+                            callBack.invoke()
+                        }
+                        sendData(
+                            Constants.EVENT_KEY_ALL_JOB_SCREEN,
+                            Constants.TAG_GET_JOB_ITEM_LIST_SUCCESS,
+                            it.data.records
+                        )
+                    } else {
+                        sendData(
+                            Constants.EVENT_KEY_ALL_JOB_SCREEN,
+                            Constants.TAG_GET_JOB_ITEM_LIST_ERROR,
+                            it.message
+                        )
                     }
                 }, {
                     sendData(

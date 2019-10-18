@@ -106,6 +106,13 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
                     true
                 )
             })
+        registerObserver(
+            Constants.TAG_SIGN_UP_SUCCESS_STATUS,
+            Boolean::class.java
+        ).observe(this,
+            Observer {
+                myBottomNavigationBar.selectTab(1)
+            })
     }
 
     override fun dataObserver() {

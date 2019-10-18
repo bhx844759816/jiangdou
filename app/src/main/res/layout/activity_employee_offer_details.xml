@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/rlBack"
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/icon_back" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="录用详情"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/text_title_size" />
+
+        <View
+            style="@style/DividerLineTheme"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvCompanyLogo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="18dp"
+        android:background="@drawable/shape_circle_gradually_change"
+        android:gravity="center"
+        android:text="匠"
+        android:textColor="@color/white"
+        android:textSize="@dimen/cp_index_bar_width"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar" />
+
+    <TextView
+        android:id="@+id/tvCompanyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="河南匠小豆品牌管理有限公司"
+        android:textColor="#434343"
+        android:textSize="@dimen/text_default_size"
+        app:layout_constraintBottom_toBottomOf="@id/tvCompanyLogo"
+        app:layout_constraintLeft_toRightOf="@id/tvCompanyLogo"
+        app:layout_constraintTop_toTopOf="@id/tvCompanyLogo"
+
+        />
+
+    <ImageView
+        android:id="@+id/ivFlower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/icon_flower"
+        app:layout_constraintLeft_toLeftOf="@id/tvCompanyLogo"
+        app:layout_constraintTop_toBottomOf="@id/tvCompanyLogo" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="恭喜你被录用，请按规定时间到岗并根据负责人提供的此岗位二维码进行扫码签到。"
+        android:textColor="@color/text_hint"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivFlower"
+        app:layout_constraintLeft_toRightOf="@id/ivFlower"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivFlower" />
+
+    <TextView
+        android:id="@+id/tvContacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/icon_contacts"
+        android:drawablePadding="15dp"
+        android:gravity="center_vertical"
+        android:text="联系人: 张宁"
+        android:textColor="#757575"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintLeft_toLeftOf="@id/ivFlower"
+        app:layout_constraintTop_toBottomOf="@id/ivFlower" />
+
+    <TextView
+        android:id="@+id/tvArrivalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/icon_time"
+        android:drawablePadding="15dp"
+        android:gravity="center_vertical"
+        android:text="2019-09-20 10:00"
+        android:textColor="#757575"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintLeft_toLeftOf="@id/tvContacts"
+        app:layout_constraintTop_toBottomOf="@id/tvContacts" />
+
+    <TextView
+        android:id="@+id/tvNotifyType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/icon_notifytaion"
+        android:drawablePadding="15dp"
+        android:gravity="center_vertical"
+        android:text="通知类型：到岗"
+        android:textColor="#757575"
+        android:textSize="@dimen/text_small_size"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@id/tvArrivalTime"
+        app:layout_constraintTop_toBottomOf="@id/tvArrivalTime" />
+
+    <RelativeLayout
+        android:id="@+id/rlJobType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintLeft_toLeftOf="@id/tvNotifyType"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNotifyType">
+
+        <TextView
+            android:id="@+id/tvJobType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/icon_job"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:text="招聘兼职UI设计师"
+            android:textColor="#757575"
+            android:textSize="@dimen/text_small_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/icon_arrow_right" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlContactPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintLeft_toLeftOf="@id/rlJobType"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rlJobType">
+
+        <TextView
+            android:id="@+id/tvContactPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/icon_contact_phone"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:text="联系电话：16755196716"
+            android:textColor="#757575"
+            android:textSize="@dimen/text_small_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/icon_arrow_right" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/rlLocation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintLeft_toLeftOf="@id/rlContactPhone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rlContactPhone">
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="11"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/icon_location_img"
+            android:text="地址：郑州市金水区木华广场3号楼B座920室"
+            android:textColor="#757575"
+            android:textSize="@dimen/text_small_size" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/icon_arrow_right" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

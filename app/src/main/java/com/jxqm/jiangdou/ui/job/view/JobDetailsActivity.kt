@@ -164,6 +164,8 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
                 mAttestationStatusModel = it
                 joPublishCompanyName.text = it.employerName //企业名称
                 joPublishCompanyUserName.text = it.contact //联系人姓名
+                Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.logo)
+                    .into(ivCompanyLogo)
             })
         //删除职位成功
         registerObserver(Constants.TAG_DELETE_WAIT_PUBLISH_JOB_SUCCESS, String::class.java).observe(
@@ -206,7 +208,11 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             tvJobContent.text = it.content
             tvJobArea.text = it.address
             tvJobTips.text = "${it.area} | 日结"
-            tvSignUp?.text = "我要报名(${it.signNum}人报名)"
+            if (it.sign) {
+                tvSignUp?.text = "已报名(${it.signNum}人报名)"
+            } else {
+                tvSignUp?.text = "我要报名(${it.signNum}人报名)"
+            }
             tvSignUp?.isEnabled = !it.sign
             tvCollection?.text = if (it.isCollection) "已收藏" else "收藏"
             tvCollection?.isChecked = it.isCollection

@@ -188,6 +188,7 @@ class Constants {
 
         const val EVENT_KEY_MAIN = "event_key_main"//主界面
         const val TAG_STATUS_WORK_FRAGMENT = "tag_status_work_fragment" //跳转到工作台
+        const val TAG_SIGN_UP_SUCCESS_STATUS = "tag_sign_up_success_status"
 
         const val EVENT_KEY_MAIN_HOME = "event_key_main_home"//首页界面
         const val TAG_GET_HOME_SWIPER = "tag_get_home_swiper"//首页轮播图
@@ -217,8 +218,7 @@ class Constants {
         const val TAG_GET_RESUME_DETAILS_SUCCESS = "tag_get_resume_details_success"//获取用户简历成功
 
         const val EVENT_KEY_MY_COLLECTION_JOB = "event_key_my_collection_job"//我的收藏列表
-        const val TAG_GET_MY_COLLECTION_LIST_SUCCESS =
-            "tag_get_my_collection_list_success" //获取收藏列表成功
+        const val TAG_GET_MY_COLLECTION_LIST_SUCCESS = "tag_get_my_collection_list_success" //获取收藏列表成功
         const val TAG_GET_MY_COLLECTION_LIST_ERROR = "tag_get_my_collection_list_error"//获取收藏列表失败
         const val TAG_CANCEL_COLLECTION_FINISH = "tag_cancel_collection_finish"//取消收藏完成
 
@@ -241,6 +241,9 @@ class Constants {
 
         const val EVENT_TRADE_DETAILS = "event_trade_details"//交易详情
 
+        const val EVENT_EMPLOYEE_OFFER_DETAILS = "event_employee_offer_details" //录用详情
 
+        const val EVENT_MODIFY_USER_DETAILS = "event_modify_user_details"//个人信息的修改
+        const val TAG_UPDATE_USER_SUCCESS = "tag_update_user_success"//更新用户信息成功
     }
 }

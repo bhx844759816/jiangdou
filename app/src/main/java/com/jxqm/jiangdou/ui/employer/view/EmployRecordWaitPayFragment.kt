@@ -59,11 +59,12 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
                 if (swipeRefreshLayout.isRefreshing) {
                     swipeRefreshLayout.finishRefresh()
                 }
+                swipeRefreshLayout.resetNoMoreData()
             } else {
-                swipeRefreshLayout.finishLoadMore()
                 if (list.isEmpty()) {
-                    swipeRefreshLayout.setNoMoreData(true)
+                    swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                 } else {
+                    swipeRefreshLayout.finishLoadMore()
                     mEmployeeResumeModelList.addAll(list)
                     mAdapter.setDataList(mEmployeeResumeModelList)
                 }
@@ -72,7 +73,13 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
         })
         //获取数据失败
         registerObserver(Constants.TAG_GET_WAIT_PAY_LIST_ERROR, String::class.java).observe(this, Observer {
-            mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+            if(mEmployeeResumeModelList.isEmpty()){
+                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                if (swipeRefreshLayout.isRefreshing){
+                    swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.finishLoadMore()
+                }
+            }
         })
         //结算完成
         registerObserver(Constants.TAG_WAIT_PAY_SETTLE_SUCCESS, Boolean::class.java).observe(this, Observer {

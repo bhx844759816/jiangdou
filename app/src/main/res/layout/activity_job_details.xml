@@ -354,18 +354,18 @@
                         android:layout_marginTop="18dp">
 
                         <ImageView
-                            android:id="@+id/joPublishCompanyHeadImg"
+                            android:id="@+id/ivCompanyLogo"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
-                            android:background="@color/text_light_color" />
+                            android:scaleType="fitXY" />
 
                         <TextView
                             android:id="@+id/joPublishCompanyName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignTop="@id/joPublishCompanyHeadImg"
+                            android:layout_alignTop="@id/ivCompanyLogo"
                             android:layout_marginLeft="10dp"
-                            android:layout_toRightOf="@id/joPublishCompanyHeadImg"
+                            android:layout_toRightOf="@id/ivCompanyLogo"
                             android:text="河南匠小豆品牌管理有限公司"
                             android:textColor="@color/text_publish_sex"
                             android:textSize="@dimen/text_small_size" />
@@ -375,7 +375,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignLeft="@id/joPublishCompanyName"
-                            android:layout_alignBottom="@id/joPublishCompanyHeadImg"
+                            android:layout_alignBottom="@id/ivCompanyLogo"
                             android:text="联系人: 李刚"
                             android:textColor="@color/text_publish_sex"
                             android:textSize="@dimen/text_small_size" />

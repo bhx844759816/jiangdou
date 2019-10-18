@@ -10,6 +10,7 @@ import com.bhx.common.utils.FileUtils
 import com.bhx.common.utils.LogUtils
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
+import com.fengchen.uistatus.listener.OnCompatRetryListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jxqm.jiangdou.MyApplication
@@ -64,6 +65,7 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
         mAdapter = JobItemAdapter(this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = mAdapter
+        swipeRefreshLayout.setEnableLoadMore(false)
         mJobTypeId?.let {
             mParamsMap["jobTypeId"] = it
         }
@@ -100,6 +102,22 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
         aboutUsBack.clickWithTrigger {
             finish()
         }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            isRefresh = true
+            mViewModel.refreshAllJobList(mParamsMap, isRefresh)
+        }
+
+        swipeRefreshLayout.setOnLoadMoreListener {
+            isRefresh = false
+            mViewModel.refreshAllJobList(mParamsMap, isRefresh)
+        }
+        mUiStatusController.onCompatRetryListener =
+            OnCompatRetryListener { p0, p1, p2, p3 ->
+                mUiStatusController.changeUiStatus(UiStatus.LOADING)
+                isRefresh = true
+                mViewModel.refreshAllJobList(mParamsMap, isRefresh)
+            }
     }
 
     override fun initData() {
@@ -108,7 +126,7 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
         //获取全部兼职列表
         mViewModel.getAllJobType()
         //获取全部兼职
-        mViewModel.getAllJobList(mParamsMap, isRefresh)
+        mViewModel.refreshAllJobList(mParamsMap, isRefresh)
     }
 
     /**
@@ -187,11 +205,12 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                     mAdapter.setDataList(mJobItemList)
                     if (swipeRefreshLayout.isRefreshing)
                         swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.resetNoMoreData()
                 } else {
-                    swipeRefreshLayout.finishLoadMore()
                     if (list.isEmpty()) {
-                        swipeRefreshLayout.setNoMoreData(true)
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
+                        swipeRefreshLayout.finishLoadMore()
                         mJobItemList.addAll(list)
                         mAdapter.setDataList(mJobItemList)
                     }

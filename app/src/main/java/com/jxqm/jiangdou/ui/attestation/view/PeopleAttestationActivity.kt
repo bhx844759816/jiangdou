@@ -7,6 +7,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.bhx.common.utils.AppManager
 import com.bhx.common.utils.PhoneUtils
+import com.bhx.common.utils.RegularUtils
 import com.bhx.common.utils.ToastUtils
 import com.bumptech.glide.Glide
 import com.jaeger.library.StatusBarUtil
@@ -44,6 +45,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
     override fun getEventKey(): Any = Constants.EVENT_KEY_PEOPLE_ATTESTATION
 
     private var businessLicensePath: String? = null//营业执照图片
+    private var companyLogoPath: String? = null//营业执照图片
     private var mMapImgFilePath: String? = null
     private var companyName: String? = null // 机构名称
     private var mLocationProvince: String? = null //省
@@ -72,35 +74,29 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             //提交认证信息
             val duty = etUserName.text.toString().trim()//负责人
             val idCardNum = etIdNum.text.toString().trim()//身份证号
-            val alipay = etPayNumber.text.toString().trim()//支付宝账号
             val contacts = etContacts.text.toString().trim()//招聘联系人
             val phone = etContactsPhone.text.toString().trim()//联系人电话
             val fileMaps = mutableMapOf<String, File>() // 上传文件数组
-            if (TextUtils.isEmpty(duty)) {
-                ToastUtils.toastShort("请输入负责人")
+            if (!RegularUtils.isLegalName(duty)) {
+                ToastUtils.toastShort("请输入合法的负责人姓名")
                 return@clickWithTrigger
             }
-            if (TextUtils.isEmpty(idCardNum) || idCardNum.length != 18) {
+            if (!RegularUtils.isLegalId(idCardNum)) {
                 ToastUtils.toastShort("请输入正确的身份证号")
                 return@clickWithTrigger
             }
-            if (TextUtils.isEmpty(alipay)) {
-                ToastUtils.toastShort("请输入支付宝账号")
+            if (!RegularUtils.isLegalName(contacts)) {
+                ToastUtils.toastShort("请输入合法招聘联系人姓名")
                 return@clickWithTrigger
             }
-            if (TextUtils.isEmpty(contacts)) {
-                ToastUtils.toastShort("请输入招聘联系人")
-                return@clickWithTrigger
-            }
-            if (TextUtils.isEmpty(phone)) {
-                ToastUtils.toastShort("请输入招聘咨询电话")
+            if (!RegularUtils.isTelPhoneNumber(phone)) {
+                ToastUtils.toastShort("请输入合法的招聘咨询电话")
                 return@clickWithTrigger
             }
             val paramsMaps = mutableMapOf<String, String>() //上传参数数组
             paramsMaps["duty"] = duty
             paramsMaps["tel"] = phone
             paramsMaps["idcard"] = idCardNum
-            paramsMaps["alipay"] = alipay
             paramsMaps["contact"] = contacts
             mAttestationStatus?.let {
                 paramsMaps["id"] = it.id
@@ -144,6 +140,9 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             businessLicensePath?.let {
                 fileMaps["businessLicenseFile"] = File(it) //企业证书
             }
+            companyLogoPath?.let {
+                fileMaps["logoFile"] = File(it) //logo
+            }
             mIdBackImgFile?.let {
                 fileMaps["idcardBackFile"] = it//身份证反面
             }
@@ -177,11 +176,11 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
                 isSubmitState()
             }
         }
-        etPayNumber.addTextChangedListener {
-            afterTextChanged {
-                isSubmitState()
-            }
-        }
+//        etPayNumber.addTextChangedListener {
+//            afterTextChanged {
+//                isSubmitState()
+//            }
+//        }
         etContacts.addTextChangedListener {
             afterTextChanged {
                 isSubmitState()
@@ -197,6 +196,7 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
     override fun initData() {
         intent.apply {
             businessLicensePath = getStringExtra("businessLicense")
+            companyLogoPath = getStringExtra("logo")
             mMapImgFilePath = getStringExtra("mapImageFilePath")
             companyName = getStringExtra("companyName")
             mLocationAddress = getStringExtra("address")
@@ -237,7 +237,6 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
                     tvPeopleCardBack.isEnabled = false
                     etUserName.isEnabled = false
                     etIdNum.isEnabled = false
-                    etPayNumber.isEnabled = false
                     etContacts.isEnabled = false
                     etContactsPhone.isEnabled = false
                 }
@@ -246,7 +245,6 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             etUserName.setText(it.duty)
             etContacts.setText(it.contact)
             etIdNum.setText(it.idcard)
-            etPayNumber.setText(it.alipay)
             etContactsPhone.setText(it.tel)
             isSubmitState()
         }
@@ -309,17 +307,14 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
     private fun isSubmitState() {
         val userName = etUserName.text.toString().trim()
         val peopleCard = etIdNum.text.toString().trim()
-        val payNum = etPayNumber.text.toString().trim()
         val contacts = etContacts.text.toString().trim()
         val phone = etContactsPhone.text.toString().trim()
         val isCanClick = (mIdFrontImgFile != null || mAttestationStatus != null) &&
                 (mIdBackImgFile != null || mAttestationStatus != null) &&
-                userName.isNotEmpty() &&
-                peopleCard.isNotEmpty() &&
-                peopleCard.length == 18 &&
-                payNum.isNotEmpty() &&
-                contacts.isNotEmpty() &&
-                phone.isNotEmpty()
+                RegularUtils.isLegalName(userName) &&
+                RegularUtils.isLegalId(peopleCard) &&
+                RegularUtils.isLegalName(contacts) &&
+                RegularUtils.isTelPhoneNumber(phone)
         if (isCanClick) {
             tvSubmit.setBackgroundResource(R.drawable.shape_button_select)
         } else {

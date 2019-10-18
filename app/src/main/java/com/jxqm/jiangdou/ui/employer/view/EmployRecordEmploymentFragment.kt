@@ -111,11 +111,12 @@ class EmployRecordEmploymentFragment : BaseMVVMFragment<EmployRecordEmploymentVi
                     if (swipeRefreshLayout.isRefreshing) {
                         swipeRefreshLayout.finishRefresh()
                     }
+                    swipeRefreshLayout.resetNoMoreData()
                 } else {
-                    swipeRefreshLayout.finishLoadMore()
                     if (list.isEmpty()) {
-                        swipeRefreshLayout.setNoMoreData(true)
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
+                        swipeRefreshLayout.finishLoadMore()
                         mEmployeeResumeModelList.addAll(list)
                         mAdapter.setDataList(mEmployeeResumeModelList)
                     }
@@ -126,7 +127,13 @@ class EmployRecordEmploymentFragment : BaseMVVMFragment<EmployRecordEmploymentVi
         registerObserver(Constants.TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
-                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                if(mEmployeeResumeModelList.isEmpty()){
+                    mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                    if (swipeRefreshLayout.isRefreshing){
+                        swipeRefreshLayout.finishRefresh()
+                        swipeRefreshLayout.finishLoadMore()
+                    }
+                }
             })
         //撤回录用或者重发offer的完成时刷新列表数据
         registerObserver(

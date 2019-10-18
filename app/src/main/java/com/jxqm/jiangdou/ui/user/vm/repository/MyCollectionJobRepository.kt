@@ -17,7 +17,7 @@ class MyCollectionJobRepository : BaseEventRepository() {
             apiService.getCollectionList(pageNo, pageSize).compose(applySchedulers())
                 .subscribe({
                     if (it.code == "0") {
-                        if (it.data.records.size == it.data.pageSize) {
+                        if (it.data.records.isNotEmpty()) {
                             callBack.invoke()
                         }
                         sendData(

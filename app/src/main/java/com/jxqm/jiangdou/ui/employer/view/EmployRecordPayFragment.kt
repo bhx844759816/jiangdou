@@ -123,11 +123,12 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
                     if (swipeRefreshLayout.isRefreshing) {
                         swipeRefreshLayout.finishRefresh()
                     }
+                    swipeRefreshLayout.resetNoMoreData()
                 } else {
-                    swipeRefreshLayout.finishLoadMore()
                     if (list.isEmpty()) {
-                        swipeRefreshLayout.setNoMoreData(true)
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
+                        swipeRefreshLayout.finishLoadMore()
                         mEmployeeResumeModelList.addAll(list)
                         mAdapter.setDataList(mEmployeeResumeModelList)
                     }
@@ -137,8 +138,13 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
         registerObserver(Constants.TAG_GET_SETTLE_FINISH_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
-                if (mEmployeeResumeModelList.isEmpty())
+                if(mEmployeeResumeModelList.isEmpty()){
                     mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                    if (swipeRefreshLayout.isRefreshing){
+                        swipeRefreshLayout.finishRefresh()
+                        swipeRefreshLayout.finishLoadMore()
+                    }
+                }
             })
         registerObserver(Constants.TAG_REPEAT_SETTLE_FINISH, Boolean::class.java).observe(this,
             Observer {

@@ -9,10 +9,13 @@ import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bhx.common.utils.LogUtils
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.*
+import com.jxqm.jiangdou.ui.employee.view.EmployeeOfferDetailsActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
 
 /**
  * Created by Administrator on 2019/9/1.
@@ -22,6 +25,9 @@ class EmployWorkListAdapter(context: Context) :
     var mAcceptOfferCallBack: ((Int) -> Unit)? = null
     var mRefuseOfferCallBack: ((Int) -> Unit)? = null
     var clearInvalidJobCallBack: (() -> Unit)? = null
+    private val mGson: Gson by lazy {
+        Gson()
+    }
 
     init {
         //失效状态的title
@@ -77,7 +83,7 @@ class EmployWorkListAdapter(context: Context) :
                         //已接受
                         tvRefuse.visibility = View.GONE
                         tvJobMoney.visibility = View.GONE
-                        tvAccept.text = "录用详情"
+                        tvAccept.text = "查看详情"
                     } else {
                         tvRefuse.visibility = View.VISIBLE
                         tvJobMoney.visibility = View.VISIBLE
@@ -87,9 +93,13 @@ class EmployWorkListAdapter(context: Context) :
                         mRefuseOfferCallBack?.invoke(model.jobResumeId)
                     }
                     tvAccept.clickWithTrigger {
-                        if(model.offerCode == 2){
-
-                        }else{
+                        if (model.offerCode == 2) {
+                            mContext.startActivity<EmployeeOfferDetailsActivity>(
+                                "JobEmployeeModel" to mGson.toJson(
+                                    model
+                                )
+                            )
+                        } else {
                             mAcceptOfferCallBack?.invoke(model.jobResumeId)
                         }
                     }
