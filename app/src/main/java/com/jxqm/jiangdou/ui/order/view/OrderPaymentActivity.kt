@@ -165,11 +165,6 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
                 rangeCalendarList.add(list)
                 return@forEachIndexed
             }
-            if (index == calendarList.size - 1) {
-                val list = rangeCalendarList.last()
-                list.add(calendar)
-                return@forEachIndexed
-            }
             val lastCalendar = calendarList[index - 1]
             val lastTimeMillis = lastCalendar.timeInMillis + 24 * 60 * 60 * 1000
             val curTimeMillis = calendar.timeInMillis

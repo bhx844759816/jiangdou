@@ -107,9 +107,14 @@ class JobTimeFragment : BaseLazyFragment() {
         //选择时间段
         tvSelectTimeRange.clickWithTrigger {
             SelectTimeRangeDialog.show(activity!!) { start, end ->
-                mRangeTimeList.add(start)
-                mRangeTimeList.add(end)
-                addTimeRange(start, end)
+                if(mRangeTimeList.isEmpty()){
+                    mRangeTimeList.add(start)
+                    mRangeTimeList.add(end)
+                    addTimeRange(start, end)
+                }else{
+
+                }
+
                 isNextStepState()
             }
         }

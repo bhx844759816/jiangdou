@@ -25,6 +25,7 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
         "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14",
         "15", "16", "17", "18", "19", "20", "21", "22", "23"
     )
+    private var mEndTimeItems = mutableListOf<String>()
     private val mSecondItems = arrayListOf("00", "10", "20", "30", "40", "50")
     private var mCallBack: ((String, String) -> Unit)? = null
     override fun getLayoutId(): Int = R.layout.dialog_select_time_range
@@ -32,18 +33,31 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
     override fun initView(view: View?) {
         wvStartTime.adapter = ArrayWheelAdapter(mItems)
         wvStartSecond.adapter = ArrayWheelAdapter(mSecondItems)
-        wvEndTime.adapter = ArrayWheelAdapter(mItems)
-        wvEndSecond.adapter = ArrayWheelAdapter(mSecondItems)
         wvStartTime.currentItem = 8
-        wvEndTime?.currentItem = wvStartTime.currentItem +
-                ((mItems.size - wvStartTime.currentItem) / 2)
+        mEndTimeItems = mItems.subList(wvStartTime.currentItem, mItems.size)
+        wvEndTime.adapter = ArrayWheelAdapter(mEndTimeItems)
+        wvEndSecond.adapter = ArrayWheelAdapter(mSecondItems)
+        wvEndTime?.currentItem = wvEndTime.adapter.itemsCount / 2
         wvStartTime.setOnItemSelectedListener {
-            wvEndTime?.currentItem = it + ((mItems.size - it) / 2)
-            wvStartSecond?.currentItem = 3
+            mEndTimeItems = mItems.subList(it, mItems.size)
+            wvEndTime.adapter = ArrayWheelAdapter(mEndTimeItems)
+            wvEndSecond.adapter = ArrayWheelAdapter(mSecondItems)
+            wvEndTime?.currentItem = wvEndTime.adapter.itemsCount / 2
         }
         wvEndTime.setOnItemSelectedListener {
-            wvEndSecond?.currentItem = 3
+            val selectTime = mEndTimeItems[it]
+            if (selectTime == mItems[wvStartTime.currentItem]) {
+                wvEndSecond.adapter =
+                    ArrayWheelAdapter(mSecondItems.subList(wvStartSecond.currentItem,mSecondItems.size))
+            }
+
         }
+        wvStartSecond.setOnItemSelectedListener {
+
+
+        }
+
+
         tvCancel.clickWithTrigger {
             dismissAllowingStateLoss()
         }
@@ -51,8 +65,10 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
             if (wvStartTime.currentItem > wvEndTime.currentItem) {
                 return@clickWithTrigger
             }
-            val startTime = "${mItems[wvStartTime.currentItem]}:${mSecondItems[wvStartSecond.currentItem]}"
-            val endTime = "${mItems[wvEndTime.currentItem]}:${mSecondItems[wvEndSecond.currentItem]}"
+            val startTime =
+                "${mItems[wvStartTime.currentItem]}:${mSecondItems[wvStartSecond.currentItem]}"
+            val endTime =
+                "${mItems[wvEndTime.currentItem]}:${mSecondItems[wvEndSecond.currentItem]}"
             mCallBack?.invoke(startTime, endTime)
             dismissAllowingStateLoss()
         }
@@ -63,7 +79,12 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
             val window = dialog.window
             if (window != null) {
                 window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                window.decorView.setPadding(DensityUtil.dip2px(context, 30f), 0, DensityUtil.dip2px(context, 30f), 0)
+                window.decorView.setPadding(
+                    DensityUtil.dip2px(context, 30f),
+                    0,
+                    DensityUtil.dip2px(context, 30f),
+                    0
+                )
                 val params = window.attributes
                 params.width = WindowManager.LayoutParams.MATCH_PARENT
                 params.height = DensityUtil.dip2px(context, 265f)
@@ -92,7 +113,8 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
         }
 
         fun dismiss(activity: FragmentActivity?) {
-            val fragment = activity?.supportFragmentManager?.findFragmentByTag(TAG) as SelectTimeRangeDialog
+            val fragment =
+                activity?.supportFragmentManager?.findFragmentByTag(TAG) as SelectTimeRangeDialog
             if (fragment.isAdded) {
                 fragment.dismissAllowingStateLoss()
             }
