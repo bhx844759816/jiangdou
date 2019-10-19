@@ -31,7 +31,6 @@ import com.jxqm.jiangdou.ui.publish.view.PublishJobPreviewActivity as PublishJob
  */
 class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublishCallBack {
     private var mJobTypeFragment: JobTypeFragment? = null
-//    private var mJobTypeFragment: JobTypeFragment2? = null
     private var mJobMessageFragment: JobMessageFragment? = null
     private var mJobTimeFragment: JobTimeFragment? = null
     private var mJobContactsFragment: JobContactsFragment? = null

@@ -32,6 +32,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
+import com.bhx.common.utils.AppManager
 import com.bhx.common.utils.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -39,21 +40,24 @@ import com.haibin.calendarview.Calendar
 import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.model.AttestationStatusModel
+import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.ui.job.vm.JobDetailsViewModel
 import com.jxqm.jiangdou.ui.login.view.LoginActivity
 import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
 import com.jxqm.jiangdou.ui.user.view.MyResumeActivity
+import com.jxqm.jiangdou.ui.user.view.UserComplainActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.MapSelectDialog
 import com.jxqm.jiangdou.view.dialog.PromptDialog
-
+import com.jxqm.jiangdou.view.popupwindow.JobDetailsSelectPopupWindow
 
 /**
  * 工作详情界面
  * Created By bhx On 2019/8/12 0012 10:56
  */
 class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
+    private var mJobDetailsSelectPopupWindow: JobDetailsSelectPopupWindow? = null
     override fun getEventKey(): Any = Constants.EVENT_JOB_DETAILS
     private var mAttestationStatusModel: AttestationStatusModel? = null
     private var tvSignUp: TextView? = null
@@ -76,6 +80,7 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
         }
         //返回
         toolbar.setNavigationOnClickListener {
+
             finish()
         }
         //跳转到公司详情
@@ -83,6 +88,10 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             mAttestationStatusModel?.let {
                 startActivity<CompanyDetailsActivity>("AttestationStatusModel" to it.toJson())
             }
+        }
+        //
+        flShowDropDownSelect.clickWithTrigger {
+            showTypePopupWindow()
         }
         llJobAddress.clickWithTrigger {
             mJobDetailsModel?.let {
@@ -322,8 +331,33 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
         flowLayout.addView(textView)
     }
 
+    /**
+     * 展示工作类型
+     */
+    private fun showTypePopupWindow() {
+        if (mJobDetailsSelectPopupWindow == null) {
+            mJobDetailsSelectPopupWindow = JobDetailsSelectPopupWindow(this)
+            mJobDetailsSelectPopupWindow!!.mCallback = {
+                when (it) {
+                    0 -> {
+
+                    }
+                    1 -> {
+                        startActivity<UserComplainActivity>("jobId" to mJobDetailsModel?.id.toString())
+                    }
+                    2 -> {
+                        AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
+                    }
+                }
+            }
+        }
+        mJobDetailsSelectPopupWindow!!.showPopup(toolbar)
+    }
+
     companion object {
         const val STATUS_SINGUP = 0x01 //报名
         const val STATUS_PAY_DEPOSIT = 0x02 //支付押金
     }
 }
+
+

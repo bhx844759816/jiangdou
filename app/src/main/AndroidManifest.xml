@@ -85,11 +85,13 @@
         <activity android:name=".ui.user.view.TradeDetailsListActivity" />
         <activity android:name=".ui.user.view.TradeDetailsActivity" />
         <activity android:name=".ui.user.view.ModifyUserDetailsActivity" />
+        <activity android:name=".ui.user.view.CashOutSuccessActivity" />
         <activity android:name=".ui.map.MapActivity" />
         <activity android:name=".ui.employee.view.EmployeeOfferDetailsActivity" />
         <activity android:name=".ui.attestation.view.PeopleAttestationActivity" />
         <activity android:name=".ui.attestation.view.CompanyAttestationActivity" />
         <activity android:name=".ui.attestation.view.AlipayAttestaionActivity" />
+        <activity android:name=".ui.web.AgreementWebActivity"/>
         <activity
             android:name=".ui.home.view.MainActivity"
             android:launchMode="singleTask">

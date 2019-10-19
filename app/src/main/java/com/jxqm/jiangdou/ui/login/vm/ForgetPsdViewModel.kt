@@ -1,10 +1,27 @@
 package com.jxqm.jiangdou.ui.login.vm
 
 import com.bhx.common.mvvm.BaseViewModel
+import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.ui.login.vm.repository.ForgetPsdRepository
 
 /**
  * Created By bhx On 2019/8/6 0006 16:47
  */
 class ForgetPsdViewModel : BaseViewModel<ForgetPsdRepository>() {
+    /**
+     * 发送验证码
+     */
+    fun sendSmsCode(phone: String, deviceId: String) {
+        val params = mapOf("phone" to phone, "deviceId" to deviceId, "smsType" to "2")
+        mRepository.sendSmsCode(params)
+    }
+
+    /**
+     * 修改密码
+     */
+    fun modifyPsd(phone: String, deviceId: String, password: String, smsCode: String){
+        val params = mapOf("deviceId" to deviceId, "password" to password, "phone" to phone, "smsCode" to smsCode)
+        LogUtils.i("register params $params")
+        mRepository.modifyPsd(params)
+    }
 }

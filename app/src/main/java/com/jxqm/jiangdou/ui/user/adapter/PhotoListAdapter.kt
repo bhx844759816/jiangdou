@@ -13,13 +13,15 @@ import java.io.File
 /**
  * Created By bhx On 2019/8/19 0019 15:28
  */
-class PhotoListAdapter(context: Context, fileList: List<Any>) : RecyclerView.Adapter<PhotoListAdapter.MyHolder>() {
+class PhotoListAdapter(context: Context, fileList: List<Any>) :
+    RecyclerView.Adapter<PhotoListAdapter.MyHolder>() {
     private val mContext: Context = context
     private val mInflater = LayoutInflater.from(context)
     private val mFileList = fileList
     private var mAddCallBack: (() -> Unit)? = null
     private var mDeleteCallBack: ((Int) -> Unit)? = null
     private var maxSelectPhotoCounts = 9
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val view = mInflater.inflate(R.layout.adapter_photo_list, parent, false)
         return MyHolder(view)
@@ -30,6 +32,10 @@ class PhotoListAdapter(context: Context, fileList: List<Any>) : RecyclerView.Ada
             return mFileList.size + 1
         }
         return mFileList.size
+    }
+
+    public fun setMaxSelectPhotoCounts(counts: Int) {
+        maxSelectPhotoCounts = counts
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {

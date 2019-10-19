@@ -88,6 +88,20 @@
                         android:text="兼职详情"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_btn_size" />
+
+                    <FrameLayout
+                        android:id="@+id/flShowDropDownSelect"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right|center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/icon_job_details_drop_down" />
+                    </FrameLayout>
+
                 </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -423,8 +437,7 @@
                 android:id="@+id/vsPayDepositJob"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout="@layout/view_job_details_pay_deposit_layout"
-                />
+                android:layout="@layout/view_job_details_pay_deposit_layout" />
         </FrameLayout>
 
     </LinearLayout>

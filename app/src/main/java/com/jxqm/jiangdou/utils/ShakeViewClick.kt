@@ -38,6 +38,18 @@ fun <T : View> T.clickWithTrigger(time: Long = 600, block: (T) -> Unit) {
     }
 }
 
+fun <T : View> T.clickWithTrigger(time: Long = 600, isCanClick: (() -> Boolean)? = null, block: (T) -> Unit) {
+    triggerDelay = time
+    setOnClickListener {
+        if (isCanClick != null && !isCanClick()) {
+            return@setOnClickListener
+        }
+        if (clickEnable()) {
+            block(it as T)
+        }
+    }
+}
+
 private var <T : View> T.triggerLastTime: Long
     get() = if (getTag(1123460103) != null) getTag(1123460103) as Long else 0
     set(value) {

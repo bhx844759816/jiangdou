@@ -4,15 +4,20 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.utils.DensityUtil
+import com.bhx.common.utils.ToastUtils
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ui.user.adapter.PhotoListAdapter
 import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.GridItemSpaceDecoration
+import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.view.dialog.SingleSelectDialog
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.compress.CompressHelper
@@ -32,8 +37,11 @@ import java.io.File
  * Created By bhx On 2019/8/24 0024 17:39
  */
 class ComplainChargeTypeFragment : BaseLazyFragment() {
+    //    deposit(0,"押金"), service(1,"服务费") ;
+    private val mChargeType = listOf("押金", "服务费")
     private lateinit var mPhotoLisAdapter: PhotoListAdapter
     private val mPhotoList = mutableListOf<File>()
+    private var mChargeTypeCode = -1
 
     override fun getLayoutId(): Int = R.layout.fragment_complain_charge_type
 
@@ -42,14 +50,78 @@ class ComplainChargeTypeFragment : BaseLazyFragment() {
         super.onViewCreated(view, savedInstanceState)
         rvPhotoList.layoutManager = GridLayoutManager(mContext, 4)
         mPhotoLisAdapter = PhotoListAdapter(mContext, mPhotoList)
+        mPhotoLisAdapter.setMaxSelectPhotoCounts(8)
         rvPhotoList.addItemDecoration(GridItemSpaceDecoration(DensityUtil.dip2px(mContext, 20f)))
         rvPhotoList.adapter = mPhotoLisAdapter
         mPhotoLisAdapter.setAddCallBack {
-            selectHeadPhoto(8, REQUEST_PHOTO_SHOW_CODE)
+            selectHeadPhoto(8 - mPhotoList.size, REQUEST_PHOTO_SHOW_CODE)
         }
         mPhotoLisAdapter.setDeleteCallBack {
             mPhotoList.removeAt(it)
             mPhotoLisAdapter.notifyDataSetChanged()
+        }
+        rlSelectChargeType.clickWithTrigger {
+            activity?.let {
+                SingleSelectDialog.show(it, mChargeType) { index ->
+                    mChargeTypeCode = index
+                    tvChargeText.text = mChargeType[index]
+                }
+            }
+        }
+        //提交
+        tvSubmit.clickWithTrigger {
+            val charge = etInputChargeAmount.text.toString().trim()
+            val content = etInputContent.text.toString().trim()
+            val address = etInputLocation.text.toString().trim()
+            if (mChargeTypeCode == -1) {
+                ToastUtils.toastShort("请选择收费类型")
+                return@clickWithTrigger
+            }
+            if (charge.isEmpty()) {
+                ToastUtils.toastShort("请输入收费金额")
+                return@clickWithTrigger
+            }
+            if (content.isEmpty()) {
+                ToastUtils.toastShort("请输入情况描述")
+                return@clickWithTrigger
+            }
+            val params = mutableMapOf<String, Any>()
+            params["loss"] = rbIsOweSalary.isChecked
+            params["chargeTypeCode"] = mChargeTypeCode
+            params["amount"] = charge
+            if (address.isNotEmpty())
+                params["address"] = address
+            params["content"] = content
+            if (activity is ComplainDetailsActivity) {
+                (activity as ComplainDetailsActivity).submitComplain(params, mPhotoList)
+            }
+
+        }
+        etInputChargeAmount.addTextChangedListener {
+            afterTextChanged {
+                changeSubmitStatus()
+            }
+        }
+        etInputContent.addTextChangedListener {
+            afterTextChanged {
+                changeSubmitStatus()
+            }
+        }
+
+    }
+
+    /**
+     * 改变提价按钮的状态
+     */
+    private fun changeSubmitStatus() {
+        val charge = etInputChargeAmount.text.toString().trim()
+        val content = etInputContent.text.toString().trim()
+
+        val isEnabled = charge.isNotEmpty() && content.isNotEmpty() && mChargeTypeCode != -1
+        if (isEnabled) {
+            tvSubmit.setBackgroundResource(R.drawable.shape_button_select)
+        } else {
+            tvSubmit.setBackgroundResource(R.drawable.shape_button_default)
         }
     }
 
@@ -93,7 +165,8 @@ class ComplainChargeTypeFragment : BaseLazyFragment() {
     private fun handlePhoto(paths: List<String>) {
         val disposable = Observable.create(ObservableOnSubscribe<Any> {
             paths.forEach { path ->
-                val file = CompressHelper.getDefault(mContext).compressToFile(FileUtil.getFileByPath(path))
+                val file =
+                    CompressHelper.getDefault(mContext).compressToFile(FileUtil.getFileByPath(path))
                 mPhotoList.add(file)
             }
             it.onNext(Any())

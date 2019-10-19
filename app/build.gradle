@@ -65,6 +65,7 @@ dependencies {
     implementation deps.expandTextView
     implementation deps.appUpdate
     implementation deps.appUpdate_ktx
+    implementation deps.agentweb
     implementation project(':common_base')
     implementation project(':common_photo')
     implementation project(':zbarlibary')

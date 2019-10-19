@@ -157,6 +157,7 @@
             android:textSize="@dimen/text_small_size" />
 
         <TextView
+            android:id="@+id/tvPublishAgreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="《匠小豆发布兼职协议》"
@@ -182,7 +183,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/previewResume"
+            android:text="预览"
             android:textColor="@color/colorAccent" />
 
         <TextView

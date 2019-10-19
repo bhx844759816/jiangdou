@@ -5,104 +5,116 @@
     android:background="@color/app_bg"
     android:orientation="vertical">
 
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:text="填写详细资料有助于我们更快地解决你的投诉"
-        android:textColor="@color/text_hint"
-        android:textSize="@dimen/text_small_size" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="11"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="相关凭证"
-                android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPhotoList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="请提供相关凭证，如：收费人聊天记录，合同协议等。单张照片不超过5M，最多不超过8张。"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="填写详细资料有助于我们更快地解决你的投诉"
                 android:textColor="@color/text_hint"
-                android:textSize="@dimen/text_big_small_size" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tvSituationDescribe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="情况描述"
-                    android:textColor="@color/text_title"
-                    android:textSize="@dimen/text_default_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/tvSituationDescribe"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_toRightOf="@id/tvSituationDescribe"
-                    android:text="*"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_small_size" />
-            </RelativeLayout>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:gravity="top"
-                android:hint="请填写具体情况或其他证据（字数200字以内）"
-                android:textColor="@color/text_default"
-                android:textColorHint="@color/text_hint"
                 android:textSize="@dimen/text_small_size" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_margin="10dp"
-            android:background="@color/colorAccent"
-            android:gravity="center"
-            android:text="提交"
-            android:textColor="@color/white" />
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="相关凭证"
+                    android:textColor="@color/text_default"
+                    android:textSize="@dimen/text_default_size" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPhotoList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="请提供相关凭证，如：收费人聊天记录，合同协议等。单张照片不超过5M，最多不超过8张。"
+                    android:textColor="@color/text_hint"
+                    android:textSize="@dimen/text_big_small_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvSituationDescribe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="情况描述"
+                        android:textColor="@color/text_title"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tvSituationDescribe"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toRightOf="@id/tvSituationDescribe"
+                        android:text="*"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_small_size" />
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/etInputContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="12dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="请填写具体情况或其他证据（字数200字以内）"
+                    android:textColor="@color/text_default"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="@dimen/text_small_size" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_button_default"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/white" />
 </LinearLayout>

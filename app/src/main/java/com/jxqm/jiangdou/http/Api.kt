@@ -17,6 +17,8 @@ object Api {
     const val UPLOAD_IMG = "/upload/image"
     //注册
     const val REGISTER = "/register"
+    //忘记密码
+    const val FORGET_PSD = "/retrieve-password"
     //用户信息
     const val USER_INFO = "/account/me"
     //获取简历 和
@@ -155,5 +157,10 @@ object Api {
     const val GET_TRADE_DETAILS_LIST = "/account/trade-details"
     //更新用户信息
     const val UPDATE_USER_MODEL = "/account/update"
-
+    //投诉
+    const val  JOB_COMPLAINT = "/employee/job/complaint"
+    //提现 /account/withdraw/sendsms
+    const val CASH_OUT_MONEY = "/account/withdraw"
+    //提现发送验证码
+    const val CASH_OUT_MONEY_SEND_SMS_CODE = "/account/withdraw/sendsms"
 }

@@ -15,10 +15,12 @@ import kotlinx.android.synthetic.main.activity_user_complain.*
  * Created By bhx On 2019/8/20 0020 11:11
  */
 class UserComplainActivity : BaseActivity() {
+    private var mJobId: String? = null
     override fun getLayoutId(): Int = R.layout.activity_user_complain
 
     override fun initView() {
         super.initView()
+        mJobId = intent.getStringExtra("jobId")
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
         userComplainBack.clickWithTrigger {
@@ -49,6 +51,7 @@ class UserComplainActivity : BaseActivity() {
         }
         val bundle = Bundle()
         bundle.putInt("ComplainType", type)
+        bundle.putString("jobId", mJobId)
         startActivity<ComplainDetailsActivity>(bundle)
     }
 }

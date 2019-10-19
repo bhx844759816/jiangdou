@@ -43,6 +43,7 @@ version.gifDrawable = "1.2.17"
 version.uiStatus = "1.0.3"
 version.expandTextView="0.1.4"
 version.appUpdate = "3.5.2"
+version.agentweb = "4.1.2"
 //
 version.appUpdate_ktx = "1.2.3"
 
@@ -107,5 +108,7 @@ deps.expandTextView = "com.ms-square:expandableTextView:$version.expandTextView"
 //版本更新 -kotlin
 deps.appUpdate_ktx = "com.qianwen:update-app-kotlin:$version.appUpdate_ktx"
 deps.appUpdate = "com.qianwen:update-app:$version.appUpdate"
+//
+deps.agentweb = "com.just.agentweb:agentweb:$version.agentweb"
 //底部导航
 deps.bottomNavigationBar = "com.ashokvarma.android:bottom-navigation-bar:$version.bottomNavigationBar"

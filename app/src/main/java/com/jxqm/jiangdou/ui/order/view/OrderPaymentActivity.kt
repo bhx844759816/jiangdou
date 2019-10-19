@@ -22,6 +22,7 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
 import com.jxqm.jiangdou.ui.order.vm.OrderPaymentViewModel
 import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
+import com.jxqm.jiangdou.ui.web.AgreementWebActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.PromptDialog
@@ -71,6 +72,9 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
             } else {
 
             }
+        }
+        tvDepositRule.clickWithTrigger {
+            startActivity<AgreementWebActivity>("Status" to AgreementWebActivity.TAG_DEPOSIT_AGREEMENT)
         }
         //返回键监听
         toolbar.setNavigationOnClickListener {

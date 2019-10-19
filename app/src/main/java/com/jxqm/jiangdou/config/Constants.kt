@@ -41,7 +41,12 @@ class Constants {
         const val TAG_SEND_SMS_CODE_RESULT = "tag_send_sms_code_result" //发送验证码结果
         const val TAG_GET_USER_INFO_SUCCESS = "tag_get_token_result"
         const val TAG_GET_TOKEN_RESULT_ERROR = "tag_get_token_result_error"
+
         const val EVENT_KEY_FORGET_PSD = "event_key_forget_psd" //忘记密码界面
+        const val TAG_FORGET_PSD_GET_SMS_CODE_SUCCESS =
+            "tag_forget_psd_get_sms_code_success" //获取验证码成功
+        const val TAG_FORGET_PSD_MODIFY_PSD_SUCCESS = "tag_forget_psd_modify_psd_success"//修改密码成功
+
         const val EVENT_KEY_REGISTER = "event_key_register" //注册界面
         const val TAG_REGISTER_GET_CODE_SUCCESS = "tag_register_get_code_success"//获取验证码成功
         const val TAG_REGISTER_SUCCESS = "tag_register_success"//注册成功
@@ -218,7 +223,8 @@ class Constants {
         const val TAG_GET_RESUME_DETAILS_SUCCESS = "tag_get_resume_details_success"//获取用户简历成功
 
         const val EVENT_KEY_MY_COLLECTION_JOB = "event_key_my_collection_job"//我的收藏列表
-        const val TAG_GET_MY_COLLECTION_LIST_SUCCESS = "tag_get_my_collection_list_success" //获取收藏列表成功
+        const val TAG_GET_MY_COLLECTION_LIST_SUCCESS =
+            "tag_get_my_collection_list_success" //获取收藏列表成功
         const val TAG_GET_MY_COLLECTION_LIST_ERROR = "tag_get_my_collection_list_error"//获取收藏列表失败
         const val TAG_CANCEL_COLLECTION_FINISH = "tag_cancel_collection_finish"//取消收藏完成
 
@@ -245,5 +251,17 @@ class Constants {
 
         const val EVENT_MODIFY_USER_DETAILS = "event_modify_user_details"//个人信息的修改
         const val TAG_UPDATE_USER_SUCCESS = "tag_update_user_success"//更新用户信息成功
+
+        const val EVENT_COMPLAIN_DETAILS = "event_complain_details"//投诉
+        const val TAG_JOB_COMPLAIN_SUCCESS = "tag_job_complain_success" //投诉成功
+
+        const val EVENT_CASH_OUT = "event_cash_out"
+        const val TAG_CASH_OUT_SEND_SMS_CODE_SUCCESS = "tag_cash_out_send_sms_code_success"//发送验证码成功
+        const val TAG_CASH_OUT_SUCCESS = "tag_cash_out_success"//提现成功
+
+        const val EVENT_CASH_OUT_SUCCESS = "event_cash_out_success" //提现成功
+
+        const val EVENT_AGREEMENT_WEB = "event_agreement_web"
+
     }
 }

@@ -5,331 +5,351 @@
     android:background="@color/app_bg"
     android:orientation="vertical">
 
-    <TextView
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:text="填写详细资料有助于我们更快地解决你的投诉"
-        android:textColor="@color/text_hint"
-        android:textSize="@dimen/text_small_size" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp">
-
-                <TextView
-                    android:id="@+id/tvChargeTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="工资拖欠"
-                    android:textColor="@color/text_title"
-                    android:textSize="@dimen/text_default_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/tvChargeTitle"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_toRightOf="@id/tvChargeTitle"
-                    android:text="*"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_small_size" />
-            </RelativeLayout>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@null"
-                    android:checked="true"
-                    android:drawableLeft="@drawable/select_round_circle_select"
-                    android:drawablePadding="10dp"
-                    android:text="是"
-                    android:textSize="@dimen/text_default_size" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="36dp"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/select_round_circle_select"
-                    android:drawablePadding="10dp"
-                    android:text="否"
-                    android:textSize="@dimen/text_default_size" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <View style="@style/DividerLineTheme" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp">
-
-                <TextView
-                    android:id="@+id/tvChargeType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="收费类型"
-                    android:textColor="@color/text_title"
-                    android:textSize="@dimen/text_default_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/tvChargeType"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_toRightOf="@id/tvChargeType"
-                    android:text="*"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_small_size" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="请选择"
-                    android:textColor="@color/text_default"
-                    android:textColorHint="@color/text_hint"
-                    android:textSize="@dimen/text_small_size" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/icon_arrow_right" />
-
-            </RelativeLayout>
-        </LinearLayout>
-
-        <View style="@style/DividerLineTheme" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp">
-
-                <TextView
-                    android:id="@+id/tvChargeAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="收费金额"
-                    android:textColor="@color/text_title"
-                    android:textSize="@dimen/text_default_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/tvChargeAmount"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_toRightOf="@id/tvChargeAmount"
-                    android:text="*"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_small_size" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="11"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    android:hint="请选择"
-                    android:inputType="number"
-                    android:maxEms="10"
-                    android:maxLength="1"
-                    android:textColor="@color/text_default"
-                    android:textColorHint="@color/text_hint"
-                    android:textSize="@dimen/text_small_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="元"
-                    android:textColor="@color/text_default"
-                    android:textSize="@dimen/text_default_size" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <View style="@style/DividerLineTheme" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp">
-
-                <TextView
-                    android:id="@+id/tvInterviewLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="面试地点"
-                    android:textColor="@color/text_title"
-                    android:textSize="@dimen/text_default_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/tvInterviewLocation"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_toRightOf="@id/tvInterviewLocation"
-                    android:text="*"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_small_size"
-                    android:visibility="invisible" />
-            </RelativeLayout>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:layout_weight="11"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="请输入面试地点"
-                android:maxLength="1"
-                android:textColor="@color/text_default"
-                android:textColorHint="@color/text_hint"
-                android:textSize="@dimen/text_small_size" />
-
-        </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="11"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="16dp">
-
+            android:orientation="vertical">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="相关凭证"
-                android:textColor="@color/text_default"
-                android:textSize="@dimen/text_default_size" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPhotoList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="填写详细资料有助于我们更快地解决你的投诉"
+                android:textColor="@color/text_hint"
+                android:textSize="@dimen/text_small_size" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp">
+
+                    <TextView
+                        android:id="@+id/tvChargeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="工资拖欠"
+                        android:textColor="@color/text_title"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tvChargeTitle"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toRightOf="@id/tvChargeTitle"
+                        android:text="*"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_small_size" />
+                </RelativeLayout>
+
+                <RadioGroup
+                    android:id="@+id/rgOweSalary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbIsOweSalary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawableLeft="@drawable/select_round_circle_select"
+                        android:drawablePadding="10dp"
+                        android:text="是"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <RadioButton
+                        android:id="@+id/rbNotOweSalary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="36dp"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/select_round_circle_select"
+                        android:drawablePadding="10dp"
+                        android:text="否"
+                        android:textSize="@dimen/text_default_size" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <View style="@style/DividerLineTheme" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp">
+
+                    <TextView
+                        android:id="@+id/tvChargeType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="收费类型"
+                        android:textColor="@color/text_title"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tvChargeType"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toRightOf="@id/tvChargeType"
+                        android:text="*"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_small_size" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlSelectChargeType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tvChargeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="请选择"
+                        android:textColor="@color/text_default"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="@dimen/text_small_size" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/icon_arrow_right" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View style="@style/DividerLineTheme" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp">
+
+                    <TextView
+                        android:id="@+id/tvChargeAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="收费金额"
+                        android:textColor="@color/text_title"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tvChargeAmount"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toRightOf="@id/tvChargeAmount"
+                        android:text="*"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_small_size" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etInputChargeAmount"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="11"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入收费金额"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:maxLines="1"
+                        android:textColor="@color/text_default"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="@dimen/text_small_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="元"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_default_size" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/DividerLineTheme" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp">
+
+                    <TextView
+                        android:id="@+id/tvInterviewLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="面试地点"
+                        android:textColor="@color/text_title"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tvInterviewLocation"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toRightOf="@id/tvInterviewLocation"
+                        android:text="*"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_small_size"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/etInputLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="11"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="请输入面试地点"
+                    android:maxLines="1"
+                    android:textColor="@color/text_default"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="@dimen/text_small_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="请提供相关凭证，如：收费人聊天记录，合同协议等。单张照片不超过5M，最多不超过8张。"
-                android:textColor="@color/text_hint"
-                android:textSize="@dimen/text_big_small_size" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
-                    android:id="@+id/tvSituationDescribe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="情况描述"
-                    android:textColor="@color/text_title"
+                    android:text="相关凭证"
+                    android:textColor="@color/text_default"
                     android:textSize="@dimen/text_default_size" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPhotoList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/tvSituationDescribe"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_toRightOf="@id/tvSituationDescribe"
-                    android:text="*"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_small_size" />
-            </RelativeLayout>
+                    android:layout_marginTop="10dp"
+                    android:text="请提供相关凭证，如：收费人聊天记录，合同协议等。单张照片不超过5M，最多不超过8张。"
+                    android:textColor="@color/text_hint"
+                    android:textSize="@dimen/text_big_small_size" />
+            </LinearLayout>
 
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:gravity="top"
-                android:hint="请填写具体情况或其他证据（字数200字以内）"
-                android:textColor="@color/text_default"
-                android:textColorHint="@color/text_hint"
-                android:textSize="@dimen/text_small_size" />
+                android:layout_height="150dp"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvSituationDescribe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="情况描述"
+                        android:textColor="@color/text_title"
+                        android:textSize="@dimen/text_default_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tvSituationDescribe"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toRightOf="@id/tvSituationDescribe"
+                        android:text="*"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text_small_size" />
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/etInputContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="12dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="请填写具体情况或其他证据（字数200字以内）"
+                    android:maxLength="200"
+                    android:textColor="@color/text_default"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="@dimen/text_small_size" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_margin="10dp"
-            android:background="@color/colorAccent"
-            android:gravity="center"
-            android:text="提交"
-            android:textColor="@color/white" />
-    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_button_default"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/white" />
 </LinearLayout>

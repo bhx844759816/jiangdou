@@ -63,6 +63,10 @@ interface ApiService {
     @POST(Api.REGISTER)
     fun register(@Body body: RequestBody): Observable<HttpResult<Any>>
 
+    @Headers("Content-type:application/json")
+    @POST(Api.FORGET_PSD)
+    fun modifyPsd(@Body body: RequestBody): Observable<HttpResult<Any>>
+
     @GET(Api.USER_INFO)
     fun getUserInfo(): Observable<HttpResult<UserModel>>
 
@@ -547,4 +551,23 @@ interface ApiService {
      */
     @POST(Api.UPDATE_USER_MODEL)
     fun updateUserInfo(@Body body: MultipartBody): Observable<HttpResult<UserModel>>
+
+    /**
+     * 提交投诉
+     */
+    @POST(Api.JOB_COMPLAINT)
+    fun complaintJob(@Body body: MultipartBody): Observable<HttpResult<Any>>
+
+    /**
+     * 发送提现验证码
+     */
+    @POST(Api.CASH_OUT_MONEY_SEND_SMS_CODE)
+    fun sendSmsCodeCashOut(): Observable<HttpResult<Any>>
+
+    /**
+     * 提现
+     */
+    @Multipart
+    @POST(Api.CASH_OUT_MONEY)
+    fun cashOutMoney(@PartMap params: MutableMap<String, RequestBody>): Observable<HttpResult<Any>>
 }

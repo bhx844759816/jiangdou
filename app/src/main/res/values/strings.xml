@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">小豆</string>
+    <string name="app_name">小豆青年</string>
     <string name="accountLogin">账号密码登录</string>
     <string name="phoneLogin">手机快捷登录</string>
     <string name="inputPhone">请输入手机号</string>

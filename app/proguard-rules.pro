@@ -168,6 +168,11 @@
     long producerIndex;
     long consumerIndex;
 }
+#agentWeb混淆配置
+-keep class com.just.agentweb.** {
+    *;
+}
+-dontwarn com.just.agentweb.**
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode producerNode;
 }

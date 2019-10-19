@@ -16,7 +16,9 @@ import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
 import com.jxqm.jiangdou.model.AttestationStatusModel
+import com.jxqm.jiangdou.ui.web.AgreementWebActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.fragment_job_contacts.*
 
 /**
@@ -38,6 +40,9 @@ class JobContactsFragment : BaseLazyFragment() {
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
         initStatus()
+        tvPublishAgreement.clickWithTrigger {
+            mContext.startActivity<AgreementWebActivity>("Status" to AgreementWebActivity.TAG_PUBLISH_JOB_AGREEMENT)
+        }
         //发布兼职
         tvImmediatelyPublish.clickWithTrigger {
             val contact = etContacts.text.toString().trim()

@@ -8,9 +8,13 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.utils.DensityUtil
+import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ui.user.adapter.PhotoListAdapter
 import com.jxqm.jiangdou.utils.GridItemSpaceDecoration
+import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.view.dialog.SingleSelectDialog
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.compress.CompressHelper
@@ -30,22 +34,63 @@ import java.io.File
  * Created By bhx On 2019/8/26 0026 10:29
  */
 class ComplainFalseMessageTypeFragment : BaseLazyFragment() {
+    private val mMessageType = listOf("职位不存在", "职位已招满", "职位信息描述不符", "职位薪资描述不符", "职位地点描述不符")
     private lateinit var mPhotoLisAdapter: PhotoListAdapter
     private val mPhotoList = mutableListOf<File>()
+    private var mMessageCode = -1
     override fun getLayoutId(): Int = R.layout.fragment_complain_false_message_type
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvPhotoList.layoutManager = GridLayoutManager(mContext, 4)
         mPhotoLisAdapter = PhotoListAdapter(mContext, mPhotoList)
+        mPhotoLisAdapter.setMaxSelectPhotoCounts(8)
         rvPhotoList.addItemDecoration(GridItemSpaceDecoration(DensityUtil.dip2px(mContext, 20f)))
         rvPhotoList.adapter = mPhotoLisAdapter
         mPhotoLisAdapter.setAddCallBack {
-            selectHeadPhoto(8, REQUEST_PHOTO_SHOW_CODE)
+            selectHeadPhoto(8 - mPhotoList.size, REQUEST_PHOTO_SHOW_CODE)
         }
         mPhotoLisAdapter.setDeleteCallBack {
             mPhotoList.removeAt(it)
             mPhotoLisAdapter.notifyDataSetChanged()
+        }
+        rlSelectMessageType.clickWithTrigger {
+            activity?.let {
+                SingleSelectDialog.show(it, mMessageType) { index ->
+                    mMessageCode = index + 1
+                    tvMessageType.text = mMessageType[index]
+                }
+            }
+        }
+        //提交
+        tvSubmit.clickWithTrigger {
+            val content = etInputContent.text.toString().trim()
+            if (mMessageCode == -1) {
+                ToastUtils.toastShort("请选择虚假理由")
+                return@clickWithTrigger
+            }
+            if (content.isEmpty()) {
+                ToastUtils.toastShort("请输入情况描述")
+                return@clickWithTrigger
+            }
+            val params = mutableMapOf<String, Any>()
+            params["content"] = content
+            params["contentTypeCode"] = mMessageCode
+            if (activity is ComplainDetailsActivity) {
+                (activity as ComplainDetailsActivity).submitComplain(params, mPhotoList)
+            }
+
+        }
+        etInputContent.addTextChangedListener {
+            afterTextChanged {
+                val content = etInputContent.text.toString().trim()
+                val isEnabled = content.isNotEmpty() && mMessageCode != -1
+                if (isEnabled) {
+                    tvSubmit.setBackgroundResource(R.drawable.shape_button_select)
+                } else {
+                    tvSubmit.setBackgroundResource(R.drawable.shape_button_default)
+                }
+            }
         }
     }
 
@@ -90,7 +135,8 @@ class ComplainFalseMessageTypeFragment : BaseLazyFragment() {
     private fun handlePhoto(paths: List<String>) {
         val disposable = Observable.create(ObservableOnSubscribe<Any> {
             paths.forEach { path ->
-                val file = CompressHelper.getDefault(mContext).compressToFile(FileUtil.getFileByPath(path))
+                val file =
+                    CompressHelper.getDefault(mContext).compressToFile(FileUtil.getFileByPath(path))
                 mPhotoList.add(file)
             }
             it.onNext(Any())

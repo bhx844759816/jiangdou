@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/colorAccent">
+
         <RelativeLayout
             android:id="@+id/cashOutBack"
             android:layout_width="60dp"
@@ -54,10 +55,13 @@
                 android:textSize="@dimen/text_default_size" />
 
             <EditText
+                android:id="@+id/etInputAmount"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
+                android:maxLength="4"
+                android:inputType="number"
                 android:gravity="center_vertical"
                 android:hint="请输入提取数量，最多可提取1000豆币"
                 android:textColor="@color/text_default"
@@ -82,12 +86,13 @@
                 android:textSize="@dimen/text_default_size" />
 
             <EditText
+                android:id="@+id/etInputAlipayNum"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:text="188****8888"
+                android:hint="请输入支付宝账号"
                 android:textColor="@color/text_default"
                 android:textColorHint="@color/text_hint"
                 android:textSize="@dimen/text_default_size" />
@@ -111,12 +116,13 @@
                 android:textSize="@dimen/text_default_size" />
 
             <EditText
+                android:id="@+id/etInputName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:text="何莉莉"
+                android:hint="请输入姓名"
                 android:textColor="@color/text_default"
                 android:textColorHint="@color/text_hint"
                 android:textSize="@dimen/text_default_size" />
@@ -138,15 +144,14 @@
                 android:textColor="@color/text_title"
                 android:textSize="@dimen/text_default_size" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tvInputPhone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:text="188****8888"
                 android:textColor="@color/text_default"
-                android:textColorHint="@color/text_hint"
                 android:textSize="@dimen/text_default_size" />
         </LinearLayout>
 
@@ -168,6 +173,7 @@
                 android:textSize="@dimen/text_default_size" />
 
             <EditText
+                android:id="@+id/etInputSmsCode"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
@@ -183,11 +189,13 @@
                 android:textSize="@dimen/text_default_size" />
 
             <TextView
+                android:id="@+id/tvGetCode"
                 android:layout_width="82dp"
                 android:layout_height="35dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/shape_cash_code_verify_code_default_bg"
+                android:background="@drawable/select_textview_enabled_bg"
                 android:gravity="center"
+                android:enabled="true"
                 android:text="发送验证码"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_big_small_size" />
@@ -210,6 +218,7 @@
                 android:textSize="@dimen/text_default_size" />
 
             <TextView
+                android:id="@+id/tvMoney"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
@@ -224,9 +233,10 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvSubmit"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/shape_button_default"
         android:gravity="center"
         android:text="确认提现"
         android:textColor="@color/white"

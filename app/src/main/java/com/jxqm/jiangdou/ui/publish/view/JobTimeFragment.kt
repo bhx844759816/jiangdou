@@ -129,11 +129,6 @@ class JobTimeFragment : BaseLazyFragment() {
                 mRangeDateList.add(list)
                 return@forEachIndexed
             }
-//            if (index == mRangeCalendarList.size - 1) {
-//                val list = mRangeDateList.last()
-//                list.add(calendar)
-//                return@forEachIndexed
-//            }
             val lastCalendar = mRangeCalendarList[index - 1]
             val lastTimeMillis = lastCalendar.timeInMillis + 24 * 60 * 60 * 1000
             val curTimeMillis = calendar.timeInMillis

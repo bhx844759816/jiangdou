@@ -28,5 +28,6 @@ class JobSingUpSuccessActivity : BaseActivity() {
             LiveBus.getDefault().postEvent(Constants.EVENT_KEY_MAIN,Constants.TAG_SIGN_UP_SUCCESS_STATUS,true)
             AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
         }
+
     }
 }

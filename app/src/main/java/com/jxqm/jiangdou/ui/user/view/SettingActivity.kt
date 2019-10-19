@@ -18,8 +18,10 @@ import com.jxqm.jiangdou.http.AppUpdateManager
 import com.jxqm.jiangdou.http.HttpResult
 import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.model.AppUpdateModel
+import com.jxqm.jiangdou.ui.login.view.ForgetPsdActivity
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.LoadingDialog
 import com.vector.update_app.UpdateAppBean
 import com.vector.update_app_kotlin.check
@@ -49,6 +51,9 @@ class SettingActivity : BaseActivity() {
         rlNotifyType.clickWithTrigger {
             Utils.jumpNotificationSetting(this)
         }
+        rlModifyPsd.clickWithTrigger {
+            startActivity<ForgetPsdActivity>()
+        }
         tvLogOut.clickWithTrigger {
             MyApplication.instance().doLogOut()
             LiveBus.getDefault().postEvent(
@@ -58,6 +63,7 @@ class SettingActivity : BaseActivity() {
             )
             finish()
         }
+
     }
 
     override fun initData() {

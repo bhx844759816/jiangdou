@@ -15,7 +15,9 @@ import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.ui.login.vm.RegisterViewModel
+import com.jxqm.jiangdou.ui.web.AgreementWebActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.jxqm.jiangdou.utils.startActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_forget_psd.*
@@ -46,6 +48,9 @@ class RegisterActivity : BaseDataActivity<RegisterViewModel>() {
         flBack.clickWithTrigger {
             finish()
         }
+        tvUserAgreement.clickWithTrigger {
+            startActivity<AgreementWebActivity>("Status" to AgreementWebActivity.TAG_USER_AGREEMENT)
+        }
         tvGetCode.clickWithTrigger {
             val phone = etInputPhone.text.toString().trim()
             val deviceId = DeviceUtils.getDeviceId(this)
@@ -74,7 +79,7 @@ class RegisterActivity : BaseDataActivity<RegisterViewModel>() {
         val phone = etInputPhone.text.toString().trim()
         val code = etCode.text.toString().trim()
         val passWord = etPassword.text.toString().trim()
-        return  PhoneUtils.isMobile(phone) and code.isNotEmpty() and passWord.isNotEmpty() and (passWord.length > 6)
+        return  PhoneUtils.isMobile(phone) and code.isNotEmpty() and passWord.isNotEmpty() and (passWord.length > 6) and cbProtocol.isChecked
     }
    
     override fun dataObserver() {

@@ -43,7 +43,7 @@ class AllJobScreenRepository : BaseEventRepository() {
                 .compose(applySchedulersForLoadingDialog())
                 .subscribe({
                     if (it.code == "0") {//获取全部工作成功
-                        if (it.data.records.size == it.data.pageSize) {
+                        if (it.data.records.isNotEmpty()) {
                             callBack.invoke()
                         }
                         sendData(
@@ -74,7 +74,7 @@ class AllJobScreenRepository : BaseEventRepository() {
                 .compose(applySchedulers())
                 .subscribe({
                     if (it.code == "0") {//获取全部工作成功
-                        if (it.data.records.size == it.data.pageSize) {
+                        if (it.data.records.isNotEmpty()) {
                             callBack.invoke()
                         }
                         sendData(
