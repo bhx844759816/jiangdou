@@ -13,6 +13,7 @@ import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ext.isRightInput
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.UserModel
 import com.jxqm.jiangdou.ui.user.vm.ModifyUserDetailsViewModel
@@ -62,7 +63,6 @@ class ModifyUserDetailsActivity : BaseDataActivity<ModifyUserDetailsViewModel>()
                 tvUserSex.text = mSexList[it]
             }
         }
-
         tvUploadResume.clickWithTrigger {
             val paramsMap = mutableMapOf<String, String>()
             val filesMap = mutableMapOf<String, File>()
@@ -77,6 +77,10 @@ class ModifyUserDetailsActivity : BaseDataActivity<ModifyUserDetailsViewModel>()
                 filesMap["avatarFile"] = it
             }
             mViewModel.updateUserInfo(paramsMap, filesMap)
+        }
+
+        rlBack.clickWithTrigger {
+            finish()
         }
     }
 

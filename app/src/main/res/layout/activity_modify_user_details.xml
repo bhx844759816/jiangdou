@@ -11,7 +11,7 @@
         android:background="@color/white">
 
         <RelativeLayout
-            android:id="@+id/myResumeBack"
+            android:id="@+id/rlBack"
             android:layout_width="60dp"
             android:layout_height="match_parent">
 

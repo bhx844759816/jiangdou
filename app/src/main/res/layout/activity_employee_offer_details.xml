@@ -42,18 +42,13 @@
             style="@style/DividerLineTheme"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tvCompanyLogo"
+    <ImageView
+        android:id="@+id/ivCompanyLogo"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_margin="18dp"
+        android:layout_margin="15dp"
         android:background="@drawable/shape_circle_gradually_change"
         android:gravity="center"
-        android:text="匠"
-        android:textColor="@color/white"
-        android:textSize="@dimen/cp_index_bar_width"
-        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar" />
 
@@ -65,9 +60,9 @@
         android:text="河南匠小豆品牌管理有限公司"
         android:textColor="#434343"
         android:textSize="@dimen/text_default_size"
-        app:layout_constraintBottom_toBottomOf="@id/tvCompanyLogo"
-        app:layout_constraintLeft_toRightOf="@id/tvCompanyLogo"
-        app:layout_constraintTop_toTopOf="@id/tvCompanyLogo"
+        app:layout_constraintBottom_toBottomOf="@id/ivCompanyLogo"
+        app:layout_constraintLeft_toRightOf="@id/ivCompanyLogo"
+        app:layout_constraintTop_toTopOf="@id/ivCompanyLogo"
 
         />
 
@@ -77,8 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/icon_flower"
-        app:layout_constraintLeft_toLeftOf="@id/tvCompanyLogo"
-        app:layout_constraintTop_toBottomOf="@id/tvCompanyLogo" />
+        app:layout_constraintLeft_toLeftOf="@id/ivCompanyLogo"
+        app:layout_constraintTop_toBottomOf="@id/ivCompanyLogo" />
 
     <TextView
         android:layout_width="0dp"

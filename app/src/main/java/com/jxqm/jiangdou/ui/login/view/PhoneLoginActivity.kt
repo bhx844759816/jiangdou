@@ -15,6 +15,7 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.text.method.TransformationMethod
 import androidx.lifecycle.Observer
+import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.AppManager
 import com.bhx.common.utils.DeviceUtils
 import com.bhx.common.utils.PhoneUtils
@@ -109,6 +110,7 @@ class PhoneLoginActivity : BaseDataActivity<PhoneLoginViewModel>() {
     override fun dataObserver() {
         registerObserver(Constants.TAG_PHONE_LOGIN_SUCCESS, UserModel::class.java).observe(this, Observer {
             //登录成功
+            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_MAIN_MY, Constants.TAG_MAIN_MY_LOGIN_SUCCESS, true)
             //发送登录成功得消息
             AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
         })

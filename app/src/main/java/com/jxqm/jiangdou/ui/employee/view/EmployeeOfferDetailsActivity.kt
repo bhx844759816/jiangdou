@@ -5,14 +5,17 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import com.bhx.common.http.RxHelper
+import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.model.JobEmployeeModel
 import com.jxqm.jiangdou.ui.employee.vm.EmployeeOfferDetailsViewModel
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
+import com.jxqm.jiangdou.utils.GlideCircleTransform
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.MapSelectDialog
@@ -39,7 +42,8 @@ class EmployeeOfferDetailsActivity : BaseDataActivity<EmployeeOfferDetailsViewMo
             tvJobType.text = mJobDetailsModel?.title
             tvLocation.text =
                 "地址： ${mJobDetailsModel?.city + mJobDetailsModel?.area + mJobDetailsModel?.address + mJobDetailsModel?.addressDetail}"
-
+            Glide.with(this).load(Api.HTTP_BASE_URL + "/" + mJobDetailsModel?.logo)
+                .transform(GlideCircleTransform(this)).into(ivCompanyLogo)
         }
         tvLocation.clickWithTrigger {
             mJobDetailsModel?.let {

@@ -25,7 +25,7 @@ class LoadingDialog : BaseDialogFragment() {
     override fun initView(view: View?) {
         setIsCanceledOnTouchOutside(false)
         try {
-            gifDrawable = GifDrawable(mContext.assets, "loading/gif_loading.gif")
+            gifDrawable = GifDrawable(mContext.assets, "loading/gif_dialog_loading.gif")
             gifImageView.setImageDrawable(gifDrawable)
         } catch (e: IOException) {
             e.printStackTrace()

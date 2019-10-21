@@ -54,8 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="请上传与支付宝账号认证相同的身份信息"
-
+                android:text="请上传负责人的身份证信息"
                 />
 
             <com.loopeer.shadow.ShadowView

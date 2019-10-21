@@ -1,11 +1,15 @@
 package com.jxqm.jiangdou.ui.employer.view
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhx.common.base.BaseLazyFragment
+import com.bhx.common.http.RxHelper
 import com.bhx.common.mvvm.BaseMVVMActivity
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.bhx.common.utils.LogUtils
@@ -19,6 +23,7 @@ import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordPayAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordPayViewModel
 import com.jxqm.jiangdou.view.dialog.SettleDialog
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_employ_record_pay.*
 
 /**
@@ -86,6 +91,9 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
                 mViewModel.singleSettleWork(jobId, it)
             }
         }
+        mAdapter.contactCallBack = {
+            callPhone(it.tel)
+        }
     }
 
     private fun getData() {
@@ -138,9 +146,9 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
         registerObserver(Constants.TAG_GET_SETTLE_FINISH_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
-                if(mEmployeeResumeModelList.isEmpty()){
+                if (mEmployeeResumeModelList.isEmpty()) {
                     mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-                    if (swipeRefreshLayout.isRefreshing){
+                    if (swipeRefreshLayout.isRefreshing) {
                         swipeRefreshLayout.finishRefresh()
                         swipeRefreshLayout.finishLoadMore()
                     }
@@ -151,6 +159,21 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
                 isRefresh = true
                 getData()
             })
+    }
+
+    private fun callPhone(phone: String) {
+        activity?.let {
+            RxPermissions(it).request(Manifest.permission.CALL_PHONE)
+                .compose(RxHelper.io_main())
+                .subscribe { result ->
+                    if (result) {
+                        val intent = Intent()
+                        intent.action = Intent.ACTION_DIAL
+                        intent.data = Uri.parse("tel:$phone")
+                        mContext.startActivity(intent)
+                    }
+                }
+        }
     }
 
     companion object {

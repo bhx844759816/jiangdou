@@ -124,9 +124,9 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
                 tvNextStep.isEnabled = true
                 radioButton.isChecked = !radioButton.isChecked
                 if (radioButton.isChecked) {
-                    mJobTypeMaps.forEach {
-                        if (it.key != radioButton.id.toString()) {
-                            it.value.isChecked = false
+                    mJobTypeMaps.forEach {jobTypeMap->
+                        if (jobTypeMap.key != radioButton.id.toString()) {
+                            jobTypeMap.value.isChecked = false
                         }
                     }
                 }

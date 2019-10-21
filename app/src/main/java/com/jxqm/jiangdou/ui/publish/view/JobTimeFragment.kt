@@ -45,6 +45,10 @@ class JobTimeFragment : BaseLazyFragment() {
     private var mRangeCalendarList = mutableListOf<Calendar>()
     private var mRangeTimeList = mutableListOf<String>()
     private val mGson = Gson()
+    private val mSimpleDateFormat: SimpleDateFormat by lazy {
+        SimpleDateFormat("HH:mm")
+    }
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is OnJobPublishCallBack) {
@@ -106,15 +110,81 @@ class JobTimeFragment : BaseLazyFragment() {
         }
         //选择时间段
         tvSelectTimeRange.clickWithTrigger {
+            if (mRangeTimeList.size == 6) {
+                ToastUtils.toastShort("最多选择三个时间段")
+                return@clickWithTrigger
+            }
             SelectTimeRangeDialog.show(activity!!) { start, end ->
-                if(mRangeTimeList.isEmpty()){
+                if (mRangeTimeList.isEmpty()) {
                     mRangeTimeList.add(start)
                     mRangeTimeList.add(end)
-                    addTimeRange(start, end)
-                }else{
-
+                } else {
+                    var startIndex = mRangeTimeList.size
+                    var endIndex = 0
+                    run breaking@{
+                        mRangeTimeList.forEachIndexed { index, value ->
+                            println("starttime = ${mSimpleDateFormat.parse(start).time}")
+                            println("valuetime = ${mSimpleDateFormat.parse(value).time}")
+                            if (
+                                mSimpleDateFormat.parse(start).time <= mSimpleDateFormat.parse(value).time
+                            ) {
+                                startIndex = index
+                                return@breaking
+                            }
+                        }
+                    }
+                    mRangeTimeList.forEachIndexed { index, value ->
+                        println("endtime = ${mSimpleDateFormat.parse(end).time}")
+                        println("valuetime = ${mSimpleDateFormat.parse(value).time}")
+                        if (
+                            mSimpleDateFormat.parse(end).time >= mSimpleDateFormat.parse(value).time
+                        ) {
+                            endIndex = if (endIndex == mRangeTimeList.size - 1) {
+                                index
+                            } else {
+                                index + 1
+                            }
+                        }
+                    }
+                    println("startIndex=$startIndex")
+                    println("endIndex=$endIndex")
+                    if (startIndex == mRangeTimeList.size || endIndex == 0) {
+                        //直接添加数据
+                        mRangeTimeList.add(start)
+                        mRangeTimeList.add(end)
+                    } else {
+                        println("添加前数据")
+                        mRangeTimeList.forEach(::println)
+                        mRangeTimeList.add(startIndex, start)
+                        mRangeTimeList.add(endIndex, end)
+                        mRangeTimeList.sortBy {
+                            mSimpleDateFormat.parse(it).time
+                        }
+                        val removeIndexArray = mutableListOf<Int>()
+                        if (startIndex == endIndex) {
+                            for (i in startIndex until (endIndex + 2)) {
+                                removeIndexArray.add(i)
+                            }
+                        } else {
+                            for (i in (startIndex + 1) until (endIndex + 2)) {
+                                removeIndexArray.add(i)
+                            }
+                        }
+                        println("添加完数据")
+                        mRangeTimeList.forEach(::println)
+                        println("需要移除的下表")
+                        removeIndexArray.forEach(::println)
+                        val list = mRangeTimeList.filterIndexed { index, s ->
+                            !removeIndexArray.contains(index)
+                        }
+                        mRangeTimeList.clear()
+                        mRangeTimeList.addAll(list)
+                    }
                 }
-
+                mRangeTimeList.sortBy {
+                    mSimpleDateFormat.parse(it).time
+                }
+                addTimeRange()
                 isNextStepState()
             }
         }
@@ -125,6 +195,7 @@ class JobTimeFragment : BaseLazyFragment() {
             }
         }
     }
+
 
     private fun operateRangeDateList() {
         mRangeDateList.clear()
@@ -187,10 +258,7 @@ class JobTimeFragment : BaseLazyFragment() {
             operateRangeDateList()
             //添加日期
             addDateRange()
-            //添加时间
-            for (i in 0 until mRangeTimeList.size step 2) {
-                addTimeRange(mRangeTimeList[i], mRangeTimeList[i + 1])
-            }
+            addTimeRange()
             isNextStepState()
         }
     }
@@ -268,22 +336,28 @@ class JobTimeFragment : BaseLazyFragment() {
         }
     }
 
-    private fun addTimeRange(startTime: String, endTime: String) {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.view_data_range_item, null)
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            DensityUtil.dip2px(mContext, 35f)
-        )
-        params.bottomMargin = DensityUtil.dip2px(mContext, 8f)
-        val rangeTextView = view.findViewById<TextView>(R.id.tvDateRange)
-        rangeTextView.text = "$startTime —— $endTime"
-        val deleteView = view.findViewById<ImageView>(R.id.ivDelete)
-        deleteView.clickWithTrigger {
-            llTimeParent.removeView(view)
-            mRangeTimeList.remove(startTime)
-            mRangeTimeList.remove(endTime)
+    private fun addTimeRange() {
+        llTimeParent.removeAllViews()
+        for (i in 0 until mRangeTimeList.size step 2) {
+            val view = LayoutInflater.from(mContext).inflate(R.layout.view_data_range_item, null)
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                DensityUtil.dip2px(mContext, 35f)
+            )
+            params.bottomMargin = DensityUtil.dip2px(mContext, 8f)
+            val rangeTextView = view.findViewById<TextView>(R.id.tvDateRange)
+            val startTime = mRangeTimeList[i]
+            val endTime = mRangeTimeList[i + 1]
+            rangeTextView.text = "$startTime —— $endTime"
+            val deleteView = view.findViewById<ImageView>(R.id.ivDelete)
+            deleteView.clickWithTrigger {
+                llTimeParent.removeView(view)
+                mRangeTimeList.remove(startTime)
+                mRangeTimeList.remove(endTime)
+            }
+            llTimeParent.addView(view, params)
         }
-        llTimeParent.addView(view, params)
+
     }
 
 }

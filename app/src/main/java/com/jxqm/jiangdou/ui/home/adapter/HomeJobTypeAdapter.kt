@@ -29,7 +29,7 @@ class HomeJobTypeAdapter(context: Context) : MultiItemTypeAdapter<JobTypeModel>(
             override fun convert(holder: ViewHolder?, jobTypeModel: JobTypeModel, position: Int) {
                 holder?.let {
                     LogUtils.i(Api.HTTP_BASE_URL + jobTypeModel.imgUrl)
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + jobTypeModel.imgUrl)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobTypeModel.imgUrl)
                         .error(R.drawable.icon_home_designer)
                         .into(it.getView(R.id.ivJobTypeImage))
                     it.getView<TextView>(R.id.tvJobTypeTitle).text = jobTypeModel.jobTypeName

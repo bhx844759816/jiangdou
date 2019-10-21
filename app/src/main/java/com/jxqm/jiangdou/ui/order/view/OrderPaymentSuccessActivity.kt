@@ -19,6 +19,7 @@ import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
 import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.publish.view.JobPublishActivity
+import com.jxqm.jiangdou.ui.web.AgreementWebActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_order_payment_success.*
@@ -58,7 +59,9 @@ class OrderPaymentSuccessActivity : BaseActivity() {
         tvBackWorkStage.clickWithTrigger {
             AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
         }
-
+        tvDepositRule.clickWithTrigger {
+            startActivity<AgreementWebActivity>("Status" to AgreementWebActivity.TAG_DEPOSIT_AGREEMENT)
+        }
     }
 
     override fun initData() {

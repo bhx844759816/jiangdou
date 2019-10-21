@@ -1,9 +1,13 @@
 package com.jxqm.jiangdou.ui.employer.view
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bhx.common.http.RxHelper
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.bhx.common.utils.DensityUtil
 import com.fengchen.uistatus.UiStatusController
@@ -15,6 +19,7 @@ import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordReportDutyAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordReportDutyViewModel
 import com.jxqm.jiangdou.utils.SpaceItemDecoration
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_employ_record_report_duty.recyclerView
 import kotlinx.android.synthetic.main.fragment_employ_record_report_duty.swipeRefreshLayout
 
@@ -85,6 +90,9 @@ class EmployRecordReportDutyFragment : BaseMVVMFragment<EmployRecordReportDutyVi
         recyclerView.addItemDecoration(SpaceItemDecoration(DensityUtil.dip2px(mContext, 10f)))
         recyclerView.adapter = mAdapter
         swipeRefreshLayout.setEnableLoadMore(false)
+        mAdapter.contactCallBack = {
+            callPhone(it.tel)
+        }
         mUiStatusController.onCompatRetryListener =
             OnCompatRetryListener { p0, p1, p2, p3 ->
                 mUiStatusController.changeUiStatus(UiStatus.LOADING)
@@ -115,7 +123,20 @@ class EmployRecordReportDutyFragment : BaseMVVMFragment<EmployRecordReportDutyVi
             mViewModel.getReportDutyList(it, isRefresh)
         }
     }
-
+    private fun callPhone(phone: String) {
+        activity?.let {
+            RxPermissions(it).request(Manifest.permission.CALL_PHONE)
+                .compose(RxHelper.io_main())
+                .subscribe { result ->
+                    if (result) {
+                        val intent = Intent()
+                        intent.action = Intent.ACTION_DIAL
+                        intent.data = Uri.parse("tel:$phone")
+                        mContext.startActivity(intent)
+                    }
+                }
+        }
+    }
     companion object {
         fun newInstance(jobId: String): EmployRecordReportDutyFragment {
             val fragment = EmployRecordReportDutyFragment()

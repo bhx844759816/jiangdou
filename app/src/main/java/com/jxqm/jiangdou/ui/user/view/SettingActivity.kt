@@ -3,10 +3,7 @@ package com.jxqm.jiangdou.ui.user.view
 import androidx.core.app.NotificationManagerCompat
 import com.bhx.common.base.BaseActivity
 import com.bhx.common.event.LiveBus
-import com.bhx.common.utils.AppCacheUtils
-import com.bhx.common.utils.FileUtils
-import com.bhx.common.utils.SPUtils
-import com.bhx.common.utils.Utils
+import com.bhx.common.utils.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jaeger.library.StatusBarUtil
@@ -120,9 +117,15 @@ class SettingActivity : BaseActivity() {
                     }.type
                 )
                 if (appUpdateModel.code == "0") {
+                    if (appUpdateModel.data == null) {
+                        ToastUtils.toastShort("已经是最新版本")
+                    }
                     val localVersionCode = Utils.getLocalVersion(this@SettingActivity)
                     val isNeedUpdate = if (appUpdateModel.data.versionCode > localVersionCode)
                         "Yes" else "no"
+                    if(isNeedUpdate == "no"){
+                        ToastUtils.toastShort("已经是最新版本")
+                    }
                     UpdateAppBean()
                         .setUpdate(isNeedUpdate)
                         //（必须）新版本号，

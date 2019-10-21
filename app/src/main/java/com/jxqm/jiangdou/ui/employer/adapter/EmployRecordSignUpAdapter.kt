@@ -52,6 +52,8 @@ class EmployRecordSignUpAdapter(context: Context) : MultiItemTypeAdapter<Employe
                     tvSingUpTime.text = model.signTime
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.avatar)
                         .transform(GlideCircleTransform(mContext))
+                        .error(R.drawable.icon_default_head_photo)
+                        .placeholder(R.drawable.icon_default_head_photo)
                         .into(ivHeadPhoto)
                     if (model.gender == "男") {
                         ivUserSex.setBackgroundResource(R.drawable.icon_boy)

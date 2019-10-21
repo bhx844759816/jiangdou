@@ -44,6 +44,7 @@ class ForgetPsdActivity : BaseDataActivity<ForgetPsdViewModel>() {
         }
         //发送验证码
         tvGetCode.clickWithTrigger {
+            mCount = 60
             val phone = etInputPhone.text.toString().trim()
             val deviceId = DeviceUtils.getDeviceId(this)
             mViewModel.sendSmsCode(phone, deviceId)

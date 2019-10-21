@@ -50,13 +50,11 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
             isEmployee = !isEmployee
             if (isEmployee) {
                 if (MyApplication.instance().attestationViewModel == null) {
-                    ToastUtils.toastShort("未认证,请先认证")
-                    isEmployee = false
+                    mViewModel.getAttestationStatus()
                     return@clickWithTrigger
                 }
                 if (MyApplication.instance().attestationViewModel?.statusCode != 2) {
-                    ToastUtils.toastShort("正在审核，请耐心等待")
-                    isEmployee = false
+                    mViewModel.getAttestationStatus()
                     return@clickWithTrigger
                 }
                 tvChange.text = "雇主"
@@ -72,6 +70,12 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
         ivScanCode.clickWithTrigger {
             startScan()
         }
+
+
+    }
+
+    override fun initView(bundle: Bundle?) {
+        super.initView(bundle)
         //跳转到工作台 雇员
         registerObserver(
             Constants.TAG_STATUS_EMPLOYEE_SETTLEMENT,
@@ -82,6 +86,27 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
                 tvChange.text = "雇员"
                 ivScanCode.visibility = View.VISIBLE
                 showEmployeeFragment(3)
+            })
+        //获取审核状态
+        registerObserver(
+            Constants.TAG_GET_EMPLOYER_ATTESTATION_STATUS,
+            Boolean::class.java
+        ).observe(this,
+            Observer {
+                val attestationStatus = MyApplication.instance().attestationViewModel
+                if (attestationStatus != null && attestationStatus.statusCode == 2) {
+                    //已认证
+                    tvChange.text = "雇主"
+                    ivScanCode.visibility = View.GONE
+                    showEmployerFragment()
+                } else {
+                    isEmployee = false
+                    if (attestationStatus == null) {
+                        ToastUtils.toastShort("未认证，请先认证")
+                    } else if (attestationStatus.statusCode != 2) {
+                        ToastUtils.toastShort("正在审核，请耐心等待")
+                    }
+                }
             })
     }
 
@@ -118,7 +143,7 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
         val transaction = childFragmentManager.beginTransaction()
         mEmployeeListFragment = EmployeeListFragment()
         val bundle = Bundle()
-        bundle.putInt("position",position)
+        bundle.putInt("position", position)
         mEmployeeListFragment!!.arguments = bundle
         transaction.replace(R.id.flFragment, mEmployeeListFragment!!)
         transaction.commit()
@@ -126,9 +151,7 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
 
     private fun showEmployerFragment() {
         val transaction = childFragmentManager.beginTransaction()
-        if (mEmployerListFragment == null) {
-            mEmployerListFragment = EmployerListFragment()
-        }
+        mEmployerListFragment = EmployerListFragment()
         transaction.replace(R.id.flFragment, mEmployerListFragment!!)
         transaction.commit()
     }

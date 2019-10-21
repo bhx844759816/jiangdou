@@ -204,6 +204,7 @@ class Constants {
 
         const val EVENT_KEY_WORK = "event_key_work"//工作界面
         const val TAG_EMPLOYEE_ARRIVAL_SUCCESS = "tag_employee_arrival_success"//签到成功
+        const val TAG_GET_EMPLOYER_ATTESTATION_STATUS = "tag_get_employer_attestation_status"//获取企业认证状态
         const val TAG_STATUS_EMPLOYEE_SETTLEMENT = "tag_status_employee_settlement" //跳转到已结算
 
 

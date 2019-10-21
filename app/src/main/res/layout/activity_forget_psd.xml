@@ -153,7 +153,7 @@
         android:layout_marginLeft="18dp"
         android:layout_marginTop="25dp"
         android:layout_marginRight="18dp"
-        android:background="@drawable/shape_button_default"
+        android:background="@drawable/select_button_bg"
         android:enabled="false"
         android:gravity="center"
         android:text="@string/submit"

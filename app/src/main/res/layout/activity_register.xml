@@ -102,6 +102,7 @@
                 android:layout_centerVertical="true"
                 android:background="@null"
                 android:hint="@string/inputVerifyCode"
+                android:inputType="number"
                 android:textColor="@color/text_default"
                 android:textColorHint="@color/text_hint"
                 android:textSize="@dimen/text_default_size" />
@@ -125,7 +126,7 @@
                 android:enabled="false"
                 android:gravity="center"
                 android:text="@string/getVerifyCode"
-                android:textColor="@color/select_publish_job_item_textcolor"
+                android:textColor="@color/select_textview_enable_textcolor"
                 android:textSize="@dimen/text_big_small_size" />
         </RelativeLayout>
 
@@ -195,8 +196,7 @@
         android:layout_marginLeft="18dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="18dp"
-        android:background="@drawable/select_button_bg"
-        android:enabled="false"
+        android:background="@drawable/shape_button_default"
         android:gravity="center"
         android:text="@string/confirmRegister"
         android:textColor="@color/white"

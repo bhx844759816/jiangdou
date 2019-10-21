@@ -29,10 +29,10 @@ class LoadingRepository : BaseEventRepository() {
                     if (it.code == "0") {
                         when (it.data) {
                             is UserModel -> {
-                                MyApplication.instance().userModel = it.data as UserModel
+                                MyApplication.instance().userModel = it.data
                             }
                             is AttestationStatusModel -> {
-                                MyApplication.instance().attestationViewModel = it.data as AttestationStatusModel
+                                MyApplication.instance().attestationViewModel = it.data
                             }
                         }
                     }

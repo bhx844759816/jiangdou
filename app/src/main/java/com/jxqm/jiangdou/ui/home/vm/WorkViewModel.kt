@@ -13,4 +13,8 @@ class WorkViewModel : BaseViewModel<WorkRepository>() {
     fun employeeArrival(id: String) {
         mRepository.employeeArrival(id)
     }
+
+    fun getAttestationStatus(){
+        mRepository.getAttestationStatus()
+    }
 }

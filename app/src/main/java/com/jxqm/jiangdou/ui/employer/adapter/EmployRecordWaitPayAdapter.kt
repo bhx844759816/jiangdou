@@ -46,6 +46,8 @@ class EmployRecordWaitPayAdapter(context: Context) : MultiItemTypeAdapter<Employ
                     val cbSelect = it.getView<CheckBox>(R.id.cbSelect)
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.avatar)
                         .transform(GlideCircleTransform(mContext))
+                        .error(R.drawable.icon_default_head_photo)
+                        .placeholder(R.drawable.icon_default_head_photo)
                         .into(ivHeadPhoto)
                     tvUserName.text = model.name
                     tvAmount.text = "${model.amount}币"

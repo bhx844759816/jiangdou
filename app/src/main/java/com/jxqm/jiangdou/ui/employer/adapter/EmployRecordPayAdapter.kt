@@ -22,7 +22,7 @@ import com.jxqm.jiangdou.utils.startActivity
  */
 class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeResumeModel>(context) {
     var repeatSettleCallBack:((String, String) -> Unit)? = null //重新结算
-
+    var contactCallBack: ((EmployeeResumeModel) -> Unit)? = null
     init {
         //已结算
         addItemViewType(object : ItemViewType<EmployeeResumeModel> {
@@ -41,6 +41,8 @@ class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeRe
                     val tvAmount = it.getView<TextView>(R.id.tvAmount)
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.avatar)
                         .transform(GlideCircleTransform(mContext))
+                        .error(R.drawable.icon_default_head_photo)
+                        .placeholder(R.drawable.icon_default_head_photo)
                         .into(ivHeadPhoto)
                     if (item.gender == "男") {
                         ivUserSex.setBackgroundResource(R.drawable.icon_boy)
@@ -105,6 +107,7 @@ class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeRe
                     val tvAmount = it.getView<TextView>(R.id.tvAmount)
                     val tvAgainSettle = it.getView<TextView>(R.id.tvAgainSettle)
                     val tvAmountSettle = it.getView<TextView>(R.id.tvAmountSettle)
+                    val tvContactOneSelf = it.getView<TextView>(R.id.tvContactOneSelf)
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.avatar)
                         .transform(GlideCircleTransform(mContext))
                         .into(ivHeadPhoto)
@@ -121,7 +124,9 @@ class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeRe
                     tvAgainSettle.clickWithTrigger {
                         repeatSettleCallBack?.invoke(item.amount, item.id.toString())
                     }
-
+                    tvContactOneSelf.clickWithTrigger {
+                        contactCallBack?.invoke(item)
+                    }
                 }
             }
 

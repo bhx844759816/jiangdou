@@ -20,6 +20,7 @@ import com.jxqm.jiangdou.utils.startActivity
  * Created By bhx On 2019/9/3 0003 16:24
  */
 class EmployRecordReportDutyAdapter(context: Context) : MultiItemTypeAdapter<EmployeeResumeModel>(context) {
+    var contactCallBack: ((EmployeeResumeModel) -> Unit)? = null
     init {
         addItemViewType(object : ItemViewType<EmployeeResumeModel> {
             override fun getItemViewLayoutId(): Int = R.layout.adapter_employ_record_report_duty
@@ -41,6 +42,8 @@ class EmployRecordReportDutyAdapter(context: Context) : MultiItemTypeAdapter<Emp
                     tvUserName.text = model.name
                     tvSignInTime.text = "签到时间： ${model.arrivalTime}"
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.avatar)
+                        .error(R.drawable.icon_default_head_photo)
+                        .placeholder(R.drawable.icon_default_head_photo)
                         .transform(GlideCircleTransform(mContext))
                         .into(ivHeadPhoto)
                     tvJobTitle.text = "岗位:${model.title}"
@@ -57,6 +60,7 @@ class EmployRecordReportDutyAdapter(context: Context) : MultiItemTypeAdapter<Emp
                     }
                     //录用
                     tvContact.clickWithTrigger {
+                        contactCallBack?.invoke(model)
                     }
 
                 }

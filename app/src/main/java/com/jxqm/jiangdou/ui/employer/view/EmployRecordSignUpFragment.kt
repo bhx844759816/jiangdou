@@ -1,9 +1,13 @@
 package com.jxqm.jiangdou.ui.employer.view
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bhx.common.http.RxHelper
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
@@ -14,6 +18,7 @@ import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordSignUpAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordSignUpViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_employ_record_sign_up.*
 
 /**
@@ -97,6 +102,10 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
             mIdArrays.add(it.id)
             mViewModel.acceptResume(mIdArrays)
         }
+        //联系
+        mAdapter.contactCallBack = {
+            callPhone(it.tel)
+        }
         //
         mAdapter.checkCallBack = { position, isChecked ->
             val employeeResumeModel = mEmployRecordSignUpItems[position]
@@ -112,50 +121,72 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
         }
     }
 
+    private fun callPhone(phone: String) {
+        activity?.let {
+            RxPermissions(it).request(Manifest.permission.CALL_PHONE)
+                .compose(RxHelper.io_main())
+                .subscribe { result ->
+                    if (result) {
+                        val intent = Intent()
+                        intent.action = Intent.ACTION_DIAL
+                        intent.data = Uri.parse("tel:$phone")
+                        mContext.startActivity(intent)
+                    }
+                }
+        }
+    }
+
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         jobId = arguments?.getString("jobId")
         //获取报名列表数据成功
-        registerObserver(Constants.TAG_GET_EMPLOYEE_LIST_SUCCESS, List::class.java).observe(this, Observer {
-            val list = it as List<EmployeeResumeModel>
-            if (isRefresh) {
-                if (list.isEmpty()) {
-                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+        registerObserver(Constants.TAG_GET_EMPLOYEE_LIST_SUCCESS, List::class.java).observe(
+            this,
+            Observer {
+                val list = it as List<EmployeeResumeModel>
+                if (isRefresh) {
+                    if (list.isEmpty()) {
+                        mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                    } else {
+                        mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                        if (list.size >= 10) {
+                            swipeRefreshLayout.setEnableLoadMore(true)
+                        }
+                    }
+                    mEmployRecordSignUpItems.clear()
+                    mEmployRecordSignUpItems.addAll(list)
+                    mAdapter.setDataList(mEmployRecordSignUpItems)
+                    if (swipeRefreshLayout.isRefreshing)
+                        swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.resetNoMoreData()
                 } else {
-                    mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                    if (list.size >= 10) {
-                        swipeRefreshLayout.setEnableLoadMore(true)
+                    if (list.isEmpty()) {
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
+                    } else {
+                        swipeRefreshLayout.finishLoadMore()
+                        mEmployRecordSignUpItems.addAll(list)
+                        mAdapter.addDatas(list)
                     }
                 }
-                mEmployRecordSignUpItems.clear()
-                mEmployRecordSignUpItems.addAll(list)
-                mAdapter.setDataList(mEmployRecordSignUpItems)
-                if (swipeRefreshLayout.isRefreshing)
-                    swipeRefreshLayout.finishRefresh()
-                swipeRefreshLayout.resetNoMoreData()
-            } else {
-                if (list.isEmpty()) {
-                    swipeRefreshLayout.finishLoadMoreWithNoMoreData()
-                } else {
-                    swipeRefreshLayout.finishLoadMore()
-                    mEmployRecordSignUpItems.addAll(list)
-                    mAdapter.addDatas(list)
-                }
-            }
 
-        })
+            })
         //获取报名列表数据失败
-        registerObserver(Constants.TAG_GET_EMPLOYEE_LIST_ERROR, String::class.java).observe(this, Observer {
-            if(mEmployRecordSignUpItems.isEmpty()){
-                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-                if (swipeRefreshLayout.isRefreshing){
-                    swipeRefreshLayout.finishRefresh()
-                    swipeRefreshLayout.finishLoadMore()
+        registerObserver(Constants.TAG_GET_EMPLOYEE_LIST_ERROR, String::class.java).observe(
+            this,
+            Observer {
+                if (mEmployRecordSignUpItems.isEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                    if (swipeRefreshLayout.isRefreshing) {
+                        swipeRefreshLayout.finishRefresh()
+                        swipeRefreshLayout.finishLoadMore()
+                    }
                 }
-            }
-        })
+            })
         //录用成功
-        registerObserver(Constants.TAG_ACCEPT_OR_REFUSED_RESUME_SUCCESS, Boolean::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_ACCEPT_OR_REFUSED_RESUME_SUCCESS,
+            Boolean::class.java
+        ).observe(this, Observer {
             val iterator = mEmployRecordSignUpItems.iterator()
             while (iterator.hasNext()) {
                 if (mIdArrays.contains(iterator.next().id)) {

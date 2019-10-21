@@ -26,6 +26,7 @@ class EmployRecordEmploymentAdapter(context: Context) :
     var status: Int = 0 //
     var mWithdrawOfferCallBack: ((Long) -> Unit)? = null //撤回
     var mRepeatOfferCallBack: ((Long) -> Unit)? = null //重发
+    var contactCallBack: ((EmployeeResumeModel) -> Unit)? = null
 
     init {
         addItemViewType(object : ItemViewType<EmployeeResumeModel> {
@@ -50,6 +51,7 @@ class EmployRecordEmploymentAdapter(context: Context) :
                     when (status) {
                         0 -> { //已邀请
                             tvReplySend.text = "撤回"
+                            tvReplySend.visibility = View.VISIBLE
                         }
                         1 -> {//已接受
                             tvReplySend.visibility = View.GONE
@@ -59,10 +61,13 @@ class EmployRecordEmploymentAdapter(context: Context) :
                         }
                         3 -> {//未恢复
                             tvReplySend.text = "重发"
+                            tvReplySend.visibility = View.VISIBLE
                         }
                     }
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.avatar)
                         .transform(GlideCircleTransform(mContext))
+                        .error(R.drawable.icon_default_head_photo)
+                        .placeholder(R.drawable.icon_default_head_photo)
                         .into(ivHeadPhoto)
                     if (model.gender == "男") {
                         ivUserSex.setBackgroundResource(R.drawable.icon_boy)
@@ -77,7 +82,7 @@ class EmployRecordEmploymentAdapter(context: Context) :
                     }
                     //联系
                     tvContact.clickWithTrigger {
-
+                        contactCallBack?.invoke(model)
                     }
                     //撤回或重发
                     tvReplySend.clickWithTrigger {

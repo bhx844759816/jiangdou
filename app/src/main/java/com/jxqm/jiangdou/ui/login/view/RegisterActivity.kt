@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import androidx.lifecycle.Observer
 import com.bhx.common.utils.DeviceUtils
 import com.bhx.common.utils.PhoneUtils
+import com.bhx.common.utils.RegularUtils
 import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
@@ -61,40 +62,85 @@ class RegisterActivity : BaseDataActivity<RegisterViewModel>() {
             val code = etCode.text.toString().trim()
             val passWord = etPassword.text.toString().trim()
             val deviceId = DeviceUtils.getDeviceId(this)
+            if (!RegularUtils.isTelPhoneNumber(phone)) {
+                ToastUtils.toastShort("请输入正确的手机号")
+                return@clickWithTrigger
+            }
+            if (code.isEmpty()) {
+                ToastUtils.toastShort("请输入验证码")
+                return@clickWithTrigger
+            }
+            if (passWord.isEmpty()) {
+                ToastUtils.toastShort("请输入密码")
+                return@clickWithTrigger
+            }
+            if (passWord.length < 6 || passWord.length > 20) {
+                ToastUtils.toastShort("请输入6-20位密码")
+                return@clickWithTrigger
+            }
+            if (!cbProtocol.isChecked) {
+                ToastUtils.toastShort("请同意用户协议及隐私政策")
+                return@clickWithTrigger
+            }
             mViewModel.register(phone, deviceId, passWord, code)
         }
         tvGetCode.isEnable(etInputPhone) {
             val phone = etInputPhone.text.toString().trim()
             !isSendCodeSuccess and PhoneUtils.isMobile(phone)
         }
-        tvSubmit.isEnable(etInputPhone) { onSubmitTextState() }
-        tvSubmit.isEnable(etCode) { onSubmitTextState() }
-        tvSubmit.isEnable(etPassword) { onSubmitTextState() }
+
+        etInputPhone.addTextChangedListener {
+            afterTextChanged {
+                onSubmitTextState()
+            }
+        }
+
+        etCode.addTextChangedListener {
+            afterTextChanged {
+                onSubmitTextState()
+            }
+        }
+        etPassword.addTextChangedListener {
+            afterTextChanged {
+                onSubmitTextState()
+            }
+        }
     }
 
     /**
      * 验证注册按钮是否可以被点击
      */
-    private fun onSubmitTextState(): Boolean {
+    private fun onSubmitTextState() {
         val phone = etInputPhone.text.toString().trim()
         val code = etCode.text.toString().trim()
         val passWord = etPassword.text.toString().trim()
-        return  PhoneUtils.isMobile(phone) and code.isNotEmpty() and passWord.isNotEmpty() and (passWord.length > 6) and cbProtocol.isChecked
+        val isEnabled =
+            PhoneUtils.isMobile(phone) and code.isNotEmpty() and passWord.isNotEmpty() and (passWord.length > 6) and cbProtocol.isChecked
+        if (isEnabled) {
+            tvSubmit.setBackgroundResource(R.drawable.shape_button_select)
+        } else {
+            tvSubmit.setBackgroundResource(R.drawable.shape_button_default)
+        }
     }
-   
+
     override fun dataObserver() {
-        registerObserver(Constants.TAG_REGISTER_GET_CODE_SUCCESS, Boolean::class.java).observe(this, Observer {
-            //发送验证码成功
-            smsCodeCountDown()
-        })
-        registerObserver(Constants.TAG_REGISTER_SUCCESS, Boolean::class.java).observe(this, Observer {
-            //注册成功
-            val phone = etInputPhone.text.toString().trim()
-            val intent = Intent()
-            intent.putExtra("phone", phone)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-        })
+        registerObserver(Constants.TAG_REGISTER_GET_CODE_SUCCESS, Boolean::class.java).observe(
+            this,
+            Observer {
+                mCount = 60
+                //发送验证码成功
+                smsCodeCountDown()
+            })
+        registerObserver(Constants.TAG_REGISTER_SUCCESS, Boolean::class.java).observe(
+            this,
+            Observer {
+                //注册成功
+                val phone = etInputPhone.text.toString().trim()
+                val intent = Intent()
+                intent.putExtra("phone", phone)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            })
     }
 
     /**

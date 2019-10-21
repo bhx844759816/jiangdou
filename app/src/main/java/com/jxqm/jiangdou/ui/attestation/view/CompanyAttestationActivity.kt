@@ -286,22 +286,24 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
         addDisposable(RxPermissions(this).request(Manifest.permission.ACCESS_FINE_LOCATION)
             .subscribe { aBoolean ->
                 if (aBoolean!!) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        val locManager =
-                            getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                        if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                            startActivityForResult(
-                                intent,
-                                REQUEST_CODE_LOCATION_SETTING
-                            ) // 设置完成后返回到原来的界面
-                        } else {
-                            LogUtils.i("获取定位权限成功")
-                            val intent =
-                                Intent(this@CompanyAttestationActivity, MapActivity::class.java)
-                            startActivityForResult(intent, REQUEST_CODE_SELECT_AREA)
-                        }
-                    }
+                    LogUtils.i("获取定位权限成功")
+                    val intent =
+                        Intent(this@CompanyAttestationActivity, MapActivity::class.java)
+                    startActivityForResult(intent, REQUEST_CODE_SELECT_AREA)
+
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        val locManager =
+//                            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//                        if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//                            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+//                            startActivityForResult(
+//                                intent,
+//                                REQUEST_CODE_LOCATION_SETTING
+//                            ) // 设置完成后返回到原来的界面
+//                        } else {
+//
+//                        }
+//                    }
                 }
             })
     }

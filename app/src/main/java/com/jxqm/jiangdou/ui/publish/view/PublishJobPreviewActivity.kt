@@ -18,6 +18,7 @@ import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import kotlinx.android.synthetic.main.activity_publish_job_preview.*
@@ -62,6 +63,8 @@ class PublishJobPreviewActivity : BaseActivity() {
         MyApplication.instance().attestationViewModel?.let {
             joPublishCompanyName.text = it.employerName
             joPublishCompanyUserName.text = "联系人: ${it.contact}"
+            Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.logo)
+                .into(joPublishCompanyHeadImg)
         }
         toolbar.setNavigationOnClickListener {
             finish()

@@ -54,6 +54,10 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
         }
         //我的收藏
         rlMyCollection.clickWithTrigger {
+            if (MyApplication.instance().userModel == null) {
+                ToastUtils.toastShort("请先登陆")
+                return@clickWithTrigger
+            }
             startActivity<MyCollectionJobActivity>()
         }
         //企业认证
@@ -66,6 +70,10 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
         }
         //我的消息
         rlMyMessage.clickWithTrigger {
+            if (MyApplication.instance().userModel == null) {
+                ToastUtils.toastShort("请先登陆")
+                return@clickWithTrigger
+            }
             startActivity<MyMessageActivity>()
         }
         ivHeadPhoto.clickWithTrigger {
@@ -110,7 +118,7 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
      * 设置用户信息展示
      */
     private fun initUserStatus() {
-        if(mUserModel != null){
+        if (mUserModel != null) {
             mUserModel?.let {
                 tvUserName.text = it.nick
                 tvRankPoints.text = it.rankPoints
@@ -126,11 +134,14 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
                     }
                 }
                 tvResumeDescribe.text = "完善度${it.perfectionDegree}%\n简历越完善，录用率越高哦～"
-                Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + it.avatar).transform(
-                    GlideCircleTransform(mContext)
-                ).into(ivHeadPhoto)
+                Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + it.avatar)
+                    .transform(
+                        GlideCircleTransform(mContext)
+                    )
+                    .error(R.drawable.icon_default_head_photo)
+                    .placeholder(R.drawable.icon_default_head_photo).into(ivHeadPhoto)
             }
-        }else{
+        } else {
             tvUserName.text = "立即登录"
             ivUserSex.visibility = View.GONE
             tvResumeDescribe.text = "登陆后才可以填写简历哦"

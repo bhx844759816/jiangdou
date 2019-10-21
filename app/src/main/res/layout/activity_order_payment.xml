@@ -268,10 +268,12 @@
                                    android:textSize="@dimen/text_default_size" />
 
 
-                               <com.bhx.common.view.FlowLayout
+                               <LinearLayout
                                    android:id="@+id/flDateRangeParent"
                                    android:layout_width="match_parent"
-                                   android:layout_height="wrap_content" />
+                                   android:layout_height="wrap_content"
+                                   android:orientation="vertical"
+                                   />
                            </LinearLayout>
 
                            <LinearLayout

@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.fragment.app.FragmentActivity
 import com.bhx.common.base.BaseDialogFragment
 import com.bhx.common.utils.DensityUtil
+import com.bhx.common.utils.ToastUtils
 import com.contrarywind.adapter.WheelAdapter
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.adapter.ArrayWheelAdapter
@@ -22,10 +23,11 @@ import kotlinx.android.synthetic.main.dialog_select_time_range.*
 class SelectTimeRangeDialog : BaseDialogFragment() {
 
     private val mItems = arrayListOf(
-        "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14",
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
         "15", "16", "17", "18", "19", "20", "21", "22", "23"
     )
     private var mEndTimeItems = mutableListOf<String>()
+    private var mEndSecondItems = mutableListOf<String>()
     private val mSecondItems = arrayListOf("00", "10", "20", "30", "40", "50")
     private var mCallBack: ((String, String) -> Unit)? = null
     override fun getLayoutId(): Int = R.layout.dialog_select_time_range
@@ -35,20 +37,21 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
         wvStartSecond.adapter = ArrayWheelAdapter(mSecondItems)
         wvStartTime.currentItem = 8
         mEndTimeItems = mItems.subList(wvStartTime.currentItem, mItems.size)
+        mEndSecondItems.addAll(mSecondItems)
         wvEndTime.adapter = ArrayWheelAdapter(mEndTimeItems)
-        wvEndSecond.adapter = ArrayWheelAdapter(mSecondItems)
-        wvEndTime?.currentItem = wvEndTime.adapter.itemsCount / 2
+        wvEndSecond.adapter = ArrayWheelAdapter(mEndSecondItems)
+        wvEndTime.currentItem = wvEndTime.adapter.itemsCount / 2
         wvStartTime.setOnItemSelectedListener {
             mEndTimeItems = mItems.subList(it, mItems.size)
-            wvEndTime.adapter = ArrayWheelAdapter(mEndTimeItems)
-            wvEndSecond.adapter = ArrayWheelAdapter(mSecondItems)
+            wvEndTime?.adapter = ArrayWheelAdapter(mEndTimeItems)
+            wvEndSecond?.adapter = ArrayWheelAdapter(mSecondItems)
             wvEndTime?.currentItem = wvEndTime.adapter.itemsCount / 2
         }
         wvEndTime.setOnItemSelectedListener {
             val selectTime = mEndTimeItems[it]
             if (selectTime == mItems[wvStartTime.currentItem]) {
-                wvEndSecond.adapter =
-                    ArrayWheelAdapter(mSecondItems.subList(wvStartSecond.currentItem,mSecondItems.size))
+                mEndSecondItems = mSecondItems.subList(wvStartSecond.currentItem, mSecondItems.size)
+                wvEndSecond?.adapter = ArrayWheelAdapter(mEndSecondItems)
             }
 
         }
@@ -56,19 +59,18 @@ class SelectTimeRangeDialog : BaseDialogFragment() {
 
 
         }
-
-
         tvCancel.clickWithTrigger {
             dismissAllowingStateLoss()
         }
         tvConfirm.clickWithTrigger {
-            if (wvStartTime.currentItem > wvEndTime.currentItem) {
-                return@clickWithTrigger
-            }
             val startTime =
                 "${mItems[wvStartTime.currentItem]}:${mSecondItems[wvStartSecond.currentItem]}"
             val endTime =
-                "${mItems[wvEndTime.currentItem]}:${mSecondItems[wvEndSecond.currentItem]}"
+                "${mEndTimeItems[wvEndTime.currentItem]}:${mEndSecondItems[wvEndSecond.currentItem]}"
+            if (startTime == endTime) {
+                ToastUtils.toastShort("起始时间不能等于结束时间")
+                return@clickWithTrigger
+            }
             mCallBack?.invoke(startTime, endTime)
             dismissAllowingStateLoss()
         }

@@ -1,9 +1,13 @@
 package com.jxqm.jiangdou.ui.employer.view
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bhx.common.http.RxHelper
 import com.bhx.common.mvvm.BaseMVVMFragment
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
@@ -13,12 +17,13 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.EmployeeResumeModel
 import com.jxqm.jiangdou.ui.employer.adapter.EmployRecordEmploymentAdapter
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordEmploymentViewModel
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_employ_record_employment.*
 import kotlinx.android.synthetic.main.fragment_employ_record_employment.recyclerView
 import kotlinx.android.synthetic.main.fragment_employ_record_employment.swipeRefreshLayout
 
 /**
- * 雇佣记录 - 已录用
+ * 雇佣记录 - 录用
  * Created By bhx On 2019/9/3 0003 08:58
  */
 class EmployRecordEmploymentFragment : BaseMVVMFragment<EmployRecordEmploymentViewModel>() {
@@ -84,6 +89,24 @@ class EmployRecordEmploymentFragment : BaseMVVMFragment<EmployRecordEmploymentVi
         mAdapter.mWithdrawOfferCallBack = {
             mViewModel.withdrawOffer(it)
         }
+        mAdapter.contactCallBack = {
+            callPhone(it.tel)
+        }
+    }
+
+    private fun callPhone(phone: String) {
+        activity?.let {
+            RxPermissions(it).request(Manifest.permission.CALL_PHONE)
+                .compose(RxHelper.io_main())
+                .subscribe { result ->
+                    if (result) {
+                        val intent = Intent()
+                        intent.action = Intent.ACTION_DIAL
+                        intent.data = Uri.parse("tel:$phone")
+                        mContext.startActivity(intent)
+                    }
+                }
+        }
     }
 
     override fun initView(bundle: Bundle?) {
@@ -127,9 +150,9 @@ class EmployRecordEmploymentFragment : BaseMVVMFragment<EmployRecordEmploymentVi
         registerObserver(Constants.TAG_GET_EMPLOYEE_ACCEPT_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
-                if(mEmployeeResumeModelList.isEmpty()){
+                if (mEmployeeResumeModelList.isEmpty()) {
                     mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-                    if (swipeRefreshLayout.isRefreshing){
+                    if (swipeRefreshLayout.isRefreshing) {
                         swipeRefreshLayout.finishRefresh()
                         swipeRefreshLayout.finishLoadMore()
                     }

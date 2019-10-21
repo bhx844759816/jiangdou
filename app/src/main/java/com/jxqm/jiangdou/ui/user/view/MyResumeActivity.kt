@@ -152,7 +152,9 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             etUserName.setText(it.name)
             tvUserSex.text = it.gender
             tvUserBirthday.text = it.birthday
-            tvUserAgeStar.text = "${it.age}/${it.star}"
+            if (it.age != 0) {
+                tvUserAgeStar.text = "${it.age}/${it.star}"
+            }
             etUserPhone.setText(it.tel)
             tvUserEducation.text = it.academic
             tvUserHeight.text = it.height
@@ -162,6 +164,8 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             etPeopleIntroduce.setText(it.content)
             Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.avatar)
                 .transform(GlideCircleTransform(this))
+                .error(R.drawable.icon_default_head_photo)
+                .placeholder(R.drawable.icon_default_head_photo)
                 .into(ivHeadPhoto)
             if (!it.images.isNullOrEmpty()) {
                 val images = it.images.split(",").map { image ->
@@ -192,7 +196,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             ToastUtils.toastShort("请输入姓名")
             return
         }
-        if (paramsMap["gender"] == "2") {
+        if (paramsMap["genderCode"] == "2") {
             ToastUtils.toastShort("请选择性别")
             return
         }

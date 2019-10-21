@@ -172,7 +172,7 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             Observer {
                 mAttestationStatusModel = it
                 joPublishCompanyName.text = it.employerName //企业名称
-                joPublishCompanyUserName.text = it.contact //联系人姓名
+                joPublishCompanyUserName.text =  "联系人: ${it.contact}"//联系人姓名
                 Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.logo)
                     .into(ivCompanyLogo)
             })

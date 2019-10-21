@@ -7,6 +7,7 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.ui.web.vm.WebViewModel
 import com.just.agentweb.AgentWeb
+import com.jxqm.jiangdou.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_agreement_web.*
 
 
@@ -50,6 +51,10 @@ class AgreementWebActivity : BaseDataActivity<WebViewModel>() {
             .createAgentWeb()
             .ready()
             .go(url)
+
+        rlBack.clickWithTrigger {
+            finish()
+        }
     }
 
 

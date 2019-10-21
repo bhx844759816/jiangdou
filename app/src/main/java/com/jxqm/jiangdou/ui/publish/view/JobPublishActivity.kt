@@ -55,6 +55,7 @@ class JobPublishActivity : BaseDataActivity<JobPublishViewModel>(), OnJobPublish
             onBackPressed()
         }
         showSelectJobTypeFragment()
+//        showSelectJobTimeFragment()
     }
 
     override fun dataObserver() {

@@ -63,6 +63,8 @@ class ResumeDetailsActivity : BaseDataActivity<ResumeDetailsViewModel>() {
         mResumeModel?.let {
             Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.avatar)
                 .transform(GlideCircleTransform(this))
+                .error(R.drawable.icon_default_head_photo)
+                .placeholder(R.drawable.icon_default_head_photo)
                 .into(ivHeadPhoto)
             tvUserName.text = it.name
             if (it.gender == "女") {
