@@ -1,5 +1,6 @@
 package com.jxqm.jiangdou.ui.job.view
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,7 @@ import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.ui.job.vm.JobDetailsViewModel
 import com.jxqm.jiangdou.ui.login.view.LoginActivity
+import com.jxqm.jiangdou.ui.order.view.OrderDetailsActivity
 import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
 import com.jxqm.jiangdou.ui.user.view.MyResumeActivity
 import com.jxqm.jiangdou.ui.user.view.UserComplainActivity
@@ -152,6 +154,14 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
                     }
                 }
             }
+
+            STATUS_EMPLOYER_JOB_DETAILS -> { //雇主查看职位详情
+                val parent = vsEmployerJob.inflate() as LinearLayout
+                val orderDetails = parent.findViewById<TextView>(R.id.tvOrderDetails)
+                orderDetails.clickWithTrigger {
+                    startActivity<OrderDetailsActivity>("JobId" to mJobDetailsModel!!.id.toString())
+                }
+            }
         }
     }
 
@@ -172,7 +182,7 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             Observer {
                 mAttestationStatusModel = it
                 joPublishCompanyName.text = it.employerName //企业名称
-                joPublishCompanyUserName.text =  "联系人: ${it.contact}"//联系人姓名
+                joPublishCompanyUserName.text = "联系人: ${it.contact}"//联系人姓名
                 Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.logo)
                     .into(ivCompanyLogo)
             })
@@ -207,6 +217,7 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initJobDetails() {
         mJobDetailsModel?.let {
             tvJobType.text = it.jobTypeName
@@ -216,6 +227,8 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             tvJobTitle.text = it.title
             tvJobContent.text = it.content
             tvJobArea.text = it.address
+            tvAddressDetails.text =
+                "详细地址:  ${it.province} ${it.city} ${it.area}  ${it.address}${it.addressDetail}"
             tvJobTips.text = "${it.area} | 日结"
             if (it.sign) {
                 tvSignUp?.text = "已报名(${it.signNum}人报名)"
@@ -349,6 +362,7 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
     companion object {
         const val STATUS_SINGUP = 0x01 //报名
         const val STATUS_PAY_DEPOSIT = 0x02 //支付押金
+        const val STATUS_EMPLOYER_JOB_DETAILS = 0x03//雇主查看职位详情
     }
 }
 

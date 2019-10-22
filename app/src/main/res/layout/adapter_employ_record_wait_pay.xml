@@ -29,7 +29,8 @@
                 android:layout_width="57dp"
                 android:layout_height="57dp"
                 android:layout_marginLeft="48dp"
-                android:background="@drawable/icon_head_photo"
+                android:background="@drawable/icon_default_head_photo"
+                android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

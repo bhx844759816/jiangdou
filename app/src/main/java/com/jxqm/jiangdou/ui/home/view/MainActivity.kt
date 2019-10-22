@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.bhx.common.base.BaseActivity
-import com.bhx.common.utils.LogUtils
-import com.bhx.common.utils.ToastUtils
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
@@ -26,8 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
-import com.bhx.common.utils.FileUtils
-import com.bhx.common.utils.Utils
+import com.bhx.common.utils.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jxqm.jiangdou.http.Api
@@ -40,6 +37,9 @@ import com.jxqm.jiangdou.view.dialog.LoadingDialog
 import com.vector.update_app.UpdateAppBean
 import com.vector.update_app_kotlin.check
 import com.vector.update_app_kotlin.updateApp
+import io.reactivex.Observable
+import io.reactivex.functions.Consumer
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -51,11 +51,13 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
 
     private var mListFragment = arrayListOf<Fragment>()
     private var mLastPosition = 0
+    private var exitTime: Long = 0
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initView() {
         super.initView()
+
         requestPermission()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
@@ -93,7 +95,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
 
         })
 
-//        //跳转到工作台 雇员
+        //跳转到工作台 雇员
         registerObserver(
             Constants.TAG_STATUS_WORK_FRAGMENT,
             Boolean::class.java
@@ -106,6 +108,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
                     true
                 )
             })
+        //登录成功切换到工作台
         registerObserver(
             Constants.TAG_SIGN_UP_SUCCESS_STATUS,
             Boolean::class.java
@@ -113,16 +116,27 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
             Observer {
                 myBottomNavigationBar.selectTab(1)
             })
+        doCheckAppUpdate()
     }
 
     override fun dataObserver() {
 
     }
 
+    /**
+     * 延迟1s检查更新
+     */
+    private fun doCheckAppUpdate() {
+        addDisposable(Observable.timer(1000, TimeUnit.MILLISECONDS)
+            .subscribe {
+                checkAppUpdate()
+            })
+    }
+
+    /**
+     * 检查App更新
+     */
     private fun checkAppUpdate() {
-        /**
-         * 更新app版本
-         */
         updateApp(Api.HTTP_BASE_URL + Api.GET_APP_UPDATE, AppUpdateManager())
         {
             isPost = false
@@ -136,7 +150,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
                     object : TypeToken<HttpResult<AppUpdateModel>>() {
                     }.type
                 )
-                if (appUpdateModel.code == "0") {
+                if (appUpdateModel.code == "0" && appUpdateModel.data != null) {
                     val localVersionCode = Utils.getLocalVersion(this@MainActivity)
                     val isNeedUpdate = if (appUpdateModel.data.versionCode > localVersionCode)
                         "Yes" else "no"
@@ -149,7 +163,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
                         //（必须）更新内容
                         .setUpdateLog(appUpdateModel.data.modifyContent)
                         //大小，不设置不显示大小，可以不设置
-                        .setTargetSize(FileUtils.formatFileSize(appUpdateModel.data.apkSize.toLong()))
+                        .setTargetSize(appUpdateModel.data.apkSize)
                         //是否强制更新，可以不设置
                         .setConstraint(false)
                         //设置md5，可以不设置
@@ -187,6 +201,15 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
             }
         addDisposable(disposable)
 
+    }
+
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            ToastUtils.toastShort("再按一次退出程序")
+            exitTime = System.currentTimeMillis()
+        } else {
+            AppManager.getAppManager().AppExit(this)
+        }
     }
 
 }

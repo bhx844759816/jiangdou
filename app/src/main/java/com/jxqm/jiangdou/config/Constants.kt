@@ -262,7 +262,11 @@ class Constants {
 
         const val EVENT_CASH_OUT_SUCCESS = "event_cash_out_success" //提现成功
 
-        const val EVENT_AGREEMENT_WEB = "event_agreement_web"
+        const val EVENT_AGREEMENT_WEB = "event_agreement_web" //协议Web
+
+        const val EVENT_PAYMENT = "event_payment"//支付界面
+
+
 
     }
 }

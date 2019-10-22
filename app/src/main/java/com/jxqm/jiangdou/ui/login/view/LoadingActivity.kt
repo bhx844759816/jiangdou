@@ -35,7 +35,8 @@ class LoadingActivity : BaseDataActivity<LoadingViewModel>() {
         requestPermission()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val lp = window.attributes
-            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            lp.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             window.attributes = lp
         }
 
@@ -78,7 +79,9 @@ class LoadingActivity : BaseDataActivity<LoadingViewModel>() {
     private fun requestPermission() {
         val disposable =
             RxPermissions(this).request(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ).subscribe {
                 mViewModel.getUserInfo()

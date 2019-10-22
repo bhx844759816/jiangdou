@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.employer.view
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -36,8 +37,16 @@ class EmployerListFragment : BaseLazyFragment() {
         tabLayout.addTab(mTitles[3])
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
         tabLayout.setupWithViewPager(viewPager)
-        ivPublishJob.clickWithTrigger {
-            startActivity<JobPublishActivity>()
+//        ivPublishJob.clickWithTrigger {
+//
+//        }
+        ivPublishJob.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    startActivity<JobPublishActivity>()
+                }
+            }
+            return@setOnTouchListener true
         }
 
     }

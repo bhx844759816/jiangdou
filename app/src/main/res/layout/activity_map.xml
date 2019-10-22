@@ -34,6 +34,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/llSearchPoiInfo"
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_weight="11"
@@ -57,6 +58,8 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:hint="请输入关键字"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:textColorHint="@color/text_hint"
                 android:textColor="@color/text_default"
                 android:textSize="@dimen/text_small_size" />

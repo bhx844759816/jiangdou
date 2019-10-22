@@ -7,6 +7,7 @@ import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.model.AccountModel
+import com.jxqm.jiangdou.ui.order.view.PaymentActivity
 import com.jxqm.jiangdou.ui.user.vm.UserWalletViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
@@ -25,14 +26,20 @@ class UserWalletActivity : BaseDataActivity<UserWalletViewModel>() {
     override fun initView() {
         super.initView()
         StatusBarUtil.setTranslucentForImageView(this, 0, toolbar)
+
         tvCashOutMoney.clickWithTrigger {
             startActivity<CashOutActivity>()
         }
         toolbar.setNavigationOnClickListener {
             finish()
         }
+        //交易明细
         rlTradeDetails.clickWithTrigger {
             startActivity<TradeDetailsListActivity>()
+        }
+        //充值
+        tvPay.clickWithTrigger {
+            startActivity<PaymentActivity>()
         }
     }
 

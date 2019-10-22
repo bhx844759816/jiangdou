@@ -153,6 +153,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             tvUserSex.text = it.gender
             tvUserBirthday.text = it.birthday
             if (it.age != 0) {
+                mSex = it.genderCode
                 tvUserAgeStar.text = "${it.age}/${it.star}"
             }
             etUserPhone.setText(it.tel)
@@ -160,7 +161,6 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
             tvUserHeight.text = it.height
             tvUserWeight.text = it.weight
             tvUserLocation.text = it.area
-
             etPeopleIntroduce.setText(it.content)
             Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.avatar)
                 .transform(GlideCircleTransform(this))

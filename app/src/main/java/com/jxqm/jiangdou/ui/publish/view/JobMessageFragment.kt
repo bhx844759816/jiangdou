@@ -3,6 +3,8 @@ package com.jxqm.jiangdou.ui.publish.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.Spanned
 import android.text.TextUtils
 import android.view.View
 import com.baidu.mapapi.model.LatLng
@@ -18,6 +20,12 @@ import com.jxqm.jiangdou.ui.map.MapActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.view.dialog.SelectSexDialog
 import kotlinx.android.synthetic.main.fragment_job_message.*
+import android.R.attr.showText
+import android.R.attr.name
+import android.R.attr.name
+import java.util.regex.Pattern
+import android.R.attr.name
+
 
 /**
  * 发布工作的消息信息
@@ -39,6 +47,35 @@ class JobMessageFragment : BaseLazyFragment() {
         if (context is OnJobPublishCallBack) {
             mCallback = context
         }
+    }
+
+    /**
+     * 过滤表情
+     */
+    private val inputFilter = object : InputFilter {
+        //        val pattern = Pattern.compile("[^a-zA-Z0-9\\p{P}\\s{S}\\u4E00-\\u9FA5_]")
+        var pattern = Pattern.compile("[^\\u0000-\\uFFFF]")
+
+        override fun filter(
+            source: CharSequence?,
+            start: Int,
+            end: Int,
+            dest: Spanned?,
+            dstart: Int,
+            dend: Int
+        ): CharSequence {
+            source?.let {
+                val matcher = pattern.matcher(it)
+                return if (!matcher.find()) {
+                    it
+                } else {
+                    ToastUtils.toastShort("静止输入表情")
+                    ""
+                }
+            }
+            return ""
+        }
+
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_job_message
@@ -146,6 +183,8 @@ class JobMessageFragment : BaseLazyFragment() {
                 isNextStepStates()
             }
         }
+        tvJopTitleContent.filters = arrayOf(inputFilter)
+        tvJopDescriptionContent.filters = arrayOf(inputFilter)
         initStatus()
     }
 

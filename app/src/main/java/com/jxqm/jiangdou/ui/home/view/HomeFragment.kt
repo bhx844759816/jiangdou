@@ -118,7 +118,6 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
 
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
-        checkAppUpdate()
         //注册获取轮播图
         registerObserver(Constants.TAG_GET_HOME_SWIPER, List::class.java).observe(this, Observer {
             val list = it as List<SwpierModel>
@@ -184,48 +183,7 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             }
     }
 
-    private fun checkAppUpdate() {
-        /**
-         * 更新app版本
-         */
-        activity?.updateApp(Api.HTTP_BASE_URL + Api.GET_APP_UPDATE, AppUpdateManager())
-        {
-            isPost = false
-            themeColor = 0xff82A2FE.toInt()
-            hideDialogOnDownloading()
-        }?.check {
-            parseJson {
-                val response = it
-                val appUpdateModel = Gson().fromJson<HttpResult<AppUpdateModel>>(
-                    response!!,
-                    object : TypeToken<HttpResult<AppUpdateModel>>() {
-                    }.type
-                )
-                if (appUpdateModel.code == "0") {
-                    val localVersionCode = Utils.getLocalVersion(mContext)
-                    val isNeedUpdate = if (appUpdateModel.data.versionCode > localVersionCode)
-                        "Yes" else "no"
-                    UpdateAppBean()
-                        .setUpdate(isNeedUpdate)
-                        //（必须）新版本号，
-                        .setNewVersion(appUpdateModel.data.versionName)
-                        //（必须）下载地址
-                        .setApkFileUrl(appUpdateModel.data.downloadUrl)
-                        //（必须）更新内容
-                        .setUpdateLog(appUpdateModel.data.modifyContent)
-                        //大小，不设置不显示大小，可以不设置
-                        .setTargetSize(appUpdateModel.data.apkSize)
-                        //是否强制更新，可以不设置
-                        .setConstraint(false)
-                        //设置md5，可以不设置
-                        .setNewMd5(appUpdateModel.data.apkMd5)
-                } else {
-                    UpdateAppBean()
-                        .setUpdate("no")
-                }
-            }
-        }
-    }
+
 
     /**
      * 开始定位

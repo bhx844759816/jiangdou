@@ -43,7 +43,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="80dp"
-                        android:text="UI设计师"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_title_size" />
 
@@ -54,7 +53,6 @@
                         android:layout_below="@id/tvJobType"
                         android:layout_alignLeft="@id/tvJobType"
                         android:layout_marginTop="2dp"
-                        android:text="30币/小时"
                         android:textColor="@color/jobPublishMoney"
                         android:textSize="@dimen/text_default_size" />
 
@@ -65,7 +63,6 @@
                         android:layout_below="@id/tvJobMoney"
                         android:layout_alignLeft="@id/tvJobMoney"
                         android:layout_marginTop="2dp"
-                        android:text="金水|日结"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_small_size" />
                 </RelativeLayout>
@@ -147,7 +144,6 @@
                             android:paddingTop="5dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="5dp"
-                            android:text="招2人"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/text_small_size" />
 
@@ -161,7 +157,6 @@
                             android:paddingTop="5dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="5dp"
-                            android:text="男女不限"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/text_small_size" />
                     </LinearLayout>
@@ -207,7 +202,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="招聘兼职UI设计师"
                         android:textColor="@color/text_default"
                         android:textSize="@dimen/text_default_size" />
 
@@ -216,7 +210,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:text="公司官网改版，招聘兼职UI设计师"
                         android:textColor="@color/text_default"
                         android:textSize="@dimen/text_small_size" />
 
@@ -312,7 +305,6 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="11"
-                                android:text="河南省郑州市金水区木华广场"
                                 android:textColor="@color/text_publish_sex"
                                 android:textSize="@dimen/text_default_size" />
 
@@ -323,7 +315,16 @@
                                 android:background="@drawable/icon_arrow_right" />
                         </LinearLayout>
 
+
                     </FrameLayout>
+                    <TextView
+                        android:id="@+id/tvAddressDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="详细地址"
+                        android:textColor="@color/text_default"
+                        android:textSize="@dimen/text_default_size"
+                        />
                 </LinearLayout>
                 <!--公司详情-->
                 <LinearLayout
@@ -380,7 +381,6 @@
                             android:layout_alignTop="@id/ivCompanyLogo"
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/ivCompanyLogo"
-                            android:text="河南匠小豆品牌管理有限公司"
                             android:textColor="@color/text_publish_sex"
                             android:textSize="@dimen/text_small_size" />
 
@@ -390,7 +390,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignLeft="@id/joPublishCompanyName"
                             android:layout_alignBottom="@id/ivCompanyLogo"
-                            android:text="联系人: 李刚"
                             android:textColor="@color/text_publish_sex"
                             android:textSize="@dimen/text_small_size" />
 
@@ -438,6 +437,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout="@layout/view_job_details_pay_deposit_layout" />
+
+            <ViewStub
+                android:id="@+id/vsEmployerJob"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout="@layout/view_job_details_employer_layout" />
         </FrameLayout>
 
     </LinearLayout>

@@ -151,6 +151,8 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                             if (cityBean.name == MyApplication.instance().locationModel?.city) {
                                 val list = cityBean.area?.map { area ->
                                     area
+                                }?.filter { area ->
+                                    area != "其他"
                                 }
                                 list?.let {
                                     mAreaItemList.addAll(list)
@@ -271,8 +273,10 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
             mAreaPopupWindow = JobScreenByAreaPopupWindow(this)
             mAreaPopupWindow!!.mConfirmCallBack = {
                 if (it == "全郑州市") {
-                    mParamsMap["area"] = it.substring(1)
+                    mParamsMap.remove("area")
+                    mParamsMap["city"] = it.substring(1)
                 } else {
+                    mParamsMap.remove("city")
                     mParamsMap["area"] = it
                 }
                 isRefresh = true

@@ -14,6 +14,7 @@ import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.ui.employer.view.EmployRecordActivity
 import com.jxqm.jiangdou.model.JobDetailsModel
+import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.ui.order.view.OrderDetailsActivity
 import com.jxqm.jiangdou.ui.publish.view.JobPublishActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -28,6 +29,7 @@ class JobPublishListAdapter(context: Context, type: Int) :
     var cancelPublish: ((String) -> Unit)? = null
     var contentClickCallBack: ((JobDetailsModel) -> Unit)? = null
     var orderDetailsCallBack: ((JobDetailsModel) -> Unit)? = null
+    var jobDetailsCallBack:((JobDetailsModel) -> Unit)? = null
     private val mGson: Gson by lazy {
         Gson()
     }
@@ -153,6 +155,7 @@ class JobPublishListAdapter(context: Context, type: Int) :
                 position: Int
             ) {
                 holder?.let {
+                    val parent = it.getView<ConstraintLayout>(R.id.parent)
                     val ivEmployeeImg = it.getView<ImageView>(R.id.ivEmployeeImg)
                     val tvEmployeeTitle = it.getView<TextView>(R.id.tvEmployeeTitle)
                     val tvSingUpPeopleNum = it.getView<TextView>(R.id.tvSingUpPeopleNum)
@@ -165,6 +168,12 @@ class JobPublishListAdapter(context: Context, type: Int) :
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + jobDetailsModel.typeImgUrl)
                         .into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobDetailsModel.title
+                    parent.clickWithTrigger {
+                        mContext.startActivity<JobDetailsActivity>(
+                            "JobId" to jobDetailsModel.id.toString(),
+                            "Status" to JobDetailsActivity.STATUS_EMPLOYER_JOB_DETAILS
+                        )
+                    }
                     //雇佣记录
                     tvEmployeeRecord.clickWithTrigger {
                         mContext.startActivity<EmployRecordActivity>("jobId" to jobDetailsModel.id.toString())
@@ -214,6 +223,7 @@ class JobPublishListAdapter(context: Context, type: Int) :
                 position: Int
             ) {
                 holder?.let {
+                    val parent = it.getView<ConstraintLayout>(R.id.parent)
                     val ivEmployeeImg = it.getView<ImageView>(R.id.ivEmployeeImg)
                     val tvEmployeeTitle = it.getView<TextView>(R.id.tvEmployeeTitle)
                     val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime) //截至报名
@@ -223,6 +233,12 @@ class JobPublishListAdapter(context: Context, type: Int) :
                         .into(ivEmployeeImg)
                     tvEmployeeTitle.text = jobDetailsModel.title
                     tvSingUpTime.text = jobDetailsModel.endTime
+                    parent.clickWithTrigger {
+                        mContext.startActivity<JobDetailsActivity>(
+                            "JobId" to jobDetailsModel.id.toString(),
+                            "Status" to JobDetailsActivity.STATUS_EMPLOYER_JOB_DETAILS
+                        )
+                    }
                     tvDelete.clickWithTrigger {
                         //删除
                         cancelPublish?.invoke(jobDetailsModel.id.toString())

@@ -10,12 +10,12 @@
         android:id="@+id/rbJobType"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/select_publish_job_item_bg"
         android:button="@null"
         android:clickable="false"
         android:gravity="center"
         android:maxLines="1"
         android:orientation="vertical"
+        android:background="@drawable/select_publish_job_item_bg"
         android:textColor="@color/select_publish_job_item_textcolor"
         android:textSize="@dimen/text_small_size" />
 

@@ -86,7 +86,6 @@ class ComplainChargeTypeFragment : BaseLazyFragment() {
                 return@clickWithTrigger
             }
             val params = mutableMapOf<String, Any>()
-            params["loss"] = rbIsOweSalary.isChecked
             params["chargeTypeCode"] = mChargeTypeCode
             params["amount"] = charge
             if (address.isNotEmpty())
@@ -135,8 +134,7 @@ class ComplainChargeTypeFragment : BaseLazyFragment() {
             .capture(true)
             .captureStrategy(CaptureStrategy(true, "com.jxqm.jiangdou.fileprovider"))
             .maxSelectable(maxSelectable)
-            .isCrop(true)
-            .cropStyle(CropImageView.Style.CIRCLE)
+            .isCrop(false)
             .isCropSaveRectangle(false)
             .thumbnailScale(0.6f)
             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)

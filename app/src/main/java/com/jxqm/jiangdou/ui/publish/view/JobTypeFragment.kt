@@ -146,6 +146,7 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
                 .inflate(R.layout.view_publish_job_type_item, null) as FrameLayout
             val radioButton = frameLayout.findViewById<RadioButton>(R.id.rbJobType)
             radioButton.text = it.jobTypeName
+            LogUtils.i("兼职名称=${it.jobTypeName}")
             radioButton.id = it.id
             val model = (activity as JobPublishActivity).mJobDetailsModel
             if (model != null && model.jobTypeId == it.id) {
@@ -177,7 +178,7 @@ class JobTypeFragment : BaseMVVMFragment<SelectJobTypeViewModel>() {
         expandView.setPadding(DensityUtil.dip2px(mContext, 10f))
         expandView.clickWithTrigger {
             rgMoreJobType.removeView(expandView)
-            addMoreJobType(mMoreJobModelList.subList(6, mMoreJobModelList.size - 1))
+            addMoreJobType(mMoreJobModelList.subList(5, mMoreJobModelList.size))
         }
         rgMoreJobType.addView(expandView)
     }

@@ -6,6 +6,7 @@ import android.graphics.Rect
 import android.location.Location
 import android.opengl.Visibility
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
@@ -26,8 +27,10 @@ import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bhx.common.adapter.rv.listener.OnItemClickListener
 import com.bhx.common.utils.DensityUtil
 import com.bhx.common.utils.FileUtils
+import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.addTextChangedListener
+import com.jxqm.jiangdou.ext.hideKeyboard
 import com.jxqm.jiangdou.ui.map.adapter.MapAdapter
 import com.jxqm.jiangdou.ui.map.adapter.MapSearchAdapter
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -237,30 +240,50 @@ class MapActivity : BaseActivity() {
     }
 
     private fun initSearch() {
-        etSearchPoiInfo.addTextChangedListener {
-            afterTextChanged {
-                searchPoiInfo(it.toString().trim())
+//        etSearchPoiInfo.addTextChangedListener {
+//            afterTextChanged {
+//
+//            }
+//        }
+        etSearchPoiInfo.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val searchKey = etSearchPoiInfo.text.toString()
+                if (searchKey.isNotEmpty()) {
+                    tvCancelSearch.visibility = View.VISIBLE
+                    flMapParent.visibility = View.GONE
+                    flSearchParent.visibility = View.VISIBLE
+                    searchPoiInfo(searchKey)
+                    return@setOnEditorActionListener true
+                } else {
+                    ToastUtils.toastShort("请输入搜索关键词")
+                }
             }
+            return@setOnEditorActionListener false
         }
-        etSearchPoiInfo.setOnFocusChangeListener { _, t ->
-            if (t) {
-                tvCancelSearch.visibility = View.VISIBLE
-                flMapParent.visibility = View.GONE
-                flSearchParent.visibility = View.VISIBLE
-
-            }
-        }
+//        etSearchPoiInfo.setOnFocusChangeListener { _, t ->
+//            if (t) {
+//                tvCancelSearch.visibility = View.VISIBLE
+//                flMapParent.visibility = View.GONE
+//                flSearchParent.visibility = View.VISIBLE
+//            }else{
+//                tvCancelSearch.visibility = View.GONE
+//                flMapParent.visibility = View.VISIBLE
+//                flSearchParent.visibility = View.GONE
+//            }
+//        }
         tvCancelSearch.clickWithTrigger {
             tvCancelSearch.visibility = View.GONE
             flMapParent.visibility = View.VISIBLE
             flSearchParent.visibility = View.GONE
             etSearchPoiInfo.text = null
+            etSearchPoiInfo.hideKeyboard()
         }
         flSearchParent.clickWithTrigger {
             tvCancelSearch.visibility = View.GONE
             flMapParent.visibility = View.VISIBLE
             flSearchParent.visibility = View.GONE
             etSearchPoiInfo.text = null
+            etSearchPoiInfo.hideKeyboard()
         }
 
     }

@@ -147,8 +147,10 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
                 if (isRefresh) {
                     if (list.isEmpty()) {
                         mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                        rlBottom.visibility = View.GONE
                     } else {
                         mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                        rlBottom.visibility = View.VISIBLE
                         if (list.size >= 10) {
                             swipeRefreshLayout.setEnableLoadMore(true)
                         }
