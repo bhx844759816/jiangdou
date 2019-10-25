@@ -15,7 +15,7 @@
         android:textColor="@color/text_default"
         android:textSize="@dimen/text_small_size"
         app:layout_constraintBottom_toBottomOf="@id/ivRingOne"
-        app:layout_constraintRight_toLeftOf="@id/ivRingOne"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/ivRingOne"
 
         />
@@ -28,7 +28,7 @@
         android:textColor="@color/text_default"
         android:textSize="@dimen/text_small_size"
         app:layout_constraintBottom_toBottomOf="@id/ivRingTwo"
-        app:layout_constraintRight_toLeftOf="@id/ivRingTwo"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/ivRingTwo"
 
         />
@@ -38,7 +38,7 @@
         android:layout_width="11dp"
         android:layout_height="11dp"
         android:layout_marginTop="3dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/shape_circle_ring"
         app:layout_constraintRight_toLeftOf="@+id/llTimeParent"
         app:layout_constraintTop_toTopOf="@id/llTimeParent" />
@@ -57,7 +57,7 @@
         android:id="@+id/ivRingTwo"
         android:layout_width="11dp"
         android:layout_height="11dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="3dp"
         android:background="@drawable/shape_circle_ring"
         app:layout_constraintBottom_toBottomOf="@id/llTimeParent"
@@ -67,7 +67,7 @@
         android:id="@+id/llTimeParent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="110dp"
+        android:layout_marginLeft="80dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"

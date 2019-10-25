@@ -48,7 +48,6 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
         recyclerView.adapter = mAdapter
         rgSelectState.check(R.id.rbInvite)
         swipeRefreshLayout.setEnableLoadMore(false)
-
         mUiStatusController.onCompatRetryListener =
             OnCompatRetryListener { p0, p1, p2, p3 ->
                 mUiStatusController.changeUiStatus(UiStatus.LOADING)
@@ -119,11 +118,6 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
                         mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                     } else {
                         mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                        if (list.size >= 10) {
-                            swipeRefreshLayout.setEnableLoadMore(true)
-                        } else {
-                            swipeRefreshLayout.setEnableLoadMore(false)
-                        }
                     }
                     mEmployeeResumeModelList.clear()
                     mEmployeeResumeModelList.addAll(list)
@@ -146,12 +140,13 @@ class EmployRecordPayFragment : BaseMVVMFragment<EmployRecordPayViewModel>() {
         registerObserver(Constants.TAG_GET_SETTLE_FINISH_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
+                if (swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.finishLoadMore()
+                }
                 if (mEmployeeResumeModelList.isEmpty()) {
                     mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-                    if (swipeRefreshLayout.isRefreshing) {
-                        swipeRefreshLayout.finishRefresh()
-                        swipeRefreshLayout.finishLoadMore()
-                    }
+
                 }
             })
         registerObserver(Constants.TAG_REPEAT_SETTLE_FINISH, Boolean::class.java).observe(this,

@@ -18,7 +18,6 @@ import com.jxqm.jiangdou.model.JobTypeModel
 import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.model.JobDetailsModel
 import com.jxqm.jiangdou.ui.order.view.OrderPaymentActivity
-import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.publish.vm.JobPublishViewModel
 import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_publish.*

@@ -4,4 +4,8 @@ import com.bhx.common.mvvm.BaseViewModel
 import com.jxqm.jiangdou.ui.order.vm.repository.PaymentRepository
 
 class PaymentViewModel : BaseViewModel<PaymentRepository>() {
+
+    fun getAlipayOrderInfo(amount: String) {
+        mRepository.getAlipayOrderInfo(amount)
+    }
 }

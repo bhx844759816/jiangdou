@@ -151,9 +151,6 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
                     } else {
                         mUiStatusController.changeUiStatus(UiStatus.CONTENT)
                         rlBottom.visibility = View.VISIBLE
-                        if (list.size >= 10) {
-                            swipeRefreshLayout.setEnableLoadMore(true)
-                        }
                     }
                     mEmployRecordSignUpItems.clear()
                     mEmployRecordSignUpItems.addAll(list)
@@ -167,7 +164,7 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
                     } else {
                         swipeRefreshLayout.finishLoadMore()
                         mEmployRecordSignUpItems.addAll(list)
-                        mAdapter.addDatas(list)
+                        mAdapter.setDataList(mEmployRecordSignUpItems)
                     }
                 }
 
@@ -176,12 +173,13 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
         registerObserver(Constants.TAG_GET_EMPLOYEE_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
+                if (swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.finishLoadMore()
+                }
                 if (mEmployRecordSignUpItems.isEmpty()) {
                     mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-                    if (swipeRefreshLayout.isRefreshing) {
-                        swipeRefreshLayout.finishRefresh()
-                        swipeRefreshLayout.finishLoadMore()
-                    }
+
                 }
             })
         //录用成功
@@ -196,8 +194,11 @@ class EmployRecordSignUpFragment : BaseMVVMFragment<EmployRecordSignUpViewModel>
                 }
             }
             mAdapter.setDataList(mEmployRecordSignUpItems)
+            if (mEmployRecordSignUpItems.isEmpty()) {
+                mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                rlBottom.visibility = View.GONE
+            }
         })
-        //
     }
 
     override fun onFirstUserVisible() {

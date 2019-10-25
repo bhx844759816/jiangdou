@@ -35,7 +35,10 @@ class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         //获取数据成功
-        registerObserver(Constants.TGA_GET_WAIT_EXAMINE_JOB_LIST_SUCCESS, JobDetailsWrapModel::class.java).observe(this,
+        registerObserver(
+            Constants.TGA_GET_WAIT_EXAMINE_JOB_LIST_SUCCESS,
+            JobDetailsWrapModel::class.java
+        ).observe(this,
             Observer {
                 if (isRefresh) {
                     if (it.records.isEmpty()) {
@@ -49,7 +52,7 @@ class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
                     mJobDetailList.clear()
                     mJobDetailList.addAll(it.records)
                     mJobPublishListAdapter.setDataList(mJobDetailList)
-                    if (swipeRefreshLayout.isRefreshing){
+                    if (swipeRefreshLayout.isRefreshing) {
                         swipeRefreshLayout.finishRefresh()
                     }
                     swipeRefreshLayout.resetNoMoreData()
@@ -64,37 +67,43 @@ class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
                 }
             })
         //获取数据失败
-        registerObserver(Constants.TAG_GET_WAIT_EXAMINE_JOB_LIST_ERROR, String::class.java).observe(this, Observer {
-            if(mJobDetailList.isEmpty()){
-                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-                if (swipeRefreshLayout.isRefreshing){
+        registerObserver(Constants.TAG_GET_WAIT_EXAMINE_JOB_LIST_ERROR, String::class.java).observe(
+            this,
+            Observer {
+                if (swipeRefreshLayout.isRefreshing) {
                     swipeRefreshLayout.finishRefresh()
                     swipeRefreshLayout.finishLoadMore()
                 }
-            }
-
-        })
-        //刷新列表
-        registerObserver(Constants.TAG_WAIT_EXAMINE_REFRESH_JOB_LIST, Boolean::class.java).observe(this, Observer {
-            if (isDataInitiated) {
-                isRefresh = true
-                mViewModel.getWaitExamineJob(isRefresh)
-            }
-        })
-        //取消订单
-        registerObserver(Constants.TAG_DELETE_WAIT_EXAMINE_JOB_SUCCESS, String::class.java).observe(this, Observer {
-            val iterator = mJobDetailList.iterator()
-            while (iterator.hasNext()) {
-                val jobDetailsModel = iterator.next()
-                if (jobDetailsModel.id == it.toInt()) {
-                    iterator.remove()
+                if (mJobDetailList.isEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
                 }
-            }
-            mJobPublishListAdapter.setDataList(mJobDetailList)
-            if (mJobDetailList.isEmpty()) {
-                mUiStatusController.changeUiStatus(UiStatus.EMPTY)
-            }
-        })
+
+            })
+        //刷新列表
+        registerObserver(Constants.TAG_WAIT_EXAMINE_REFRESH_JOB_LIST, Boolean::class.java).observe(
+            this,
+            Observer {
+                if (isDataInitiated) {
+                    isRefresh = true
+                    mViewModel.getWaitExamineJob(isRefresh)
+                }
+            })
+        //取消订单
+        registerObserver(Constants.TAG_DELETE_WAIT_EXAMINE_JOB_SUCCESS, String::class.java).observe(
+            this,
+            Observer {
+                val iterator = mJobDetailList.iterator()
+                while (iterator.hasNext()) {
+                    val jobDetailsModel = iterator.next()
+                    if (jobDetailsModel.id == it.toInt()) {
+                        iterator.remove()
+                    }
+                }
+                mJobPublishListAdapter.setDataList(mJobDetailList)
+                if (mJobDetailList.isEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                }
+            })
 
     }
 
@@ -134,5 +143,13 @@ class WaitExamineFragment : BaseMVVMFragment<WaitExamineViewModel>() {
         mViewModel.getWaitExamineJob(isRefresh)
     }
 
+    /**
+     * 搜索
+     */
+    fun doSearch(searchKey: String) {
+        mUiStatusController.changeUiStatus(UiStatus.LOADING)
+        isRefresh = true
+        mViewModel.getWaitExamineJob(isRefresh)
+    }
 
 }

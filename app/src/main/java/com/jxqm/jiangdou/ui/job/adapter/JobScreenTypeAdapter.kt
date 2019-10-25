@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_select_job_type.*
  * Created by Administrator on 2019/10/3.
  */
 class JobScreenTypeAdapter(context: Context) : MultiItemTypeAdapter<JobTypeModel>(context) {
-    var mTypeSelectCallBack: ((Int) -> Unit)? = null //
+    var mTypeSelectCallBack: (() -> Unit)? = null //
     private var mJobTypeMaps = mutableMapOf<String, CheckBox>()
     var mJopTypeArrayList = mutableListOf<Int>()
 
@@ -43,7 +43,7 @@ class JobScreenTypeAdapter(context: Context) : MultiItemTypeAdapter<JobTypeModel
                     val ivJobTypeTitle = it.getView<ImageView>(R.id.ivJobTypeTitle)
                     val tvJobTypeTitle = it.getView<TextView>(R.id.tvJobTypeTitle)
                     val rgJobType = it.getView<FlowLayout>(R.id.rgJobType)
-                    Glide.with(mContext).load(Api.HTTP_BASE_URL + item?.imgUrl).into(ivJobTypeTitle)
+                    Glide.with(mContext).load(Api.HTTP_BASE_URL + "/"+ item?.imgUrl).into(ivJobTypeTitle)
                     tvJobTypeTitle.text = item?.jobTypeName
                     rgJobType.removeAllViews()
                     addJobType(rgJobType, item!!.jobTypes)
@@ -74,6 +74,7 @@ class JobScreenTypeAdapter(context: Context) : MultiItemTypeAdapter<JobTypeModel
             checkBox.id = it.id
             checkBox.setOnCheckedChangeListener { compoundButton, isChecked ->
                 if (isChecked) {
+                    mTypeSelectCallBack?.invoke()
                     mJopTypeArrayList.add(compoundButton.id)
                 } else {
                     mJopTypeArrayList.remove(compoundButton.id)
@@ -84,7 +85,7 @@ class JobScreenTypeAdapter(context: Context) : MultiItemTypeAdapter<JobTypeModel
                 DensityUtil.dip2px(mContext, 100f),
                 DensityUtil.dip2px(mContext, 40f)
             )
-            layoutParams.rightMargin = DensityUtil.dip2px(mContext, 10f)
+            layoutParams.leftMargin = DensityUtil.dip2px(mContext, 10f)
             layoutParams.bottomMargin = DensityUtil.dip2px(mContext, 10f)
             checkBox.layoutParams = layoutParams
             rgParent.addView(checkBox)

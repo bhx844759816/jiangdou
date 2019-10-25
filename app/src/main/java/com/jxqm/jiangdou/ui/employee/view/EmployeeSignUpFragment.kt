@@ -62,6 +62,7 @@ class EmployeeSignUpFragment : BaseMVVMFragment<EmployeeSignUpViewModel>() {
             Observer {
                 mViewModel.getSignList()
             })
+
         registerObserver(
             Constants.TAG_MAIN_MY_LOGIN_SUCCESS,
             Boolean::class.java
@@ -69,6 +70,14 @@ class EmployeeSignUpFragment : BaseMVVMFragment<EmployeeSignUpViewModel>() {
             this,
             Observer {
                 LogUtils.i("loading 登录成功,重新获取数据")
+                mUiStatusController.changeUiStatus(UiStatus.LOADING)
+                mViewModel.getSignList()
+            })
+        //报名成功 - 跳转到工作台 - 刷新列表
+        registerObserver(Constants.TAG_SING_UP_SUCCESS_REFRESH_LIST, Boolean::class.java).observe(
+            this,
+            Observer {
+                mUiStatusController.changeUiStatus(UiStatus.LOADING)
                 mViewModel.getSignList()
             })
     }
@@ -95,5 +104,13 @@ class EmployeeSignUpFragment : BaseMVVMFragment<EmployeeSignUpViewModel>() {
         mAdapter.clearCloseJobCallBack = {
             mViewModel.clearCloseJob()
         }
+    }
+
+    /**
+     *
+     */
+    fun doSearch(searchKey: String) {
+        mUiStatusController.changeUiStatus(UiStatus.LOADING)
+        mViewModel.getSignList()
     }
 }

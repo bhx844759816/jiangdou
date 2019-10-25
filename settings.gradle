@@ -1,1 +1,1 @@
-include ':app', 'common_base', ':common_select_city', 'common_photo', ':zbarlibary'
+include ':app', ':common_umeng', 'common_base', ':common_select_city', 'common_photo', ':zbarlibary'

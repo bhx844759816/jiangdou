@@ -47,11 +47,10 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
             if (isRefresh) {
                 if (list.isNullOrEmpty()) {
                     mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                    rlBottom.visibility = View.GONE
                 } else {
                     mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                    if (list.size >= 10) {
-                        swipeRefreshLayout.setEnableLoadMore(true)
-                    }
+                    rlBottom.visibility = View.VISIBLE
                 }
                 mEmployeeResumeModelList.clear()
                 mEmployeeResumeModelList.addAll(list)
@@ -73,12 +72,13 @@ class EmployRecordWaitPayFragment : BaseMVVMFragment<EmployRecordWaitPayViewMode
         })
         //获取数据失败
         registerObserver(Constants.TAG_GET_WAIT_PAY_LIST_ERROR, String::class.java).observe(this, Observer {
+            if (swipeRefreshLayout.isRefreshing){
+                swipeRefreshLayout.finishRefresh()
+                swipeRefreshLayout.finishLoadMore()
+            }
             if(mEmployeeResumeModelList.isEmpty()){
                 mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-                if (swipeRefreshLayout.isRefreshing){
-                    swipeRefreshLayout.finishRefresh()
-                    swipeRefreshLayout.finishLoadMore()
-                }
+
             }
         })
         //结算完成

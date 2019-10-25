@@ -1,16 +1,11 @@
 package com.jxqm.jiangdou.ui.order.view
 
-import android.graphics.BitmapFactory
 import android.graphics.Paint
-import android.util.Base64
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.Observer
-import com.bhx.common.base.BaseActivity
 import com.bhx.common.utils.DensityUtil
-import com.bhx.common.utils.LogUtils
-import com.bhx.common.utils.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.haibin.calendarview.Calendar
@@ -18,11 +13,10 @@ import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
+import com.jxqm.jiangdou.model.OrderDetailsModel
+import com.jxqm.jiangdou.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.order.vm.OrderDetailsViewModel
-import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.web.AgreementWebActivity
-import com.jxqm.jiangdou.utils.ImageUtil
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.QrCodeDialog

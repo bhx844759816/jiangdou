@@ -19,7 +19,7 @@ class EmployRecordWaitPayRepository : BaseEventRepository() {
                 .compose(applySchedulers())
                 .subscribe({
                     if (it.code == "0") {
-                        if (it.data.records.size >= it.data.pageSize) {
+                        if (it.data.records.isNotEmpty()) {
                             callBack.invoke()
                         }
                         sendData(
@@ -60,7 +60,10 @@ class EmployRecordWaitPayRepository : BaseEventRepository() {
     fun mergeSettleWork(ids: List<Long>) {
         val params = mutableMapOf("ids" to ids)
         val jsonString = Gson().toJson(params)
-        val body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), jsonString)
+        val body = RequestBody.create(
+            okhttp3.MediaType.parse("application/json;charset=UTF-8"),
+            jsonString
+        )
         addDisposable(apiService.mergeSettleWork(body).action {
             sendData(
                 Constants.EVENT_KEY_EMPLOY_RECORD_WAIT_PAY,

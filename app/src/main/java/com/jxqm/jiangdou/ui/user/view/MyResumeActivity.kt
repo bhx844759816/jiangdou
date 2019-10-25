@@ -65,7 +65,7 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
     private var mPhotoFile: File? = null
     private var mResumeModel: ResumeModel? = null
     private val mPhotoList = mutableListOf<Any>()
-    private var mSex: Int = 2
+    private var mSex: Int = 1
 
     override fun getLayoutId(): Int = R.layout.activity_my_resume
     override fun getEventKey(): Any = Constants.EVENT_KEY_MY_RESUME
@@ -181,11 +181,15 @@ class MyResumeActivity : BaseDataActivity<MyResumeViewModel>() {
 
     private fun uploadUserResume() {
         val paramsMap = mutableMapOf<String, String>()
-        paramsMap["id"] = mResumeModel!!.id
+        mResumeModel?.let {
+            paramsMap["id"] = it.id
+        }
         paramsMap["name"] = etUserName.text.toString().trim()
         paramsMap["genderCode"] = mSex.toString()
         paramsMap["birthday"] = tvUserBirthday.text.toString().trim()
-        paramsMap["star"] = tvUserAgeStar.text.toString().trim().split("/")[1]
+        if(tvUserAgeStar.text.toString().isNotEmpty()){
+            paramsMap["star"] = tvUserAgeStar.text.toString().trim().split("/")[1]
+        }
         paramsMap["tel"] = etUserPhone.text.toString().trim()
         paramsMap["academic"] = tvUserEducation.text.toString().trim()
         paramsMap["height"] = tvUserHeight.text.toString().trim()

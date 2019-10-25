@@ -1,12 +1,8 @@
 package com.jxqm.jiangdou.ui.home.view
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
-import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,37 +10,19 @@ import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
-import com.baidu.mapapi.map.*
-import com.baidu.mapapi.model.LatLng
-import com.baidu.mapapi.search.geocode.GeoCoder
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption
 import com.bhx.common.mvvm.BaseMVVMFragment
-import com.bhx.common.utils.FileUtils
-import com.bhx.common.utils.LogUtils
-import com.bhx.common.utils.Utils
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.http.Api
-import com.jxqm.jiangdou.http.AppUpdateManager
-import com.jxqm.jiangdou.http.HttpResult
 import com.jxqm.jiangdou.model.*
-import com.jxqm.jiangdou.ui.attestation.view.CompanyAttestationActivity
 import com.jxqm.jiangdou.ui.city.SelectCity
 import com.jxqm.jiangdou.ui.home.adapter.HomeAdapter
-import com.jxqm.jiangdou.ui.home.model.*
 import com.jxqm.jiangdou.ui.home.vm.HomeViewModel
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.ui.job.view.JobSearchActivity
-import com.jxqm.jiangdou.ui.map.MapActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
-import com.vector.update_app.UpdateAppBean
-import com.vector.update_app_kotlin.check
-import com.vector.update_app_kotlin.updateApp
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -88,8 +66,6 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             intent.putExtra("Status", JobDetailsActivity.STATUS_SINGUP)
             startActivity(intent)
         }
-        swipeRefreshLayout.setEnableLoadMore(false)
-        swipeRefreshLayout.setEnableAutoLoadMore(true)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
         swipeRefreshLayout.setOnRefreshListener {
@@ -142,7 +118,8 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
                 val list = it as List<JobDetailsModel>
                 val homeJobDetailsModelList = mutableListOf<HomeJobDetailsModel>()
                 list.forEach { jobDetailsModel ->
-                    val homeJobDetailsModel = HomeJobDetailsModel(jobDetailsModel)
+                    val homeJobDetailsModel =
+                        HomeJobDetailsModel(jobDetailsModel)
                     homeJobDetailsModelList.add(homeJobDetailsModel)
                 }
                 if (isRefresh) {
@@ -155,16 +132,13 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
                             iterator.remove()
                         }
                     }
-                    if (list.size >= 10) {
-                        swipeRefreshLayout.setEnableLoadMore(true)
-                    }
                     mHomeModelList.addAll(homeJobDetailsModelList)
                 } else {
-                    if (homeJobDetailsModelList.isEmpty()) {
+                    mHomeModelList.addAll(homeJobDetailsModelList)
+                    if (homeJobDetailsModelList.size < Constants.PAGE_SIZE) {
                         swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
                         swipeRefreshLayout.finishLoadMore()
-                        mHomeModelList.addAll(homeJobDetailsModelList)
                     }
                 }
                 mAdapter.updateDatas(mHomeModelList)
@@ -182,7 +156,6 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
                 }
             }
     }
-
 
 
     /**

@@ -1,27 +1,20 @@
 package com.jxqm.jiangdou.ui.home.view
 
 import android.Manifest
-import android.os.Handler
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
-import com.bhx.common.base.BaseActivity
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.home.vm.MainViewModel
-import com.jxqm.jiangdou.ui.login.view.GuideActivity
-import com.jxqm.jiangdou.ui.login.view.LoginActivity
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.startActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
-import kotlinx.android.synthetic.main.activity_job_details.*
 import kotlinx.android.synthetic.main.activity_main.*
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.*
@@ -29,16 +22,19 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.http.AppUpdateManager
-import com.jxqm.jiangdou.http.HttpResult
+import com.jxqm.jiangdou.model.HttpResult
 import com.jxqm.jiangdou.model.AppUpdateModel
 import com.jxqm.jiangdou.ui.login.view.LoadingActivity
-import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
-import com.jxqm.jiangdou.view.dialog.LoadingDialog
+import com.jxqm.jiangdou.ui.login.view.LoginActivity
+import com.jxqm.jiangdou.view.dialog.AppUpdateDialog
 import com.vector.update_app.UpdateAppBean
+import com.vector.update_app.UpdateAppManager
+import com.vector.update_app.utils.AppUpdateUtils
 import com.vector.update_app_kotlin.check
+import com.vector.update_app_kotlin.download
 import com.vector.update_app_kotlin.updateApp
 import io.reactivex.Observable
-import io.reactivex.functions.Consumer
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 
@@ -84,10 +80,11 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
                         startActivity<LoginActivity>()
                         myBottomNavigationBar.selectTab(mLastPosition, false)
                     } else {
-                        myViewPage.currentItem = position
+
+                        myViewPage.setCurrentItem(position, false)
                     }
                 } else {
-                    myViewPage.currentItem = position
+                    myViewPage.setCurrentItem(position, false)
                     mLastPosition = position
                 }
 
@@ -141,7 +138,7 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
         {
             isPost = false
             themeColor = 0xff82A2FE.toInt()
-            hideDialogOnDownloading()
+            isIgnoreDefParams = true
         }.check {
             parseJson {
                 val response = it
@@ -173,6 +170,30 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
                         .setUpdate("no")
                 }
             }
+            hasNewApp { updateApp, updateAppManager ->
+                showAppUpdateDialog(updateApp, updateAppManager)
+            }
+        }
+    }
+
+    /**
+     * 展示app更新的Dialog
+     */
+    private fun showAppUpdateDialog(updateApp: UpdateAppBean, updateAppManager: UpdateAppManager) {
+        AppUpdateDialog.show(
+            this,
+            updateApp.newVersion,
+            updateApp.targetSize,
+            updateApp.updateLog
+        ) {
+            updateAppManager.download {
+                this.onFinish {
+                    true
+                }
+                this.onInstallAppAndAppOnForeground {
+                    AppUpdateUtils.installApp(this@MainActivity,it)
+                }
+            }
         }
     }
 
@@ -184,7 +205,6 @@ class MainActivity : BaseDataActivity<MainViewModel>() {
     }
 
     override fun protectApp() {
-
         startActivity<LoadingActivity>()
         finish()
     }

@@ -32,7 +32,10 @@ class EmployeeReportDutyFragment : BaseMVVMFragment<EmployeeReportDutyViewModel>
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         //获取已报名列表成功
-        registerObserver(Constants.TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_SUCCESS, List::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_SUCCESS,
+            List::class.java
+        ).observe(this, Observer {
             val list = it as List<JobEmployeeModel>
             mJobModelList.clear()
             mJobModelList.addAll(list)
@@ -48,7 +51,10 @@ class EmployeeReportDutyFragment : BaseMVVMFragment<EmployeeReportDutyViewModel>
 
         })
         //获取已报名列表失败
-        registerObserver(Constants.TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_ERROR, String::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_GET_EMPLOYEE_REPORT_DUTY_LIST_ERROR,
+            String::class.java
+        ).observe(this, Observer {
             mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
         })
 
@@ -72,6 +78,11 @@ class EmployeeReportDutyFragment : BaseMVVMFragment<EmployeeReportDutyViewModel>
     }
 
     override fun onFirstUserVisible() {
+        mViewModel.getEmployeeArrivalList()
+    }
+
+    fun doSearch(searchKey: String) {
+        mUiStatusController.changeUiStatus(UiStatus.LOADING)
         mViewModel.getEmployeeArrivalList()
     }
 }

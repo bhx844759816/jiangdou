@@ -26,11 +26,12 @@
                 android:background="@drawable/icon_scan_zxing" />
 
             <LinearLayout
+                android:id="@+id/llSearch"
                 android:layout_width="0dp"
                 android:layout_height="34dp"
+                android:layout_weight="11"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="9dp"
-                android:layout_weight="11"
                 android:background="@drawable/shape_gray_circle_rectage">
 
                 <ImageView
@@ -39,17 +40,34 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/icon_search" />
-
-                <TextView
-                    android:id="@+id/tvSearchJob"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    android:text="请输入职位和公司"
-                    android:textColor="@color/text_light_color"
-                    android:textSize="@dimen/text_small_size" />
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:id="@+id/etSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:background="@null"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:gravity="center_vertical"
+                        android:hint="请输入职位和公司"
+                        android:textColor="@color/text_default"
+                        android:textColorHint="@color/text_light_color"
+                        android:textSize="@dimen/text_small_size" />
+                    <ImageView
+                        android:id="@+id/ivDelete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:visibility="gone"
+                        android:background="@drawable/icon_search_delete"
+                        android:layout_marginRight="10dp"
+                        />
+                </FrameLayout>
+
             </LinearLayout>
 
             <TextView

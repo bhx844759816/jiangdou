@@ -29,7 +29,10 @@ class EmployeePayFinishFragment : BaseMVVMFragment<EmployeePayFinishViewModel>()
     override fun initView(bundle: Bundle?) {
         super.initView(bundle)
         //获取数据成功
-        registerObserver(Constants.TAG_GET_EMPLOYEE_PAY_FINISH_LIST_SUCCESS, List::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_GET_EMPLOYEE_PAY_FINISH_LIST_SUCCESS,
+            List::class.java
+        ).observe(this, Observer {
             val list = it as List<JobEmployeeModel>
             mJobModelList.clear()
             mJobModelList.addAll(list)
@@ -44,13 +47,18 @@ class EmployeePayFinishFragment : BaseMVVMFragment<EmployeePayFinishViewModel>()
             }
         })
         //获取数据失败
-        registerObserver(Constants.TAG_GET_EMPLOYEE_PAY_FINISH_LIST_ERROR, String::class.java).observe(this, Observer {
+        registerObserver(
+            Constants.TAG_GET_EMPLOYEE_PAY_FINISH_LIST_ERROR,
+            String::class.java
+        ).observe(this, Observer {
             mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
         })
         //拒绝和接受
-        registerObserver(Constants.TAG_REFUSE_ACCEPT_SETTLE_FINISH, Boolean::class.java).observe(this, Observer {
-            mViewModel.getEmployeeSettleList()
-        })
+        registerObserver(Constants.TAG_REFUSE_ACCEPT_SETTLE_FINISH, Boolean::class.java).observe(
+            this,
+            Observer {
+                mViewModel.getEmployeeSettleList()
+            })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,6 +87,11 @@ class EmployeePayFinishFragment : BaseMVVMFragment<EmployeePayFinishViewModel>()
     }
 
     override fun onFirstUserVisible() {
+        mViewModel.getEmployeeSettleList()
+    }
+
+    fun doSearch(searchKey: String) {
+        mUiStatusController.changeUiStatus(UiStatus.LOADING)
         mViewModel.getEmployeeSettleList()
     }
 

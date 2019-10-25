@@ -13,12 +13,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="180dp">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/collapsing_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:collapsedTitleGravity="center"
@@ -29,7 +27,6 @@
                 app:titleEnabled="false">
 
                 <RelativeLayout
-                    android:id="@+id/anime_root"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:background="@drawable/publish_job_top_bar_bg"
@@ -104,7 +101,6 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true"
@@ -274,6 +270,7 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
+                        android:layout_marginTop="18dp"
                         android:layout_height="80dp">
 
                         <ImageView
@@ -284,7 +281,9 @@
 
                         <LinearLayout
                             android:id="@+id/llJobAddress"
-                            android:layout_width="350dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
                             android:background="@drawable/shape_white_circle_rectage"
@@ -417,7 +416,6 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <View
-            android:id="@+id/bottomSpace"
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="@color/app_bg" />

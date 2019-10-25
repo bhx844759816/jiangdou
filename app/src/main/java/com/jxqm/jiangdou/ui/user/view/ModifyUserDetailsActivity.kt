@@ -37,7 +37,7 @@ import java.io.File
 class ModifyUserDetailsActivity : BaseDataActivity<ModifyUserDetailsViewModel>() {
     private val mSexList = arrayListOf("女", "男")
     private var mPhotoFile: File? = null
-    private var mSexCode = 2
+    private var mSexCode = 1
     override fun getLayoutId(): Int = R.layout.activity_modify_user_details
 
     override fun getEventKey(): Any = Constants.EVENT_MODIFY_USER_DETAILS
@@ -48,9 +48,12 @@ class ModifyUserDetailsActivity : BaseDataActivity<ModifyUserDetailsViewModel>()
         userModel?.let {
             Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.avatar)
                 .transform(GlideCircleTransform(this))
+                .placeholder(R.drawable.icon_default_head_photo)
+                .error(R.drawable.icon_default_head_photo)
                 .into(ivHeadPhoto)
             etUserName.setText(it.nick)
             tvUserSex.text = it.gender
+            mSexCode = it.genderCode
         }
         //修改头像
         rlHeadPhotoParent.clickWithTrigger {
@@ -149,7 +152,6 @@ class ModifyUserDetailsActivity : BaseDataActivity<ModifyUserDetailsViewModel>()
                     .transform(GlideCircleTransform(this))
                     .into(ivHeadPhoto)
             }
-
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

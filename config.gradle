@@ -4,8 +4,8 @@ def version = [:]
 version.android_gradle_plugin = "3.5.0"
 version.kotlin_version = "1.3.31"
 version.applicationId = "com.jxqm.jiangdou"
-version.versionCode = 2
-version.versionName = "1.0.1"
+version.versionCode = 3
+version.versionName = "1.0.2"
 version.minSdk = 17
 version.targetSdk = 29
 version.compileSdk = 29
@@ -44,6 +44,10 @@ version.uiStatus = "1.0.3"
 version.expandTextView = "0.1.4"
 version.appUpdate = "3.5.2"
 version.agentweb = "4.1.2"
+version.umeng_common="2.0.0"
+version.umeng_analytics="8.0.0"
+version.photoView= "2.0.0"
+//
 //
 version.appUpdate_ktx = "1.2.3"
 
@@ -110,5 +114,11 @@ deps.appUpdate_ktx = "com.qianwen:update-app-kotlin:$version.appUpdate_ktx"
 deps.appUpdate = "com.qianwen:update-app:$version.appUpdate"
 //web页面
 deps.agentweb = "com.just.agentweb:agentweb:$version.agentweb"
+//umeng
+deps.umeng_common = "com.umeng.umsdk:common:$version.umeng_common"
+deps.umeng_analytics = "com.umeng.umsdk:analytics:$version.umeng_analytics"
+//photoViw
+deps.photoView = "com.github.chrisbanes:PhotoView:$version.photoView"
+
 //底部导航
 deps.bottomNavigationBar = "com.ashokvarma.android:bottom-navigation-bar:$version.bottomNavigationBar"

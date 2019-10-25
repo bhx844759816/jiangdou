@@ -2,11 +2,10 @@ package com.jxqm.jiangdou.ui.employer.vm.repository
 
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
-import com.jxqm.jiangdou.http.HttpResult
+import com.jxqm.jiangdou.model.HttpResult
 import com.jxqm.jiangdou.http.action
 import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.model.EmployeeResumeModelWrap
-import io.reactivex.functions.Consumer
 
 /**
  * 雇佣记录 - 已结算
@@ -21,9 +20,9 @@ class EmployRecordPayRepository : BaseEventRepository() {
             apiService.getSettleFinishList(jobId.toLong(), pageNo, pageSize)
                 .compose(applySchedulers())
                 .subscribe({
-                    sendSuccessResult(it,callBack)
+                    sendSuccessResult(it, callBack)
                 }, {
-                 sendErrorResult(it.localizedMessage)
+                    sendErrorResult(it.localizedMessage)
                 })
 
         )
@@ -38,7 +37,7 @@ class EmployRecordPayRepository : BaseEventRepository() {
             apiService.getSettleWaitConfirmList(jobId.toLong(), pageNo, pageSize)
                 .compose(applySchedulers())
                 .subscribe({
-                    sendSuccessResult(it,callBack)
+                    sendSuccessResult(it, callBack)
                 }, {
                     sendErrorResult(it.localizedMessage)
                 })
@@ -54,16 +53,19 @@ class EmployRecordPayRepository : BaseEventRepository() {
             apiService.getSettleRefuseList(jobId.toLong(), pageNo, pageSize)
                 .compose(applySchedulers())
                 .subscribe({
-                    sendSuccessResult(it,callBack)
+                    sendSuccessResult(it, callBack)
                 }, {
                     sendErrorResult(it.localizedMessage)
                 })
         )
     }
 
-    private fun sendSuccessResult(model: HttpResult<EmployeeResumeModelWrap>, callBack: () -> Unit) {
+    private fun sendSuccessResult(
+        model: HttpResult<EmployeeResumeModelWrap>,
+        callBack: () -> Unit
+    ) {
         if (model.code == "0") {
-            if (model.data.records.size >= model.data.pageSize) {
+            if (model.data.records.isNotEmpty()) {
                 callBack.invoke()
             }
             sendData(

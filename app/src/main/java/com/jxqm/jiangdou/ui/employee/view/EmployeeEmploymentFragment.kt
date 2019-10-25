@@ -93,4 +93,9 @@ class EmployeeEmploymentFragment : BaseMVVMFragment<EmployeeEmploymentViewModel>
     override fun onFirstUserVisible() {
         mViewModel.getEmployeeOfferList()
     }
+
+    fun doSearch(searchKey: String) {
+        mUiStatusController.changeUiStatus(UiStatus.LOADING)
+        mViewModel.getEmployeeOfferList()
+    }
 }

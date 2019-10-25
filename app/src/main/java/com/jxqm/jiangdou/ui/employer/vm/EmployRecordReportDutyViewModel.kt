@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.employer.vm
 
 import com.bhx.common.mvvm.BaseViewModel
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.employer.vm.repository.EmployRecordReportDutyRepository
 
 /**
@@ -9,7 +10,7 @@ import com.jxqm.jiangdou.ui.employer.vm.repository.EmployRecordReportDutyReposit
  */
 class EmployRecordReportDutyViewModel : BaseViewModel<EmployRecordReportDutyRepository>() {
     private var pageNo = 1
-    private val pageSize = 10
+    private var pageSize = Constants.PAGE_SIZE
 
     fun getReportDutyList(jobId: String, isRefresh: Boolean) {
         if (isRefresh) {

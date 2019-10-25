@@ -25,6 +25,7 @@ data class EmployeeResumeModel(
     val signTime: String = "",
     val name: String = "",
     val gender: String = "",
+    val genderCode:Int,
     val avatar: String = "",
     val tel: String = "",
     val title: String = "",

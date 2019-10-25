@@ -11,12 +11,10 @@
         android:layout_above="@id/llBottom">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="180dp">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/collapsing_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:collapsedTitleGravity="center"
@@ -24,7 +22,6 @@
                 app:titleEnabled="false">
 
                 <RelativeLayout
-                    android:id="@+id/anime_root"
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
                     android:background="@drawable/icon_order_payment_bg"
@@ -95,7 +92,6 @@
                android:orientation="vertical"
                >
                <com.loopeer.shadow.ShadowView
-                   android:id="@+id/shadowView"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginLeft="15dp"
@@ -331,7 +327,6 @@
                    </LinearLayout>
                </com.loopeer.shadow.ShadowView>
                <com.loopeer.shadow.ShadowView
-                   android:id="@+id/secondShadowView"
                    android:layout_width="match_parent"
                    android:layout_height="50dp"
                    android:layout_marginLeft="15dp"
@@ -377,7 +372,6 @@
                                android:textSize="@dimen/text_default_size" />
 
                            <TextView
-                               android:id="@+id/tvCommissionStatus"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
                                android:layout_marginLeft="10dp"

@@ -9,12 +9,14 @@ import com.jxqm.jiangdou.http.applySchedulers
  */
 class CompanyListRepository : BaseEventRepository() {
 
-    fun getSearchCompanyList(searchKey: String, pageNo: Int, pageSize: Int) {
+    fun getSearchCompanyList(searchKey: String, pageNo: Int, pageSize: Int, callBack: () -> Unit) {
         addDisposable(
             apiService.getSearchCompanyList(pageNo, pageSize, searchKey).compose(applySchedulers())
                 .subscribe({
                     if (it.code == "0") {
-
+                        if(it.data.records.isNotEmpty()){
+                            callBack?.invoke()
+                        }
                         sendData(
                             Constants.EVENT_KEY_SEARCH_COMPANY_LIST,
                             Constants.TAG_GET_SEARCH_COMPANY_LIST_SUCCESS,

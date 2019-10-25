@@ -59,9 +59,6 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
                         mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                     } else {
                         mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                        if (list.size >= 10) {
-                            swipeRefreshLayout.setEnableLoadMore(true)
-                        }
                     }
                     mJobDetailList.clear()
                     mJobDetailList.addAll(list)
@@ -69,11 +66,12 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
                     if (swipeRefreshLayout.isRefreshing) {
                         swipeRefreshLayout.finishRefresh()
                     }
+                    swipeRefreshLayout.resetNoMoreData()
                 } else {
-                    swipeRefreshLayout.finishLoadMore()
                     if (list.isEmpty()) {
-                        swipeRefreshLayout.setNoMoreData(true)
+                        swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
+                        swipeRefreshLayout.finishLoadMore()
                         mJobDetailList.addAll(list)
                         mAdapter.setDataList(mJobDetailList)
                     }
@@ -83,7 +81,13 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
         registerObserver(Constants.TAG_GET_SEARCH_JOB_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
-                mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                if (swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.finishLoadMore()
+                    swipeRefreshLayout.finishRefresh()
+                }
+                if (mJobDetailList.isEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
+                }
             })
     }
 
@@ -93,7 +97,6 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
         mAdapter = JobListAdapter(mContext)
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.adapter = mAdapter
-        swipeRefreshLayout.setEnableLoadMore(false)
         mUiStatusController.onCompatRetryListener =
             OnCompatRetryListener { p0, p1, p2, p3 ->
                 mUiStatusController.changeUiStatus(UiStatus.LOADING)
@@ -146,6 +149,13 @@ class JobListFragment : BaseMVVMFragment<JobListViewModel>() {
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
+            mSearchKey?.let {
+                mViewModel.getSearchJobList(mParamsMap, isRefresh)
+            }
+        }
+        //上拉加载
+        swipeRefreshLayout.setOnLoadMoreListener {
+            isRefresh = false
             mSearchKey?.let {
                 mViewModel.getSearchJobList(mParamsMap, isRefresh)
             }

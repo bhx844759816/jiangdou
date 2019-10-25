@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bhx.common.utils.RegularUtils
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
@@ -39,7 +40,11 @@ class EmployRecordReportDutyAdapter(context: Context) : MultiItemTypeAdapter<Emp
                     val tvJobTitle = it.getView<TextView>(R.id.tvJobTitle) //职位标题
                     val tvContact = it.getView<TextView>(R.id.tvContact)
                     val tvDetails = it.getView<TextView>(R.id.tvDetails)
-                    tvUserName.text = model.name
+                    if (RegularUtils.isTelPhoneNumber(model.name)) {
+                        tvUserName.text = RegularUtils.mobileEncrypt(model.name)
+                    } else {
+                        tvUserName.text = model.name
+                    }
                     tvSignInTime.text = "签到时间： ${model.arrivalTime}"
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + model.avatar)
                         .error(R.drawable.icon_default_head_photo)
@@ -47,10 +52,10 @@ class EmployRecordReportDutyAdapter(context: Context) : MultiItemTypeAdapter<Emp
                         .transform(GlideCircleTransform(mContext))
                         .into(ivHeadPhoto)
                     tvJobTitle.text = "岗位:${model.title}"
-                    if (model.gender == "男") {
-                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
-                    } else {
+                    if (model.genderCode == 0) {
                         ivUserSex.setBackgroundResource(R.drawable.icon_girl)
+                    } else {
+                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
                     }
                     ivHeadPhoto.clickWithTrigger {
                         mContext.startActivity<ResumeDetailsActivity>("UserId" to model.userId)

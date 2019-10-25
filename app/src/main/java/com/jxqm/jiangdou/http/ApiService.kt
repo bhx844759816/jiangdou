@@ -4,13 +4,12 @@ import com.jxqm.jiangdou.model.*
 import com.jxqm.jiangdou.ui.attestation.model.CompanyTypeModel
 import com.jxqm.jiangdou.model.AttestationStatusModel
 import com.jxqm.jiangdou.model.SwpierModel
-import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
+import com.jxqm.jiangdou.model.OrderDetailsModel
 import com.jxqm.jiangdou.ui.user.model.EduModel
 import com.jxqm.jiangdou.ui.user.model.ResumeModel
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.Response
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -138,10 +137,16 @@ interface ApiService {
     fun payOrder(@Part("jobId") jobId: Long): Observable<HttpResult<Any>>
 
     /**
-     * 获取账户余额
+     * 获取账户总额
      */
     @GET(Api.GET_ACCOUNT_BALANCE)
     fun getAccountBalance(): Observable<HttpResult<String>>
+
+    /**
+     * 获取账户可用余额
+     */
+    @GET(Api.GET_ACCOUNT_AVAIL_BALANCE)
+    fun getAccountAvailBalance(): Observable<HttpResult<String>>
 
     /**
      * 获取学历列表
@@ -570,4 +575,10 @@ interface ApiService {
     @Multipart
     @POST(Api.CASH_OUT_MONEY)
     fun cashOutMoney(@PartMap params: MutableMap<String, RequestBody>): Observable<HttpResult<Any>>
+
+    /**
+     * 获取订单
+     */
+    @GET(Api.GET_ALIPAY_ORDER_INFO)
+    fun getAlipayOrderInfo(@Query("amount") amount: String): Observable<HttpResult<String>>
 }

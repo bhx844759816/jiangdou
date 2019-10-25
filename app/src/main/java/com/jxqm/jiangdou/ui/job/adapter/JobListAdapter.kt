@@ -5,7 +5,6 @@ import android.content.Intent
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.bhx.common.adapter.rv.LoadMoreAdapter
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
@@ -13,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobDetailsModel
-import com.jxqm.jiangdou.ui.home.model.HomeJobDetailsModel
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 

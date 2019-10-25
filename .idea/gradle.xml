@@ -12,10 +12,12 @@
             <option value="$PROJECT_DIR$/common_base" />
             <option value="$PROJECT_DIR$/common_photo" />
             <option value="$PROJECT_DIR$/common_select_city" />
+            <option value="$PROJECT_DIR$/common_umeng" />
             <option value="$PROJECT_DIR$/zbarlibary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

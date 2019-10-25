@@ -66,9 +66,12 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
         registerObserver(Constants.TAG_GET_END_SIGN_UP_JOB_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
+                if (swipeRefreshLayout.isRefreshing){
+                    swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.finishLoadMore()
+                }
                 if (mJobDetailList.isEmpty()) {
-                    if (swipeRefreshLayout.isRefreshing)
-                        swipeRefreshLayout.finishRefresh()
+
                     mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
                 }
 
@@ -76,6 +79,12 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
         //删除职位请求成功
         registerObserver(Constants.TAG_END_SIGN_UP_DELETE_JOB_SUCCESS, Boolean::class.java).observe(
             this,
+            Observer {
+                isRefresh = true
+                mViewModel.getEndSignUpPublishJob(isRefresh)
+            })
+
+        registerObserver(Constants.TAG_END_SIGN_UP_JOB_LIST, Boolean::class.java).observe(this,
             Observer {
                 isRefresh = true
                 mViewModel.getEndSignUpPublishJob(isRefresh)
@@ -111,6 +120,12 @@ class EndSignUpFragment : BaseMVVMFragment<EndSignUpViewModel>() {
     }
 
     override fun onFirstUserVisible() {
+        mViewModel.getEndSignUpPublishJob(isRefresh)
+    }
+
+    fun doSearch(searchKey: String) {
+        mUiStatusController.changeUiStatus(UiStatus.LOADING)
+        isRefresh = true
         mViewModel.getEndSignUpPublishJob(isRefresh)
     }
 

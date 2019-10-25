@@ -6,8 +6,9 @@ package com.jxqm.jiangdou.http
 object Api {
 
 
-        const val HTTP_BASE_URL = "http://jxdou.natapp1.cc"
-//    const val HTTP_BASE_URL = "http://192.168.0.100:8080"
+//    const val HTTP_BASE_URL = "http://jxdou.natapp1.cc"
+    const val HTTP_BASE_URL = "http://app.jxd007.cn"
+//        const val HTTP_BASE_URL = "http://192.168.0.100:8080"
     const val SEND_SMS_CODE = "/send-validate-code"
     //登录并获取token
     const val GET_TOKEN = "/oauth/token"
@@ -71,8 +72,10 @@ object Api {
 //    const val PUBLISH_PAY_JOB_ORDER = "/employer/order/pay"
     //支付订单
     const val PUBLISH_PAY_JOB_ORDER = "/employer/order/frozen-deposit"
-    //获取账户余额
+    //获取账户总数
     const val GET_ACCOUNT_BALANCE = "/account/balance"
+    //获取账户可用余额
+    const val GET_ACCOUNT_AVAIL_BALANCE = "/account/avail-balance"
     //首页轮播图
     const val HOME_SWIPER = "/home/swiper"
     //首页职位推荐
@@ -158,9 +161,12 @@ object Api {
     //更新用户信息
     const val UPDATE_USER_MODEL = "/account/update"
     //投诉
-    const val  JOB_COMPLAINT = "/employee/job/complaint"
+    const val JOB_COMPLAINT = "/employee/job/complaint"
     //提现 /account/withdraw/sendsms
     const val CASH_OUT_MONEY = "/account/withdraw"
     //提现发送验证码
     const val CASH_OUT_MONEY_SEND_SMS_CODE = "/account/withdraw/sendsms"
+    //获取订单信息 - 支付宝
+    const val GET_ALIPAY_ORDER_INFO = "/alipay/pay"
+
 }

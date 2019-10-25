@@ -26,7 +26,7 @@ import com.jxqm.jiangdou.ext.addTextChangedListener
 import com.jxqm.jiangdou.ext.isEnable
 import com.jxqm.jiangdou.ext.isRightInput
 import com.jxqm.jiangdou.listener.OnJobPublishCallBack
-import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
+import com.jxqm.jiangdou.model.TimeRangeModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.view.calendar.CalendarRangeSelectDialog
 import com.jxqm.jiangdou.view.dialog.SelectTimeRangeDialog

@@ -112,7 +112,6 @@
         app:layout_constraintTop_toBottomOf="@id/ivEmployeeImg" />
 
     <RelativeLayout
-        android:id="@+id/rlNormalState"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center_vertical"

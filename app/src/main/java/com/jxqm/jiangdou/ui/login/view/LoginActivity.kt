@@ -1,22 +1,14 @@
 package com.jxqm.jiangdou.ui.login.view
 
-import android.os.Bundle
-import androidx.lifecycle.Observer
-import com.bhx.common.utils.DeviceUtils
-import com.bhx.common.utils.PhoneUtils
+import androidx.fragment.app.FragmentTransaction
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.ext.addTextChangedListener
-import com.jxqm.jiangdou.ext.isEnable
-import com.jxqm.jiangdou.ext.showSoftInput
-import com.jxqm.jiangdou.ui.attestation.view.PeopleAttestationActivity
+import com.jxqm.jiangdou.ui.login.view.fragment.LoginPhonePsdFragment
+import com.jxqm.jiangdou.ui.login.view.fragment.LoginQuickFragment
 import com.jxqm.jiangdou.ui.login.vm.LoginViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
-import com.jxqm.jiangdou.utils.startActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import com.jxqm.jiangdou.ui.publish.view.JobPublishActivity
-import com.jxqm.jiangdou.view.dialog.LoadingDialog
 
 
 /**
@@ -24,43 +16,75 @@ import com.jxqm.jiangdou.view.dialog.LoadingDialog
  * Created By bhx On 2019/8/6 0006 09:32
  */
 class LoginActivity : BaseDataActivity<LoginViewModel>() {
-    private var mDeviceId =""
+    private var mQuickLoginFragment: LoginQuickFragment? = null
+    private var mPhonePsdLoginFragment: LoginPhonePsdFragment? = null
+    private var isQuickLoginFlag = true
     override fun getLayoutId(): Int = R.layout.activity_login
 
     override fun getEventKey(): Any = Constants.EVENT_KEY_LOGIN
 
     override fun initView() {
         super.initView()
-        tvLogin.isClickable = false
-        myLoginBack.clickWithTrigger {
+        showQuickLoginFragment()
+        tvAccountLogin.clickWithTrigger {
+            isQuickLoginFlag = !isQuickLoginFlag
+            tvAccountLogin.text = if (isQuickLoginFlag) "手机快捷登录" else "账号密码登录"
+            if (isQuickLoginFlag) {
+                showQuickLoginFragment()
+            } else {
+                showPhonePsdLoginFragment()
+            }
+        }
+        toolBar.setNavigationOnClickListener {
             finish()
         }
-        tvAccountLogin.clickWithTrigger {
-            startActivity<PhoneLoginActivity>()
-        }
-        tvLogin.clickWithTrigger {
-            val phone = etInputPhone.text.toString().trim()
-            mDeviceId = DeviceUtils.getDeviceId(this)
-            mViewModel.sendSmsCode(mDeviceId, phone)
-        }
-        tvLogin.isEnable(etInputPhone) {
-            val phone = etInputPhone.text.toString().trim()
-            PhoneUtils.isMobile(phone)
-        }
-        etInputPhone.showSoftInput()
     }
 
-    override fun dataObserver() {
-        //注册发送验证码结果的接受者
-        registerObserver(Constants.TAG_LOGIN_CODE_SUCCESS, Boolean::class.java).observe(this, Observer {
-            if (it) {
-                val bundle = Bundle()
-                val phone = etInputPhone.text.toString().trim()
-                bundle.putString("phone", phone)
-                bundle.putString("deviceId", mDeviceId)
-                startActivity<VerifyCodeActivity>(bundle)
-            }
-        })
+    override fun onBackPressed() {
+        this.finish()
+    }
+
+    /**
+     * 展示快捷登录的界面
+     */
+    private fun showQuickLoginFragment() {
+        val transaction = supportFragmentManager.beginTransaction().disallowAddToBackStack()
+        hideAllFragment(transaction)
+        if (mQuickLoginFragment == null) {
+            mQuickLoginFragment = LoginQuickFragment()
+        }
+        if (!mQuickLoginFragment!!.isAdded) {
+            transaction.add(R.id.flFragment, mQuickLoginFragment!!)
+        } else {
+            transaction.show(mQuickLoginFragment!!)
+        }
+        transaction.commit()
+    }
+
+    /**
+     * 展示手机密码登录的界面
+     */
+    private fun showPhonePsdLoginFragment() {
+        val transaction = supportFragmentManager.beginTransaction().disallowAddToBackStack()
+        hideAllFragment(transaction)
+        if (mPhonePsdLoginFragment == null) {
+            mPhonePsdLoginFragment = LoginPhonePsdFragment()
+        }
+        if (!mPhonePsdLoginFragment!!.isAdded) {
+            transaction.add(R.id.flFragment, mPhonePsdLoginFragment!!)
+        } else {
+            transaction.show(mPhonePsdLoginFragment!!)
+        }
+        transaction.commit()
+    }
+
+    private fun hideAllFragment(transaction: FragmentTransaction) {
+        if (mQuickLoginFragment != null && mQuickLoginFragment!!.isAdded) {
+            transaction.hide(mQuickLoginFragment!!)
+        }
+        if (mPhonePsdLoginFragment != null && mPhonePsdLoginFragment!!.isAdded) {
+            transaction.hide(mPhonePsdLoginFragment!!)
+        }
     }
 
 

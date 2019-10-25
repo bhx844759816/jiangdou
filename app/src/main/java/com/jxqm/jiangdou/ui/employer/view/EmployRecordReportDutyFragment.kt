@@ -47,9 +47,6 @@ class EmployRecordReportDutyFragment : BaseMVVMFragment<EmployRecordReportDutyVi
                     mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                 } else {
                     mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                    if (list.size >= 10) {
-                        swipeRefreshLayout.setEnableLoadMore(true)
-                    }
                 }
                 mEmployeeResumeModelList.clear()
                 mEmployeeResumeModelList.addAll(list)
@@ -71,12 +68,13 @@ class EmployRecordReportDutyFragment : BaseMVVMFragment<EmployRecordReportDutyVi
         })
         //获取数据失败
         registerObserver(Constants.TAG_GET_REPORT_DUTY_LIST_ERROR, String::class.java).observe(this, Observer {
+            if (swipeRefreshLayout.isRefreshing){
+                swipeRefreshLayout.finishRefresh()
+                swipeRefreshLayout.finishLoadMore()
+            }
             if(mEmployeeResumeModelList.isEmpty()){
                 mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-                if (swipeRefreshLayout.isRefreshing){
-                    swipeRefreshLayout.finishRefresh()
-                    swipeRefreshLayout.finishLoadMore()
-                }
+
             }
         })
     }
@@ -89,10 +87,10 @@ class EmployRecordReportDutyFragment : BaseMVVMFragment<EmployRecordReportDutyVi
         recyclerView.layoutManager = LinearLayoutManager(mContext)
         recyclerView.addItemDecoration(SpaceItemDecoration(DensityUtil.dip2px(mContext, 10f)))
         recyclerView.adapter = mAdapter
-        swipeRefreshLayout.setEnableLoadMore(false)
         mAdapter.contactCallBack = {
             callPhone(it.tel)
         }
+        swipeRefreshLayout.setEnableLoadMore(false)
         mUiStatusController.onCompatRetryListener =
             OnCompatRetryListener { p0, p1, p2, p3 ->
                 mUiStatusController.changeUiStatus(UiStatus.LOADING)

@@ -1,5 +1,7 @@
 package com.bhx.common.utils;
 
+import android.text.TextUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +23,12 @@ public class RegularUtils {
         }
         return false;
     }
-
+    public static String mobileEncrypt(String mobile){
+        if(TextUtils.isEmpty(mobile) || (mobile.length() != 11)){
+            return mobile;
+        }
+        return mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2");
+    }
     /**
      * 验证输入的名字是否为“中文”或者是否包含“·”
      */

@@ -8,7 +8,6 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.DensityUtil
@@ -19,9 +18,9 @@ import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
-import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
+import com.jxqm.jiangdou.model.OrderDetailsModel
+import com.jxqm.jiangdou.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.order.vm.OrderPaymentViewModel
-import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.web.AgreementWebActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
@@ -139,6 +138,11 @@ class OrderPaymentActivity : BaseDataActivity<OrderPaymentViewModel>() {
                 LiveBus.getDefault().postEvent(
                     Constants.EVENT_KEY_WAIT_EXAMINE_JOB,
                     Constants.TAG_WAIT_EXAMINE_REFRESH_JOB_LIST, true
+                )
+                //刷新截至报名
+                LiveBus.getDefault().postEvent(
+                    Constants.EVENT_KEY_END_SIGN_UP,
+                    Constants.TAG_END_SIGN_UP_JOB_LIST, true
                 )
                 //跳转到支付成功界面
                 startActivity<OrderPaymentSuccessActivity>("orderDetailsModel" to orderDetailsModel!!.toJson())

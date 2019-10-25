@@ -72,12 +72,13 @@ class WaitPublishFragment : BaseMVVMFragment<WaitPublishViewModel>() {
         registerObserver(Constants.TAG_GET_WAIT_PUBLISH_JOB_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
+                if (swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.finishLoadMore()
+                }
                 if (mJobDetailList.isEmpty()) {
                     mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
-                    if (swipeRefreshLayout.isRefreshing) {
-                        swipeRefreshLayout.finishRefresh()
-                        swipeRefreshLayout.finishLoadMore()
-                    }
+
                 }
             })
         //刷新列表
@@ -149,6 +150,12 @@ class WaitPublishFragment : BaseMVVMFragment<WaitPublishViewModel>() {
     }
 
     override fun onFirstUserVisible() {
+        mViewModel.getWaitPublishJob(isRefresh)
+    }
+
+    fun doSearch(searchKey: String) {
+        mUiStatusController.changeUiStatus(UiStatus.LOADING)
+        isRefresh = true
         mViewModel.getWaitPublishJob(isRefresh)
     }
 }

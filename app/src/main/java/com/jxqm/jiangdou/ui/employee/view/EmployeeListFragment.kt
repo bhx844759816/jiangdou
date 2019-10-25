@@ -44,9 +44,6 @@ class EmployeeListFragment : BaseLazyFragment() {
         viewPager.setCurrentItem(position ?: 0, false)
     }
 
-    fun changeToSettlement() {
-        viewPager.setCurrentItem(4, false)
-    }
 
     inner class MyPageAdapter(fragmentManager: FragmentManager) :
         FragmentPagerAdapter(fragmentManager) {
@@ -54,6 +51,26 @@ class EmployeeListFragment : BaseLazyFragment() {
         override fun getCount(): Int = mListFragment.size
         override fun getPageTitle(position: Int): CharSequence? {
             return mTitles[position]
+        }
+    }
+
+    /**
+     * 搜索
+     */
+    fun doSearch(searchKey: String) {
+        when (val fragment = mListFragment[viewPager.currentItem]) {
+            is EmployeeSignUpFragment -> {
+                fragment.doSearch(searchKey)
+            }
+            is EmployeeEmploymentFragment -> {
+                fragment.doSearch(searchKey)
+            }
+            is EmployeeReportDutyFragment -> {
+                fragment.doSearch(searchKey)
+            }
+            is EmployeePayFinishFragment -> {
+                fragment.doSearch(searchKey)
+            }
         }
     }
 }

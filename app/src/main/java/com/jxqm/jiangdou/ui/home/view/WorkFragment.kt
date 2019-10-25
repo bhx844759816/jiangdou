@@ -3,6 +3,7 @@ package com.jxqm.jiangdou.ui.home.view
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import cn.bertsir.zbar.Qr.Config
@@ -23,6 +24,9 @@ import com.bhx.common.base.BaseLazyFragment
 import com.bhx.common.utils.LogUtils
 import com.bhx.common.utils.ToastUtils
 import com.jxqm.jiangdou.MyApplication
+import com.jxqm.jiangdou.ext.addTextChangedListener
+import com.jxqm.jiangdou.ext.hideKeyboard
+import com.jxqm.jiangdou.utils.startActivity
 
 
 /**
@@ -30,8 +34,7 @@ import com.jxqm.jiangdou.MyApplication
  * Created by Administrator on 2019/8/20.
  */
 class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
-    private var mEmployeeListFragment: EmployeeListFragment? = null
-    private var mEmployerListFragment: EmployerListFragment? = null
+    private var mCurrentFragment: Fragment? = null
     override fun getLayoutId(): Int = R.layout.fragment_work
     override fun getEventKey(): Any = Constants.EVENT_KEY_WORK
     private var isEmployee = false
@@ -39,9 +42,8 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (MyApplication.instance().attestationViewModel?.statusCode == 2) {
-            tvChange.text = "雇主"
             isEmployee = true
-            ivScanCode.visibility = View.GONE
+            changeUiStatus()
             showEmployerFragment()
         } else {
             showEmployeeFragment(0)
@@ -57,12 +59,10 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
                     mViewModel.getAttestationStatus()
                     return@clickWithTrigger
                 }
-                tvChange.text = "雇主"
-                ivScanCode.visibility = View.GONE
+                changeUiStatus()
                 showEmployerFragment()
             } else {
-                tvChange.text = "雇员"
-                ivScanCode.visibility = View.VISIBLE
+                changeUiStatus()
                 showEmployeeFragment(0)
             }
         }
@@ -71,6 +71,34 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
             startScan()
         }
 
+        etSearch.addTextChangedListener {
+            afterTextChanged {
+                val content = etSearch.text.toString().trim()
+                if (content.isNotEmpty()) {
+                    ivDelete.visibility = View.VISIBLE
+                } else {
+                    ivDelete.visibility = View.GONE
+                }
+            }
+        }
+        ivDelete.clickWithTrigger {
+            etSearch.setText("")
+        }
+        etSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val searchKey = etSearch.text.toString()
+                MyApplication.instance().searchKeyWork = searchKey
+                if (searchKey.isNotEmpty()) {
+                    etSearch.hideKeyboard()
+                    //存储到SharedPreference
+                    doSearch(searchKey)
+                    return@setOnEditorActionListener true
+                } else {
+                    ToastUtils.toastShort("请输入搜索关键词")
+                }
+            }
+            return@setOnEditorActionListener false
+        }
 
     }
 
@@ -83,8 +111,7 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
         ).observe(this,
             Observer {
                 isEmployee = false
-                tvChange.text = "雇员"
-                ivScanCode.visibility = View.VISIBLE
+                changeUiStatus()
                 showEmployeeFragment(3)
             })
         //获取审核状态
@@ -96,8 +123,7 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
                 val attestationStatus = MyApplication.instance().attestationViewModel
                 if (attestationStatus != null && attestationStatus.statusCode == 2) {
                     //已认证
-                    tvChange.text = "雇主"
-                    ivScanCode.visibility = View.GONE
+                    changeUiStatus()
                     showEmployerFragment()
                 } else {
                     isEmployee = false
@@ -108,6 +134,40 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
                     }
                 }
             })
+    }
+
+    private fun changeUiStatus() {
+        if (isEmployee) {
+            tvChange.text = "雇主"
+            ivScanCode.visibility = View.GONE
+            etSearch.hint = "搜索职位"
+            etSearch.setText("")
+        } else {
+            tvChange.text = "雇员"
+            ivScanCode.visibility = View.VISIBLE
+            etSearch.hint = "搜索已投职位"
+            etSearch.setText("")
+        }
+
+    }
+
+    /**
+     * 模糊查询对应的
+     */
+    private fun doSearch(searchKey: String) {
+        mCurrentFragment?.let {
+            when (it) {
+                is EmployeeListFragment -> {//雇员搜索
+//                    (mCurrentFragment as EmployeeListFragment).doSearch(searchKey)
+                }
+                is EmployerListFragment -> {//雇主搜索
+//                    (mCurrentFragment as EmployerListFragment).doSearch(searchKey)
+                }
+                else -> {
+
+                }
+            }
+        }
     }
 
     override fun onFirstUserVisible() {
@@ -141,18 +201,20 @@ class WorkFragment : BaseMVVMFragment<WorkViewModel>() {
 
     private fun showEmployeeFragment(position: Int) {
         val transaction = childFragmentManager.beginTransaction()
-        mEmployeeListFragment = EmployeeListFragment()
+        val employeeListFragment = EmployeeListFragment()
         val bundle = Bundle()
         bundle.putInt("position", position)
-        mEmployeeListFragment!!.arguments = bundle
-        transaction.replace(R.id.flFragment, mEmployeeListFragment!!)
+        employeeListFragment.arguments = bundle
+        mCurrentFragment = employeeListFragment
+        transaction.replace(R.id.flFragment, employeeListFragment)
         transaction.commit()
     }
 
     private fun showEmployerFragment() {
         val transaction = childFragmentManager.beginTransaction()
-        mEmployerListFragment = EmployerListFragment()
-        transaction.replace(R.id.flFragment, mEmployerListFragment!!)
+        val employerListFragment = EmployerListFragment()
+        mCurrentFragment = employerListFragment
+        transaction.replace(R.id.flFragment, employerListFragment)
         transaction.commit()
     }
 }

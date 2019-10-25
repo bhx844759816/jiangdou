@@ -1,7 +1,6 @@
 package com.jxqm.jiangdou.model
 
 import com.jxqm.jiangdou.base.CommonConfig
-import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 
 /**
  * Created by Administrator on 2019/9/19.

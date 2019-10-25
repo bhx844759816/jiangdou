@@ -1,14 +1,11 @@
 package com.jxqm.jiangdou.ui.order.vm.repository
 
-import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.BaseEventRepository
 import com.jxqm.jiangdou.http.action
-import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.http.applySchedulersForLoadingDialog
-import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
+import com.jxqm.jiangdou.model.OrderDetailsModel
 import io.reactivex.Observable
-import io.reactivex.functions.Consumer
 
 /**
  * Created by Administrator on 2019/9/22.
@@ -17,7 +14,7 @@ class OrderPaymentRepository : BaseEventRepository() {
 
     fun getOrderDetail(jobId: String) {
         addDisposable(
-            Observable.concat(apiService.getAccountBalance(), apiService.getOrderDetails(jobId))
+            Observable.concat(apiService.getAccountAvailBalance(), apiService.getOrderDetails(jobId))
                 .compose(applySchedulersForLoadingDialog())
                 .subscribe({
                     if (it.code == "0") {

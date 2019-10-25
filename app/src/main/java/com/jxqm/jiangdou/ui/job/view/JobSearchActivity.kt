@@ -100,7 +100,9 @@ class JobSearchActivity : BaseDataActivity<JobSearchViewModel>() {
             )
             textView.layoutParams = layoutParams
             textView.clickWithTrigger {
-                startActivity<JobCompanyListActivity>("SearchKey" to textView.text.toString().trim())
+                val content = textView.text.toString().trim()
+                writeSearchHistory(content)
+                startActivity<JobCompanyListActivity>("SearchKey" to content)
             }
             flHotSearchParent.addView(textView)
         }

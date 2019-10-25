@@ -27,6 +27,8 @@ class TradeDetailsListActivity : BaseDataActivity<TradeDetailsListViewModel>() {
     private lateinit var mAdapter: TradeDetailsItemAdapter
     private val mTradeDetailsModelList = mutableListOf<TradeDetailsModel>()
     private var mTimePickView: TimePickerView? = null
+    private val mYear = Calendar.getInstance().get(Calendar.YEAR)
+    private val mMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
     override fun getLayoutId(): Int = R.layout.activity_trade_details_list
 
     override fun getEventKey(): Any = Constants.EVENT_TRADE_DETAILS_LIST
@@ -37,7 +39,8 @@ class TradeDetailsListActivity : BaseDataActivity<TradeDetailsListViewModel>() {
         mAdapter = TradeDetailsItemAdapter(this)
         rvTradeList.layoutManager = LinearLayoutManager(this)
         rvTradeList.adapter = mAdapter
-
+        tvSelectDate.text =
+            "${mYear}年${mMonth}月"
         tvSelectDate.clickWithTrigger {
             showTimePickedDialog()
         }
@@ -71,8 +74,8 @@ class TradeDetailsListActivity : BaseDataActivity<TradeDetailsListViewModel>() {
 
     override fun initData() {
         mViewModel.getTradeDetailsList(
-            Calendar.getInstance().get(Calendar.YEAR).toString(),
-            (Calendar.getInstance().get(Calendar.MONTH) + 1).toString()
+            mYear.toString(),
+            mMonth.toString()
         )
     }
 

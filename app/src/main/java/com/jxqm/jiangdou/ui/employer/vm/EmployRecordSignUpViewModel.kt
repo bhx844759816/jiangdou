@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.employer.vm
 
 import com.bhx.common.mvvm.BaseViewModel
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.employer.vm.repository.EmployRecordSignUpRepository
 
 /**
@@ -9,7 +10,7 @@ import com.jxqm.jiangdou.ui.employer.vm.repository.EmployRecordSignUpRepository
  */
 class EmployRecordSignUpViewModel : BaseViewModel<EmployRecordSignUpRepository>() {
     private var pageNo = 1
-    private var pageSize = 20
+    private var pageSize = Constants.PAGE_SIZE
     fun getSignUpEmployee(jobId: String, isRefresh: Boolean) {
         if (isRefresh) {
             pageNo = 1

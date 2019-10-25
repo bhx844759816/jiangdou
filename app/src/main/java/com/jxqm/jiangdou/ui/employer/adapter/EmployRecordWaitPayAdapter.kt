@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bhx.common.utils.RegularUtils
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
@@ -49,15 +50,19 @@ class EmployRecordWaitPayAdapter(context: Context) : MultiItemTypeAdapter<Employ
                         .error(R.drawable.icon_default_head_photo)
                         .placeholder(R.drawable.icon_default_head_photo)
                         .into(ivHeadPhoto)
-                    tvUserName.text = model.name
+                    if (RegularUtils.isTelPhoneNumber(model.name)) {
+                        tvUserName.text = RegularUtils.mobileEncrypt(model.name)
+                    } else {
+                        tvUserName.text = model.name
+                    }
                     tvAmount.text = "${model.amount}币"
                     val date = model.date.substring(model.date.indexOf("-") + 1).replace("-", "月")
                     tvWorkTime.text = "工作时段： ${model.startTime}"
                     cbSelect.isChecked = model.isChecked
-                    if (model.gender == "男") {
-                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
-                    } else {
+                    if (model.genderCode == 0) {
                         ivUserSex.setBackgroundResource(R.drawable.icon_girl)
+                    } else {
+                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
                     }
                     //查看简历
                     ivHeadPhoto.clickWithTrigger {

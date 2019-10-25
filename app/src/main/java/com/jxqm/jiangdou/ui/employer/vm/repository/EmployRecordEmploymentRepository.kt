@@ -20,7 +20,7 @@ class EmployRecordEmploymentRepository : BaseEventRepository() {
                 .compose(applySchedulers())
                 .subscribe({
                     if (it.code == "0") {
-                        if (it.data.records.size == it.data.total) {
+                        if (it.data.records.isNotEmpty()) {
                             callBack.invoke()
                         }
                         val list = it.data.records

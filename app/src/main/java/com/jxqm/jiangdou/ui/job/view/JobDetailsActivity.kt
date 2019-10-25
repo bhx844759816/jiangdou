@@ -1,20 +1,17 @@
 package com.jxqm.jiangdou.ui.job.view
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.TextView
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.bhx.common.utils.DensityUtil
 import com.bhx.common.view.FlowLayout
 import com.bumptech.glide.Glide
-import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobDetailsModel
-import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
 import kotlinx.android.synthetic.main.activity_job_details.*
 import kotlinx.android.synthetic.main.activity_job_details.ivMapView
 import kotlinx.android.synthetic.main.activity_job_details.llDateParent
@@ -34,13 +31,13 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import com.bhx.common.event.LiveBus
 import com.bhx.common.utils.AppManager
-import com.bhx.common.utils.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.haibin.calendarview.Calendar
 import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.model.AttestationStatusModel
+import com.jxqm.jiangdou.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.ui.job.vm.JobDetailsViewModel
 import com.jxqm.jiangdou.ui.login.view.LoginActivity
@@ -53,6 +50,10 @@ import com.jxqm.jiangdou.utils.startActivity
 import com.jxqm.jiangdou.view.dialog.MapSelectDialog
 import com.jxqm.jiangdou.view.dialog.PromptDialog
 import com.jxqm.jiangdou.view.popupwindow.JobDetailsSelectPopupWindow
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.UMShareAPI
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
 
 /**
  * 工作详情界面
@@ -68,6 +69,20 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
     private var rlCollection: RelativeLayout? = null//收藏
     private val mGson = Gson()
     private var mJobDetailsModel: JobDetailsModel? = null
+    private val mShareListener = object : UMShareListener {
+        override fun onResult(p0: SHARE_MEDIA?) {
+        }
+
+        override fun onCancel(p0: SHARE_MEDIA?) {
+        }
+
+        override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+        }
+
+        override fun onStart(p0: SHARE_MEDIA?) {
+        }
+
+    }
 
     override fun getLayoutId(): Int = R.layout.activity_job_details
 
@@ -220,7 +235,7 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
     @SuppressLint("SetTextI18n")
     private fun initJobDetails() {
         mJobDetailsModel?.let {
-            tvJobType.text = it.jobTypeName
+            tvJobType.text = it.title
             tvJobMoney.text = "${it.salary} 币/小时"
             tvRecruitPeoples.text = "招${it.recruitNum}人"
             tvJobSex.text = it.gender
@@ -229,7 +244,7 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             tvJobArea.text = it.address
             tvAddressDetails.text =
                 "详细地址:  ${it.province} ${it.city} ${it.area}  ${it.address}${it.addressDetail}"
-            tvJobTips.text = "${it.area} | 日结"
+            tvJobTips.text = "${it.area} | ${it.jobTypeName}"
             if (it.sign) {
                 tvSignUp?.text = "已报名(${it.signNum}人报名)"
             } else {
@@ -345,7 +360,9 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             mJobDetailsSelectPopupWindow!!.mCallback = {
                 when (it) {
                     0 -> {
-
+                        ShareAction(this).withText("hello")
+                            .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                            .setCallback(mShareListener).open()
                     }
                     1 -> {
                         startActivity<UserComplainActivity>("jobId" to mJobDetailsModel?.id.toString())
@@ -357,6 +374,11 @@ class JobDetailsActivity : BaseDataActivity<JobDetailsViewModel>() {
             }
         }
         mJobDetailsSelectPopupWindow!!.showPopup(toolbar)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        UMShareAPI.get(this).onActivityResult(requestCode,resultCode,data)
     }
 
     companion object {

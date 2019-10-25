@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bhx.common.base.BaseActivity
+import com.bhx.common.utils.ToastUtils
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
 import com.jaeger.library.StatusBarUtil
@@ -41,7 +42,6 @@ class MyCollectionJobActivity : BaseDataActivity<MyCollectionJobViewModel>() {
         mAdapter = CollectionAdapter(this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = mAdapter
-        swipeRefreshLayout.setEnableLoadMore(false)
         swipeRefreshLayout.setOnRefreshListener {
             isRefresh = true
             mViewModel.getCollectionList(isRefresh)
@@ -54,6 +54,9 @@ class MyCollectionJobActivity : BaseDataActivity<MyCollectionJobViewModel>() {
             finish()
         }
         tvSelect.clickWithTrigger {
+            if (mJobDetailModelList.isEmpty()) {
+                return@clickWithTrigger
+            }
             changeJobListState()
         }
         mAdapter.mSelectCallBack = { position, isChecked ->
@@ -64,6 +67,10 @@ class MyCollectionJobActivity : BaseDataActivity<MyCollectionJobViewModel>() {
         tvCancelCollection.clickWithTrigger {
             val idList = mJobDetailModelList.filter { it.isChecked }.map {
                 it.id
+            }
+            if(idList.isEmpty()){
+                ToastUtils.toastShort("没有选中的条目")
+                return@clickWithTrigger
             }
             mViewModel.cancelCollection(idList)
         }
@@ -118,9 +125,6 @@ class MyCollectionJobActivity : BaseDataActivity<MyCollectionJobViewModel>() {
                         mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                     } else {
                         mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                        if (list.size >= 10) {
-                            swipeRefreshLayout.setEnableLoadMore(true)
-                        }
                     }
                     mJobDetailModelList.clear()
                     mJobDetailModelList.addAll(list)

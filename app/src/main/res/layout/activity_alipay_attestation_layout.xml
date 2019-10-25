@@ -334,7 +334,6 @@
                         android:textSize="@dimen/text_default_size" />
 
                     <EditText
-                        android:id="@+id/etAlipayAccount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
@@ -394,7 +393,6 @@
                         android:textSize="@dimen/text_default_size" />
 
                     <EditText
-                        android:id="@+id/etPeopleCard"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"

@@ -25,7 +25,13 @@ class JobSingUpSuccessActivity : BaseActivity() {
             AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
         }
         tvSeeDetails.clickWithTrigger {
-            LiveBus.getDefault().postEvent(Constants.EVENT_KEY_MAIN,Constants.TAG_SIGN_UP_SUCCESS_STATUS,true)
+            LiveBus.getDefault()
+                .postEvent(Constants.EVENT_KEY_MAIN, Constants.TAG_SIGN_UP_SUCCESS_STATUS, true)
+            LiveBus.getDefault().postEvent(
+                Constants.EVENT_KEY_EMPLOYEE_SIGN_UP,
+                Constants.TAG_SING_UP_SUCCESS_REFRESH_LIST,
+                true
+            )
             AppManager.getAppManager().finishOthersActivity(MainActivity::class.java)
         }
 

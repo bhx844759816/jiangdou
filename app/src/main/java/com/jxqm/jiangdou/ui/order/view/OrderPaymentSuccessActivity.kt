@@ -16,8 +16,8 @@ import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.ui.home.view.MainActivity
-import com.jxqm.jiangdou.ui.order.model.OrderDetailsModel
-import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
+import com.jxqm.jiangdou.model.OrderDetailsModel
+import com.jxqm.jiangdou.model.TimeRangeModel
 import com.jxqm.jiangdou.ui.publish.view.JobPublishActivity
 import com.jxqm.jiangdou.ui.web.AgreementWebActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger

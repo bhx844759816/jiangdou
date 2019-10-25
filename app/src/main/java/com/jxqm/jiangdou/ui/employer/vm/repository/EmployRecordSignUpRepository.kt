@@ -23,7 +23,7 @@ class EmployRecordSignUpRepository : BaseEventRepository() {
                 .subscribe({
                     LogUtils.i("getSignUpEmployee$it")
                     if (it.code == "0") {
-                        if (!it.data.records.isNullOrEmpty() && it.data.records.size >= 10) { //当前列表超过10条数据
+                        if (it.data.records.isNotEmpty()) { //当前列表超过10条数据
                             callBack.invoke()
                         }
                         sendData(

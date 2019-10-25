@@ -1,14 +1,19 @@
 package com.jxqm.jiangdou.ui.user.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bhx.common.utils.LogUtils
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
+import com.jxqm.jiangdou.ui.user.view.PhotoViewPageActivity
+import com.jxqm.jiangdou.utils.startActivity
 import java.io.File
+import java.util.ArrayList
 
 /**
  * Created By bhx On 2019/8/19 0019 15:28
@@ -20,6 +25,7 @@ class PhotoListAdapter(context: Context, fileList: List<Any>) :
     private val mFileList = fileList
     private var mAddCallBack: (() -> Unit)? = null
     private var mDeleteCallBack: ((Int) -> Unit)? = null
+    var mClickItemCallBack: (() -> Unit)? = null
     private var maxSelectPhotoCounts = 9
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
@@ -52,6 +58,17 @@ class PhotoListAdapter(context: Context, fileList: List<Any>) :
         holder.addView.setOnClickListener {
             if (position == mFileList.size) {
                 mAddCallBack?.invoke()
+            } else {
+                val intent = Intent(mContext, PhotoViewPageActivity::class.java)
+                val list = mFileList.map {
+                    if (it is File) {
+                        it.absolutePath
+                    } else {
+                        it as String
+                    }
+                }
+                intent.putStringArrayListExtra("ImageUrls", list as ArrayList<String>?)
+                mContext.startActivity(intent)
             }
         }
         holder.deleteView.setOnClickListener {

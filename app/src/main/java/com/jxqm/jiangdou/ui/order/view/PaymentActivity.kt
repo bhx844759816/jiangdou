@@ -1,13 +1,19 @@
 package com.jxqm.jiangdou.ui.order.view
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.Observer
+import com.alipay.sdk.app.PayTask
+import com.bhx.common.utils.LogUtils
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ext.addTextChangedListener
+import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.ui.order.vm.PaymentViewModel
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import io.reactivex.Observable
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_payment.*
 
 class PaymentActivity : BaseDataActivity<PaymentViewModel>() {
@@ -15,12 +21,11 @@ class PaymentActivity : BaseDataActivity<PaymentViewModel>() {
     private var mNeedPayMoney = 200
     override fun getLayoutId(): Int = R.layout.activity_payment
 
-    override fun getEventKey(): Any = Constants.EVENT_PAYMENT
+    override fun getEventKey(): Any = Constants.EVENT_KEY_PAYMENT
 
     override fun initView() {
         super.initView()
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.colorAccent))
-
         rlPayOne.clickWithTrigger {
             mCurrentStatus = PAYMENT_STATUS_ONE
             changePaymentStatus()
@@ -56,7 +61,39 @@ class PaymentActivity : BaseDataActivity<PaymentViewModel>() {
                 resetPaymentStatus()
             }
         }
+
+        tvPaying.clickWithTrigger {
+            mViewModel.getAlipayOrderInfo("1")
+        }
+        //
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
+
+    override fun dataObserver() {
+        registerObserver(Constants.TAG_GET_ALIPAY_ORDER_INFO, String::class.java).observe(this,
+            Observer {
+                LogUtils.i("订单信息: $it")
+                doAlipayAction(it)
+            })
+    }
+
+    /**
+     * 调用支付宝支付
+     */
+    private fun doAlipayAction(orderInfo: String) {
+        addDisposable(Observable.create<Boolean> {
+            val alipay = PayTask(this)
+            val result = alipay.payV2(orderInfo, true)
+            LogUtils.i("result=$result")
+        }.compose(applySchedulers()).subscribe({
+
+        }, {
+
+        }))
+    }
+
 
     private fun changePaymentStatus() {
         resetPaymentStatus()

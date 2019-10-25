@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bhx.common.utils.RegularUtils
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
@@ -46,7 +47,11 @@ class EmployRecordSignUpAdapter(context: Context) : MultiItemTypeAdapter<Employe
                     val tvSingUpTime = it.getView<TextView>(R.id.tvSingUpTime)
                     val cbSelect = it.getView<CheckBox>(R.id.cbSelect)
                     cbSelect.isChecked = model.isChecked
-                    tvUserName.text = model.name
+                    if (RegularUtils.isTelPhoneNumber(model.name)) {
+                        tvUserName.text = RegularUtils.mobileEncrypt(model.name)
+                    } else {
+                        tvUserName.text = model.name
+                    }
                     tvArea.text = model.area
                     tvAge.text = model.age
                     tvSingUpTime.text = model.signTime
@@ -55,10 +60,10 @@ class EmployRecordSignUpAdapter(context: Context) : MultiItemTypeAdapter<Employe
                         .error(R.drawable.icon_default_head_photo)
                         .placeholder(R.drawable.icon_default_head_photo)
                         .into(ivHeadPhoto)
-                    if (model.gender == "男") {
-                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
-                    } else {
+                    if (model.genderCode == 0) {
                         ivUserSex.setBackgroundResource(R.drawable.icon_girl)
+                    } else {
+                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
                     }
                     ivHeadPhoto.clickWithTrigger {
                         mContext.startActivity<ResumeDetailsActivity>("UserId" to model.userId)

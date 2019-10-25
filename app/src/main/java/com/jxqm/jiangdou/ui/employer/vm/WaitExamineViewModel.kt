@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.employer.vm
 
 import com.bhx.common.mvvm.BaseViewModel
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.employer.vm.repository.WaitExamineRepository
 
 /**
@@ -8,7 +9,7 @@ import com.jxqm.jiangdou.ui.employer.vm.repository.WaitExamineRepository
  */
 class WaitExamineViewModel : BaseViewModel<WaitExamineRepository>() {
     private var pageNo: Int = 1
-    private var pageSize: Int = 10
+    private var pageSize = Constants.PAGE_SIZE
     fun getWaitExamineJob(isRefresh: Boolean) {
         if (isRefresh) {
             pageNo = 1

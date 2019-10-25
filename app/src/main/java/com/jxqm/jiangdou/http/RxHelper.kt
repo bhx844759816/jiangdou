@@ -1,11 +1,13 @@
 package com.jxqm.jiangdou.http
 
 import android.text.TextUtils
+import android.util.Log
 import com.bhx.common.event.LiveBus
 import com.bhx.common.http.ApiException
 import com.bhx.common.http.CustomException
 import com.bhx.common.utils.LogUtils
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.model.HttpResult
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -13,7 +15,6 @@ import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
-import java.util.logging.Logger
 
 
 /**
@@ -29,6 +30,8 @@ fun <T> Observable<HttpResult<T>>.action(
 ): Disposable {
     return this.compose(handleResultForLoadingDialog())
         .subscribe(Consumer(onNext), Consumer {
+            LogUtils.i("Throwable:${it.localizedMessage}")
+            Log.i("TAG","Throwable:${it.localizedMessage}")
             LiveBus.getDefault().postEvent(Constants.EVENT_KEY_HTTP_REQUEST_ERROR, Constants.TAG_HTTP_REQUEST_ERROR, it)
         }, Action {
 
@@ -141,6 +144,7 @@ class ErrorResumeFunction<T> : Function<Throwable, ObservableSource<out HttpResu
 class ResponseFunction<T> : Function<HttpResult<T>, ObservableSource<T>> {
     override fun apply(t: HttpResult<T>): ObservableSource<T> {
         LogUtils.i("httpResult:$t")
+        Log.i("TAG","httpResult:$t")
         return if (t.code == "0") {
             if (t.data == null) {
                 Observable.just(Any() as T)

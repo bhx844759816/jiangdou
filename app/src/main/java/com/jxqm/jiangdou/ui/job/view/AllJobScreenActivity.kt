@@ -26,6 +26,7 @@ import com.jxqm.jiangdou.ui.job.widget.JobScreenByAreaPopupWindow
 import com.jxqm.jiangdou.ui.job.widget.JobScreenBySortPopupWindow
 import com.jxqm.jiangdou.ui.job.widget.JobScreenByTypePopupWindow
 import com.jxqm.jiangdou.utils.clickWithTrigger
+import com.tencent.mm.opensdk.openapi.IWXAPI
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_all_job_screen.*
 import org.json.JSONArray
@@ -47,6 +48,7 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
     private var mScreenResult: String? = null
     private var mJobTypeId: String? = null
     private var isRefresh = true
+
     private lateinit var mUiStatusController: UiStatusController
     private lateinit var mAdapter: JobItemAdapter
 
@@ -65,7 +67,6 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
         mAdapter = JobItemAdapter(this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = mAdapter
-        swipeRefreshLayout.setEnableLoadMore(false)
         mJobTypeId?.let {
             mParamsMap["jobTypeId"] = it
         }
@@ -94,6 +95,7 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                 }
             }
         }
+
         rlScreenJob.clickWithTrigger {
             val intent = Intent(this, JobScreenActivity::class.java)
             intent.putExtra("ScreenResult", mScreenResult)
@@ -198,9 +200,6 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                         mUiStatusController.changeUiStatus(UiStatus.EMPTY)
                     } else {
                         mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                        if (list.size >= 10) {
-                            swipeRefreshLayout.setEnableLoadMore(true)
-                        }
                     }
                     mJobItemList.clear()
                     mJobItemList.addAll(list)
@@ -209,11 +208,11 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
                         swipeRefreshLayout.finishRefresh()
                     swipeRefreshLayout.resetNoMoreData()
                 } else {
-                    if (list.isEmpty()) {
+                    mJobItemList.addAll(list)
+                    if (list.size < Constants.PAGE_SIZE) {
                         swipeRefreshLayout.finishLoadMoreWithNoMoreData()
                     } else {
                         swipeRefreshLayout.finishLoadMore()
-                        mJobItemList.addAll(list)
                         mAdapter.setDataList(mJobItemList)
                     }
                 }
@@ -222,6 +221,10 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
         registerObserver(Constants.TAG_GET_JOB_ITEM_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
+                if(swipeRefreshLayout.isRefreshing){
+                    swipeRefreshLayout.finishLoadMore()
+                    swipeRefreshLayout.finishRefresh()
+                }
                 if (mJobItemList.isEmpty()) {
                     mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
                 }
@@ -274,6 +277,7 @@ class AllJobScreenActivity : BaseDataActivity<AllJobScreenViewModel>() {
             mAreaPopupWindow!!.mConfirmCallBack = {
                 if (it == "全郑州市") {
                     mParamsMap.remove("area")
+                    LogUtils.i("city=${it.substring(1)}")
                     mParamsMap["city"] = it.substring(1)
                 } else {
                     mParamsMap.remove("city")

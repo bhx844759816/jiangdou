@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import androidx.annotation.NonNull
+import androidx.multidex.MultiDex
 import com.baidu.mapapi.SDKInitializer
 import com.bhx.common.BaseApplication
 import com.bhx.common.http.RetrofitManager
@@ -28,6 +29,9 @@ import com.jxqm.jiangdou.view.refresh.BaseRefreshHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer
+import com.umeng.analytics.MobclickAgent
+import com.umeng.commonsdk.UMConfigure
+import com.umeng.socialize.PlatformConfig
 
 
 /**
@@ -41,7 +45,8 @@ class MyApplication : BaseApplication() {
     var attestationViewModel: AttestationStatusModel? = null
     var locationModel: LocationModel? = null
     var isRecyclerFlag = -1
-
+    var searchKeyWork = "" //工作台-搜索
+    var searchKeyEmployRecord = ""//雇佣记录 - 搜索
     private val mActivityCallBack = object : ActivityLifecycleCallbacks {
         override fun onActivityPaused(p0: Activity) {
         }
@@ -88,15 +93,14 @@ class MyApplication : BaseApplication() {
             .setInterceptorList(listOf(TokenInterceptor()))
             .setBaseUrl(Api.HTTP_BASE_URL)
         RetrofitManager.getInstance().init(builder)
-        SmartRefreshLayout.setDefaultRefreshInitializer { context, layout ->
+        SmartRefreshLayout.setDefaultRefreshInitializer { _, layout ->
             //全局设置（优先级最低）
             layout.setEnableAutoLoadMore(true)
             layout.setEnableOverScrollDrag(false)
-            layout.setFooterHeight(DensityUtil.dip2px(instance,20f).toFloat())
             layout.setEnableOverScrollBounce(true)
             layout.setEnableLoadMoreWhenContentNotFull(false)
             layout.setEnableScrollContentWhenRefreshed(true)
-            layout.setEnableFooterFollowWhenNoMoreData(true) //
+            layout.setEnableFooterFollowWhenNoMoreData(true) //显示底部布局
             layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white)
         }
         //设置全局的Header构建器
@@ -129,11 +133,22 @@ class MyApplication : BaseApplication() {
         UiStatusNetworkStatusProvider.getInstance()
             .registerOnRequestNetworkStatusEvent { context -> NetworkUtils.isConnected(context) }
         registerActivityLifecycleCallbacks(mActivityCallBack)
-//        Utils_CrashHandler.getInstance().init(this)
         //百度地图初始化
         SDKInitializer.initialize(this)
-        //保存报错日志
-        Utils_CrashHandler.getInstance().init(instance)
+        // UMENG初始化SDK
+        UMConfigure.init(
+            this,
+            "5db023503fc1951923000ac2",
+            "Umeng",
+            UMConfigure.DEVICE_TYPE_PHONE,
+            null
+        )
+        if (BuildConfig.DEBUG)
+            UMConfigure.setLogEnabled(true)
+        // 选用AUTO页面采集模式
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO)
+//        PlatformConfig.setWeixin("wx2108d96dd642c746", "")
+//        PlatformConfig.setQQZone("wx2108d96dd642c746", "")
     }
 
     fun saveToken(it: TokenModel) {
@@ -141,6 +156,11 @@ class MyApplication : BaseApplication() {
         refreshToken = it.refresh_token
         SPUtils.put(this.applicationContext, Constants.ACCESS_TOKEN, accessToken)
         SPUtils.put(this.applicationContext, Constants.REFRESH_TOKEN, it.refresh_token)
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     fun doLogOut() {

@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.attestation.view
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -254,7 +255,7 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
                 .subscribe {
                     LogUtils.i("requestGpsPermission$it")
                     if (it) {
-                        selectImage(isCrop,requestCode)
+                        selectImage(isCrop, requestCode)
                     }
                 }
         addDisposable(disposable)
@@ -351,6 +352,9 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode != Activity.RESULT_OK) {
+            return
+        }
         when (requestCode) {
             REQUEST_CODE_SELECT_IMAGE -> { //选择营业执照
                 val file = FileUtil.getFileByPath(Matisse.obtainPathResult(data)[0])
@@ -398,9 +402,9 @@ class CompanyAttestationActivity : BaseDataActivity<CompanyAttestationViewModel>
             flCompanyLogoStatusParent.visibility = View.VISIBLE
             tvCompanyLogoStatusText.text = it.status
             LogUtils.i(Api.HTTP_BASE_URL + it.businessLicense)
-            Glide.with(this).load(Api.HTTP_BASE_URL + it.businessLicense)
+            Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.businessLicense)
                 .into(ivAttestationImg)
-            Glide.with(this).load(Api.HTTP_BASE_URL + it.logo).into(ivCompanyLogoImg)
+            Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.logo).into(ivCompanyLogoImg)
             etCompanyName.setText(it.employerName)
             etCompanyDescription.setText(it.introduction)
             //企业类型

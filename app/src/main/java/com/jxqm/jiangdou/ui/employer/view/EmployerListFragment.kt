@@ -24,7 +24,6 @@ class EmployerListFragment : BaseLazyFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_employer_job_list
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         mListFragment.add(WaitPublishFragment())
         mListFragment.add(WaitExamineFragment())
         mListFragment.add(PublishingFragment())
@@ -37,9 +36,6 @@ class EmployerListFragment : BaseLazyFragment() {
         tabLayout.addTab(mTitles[3])
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout.tabLayout))
         tabLayout.setupWithViewPager(viewPager)
-//        ivPublishJob.clickWithTrigger {
-//
-//        }
         ivPublishJob.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -60,4 +56,23 @@ class EmployerListFragment : BaseLazyFragment() {
         }
     }
 
+    /**
+     * 搜索
+     */
+    fun doSearch(searchKey: String) {
+        when (val fragment = mListFragment[viewPager.currentItem]) {
+            is WaitPublishFragment -> {
+                fragment.doSearch(searchKey)
+            }
+            is WaitExamineFragment -> {
+                fragment.doSearch(searchKey)
+            }
+            is PublishingFragment -> {
+                fragment.doSearch(searchKey)
+            }
+            is EndSignUpFragment -> {
+                fragment.doSearch(searchKey)
+            }
+        }
+    }
 }

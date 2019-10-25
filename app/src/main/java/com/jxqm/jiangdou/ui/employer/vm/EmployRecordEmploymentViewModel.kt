@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.employer.vm
 
 import com.bhx.common.mvvm.BaseViewModel
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.employer.vm.repository.EmployRecordEmploymentRepository
 
 /**
@@ -9,7 +10,7 @@ import com.jxqm.jiangdou.ui.employer.vm.repository.EmployRecordEmploymentReposit
  */
 class EmployRecordEmploymentViewModel : BaseViewModel<EmployRecordEmploymentRepository>() {
     private var pageNo = 1
-    private var pageSize = 10
+    private var pageSize = Constants.PAGE_SIZE
     /**
      *获取录用列表通过不同的状态
      * @param status 0已邀请 1已接受 2已拒绝 3未回复

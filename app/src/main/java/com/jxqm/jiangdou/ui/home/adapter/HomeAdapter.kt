@@ -14,8 +14,7 @@ import com.bhx.common.adapter.rv.holder.ViewHolder
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
-import com.jxqm.jiangdou.model.JobDetailsModel
-import com.jxqm.jiangdou.ui.home.model.*
+import com.jxqm.jiangdou.model.*
 import com.jxqm.jiangdou.ui.job.view.AllJobScreenActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity

@@ -1,5 +1,6 @@
 package com.jxqm.jiangdou.ui.attestation.view
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.text.TextUtils
@@ -223,9 +224,9 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
             flCardBackStatusParent.visibility = View.VISIBLE
             tvCardPositiveStatusText.text = it.status
             tvCardBackStatusText.text = it.status
-            Glide.with(this).load(Api.HTTP_BASE_URL + it.idcardFront)
+            Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.idcardFront)
                 .into(ivPeopleCardPositive)
-            Glide.with(this).load(Api.HTTP_BASE_URL + it.idcardBack)
+            Glide.with(this).load(Api.HTTP_BASE_URL + "/" + it.idcardBack)
                 .into(ivPeopleCardBack)
             when (it.statusCode) {
                 1 -> {//审核中 //已认证
@@ -251,6 +252,9 @@ class PeopleAttestationActivity : BaseDataActivity<PeopleAttestationViewModel>()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode != Activity.RESULT_OK) {
+            return
+        }
         when (requestCode) {
             REQUEST_CODE_SELECT_IMAGE_FRONT -> {
                 data?.let {

@@ -1,6 +1,7 @@
 package com.jxqm.jiangdou.ui.job.vm
 
 import com.bhx.common.mvvm.BaseViewModel
+import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.job.vm.repository.AllJobScreenRepository
 
 /**
@@ -8,7 +9,7 @@ import com.jxqm.jiangdou.ui.job.vm.repository.AllJobScreenRepository
  */
 class AllJobScreenViewModel : BaseViewModel<AllJobScreenRepository>() {
     private var pageNo = 1
-    private var pageSize = 10
+    private var pageSize = Constants.PAGE_SIZE
     /**
      * 获取全部的工作类型
      */

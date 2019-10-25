@@ -32,7 +32,7 @@ class MessageAdapter(context: Context) : MultiItemTypeAdapter<MessageModel>(cont
             override fun convert(holder: ViewHolder?, messageModel: MessageModel, position: Int) {
                 holder?.let {
                     val llContentParent = it.getView<LinearLayout>(R.id.llContentParent)
-                    val tvTime = it.getView<TextView>(R.id.tvTitle)
+                    val tvTime = it.getView<TextView>(R.id.tvTime)
                     val tvTitle = it.getView<TextView>(R.id.tvTitle)
                     val tvContent = it.getView<TextView>(R.id.tvContent)
                     val tvSee = it.getView<TextView>(R.id.tvSee)

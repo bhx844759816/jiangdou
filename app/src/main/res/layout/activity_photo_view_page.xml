@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jxqm.jiangdou.view.HackyViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewPager"
+    android:layout_width="match_parent"
+    android:background="#001425"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+</com.jxqm.jiangdou.view.HackyViewPager>

@@ -12,8 +12,6 @@ import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobDetailsModel
-import com.jxqm.jiangdou.ui.home.model.HomeJobDetailsModel
-import com.jxqm.jiangdou.ui.home.model.HomeModel
 import com.jxqm.jiangdou.ui.job.view.JobDetailsActivity
 import com.jxqm.jiangdou.utils.clickWithTrigger
 

@@ -7,4 +7,8 @@ import com.jxqm.jiangdou.ui.home.vm.repository.MyRepository
  * Created by Administrator on 2019/8/20.
  */
 class MyViewModel : BaseViewModel<MyRepository>() {
+
+    fun getAccountBalance() {
+        mRepository.getAccountBalance()
+    }
 }

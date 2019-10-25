@@ -65,11 +65,11 @@ class PublishingFragment : BaseMVVMFragment<PublishingViewModel>() {
         registerObserver(Constants.TAG_GET_PUBLISHING_JOB_LIST_ERROR, String::class.java).observe(
             this,
             Observer {
+                if (swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.finishRefresh()
+                    swipeRefreshLayout.finishLoadMore()
+                }
                 if (mJobDetailList.isEmpty()) {
-                    if (swipeRefreshLayout.isRefreshing){
-                        swipeRefreshLayout.finishRefresh()
-                        swipeRefreshLayout.finishLoadMore()
-                    }
                     mUiStatusController.changeUiStatus(UiStatus.NETWORK_ERROR)
                 }
             })
@@ -100,6 +100,12 @@ class PublishingFragment : BaseMVVMFragment<PublishingViewModel>() {
     }
 
     override fun onFirstUserVisible() {
+        mViewModel.getPublishingJob(isRefresh)
+    }
+
+    fun doSearch(searchKey: String) {
+        mUiStatusController.changeUiStatus(UiStatus.LOADING)
+        isRefresh = true
         mViewModel.getPublishingJob(isRefresh)
     }
 

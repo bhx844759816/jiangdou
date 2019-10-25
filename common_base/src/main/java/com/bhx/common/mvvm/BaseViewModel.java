@@ -1,8 +1,10 @@
 package com.bhx.common.mvvm;
 
 import android.app.Application;
+
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
+
 import com.bhx.common.utils.ReflexUtils;
 
 /**

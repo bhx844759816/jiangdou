@@ -21,14 +21,16 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            signingConfig signingConfigs.debug
+//            buildConfigField "boolean", "LOG_DEBUG", "false" //不显示log
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
         debug{
             minifyEnabled false
-            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     signingConfigs {
@@ -47,6 +49,12 @@ android {
         main {
             jniLibs.srcDirs = ['libs']
         }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    dexOptions{
+        preDexLibraries = false
     }
 }
 
@@ -70,10 +78,13 @@ dependencies {
     implementation deps.appUpdate
     implementation deps.appUpdate_ktx
     implementation deps.agentweb
+    implementation deps.photoView
     implementation project(':common_base')
     implementation project(':common_photo')
     implementation project(':zbarlibary')
+    implementation project(':common_umeng')
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation (name: 'alipaySdk-15.6.5-20190718211148', ext: 'aar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

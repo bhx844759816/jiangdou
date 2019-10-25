@@ -17,6 +17,7 @@ class Constants {
         const val ACCESS_TOKEN = "access_token"
         const val REFRESH_TOKEN = "refresh_token"
         const val SEARCH_KEY = "search_key"
+        const val PAGE_SIZE = 20
 
 
         /**
@@ -32,11 +33,17 @@ class Constants {
         const val EVENT_KET_LOADING = "event_ket_loading"//loading界面
         const val TAG_LOADING_FINISH = "tag_loading_finish"//登录界面获取信息完成
         const val EVENT_KEY_LOGIN = "event_key_login" //登录界面
-        const val TAG_LOGIN_CODE_SUCCESS = "tag_login_code_success" //
+        const val EVENT_KEY_LOGIN_QUICK = "event_key_login_quick"//快捷登录
+        const val TAG_LOGIN_QUICK_CODE_SUCCESS = "tag_login_quick_code_success" //快捷登录 发送验证码成功
+        const val EVENT_KEY_LOGIN_PHONE_PSD = "event_key_login_phone_psd"//手机号密码登录
+        const val TAG_LOGIN_PHONE_PSD_LOGIN_SUCCESS = "tag_login_phone_psd_login_success" //
+
         const val EVENT_KEY_MAIN_MY = "event_key_main_my"//我的界面
         const val TAG_MAIN_MY_LOGIN_SUCCESS = "tag_main_my_login_success"
+        const val TAG_GET_ACCOUNT_BALANCE_SUCCESS = ""//获取账户余额成功
+
         const val EVENT_KEY_PHONE_LOGIN = "event_key_phone_login" //手机号登录几面
-        const val TAG_PHONE_LOGIN_SUCCESS = "tag_phone_login_success" //
+
         const val EVENT_KEY_VERIFY_CODE = "event_key_verify_code" //验证码界面
         const val TAG_SEND_SMS_CODE_RESULT = "tag_send_sms_code_result" //发送验证码结果
         const val TAG_GET_USER_INFO_SUCCESS = "tag_get_token_result"
@@ -128,7 +135,7 @@ class Constants {
         const val TAG_GET_END_SIGN_UP_JOB_LIST_SUCCESS = "tag_get_end_sign_up_job_list_success"
         const val TAG_GET_END_SIGN_UP_JOB_LIST_ERROR = "tag_get_end_sign_up_job_list_error"
         const val TAG_END_SIGN_UP_DELETE_JOB_SUCCESS = "tag_end_sign_up_delete_job_success"//删除发布成功
-
+        const val TAG_END_SIGN_UP_JOB_LIST = "tag_end_sign_up_job_list"//刷新工作列表
         //订单
         const val EVENT_KEY_PAYMENT_ORDER = "event_key_end_sign_up"//支付订单
         const val TAG_GET_ORDER_DETAILS_SUCCESS = "tag_get_order_details_success"//获取订单详情成功
@@ -144,6 +151,7 @@ class Constants {
         const val TAG_GET_EMPLOYEE_SIGN_LIST_SUCCESS = "tag_get_employee_sign_list_success"//已报名列表
         const val TAG_GET_EMPLOYEE_SIGN_LIST_ERROR = "tag_get_employee_sign_list_error"//已报名列表失败
         const val TAG_CLEAR_EMPLOYEE_SIGN_CLOSE_LIST = "tag_clear_employee_sign_close_list"//清空失效完成
+        const val TAG_SING_UP_SUCCESS_REFRESH_LIST = "tag_sing_up_success_refresh_list"//报名成功刷新列表
 
         const val EVENT_KEY_EMPLOYEE_EMPLOYMENT = "event_key_employee_employment"//雇员 - 已录用
         const val TAG_GET_EMPLOYEE_EMPLOYMENT_LIST_SUCCESS =
@@ -204,7 +212,8 @@ class Constants {
 
         const val EVENT_KEY_WORK = "event_key_work"//工作界面
         const val TAG_EMPLOYEE_ARRIVAL_SUCCESS = "tag_employee_arrival_success"//签到成功
-        const val TAG_GET_EMPLOYER_ATTESTATION_STATUS = "tag_get_employer_attestation_status"//获取企业认证状态
+        const val TAG_GET_EMPLOYER_ATTESTATION_STATUS =
+            "tag_get_employer_attestation_status"//获取企业认证状态
         const val TAG_STATUS_EMPLOYEE_SETTLEMENT = "tag_status_employee_settlement" //跳转到已结算
 
 
@@ -264,8 +273,10 @@ class Constants {
 
         const val EVENT_AGREEMENT_WEB = "event_agreement_web" //协议Web
 
-        const val EVENT_PAYMENT = "event_payment"//支付界面
+        const val EVENT_KEY_PAYMENT = "event_payment"//支付界面
+        const val TAG_GET_ALIPAY_ORDER_INFO = "tag_get_alipay_order_info"//获取阿里的订单信息成功
 
+        const val EVENT_KEY_PHOTO_VIEW_PAGE = "event_key_photo_view_page" //缩放的ViewPage
 
 
     }

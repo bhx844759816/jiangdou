@@ -112,6 +112,13 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
                 mUserModel = MyApplication.instance().userModel
                 initUserStatus()
             })
+        registerObserver(
+            Constants.TAG_GET_ACCOUNT_BALANCE_SUCCESS,
+            String::class.java
+        ).observe(this,
+            Observer {
+                tvBalance.text = it
+            })
     }
 
     /**
@@ -150,6 +157,11 @@ class MyFragment : BaseMVVMFragment<MyViewModel>() {
             tvBalance.text = "0"
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.getAccountBalance()
     }
 
 

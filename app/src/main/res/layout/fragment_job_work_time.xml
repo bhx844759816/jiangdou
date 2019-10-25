@@ -186,7 +186,6 @@
             </FrameLayout>
 
             <LinearLayout
-                android:id="@+id/llWelfareParent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="33dp"
@@ -208,7 +207,6 @@
                     android:textStyle="bold" />
 
                 <com.jxqm.jiangdou.view.MultipleRadioGroup
-                    android:id="@+id/rgHotTypeGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
@@ -221,7 +219,6 @@
                         android:layout_height="wrap_content">
 
                         <RadioButton
-                            android:id="@+id/rb03"
                             android:layout_width="93dp"
                             android:layout_height="36dp"
                             android:layout_marginRight="13dp"
@@ -234,7 +231,6 @@
                             android:textSize="@dimen/text_default_size" />
 
                         <RadioButton
-                            android:id="@+id/rb04"
                             android:layout_width="93dp"
                             android:layout_height="36dp"
                             android:layout_marginRight="13dp"
@@ -246,7 +242,6 @@
                             android:textSize="@dimen/text_default_size" />
 
                         <RadioButton
-                            android:id="@+id/rb05"
                             android:layout_width="93dp"
                             android:layout_height="36dp"
                             android:background="@drawable/select_publish_job_item_bg"
@@ -263,7 +258,6 @@
                         android:layout_marginTop="11dp">
 
                         <RadioButton
-                            android:id="@+id/rb06"
                             android:layout_width="93dp"
                             android:layout_height="36dp"
                             android:layout_marginRight="13dp"
@@ -275,7 +269,6 @@
                             android:textSize="@dimen/text_default_size" />
 
                         <RadioButton
-                            android:id="@+id/rb07"
                             android:layout_width="93dp"
                             android:layout_height="36dp"
                             android:layout_marginRight="11dp"

@@ -106,7 +106,6 @@ class VerifyCodeActivity : BaseDataActivity<VerifyCodeViewModel>() {
             LiveBus.getDefault().postEvent(Constants.EVENT_KEY_EMPLOYEE_SIGN_UP, Constants.TAG_MAIN_MY_LOGIN_SUCCESS, true)
             AppManager.getAppManager().finishActivity(LoginActivity::class.java)
             finish()
-            //发送消息到MainFragment
         })
     }
 

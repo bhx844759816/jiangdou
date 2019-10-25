@@ -37,7 +37,7 @@
         <activity
             android:name=".ui.login.view.LoginActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" />
-        <activity android:name=".ui.login.view.PhoneLoginActivity" />
+
         <activity android:name=".ui.login.view.ForgetPsdActivity" />
         <activity android:name=".ui.login.view.RegisterActivity" />
         <activity
@@ -46,6 +46,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -85,12 +86,13 @@
         <activity android:name=".ui.user.view.TradeDetailsActivity" />
         <activity android:name=".ui.user.view.ModifyUserDetailsActivity" />
         <activity android:name=".ui.user.view.CashOutSuccessActivity" />
+        <activity android:name=".ui.user.view.PhotoViewPageActivity" />
         <activity android:name=".ui.map.MapActivity" />
         <activity android:name=".ui.employee.view.EmployeeOfferDetailsActivity" />
         <activity android:name=".ui.attestation.view.PeopleAttestationActivity" />
         <activity android:name=".ui.attestation.view.CompanyAttestationActivity" />
         <activity android:name=".ui.attestation.view.AlipayAttestaionActivity" />
-        <activity android:name=".ui.web.AgreementWebActivity"/>
+        <activity android:name=".ui.web.AgreementWebActivity" />
         <activity
             android:name=".ui.home.view.MainActivity"
             android:launchMode="singleTask">
@@ -109,6 +111,30 @@
                 android:resource="@xml/file_paths_public" />
         </provider>
 
+        <!--Umeng集成 start**************************** -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--Umeng集成 end******************************************* -->
     </application>
 
 </manifest>

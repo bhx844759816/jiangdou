@@ -1,14 +1,20 @@
 package com.jxqm.jiangdou.ui.employer.view
 
+import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.bhx.common.base.BaseActivity
+import com.bhx.common.utils.ToastUtils
 import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
+import com.jxqm.jiangdou.MyApplication
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.base.BaseDataActivity
 import com.jxqm.jiangdou.config.Constants
+import com.jxqm.jiangdou.ext.addTextChangedListener
+import com.jxqm.jiangdou.ext.hideKeyboard
 import com.jxqm.jiangdou.ui.employer.vm.EmployRecordViewModel
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.clickWithTrigger
@@ -51,6 +57,36 @@ class EmployRecordActivity : BaseDataActivity<EmployRecordViewModel>() {
         myEmployRecordBack.clickWithTrigger {
             finish()
         }
+
+
+        etSearch.addTextChangedListener {
+            afterTextChanged {
+                val content = etSearch.text.toString().trim()
+                if (content.isNotEmpty()) {
+                    ivDelete.visibility = View.VISIBLE
+                } else {
+                    ivDelete.visibility = View.GONE
+                }
+            }
+        }
+        ivDelete.clickWithTrigger {
+            etSearch.setText("")
+        }
+        etSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val searchKey = etSearch.text.toString()
+                MyApplication.instance().searchKeyWork = searchKey
+                if (searchKey.isNotEmpty()) {
+                    etSearch.hideKeyboard()
+                    //存储到SharedPreference
+                    doSearch(searchKey)
+                    return@setOnEditorActionListener true
+                } else {
+                    ToastUtils.toastShort("请输入搜索关键词")
+                }
+            }
+            return@setOnEditorActionListener false
+        }
     }
 
     inner class MyPageAdapter(fragmentManager: FragmentManager) :
@@ -59,6 +95,29 @@ class EmployRecordActivity : BaseDataActivity<EmployRecordViewModel>() {
         override fun getCount(): Int = mListFragment.size
         override fun getPageTitle(position: Int): CharSequence? {
             return mTitles[position]
+        }
+    }
+
+    /**
+     * 搜索
+     */
+    private fun doSearch(searchKey: String) {
+        when (val fragment = mListFragment[viewPager.currentItem]) {
+            is EmployRecordSignUpFragment -> {
+
+            }
+            is EmployRecordEmploymentFragment -> {
+
+            }
+            is EmployRecordReportDutyFragment -> {
+
+            }
+            is EmployRecordWaitPayFragment -> {
+
+            }
+            is EmployRecordPayFragment -> {
+
+            }
         }
     }
 }

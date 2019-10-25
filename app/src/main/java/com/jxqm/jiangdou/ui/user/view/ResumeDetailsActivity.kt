@@ -1,9 +1,11 @@
 package com.jxqm.jiangdou.ui.user.view
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bhx.common.utils.RegularUtils
 import com.bumptech.glide.Glide
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
@@ -66,28 +68,33 @@ class ResumeDetailsActivity : BaseDataActivity<ResumeDetailsViewModel>() {
                 .error(R.drawable.icon_default_head_photo)
                 .placeholder(R.drawable.icon_default_head_photo)
                 .into(ivHeadPhoto)
-            tvUserName.text = it.name
-            if (it.gender == "女") {
+            if (RegularUtils.isTelPhoneNumber(it.name)) {
+                tvUserName.text = RegularUtils.mobileEncrypt(it.name)
+            } else {
+                tvUserName.text = it.name
+            }
+            if (it.genderCode == 0) {
                 ivUserGender.setBackgroundResource(R.drawable.icon_girl)
             } else {
                 ivUserGender.setBackgroundResource(R.drawable.icon_boy)
             }
+
             tvUserBirthday.text = it.birthday
-            tvUserPhone.text = it.tel
+            tvUserPhone.text = RegularUtils.mobileEncrypt(it.tel)
             tvUserStar.text = it.star
             tvUserAge.text = "${it.age} 岁"
             tvUserEdu.text = "学历:  ${it.academic}"
-            tvUserWeight.text = "体重:  ${it.weight}kg"
-            tvUserHeight.text = "身高:  ${it.height}cm"
-            tvUserLocation.text = "位置:  ${it.area}"
+            tvUserWeight.text = if (TextUtils.isEmpty(it.weight)) "体重:" else "体重:  ${it.weight}kg"
+            tvUserHeight.text = if (TextUtils.isEmpty(it.height)) "身高:" else "身高:  ${it.height}cm"
+            tvUserLocation.text = if (TextUtils.isEmpty(it.area)) "位置:" else "位置:  ${it.area}"
             tvUserDescription.text = it.content
             if (it.images != null && it.images.isNotEmpty()) {
-                if(it.images.contains(",")){
+                if (it.images.contains(",")) {
                     val images = it.images.split(",").map { image ->
                         Api.HTTP_BASE_URL + "/" + image
                     }
                     mPhotoList.addAll(images)
-                }else{
+                } else {
                     mPhotoList.add("${Api.HTTP_BASE_URL}/${it.images}")
                 }
 

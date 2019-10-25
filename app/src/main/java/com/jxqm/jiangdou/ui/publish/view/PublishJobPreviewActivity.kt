@@ -20,7 +20,7 @@ import com.jxqm.jiangdou.base.CommonConfig
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.model.JobDetailsModel
-import com.jxqm.jiangdou.ui.publish.model.TimeRangeModel
+import com.jxqm.jiangdou.model.TimeRangeModel
 import kotlinx.android.synthetic.main.activity_publish_job_preview.*
 import java.io.File
 

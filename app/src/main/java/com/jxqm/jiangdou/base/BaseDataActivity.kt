@@ -1,6 +1,8 @@
 package com.jxqm.jiangdou.base
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Resources
 import androidx.appcompat.widget.DialogTitle
 import androidx.appcompat.widget.Toolbar
 import com.bhx.common.mvvm.BaseMVVMActivity
@@ -8,13 +10,8 @@ import com.bhx.common.mvvm.BaseViewModel
 import com.jaeger.library.StatusBarUtil
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
-import kotlinx.android.synthetic.main.view_toolbar.*
-import androidx.core.view.ViewCompat.setFitsSystemWindows
 import android.os.Build.VERSION_CODES.M
 import android.os.Build.VERSION.SDK_INT
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.os.Build
-import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
@@ -26,6 +23,7 @@ import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.ui.home.view.MainActivity
 import com.jxqm.jiangdou.ui.login.view.LoadingActivity
 import com.jxqm.jiangdou.view.dialog.LoadingDialog
+import com.umeng.analytics.MobclickAgent
 
 
 /**
@@ -33,8 +31,10 @@ import com.jxqm.jiangdou.view.dialog.LoadingDialog
  * Created By bhx On 2019/8/6 0006 09:38
  */
 abstract class BaseDataActivity<T : BaseViewModel<*>> : BaseMVVMActivity<T>() {
+
     override fun initView() {
         super.initView()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
         StatusBarTextUtils.setLightStatusBar(this, true)
         LogUtils.i("MyApplication isRecycler${MyApplication.instance().isRecyclerFlag} $this.javaClass=${this.javaClass}")
@@ -56,6 +56,7 @@ abstract class BaseDataActivity<T : BaseViewModel<*>> : BaseMVVMActivity<T>() {
 
     override fun onResume() {
         super.onResume()
+        MobclickAgent.onResume(this)
         LogUtils.i("${this.javaClass.simpleName},onResume")
         //注册加载对话框监听
         registerObserver(
@@ -87,6 +88,7 @@ abstract class BaseDataActivity<T : BaseViewModel<*>> : BaseMVVMActivity<T>() {
 
     override fun onPause() {
         super.onPause()
+        MobclickAgent.onPause(this)
         LogUtils.i("${this.javaClass.simpleName},onPause")
         //页面不显示的时候取消注册对话框监听
         unRegisterObserver(Constants.EVENT_KEY_LOADING_DIALOG, Constants.TAG_LOADING_DIALOG)

@@ -142,9 +142,7 @@ public class AppManager {
      * 退出应用程序
      */
     public void AppExit(Activity activity) {
-        LogUtils.i("栈内信息："+activityStack.toString());
         finishOthersActivity(activity);
-        LogUtils.i("栈内信息："+activityStack.toString());
         ActivityManager activityMgr = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
         if (activityMgr != null) {
             activityMgr.killBackgroundProcesses(activity.getPackageName());

@@ -125,10 +125,6 @@
 # 不混淆资源类
 -keepclassmembers class **.R$* { *; }
 
-# 对于带有回调函数onXXEvent()的，不能被混淆
--keepclassmembers class * {
-    void *(**On*Event);
-}
 # WebView
 -keepclassmembers class fqcn.of.javascript.interface.for.Webview {
    public *;
@@ -143,31 +139,50 @@
 # 保留实体类和成员不被混淆(根据具体情况修改entity的路径)
 -keep class com.jxqm.jiangdou.model.**{*;}
 -keep class com.jxqm.jiangdou.ui.** { *; }
--keep class com.jxqm.jiangdou.view.MyBottomNavigationBar{ *; }
+-keep class com.jxqm.jiangdou.model.HttpResult.** { *; }
+-keep class com.jxqm.jiangdou.view.MyBottomNavigationBar { *; }
+-keep class cn.bertsir.zbar.Qr.** { *; }
+#-keep public class * extends com.bhx.common.BaseMVVMActivity { *; }
+#-keep public class * extends com.bhx.common.BaseMVVMFragment { *; }
+#-keep public class * extends com.bhx.common.BaseMVVMDialogFragment { *; }
+#-keep public class * extends com.bhx.common.BaseRepository { *; }
+#-keep public class * extends com.bhx.common.BaseViewModel { *; }
 #kotlin
 -keep class kotlin.** { *; }
 -keep class org.jetbrains.** { *; }
-#gson混淆
--keep public class com.google.gson.**
--keep public class com.google.gson.** {public private protected *;}
-#过滤okhttp
--dontwarn com.squareup.okhttp3.**
--keep class com.squareup.okhttp3.** { *;}
--dontwarn okio.**
 #过滤glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
   **[] $VALUES;
   public *;
 }
-#retrofit
--dontwarn okio.**
+#retrofit2  混淆
 -dontwarn javax.annotation.**
-#解决使用Retrofit+rxJava联网时，在6.0系统出现java.lang.InternalError奔溃的问题:http://blog.csdn.net/mp624183768/article/details/79242147
+-dontwarn javax.inject.**
+# OkHttp3
+-dontwarn okhttp3.logging.**
+-keep class okhttp3.internal.**{*;}
+-dontwarn okio.**
+# Retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+# RxJava RxAndroid
+-dontwarn sun.misc.**
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
     long producerIndex;
     long consumerIndex;
 }
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+# Gson
+-keep class com.google.gson.stream.** { *; }
+-keepattributes EnclosingMethod
 #agentWeb混淆配置
 -keep class com.just.agentweb.** {
     *;
@@ -185,30 +200,24 @@
     @retrofit2.http.* <methods>;
 }
 #友盟
-#ShareSdk混淆配置
--keep class cn.sharesdk.**{*;}
--keep class com.sina.**{*;}
--keep class **.R$* {*;}
--keep class **.R{*;}
--keep class com.mob.**{*;}
--keep class m.framework.**{*;}
--dontwarn cn.sharesdk.**
--dontwarn com.sina.**
--dontwarn com.mob.**
--dontwarn **.R$*
--dontwarn android.support.**
--keep class android.support.** {*; }
--dontwarn javax.annotation.**
+-keep class com.umeng.** {*;}
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
 # 百度地图混淆配置
 -keep class com.baidu.** {*;}
 -keep class mapsdkvi.com.** {*;}
 -dontwarn com.baidu.**
 # 删除log代码
--assumenosideeffects class android.util.Log {
-    public static boolean isLoggable(java.lang.String, int);
-    public static int v(...);
-    public static int i(...);
-    public static int w(...);
-    public static int d(...);
-    public static int e(...);
-}
+#-assumenosideeffects class android.util.Log {
+#    public static boolean isLoggable(java.lang.String, int);
+#    public static int v(...);
+#    public static int i(...);
+#    public static int w(...);
+#    public static int d(...);
+#    public static int e(...);
+#}

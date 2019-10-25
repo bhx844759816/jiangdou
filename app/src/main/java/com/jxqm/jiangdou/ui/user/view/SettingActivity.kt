@@ -12,19 +12,22 @@ import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.config.Constants
 import com.jxqm.jiangdou.http.Api
 import com.jxqm.jiangdou.http.AppUpdateManager
-import com.jxqm.jiangdou.http.HttpResult
+import com.jxqm.jiangdou.model.HttpResult
 import com.jxqm.jiangdou.http.applySchedulers
 import com.jxqm.jiangdou.model.AppUpdateModel
 import com.jxqm.jiangdou.ui.login.view.ForgetPsdActivity
 import com.jxqm.jiangdou.utils.StatusBarTextUtils
 import com.jxqm.jiangdou.utils.clickWithTrigger
 import com.jxqm.jiangdou.utils.startActivity
+import com.jxqm.jiangdou.view.dialog.AppUpdateDialog
 import com.jxqm.jiangdou.view.dialog.LoadingDialog
 import com.vector.update_app.UpdateAppBean
+import com.vector.update_app.UpdateAppManager
+import com.vector.update_app.utils.AppUpdateUtils
 import com.vector.update_app_kotlin.check
+import com.vector.update_app_kotlin.download
 import com.vector.update_app_kotlin.updateApp
 import io.reactivex.Observable
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_setting.*
 
 /**
@@ -105,8 +108,8 @@ class SettingActivity : BaseActivity() {
         updateApp(Api.HTTP_BASE_URL + Api.GET_APP_UPDATE, AppUpdateManager())
         {
             isPost = false
+            isIgnoreDefParams = true
             themeColor = 0xff82A2FE.toInt()
-            hideDialogOnDownloading()
         }.check {
             onBefore { LoadingDialog.show(this@SettingActivity) }
             parseJson {
@@ -145,12 +148,34 @@ class SettingActivity : BaseActivity() {
                         .setUpdate("no")
                 }
             }
+            hasNewApp{updateApp, updateAppManager ->
+                showAppUpdateDialog(updateApp,updateAppManager)
+            }
             onAfter {
                 LoadingDialog.dismiss(this@SettingActivity)
             }
         }
     }
-
+    /**
+     * 展示app更新的Dialog
+     */
+    private fun showAppUpdateDialog(updateApp: UpdateAppBean, updateAppManager: UpdateAppManager) {
+        AppUpdateDialog.show(
+            this,
+            updateApp.newVersion,
+            updateApp.targetSize,
+            updateApp.updateLog
+        ) {
+            updateAppManager.download {
+                this.onFinish {
+                    true
+                }
+                this.onInstallAppAndAppOnForeground {
+                    AppUpdateUtils.installApp(this@SettingActivity,it)
+                }
+            }
+        }
+    }
 
     private fun checkNotificationStatus(): Boolean {
         val manager = NotificationManagerCompat.from(this)

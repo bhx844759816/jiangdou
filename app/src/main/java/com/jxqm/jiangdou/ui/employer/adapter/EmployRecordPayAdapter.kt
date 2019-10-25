@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.bhx.common.adapter.rv.MultiItemTypeAdapter
 import com.bhx.common.adapter.rv.base.ItemViewType
 import com.bhx.common.adapter.rv.holder.ViewHolder
+import com.bhx.common.utils.RegularUtils
 import com.bumptech.glide.Glide
 import com.jxqm.jiangdou.R
 import com.jxqm.jiangdou.http.Api
@@ -51,7 +52,7 @@ class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeRe
                     }
                     tvUserName.text = item.name
                     tvWorkTime.text = "工作时段：  ${item.startTime}  "
-                    tvAmount.text = "${item.amount}币"
+                    tvAmount.text = "${item.settleAmount}币"
                 }
             }
 
@@ -111,12 +112,16 @@ class EmployRecordPayAdapter(context: Context) : MultiItemTypeAdapter<EmployeeRe
                     Glide.with(mContext).load(Api.HTTP_BASE_URL + "/" + item.avatar)
                         .transform(GlideCircleTransform(mContext))
                         .into(ivHeadPhoto)
-                    if (item.gender == "男") {
-                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
-                    } else {
+                    if (item.genderCode == 0) {
                         ivUserSex.setBackgroundResource(R.drawable.icon_girl)
+                    } else {
+                        ivUserSex.setBackgroundResource(R.drawable.icon_boy)
                     }
-                    tvUserName.text = item.name
+                    if (RegularUtils.isTelPhoneNumber(item.name)) {
+                        tvUserName.text = RegularUtils.mobileEncrypt(item.name)
+                    } else {
+                        tvUserName.text = item.name
+                    }
                     tvWorkTime.text = "工作时段： ${item.startTime}  "
                     tvAmount.text = "${item.amount}币"
                     tvAmountSettle.text = "${item.settleAmount}币"
